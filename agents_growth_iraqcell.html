@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> IraqCell</title>
+
+  <style>
+    :root{
+      --bg:#0f172a; --card:#0b1220; --accent:#0ea5a9; --muted:#94a3b8; --success:#16a34a; --danger:#ef4444; --warning:#f59e0b;
+      --panel-bg:#071021;
+      --glass: rgba(255,255,255,0.03);
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    }
+    :root.light{
+      --bg:#f1f5f9; --card:#ffffff; --accent:#0ea5a9; --muted:#374151; --success:#15803d; --danger:#dc2626; --warning:#d97706;
+      --panel-bg:#ffffff;
+      --glass: rgba(0,0,0,0.03);
+    }
+    body{background: linear-gradient(180deg,#071028 0%, #09213a 100%); color:#e6eef8; margin:0; padding:18px; -webkit-font-smoothing:antialiased;}
+    body.light{background: linear-gradient(180deg,#e8edf3 0%, #f6f8fb 100%); color:#0b1220;}
+    .container{max-width:1200px; margin:0 auto;}
+    header{display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:16px;}
+    h1{font-size:20px; margin:0;}
+    p.lead{margin:0; color:var(--muted); font-size:13px;}
+    .card{background:var(--card); padding:12px; border-radius:10px; box-shadow:0 6px 18px rgba(2,6,23,0.6); margin-bottom:12px;}
+    .controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
+    input[type="file"]{display:none;}
+    .btn{background:var(--accent); color:#022; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600;}
+    .btn.secondary{background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted);}
+    .btn.warn{background:var(--warning); color:#072;}
+    .flex{display:flex; gap:8px; align-items:center;}
+    .stats{display:flex; gap:8px; flex-wrap:wrap;}
+    .stat{flex:1 1 160px; background:var(--glass); padding:10px; border-radius:8px; min-width:140px;}
+    .stat h3{margin:0; font-size:18px;}
+    .stat p{margin:6px 0 0; color:var(--muted); font-size:13px;}
+    .row{display:flex; gap:12px;}
+    .col{flex:1;}
+    table{width:100%; border-collapse:collapse; font-size:13px;}
+    th, td{padding:8px 6px; border-bottom:1px dashed rgba(255,255,255,0.04); text-align:center;}
+    th{font-size:12px; color:var(--muted); font-weight:600;}
+    td small{display:block; color:var(--muted);}
+    .badge{padding:4px 8px; border-radius:6px; font-weight:600; font-size:12px;}
+    .badge.good{background:rgba(22,163,74,0.12); color:var(--success); border:1px solid rgba(22,163,74,0.18);}
+    .badge.fail{background:rgba(239,68,68,0.08); color:var(--danger); border:1px solid rgba(239,68,68,0.12);}
+    .badge.ok{background:rgba(148,163,184,0.06); color:var(--muted); border:1px solid rgba(148,163,184,0.06);}
+    .search{padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit;}
+    .filters{display:flex; gap:6px; flex-wrap:wrap;}
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(2,6,23,0.6); z-index:40;}
+    .modal.open{display:flex;}
+    .modal .box{width:560px; max-width:95%; background:var(--panel-bg); padding:14px; border-radius:10px;}
+    label{display:block; font-size:13px; margin-bottom:6px; color:var(--muted);}
+    input[type="text"], input[type="number"], input[type="date"], select{width:100%; padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit;}
+    .actions{display:flex; gap:8px; justify-content:flex-end; margin-top:12px;}
+    .small{font-size:12px; color:var(--muted);}
+    .chart-row{display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;}
+    .chart-card{flex:1 1 360px; min-height:260px; padding:8px; background:var(--glass); border-radius:8px;}
+    footer{color:var(--muted); margin-top:14px; font-size:13px;}
+    @media (max-width:800px){ .row{flex-direction:column;} .stats{flex-direction:column;} th, td{font-size:12px;} }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1> متابعة الوكلاء </h1>
+        <p class="lead">Ameer Helwas </p>
+      </div>
+      <div class="controls">
+        <button class="btn secondary" id="btnAddAgent">إضافة وكيل</button>
+        <button class="btn warn" id="btnWeeklyReport">تقرير </button>
+        <button class="btn secondary" id="btnTheme">الوضع: ليلي</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="row" style="align-items:center;">
+        <div class="col">
+          <div class="filters">
+            <select id="phaseFilter" class="search">
+              <option value="">كل المراحل</option>
+              <option value="PHASE1">المرحلة الثانية  Phase2</option>
+              <option value="OLD">المشروع القديم</option>
+              <option value="PHASE2">> المرحلة الثانية Phase2</option>
+              <option value="PHASE3">المرحلة الثالثة</option>
+            </select>
+            <input id="searchBox" class="search" placeholder="بحث" />
+            <select id="sortBy" class="search">
+              <option value="name">ترتيب حسب الاسم</option>
+              <option value="total_users_desc">أعلى إجمالي</option>
+              <option value="active_desc">أعلى نشط</option>
+              <option value="deficit_desc">أعلى عجز (عدد)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="min-width:320px;">
+          <div class="stats">
+            <div class="stat card">
+              <h3 id="totalAgents">0</h3>
+              <p>الوكلاء</p>
+            </div>
+            <div class="stat card">
+              <h3 id="totalUsers">0</h3>
+              <p>إجمالي المستخدمين</p>
+            </div>
+            <div class="stat card">
+              <h3 id="totalActive">0</h3>
+              <p>المستخدمون النشطون</p>
+            </div>
+            <div class="stat card">
+              <h3 id="overallActivation">0%</h3>
+              <p>معدل النمو العام</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div style="overflow:auto;">
+        <table id="agentsTable">
+          <thead>
+            <tr>
+              <th>الوكيل</th>
+              <th>تاريخ العقد</th>
+              <th>FDT</th>
+              <th>إجمالي المستخدمين</th>
+              <th>النشط الفعلي</th>
+              
+              
+              <th>معدل التفعيل</th>
+              <th>النسبة المطلوبة</th>
+              <th>المطلوب للوصول</th>
+              <th>نسبة العجز</th>
+              <th>عدد العجز </th>
+              <th>الحالة</th>
+              <th>إجراءات</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="small"</div>
+    </footer>
+  </div>
+
+  <div id="modalEdit" class="modal">
+    <div class="box">
+      <h3 id="modalTitle">تحديث المستخدمين النشطين</h3>
+      <div>
+        <label>اسم الوكيل</label>
+        <input type="text" id="editName" readonly />
+      </div>
+      <div>
+        <label>إجمالي المستخدمين</label>
+        <input type="number" id="editTotal" readonly />
+      </div>
+      <div>
+        <label>النشط السابق</label>
+        <input type="number" id="editPrevActive" readonly />
+      </div>
+      <div>
+        <label>النشط الحالي</label>
+        <input type="number" id="editActive" />
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="closeModal">إلغاء</button>
+        <button class="btn" id="saveActive">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalEditInfo" class="modal">
+    <div class="box">
+      <h3>تعديل معلومات الوكيل</h3>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:200px;">
+          <label>اسم الوكيل</label>
+          <input type="text" id="info_name" />
+        </div>
+        <div style="flex:1; min-width:200px;">
+          <label>ITPC Site </label>
+          <input type="text" id="info_note" />
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:160px;">
+          <label>تاريخ العقد</label>
+          <input type="date" id="info_date" />
+        </div>
+        <div style="flex:1; min-width:160px;">
+          <label>المرحلة</label>
+          <select id="info_phase">
+            <option value="PHASE1">PHASE1</option>
+            <option value="OLD">OLD</option>
+            <option value="PHASE2">PHASE2</option>
+            <option value="PHASE3">PHASE3</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:200px;">
+          <label>ITPC Site</label>
+          <input type="text" id="info_site" />
+        </div>
+        <div style="flex:1; min-width:200px;">
+          <label>FDT</label>
+          <input type="text" id="info_fdt" />
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:160px;">
+          <label>إجمالي المستخدمين</label>
+          <input type="number" id="info_total" />
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="closeInfoModal">إلغاء</button>
+        <button class="btn" id="saveInfo">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalAdd" class="modal">
+    <div class="box">
+      <h3>إضافة وكيل</h3>
+      <div>
+        <label>اسم الوكيل</label>
+        <input type="text" id="new_name" />
+      </div>
+      <div style="display:flex; gap:8px;">
+        <div style="flex:1;">
+          <label>تاريخ العقد </label>
+          <input type="date" id="new_date" />
+        </div>
+        <div style="flex:1;">
+          <label>المرحلة</label>
+          <select id="new_phase">
+            <option value="PHASE1">PHASE1</option>
+            <option value="OLD">OLD</option>
+            <option value="PHASE2">PHASE2</option>
+            <option value="PHASE3">PHASE3</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label>ITPC Site</label>
+        <input type="text" id="new_site" />
+      </div>
+      <div>
+        <label>FDT</label>
+        <input type="text" id="new_fdt" />
+      </div>
+      <div>
+        <label>ملاحظة </label>
+        <input type="text" id="new_note" placeholder="" />
+      </div>
+      <div style="display:flex; gap:8px;">
+        <div style="flex:1;">
+          <label>إجمالي المستخدمين</label>
+          <input type="number" id="new_total" />
+        </div>
+        <div style="flex:1;">
+          <label>المستخدمون النشطون</label>
+          <input type="number" id="new_active" />
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="closeAddModal">إلغاء</button>
+        <button class="btn" id="saveNewAgent">إضافة</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+   
+    const STORAGE_KEY = 'agents_dashboard_data_v1';
+
+    const tbody = document.querySelector('#agentsTable tbody');
+    const totalAgentsEl = document.getElementById('totalAgents');
+    const totalUsersEl = document.getElementById('totalUsers');
+    const totalActiveEl = document.getElementById('totalActive');
+    const overallActEl = document.getElementById('overallActivation');
+    const phaseFilter = document.getElementById('phaseFilter');
+    const searchBox = document.getElementById('searchBox');
+    const sortBy = document.getElementById('sortBy');
+    const btnExportCSV = document.getElementById('btnExportCSV');
+    const btnAddAgent = document.getElementById('btnAddAgent');
+    const btnTheme = document.getElementById('btnTheme');
+
+    const modalEdit = document.getElementById('modalEdit');
+    const editName = document.getElementById('editName');
+    const editTotal = document.getElementById('editTotal');
+    const editPrevActive = document.getElementById('editPrevActive');
+    const editActive = document.getElementById('editActive');
+    const saveActiveBtn = document.getElementById('saveActive');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    const modalAdd = document.getElementById('modalAdd');
+    const closeAddModal = document.getElementById('closeAddModal');
+    const saveNewAgent = document.getElementById('saveNewAgent');
+    const modalEditInfo = document.getElementById('modalEditInfo');
+    const closeInfoModal = document.getElementById('closeInfoModal');
+    const saveInfo = document.getElementById('saveInfo');
+
+    let barChart=null, pieChart=null;
+
+    let agents = loadFromStorage() || [];
+
+    function migrateData(){
+      let changed = false;
+      agents.forEach(a=>{
+        const norm = normalizePhase(a.phase);
+        if(a.phase !== norm){ a.phase = norm; changed = true; }
+        if((a.name||'').trim() === 'abbas عباس حلواص' && a.phase !== 'PHASE1'){
+          a.phase = 'PHASE1';
+          changed = true;
+        }
+      });
+      if(changed){ saveToStorage(); }
+    }
+
+    const INITIAL_AGENTS = [
+      { name:'gsm2 علاء صاحب', phase:'المشروع الجديد PHASE1', itpc_site:'Said Al-shohdaa ITPC', fdt:'', contract_date:'18/05/2024', total_users:2560, active:1046, growth:-1002 },
+      { name:'ghaith غيث علاء زكي', phase:'المشروع الجديد PHASE1', itpc_site:'Said Al-shohdaa ITPC', fdt:'', contract_date:'12/05/2024', total_users:1920, active:826, growth:-710 },
+      { name:'vlan محمد صاحب جابر', phase:'المشروع الجديد PHASE1', itpc_site:'Said Al-shohdaa&Al-Mualmeen ITPC', contract_date:'05/05/2024', total_users:3200, active:1241, growth:-1319 },
+      { name:'alnaqeeb منتظر النقيب', phase:'المشروع الجديد PHASE1', itpc_site:'Al-Mualmeen ITPC', contract_date:'11/05/2024', total_users:2128, active:1105, growth:-597 },
+      { name:'Fouad فؤاد عايد', phase:'المشروع الجديد PHASE1', itpc_site:'Said Al-shohdaa ITPC', contract_date:'12/05/2024', total_users:3200, active:1384, growth:-1176 },
+      { name:'moh محمد ابراهيم', phase:'المشروع الجديد PHASE1', itpc_site:'Al-Mualmeen ITPC', contract_date:'30/04/2024', total_users:2352, active:1209, growth:-673 },
+      { name:'digital حسين عادل', phase:'المشروع القديم', itpc_site:'Said Al-shohdaa ITPC', contract_date:'01/09/2024', total_users:512, active:231, growth:-105 },
+      { name:'mega سامر العامري', phase:'المشروع القديم', itpc_site:'Said Al-shohdaa ITPC', contract_date:'01/09/2024', total_users:1024, active:413, growth:-271 },
+      { name:'alamri ضياء العامري', phase:'المشروع القديم', itpc_site:'Said Al-shohdaa ITPC', contract_date:'01/09/2024', total_users:1536, active:532, growth:-441 },
+      { name:'gsm حسنين صاحب', phase:'المشروع القديم', itpc_site:'Said Al-shohdaa ITPC', contract_date:'01/09/2024', total_users:2384, active:1183, growth:605 },
+      { name:'abbas عباس حلواص', phase:'المشروع الجديد PHASE1', itpc_site:'Said Al-shohdaa ITPC', contract_date:'01/09/2024', total_users:1920, active:815, growth:-721 },
+      { name:'منتظر النقيب nakib@IQCELL_15', phase:' المشروع الجديد PHASE2', itpc_site:'ABS ITPC', contract_date:'23/11/2024', total_users:5488, active:1621, growth:-1672 },
+      { name:'محمد ابراهيم Moh2@IQCELL_16', phase:' المشروع الجديد PHASE2', itpc_site:'Al-Mualmeen ITPC', contract_date:'23/11/2024', total_users:2560, active:799, growth:-737 },
+      { name:'زيد صلاح ZAID@IQCELL_17', phase:'  المشروع الجديد PHASE2', itpc_site:'Al-Mualmeen ITPC', contract_date:'23/11/2024', total_users:5760, active:1654, growth:-1802 },
+      { name:'محمد عباس mtdx@iqcell_18', phase:'المشروع الجديد PHASE2  ', itpc_site:'ABS ITPC', contract_date:'23/11/2024', total_users:1088, active:581, growth:-72 },
+      { name:'حيدرهاني hider@iqcell_19', phase:'المشروع الجديد PHASE2  ', itpc_site:'ABS ITPC', contract_date:'23/11/2024', total_users:5488, active:1322, growth:-1971 },
+      { name:'حسين النصراوي IQCELL_23', phase:' المشروع الجديد PHASE2 ', itpc_site:'Al-Mualmeen ITPC', contract_date:'17/12/2024', total_users:640, active:190, growth:-130 },
+      { name:'وليد علاوي IQCELL_22', phase:'المشروع الجديد PHASE2  ', itpc_site:'Al-Mualmeen ITPC', contract_date:'28/12/2024', total_users:1280, active:342, growth:-298 },
+      { name:'حسن حميد HUSS@IQCELL_25', phase:'المشروع الجديد PHASE2  ', itpc_site:'Al-Mualmeen ITPC', contract_date:'26/12/2024', total_users:1280, active:343, growth:-297 },
+      { name:'عيسى حسين ISSA@IQCELL_24', phase:'المشروع الجديد PHASE2', itpc_site:'Al-Mualmeen ITPC', contract_date:'21/12/2024', total_users:2560, active:985, growth:-295 },
+      { name:'IQCEEL-26 ضرغام', phase:'المشروع الجديد PHASE2', itpc_site:'Said Al-shohdaa ITPC', contract_date:'02/02/2025', total_users:1920, active:935, growth:359 }
+    ].map(a=> ({
+      ...a,
+      prev_active: Number(a.active) - Number(a.growth||0)
+    }));
+
+    function parseDateAuto(s){
+      if(!s) return null;
+      if(s instanceof Date) return s;
+      if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return new Date(s + 'T00:00:00');
+      if(/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)){
+        const parts = s.split('/');
+        return new Date(+parts[2], +parts[1]-1, +parts[0]);
+      }
+      const d = new Date(s);
+      return isNaN(d) ? null : d;
+    }
+
+    function monthsBetween(d1, d2){
+      const y1=d1.getFullYear(), m1=d1.getMonth();
+      const y2=d2.getFullYear(), m2=d2.getMonth();
+      return Math.max(0, (y2 - y1)*12 + (m2 - m1));
+    }
+
+    function normalizePhase(value){
+      const s = String(value||'').trim().toLowerCase();
+      if(!s) return '';
+      if(s.includes('phase2') || s.includes('phase 2') || s.includes('phase-2') || s.includes('المرحلة') && s.includes('2')) return 'PHASE2';
+      if(s.includes('phase3') || s.includes('phase 3') || s.includes('phase-3') || (s.includes('المرحلة') && s.includes('3'))) return 'PHASE3';
+      if(s.includes('old') || s.includes('قديم') || s.includes('المشروع القديم')) return 'OLD';
+      if(s.includes('phase1') || s.includes('phase 1') || s.includes('phase-1') || s.includes('المشروع الجديد')) return 'PHASE1';
+      const up = s.toUpperCase();
+      if(['PHASE1','PHASE2','PHASE3','OLD'].includes(up)) return up;
+      return '';
+    }
+
+    function arabicPhaseLabel(phase){
+      switch(String(phase||'').toUpperCase()){
+        case 'PHASE1': return ' المرحلة الثانية PHASE1';
+        case 'PHASE2': return ' المرحلة الثانية PHASE2';
+        case 'PHASE3': return 'المرحلة الثالثة';
+        case 'OLD': return 'المشروع القديم';
+        default: return '';
+      }
+    }
+
+    function toYMDLocal(d){
+      const y=d.getFullYear();
+      const m=String(d.getMonth()+1).padStart(2,'0');
+      const day=String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function genId(){
+      return 'a_' + Math.random().toString(36).slice(2,8) + Date.now().toString(36).slice(-4);
+    }
+
+    function computeAgent(agent){
+      if(!agent._id) agent._id = genId();
+      const now = new Date();
+      const contract = parseDateAuto(agent.contract_date) || now;
+      const months = monthsBetween(contract, now);
+      agent.contract_date = toYMDLocal(contract); 
+      agent.months_since = months;
+      agent.phase = normalizePhase(agent.phase);
+      let required = months >= 8 ? 80 : 60;
+      agent.required_rate = required;
+
+      agent.total_users = Number(agent.total_users) || 0;
+      agent.active = Number(agent.active) || 0;
+      agent.prev_active = Number(agent.prev_active || 0);
+
+      if(Array.isArray(agent.history) && agent.history.length>0){
+        const last = agent.history[agent.history.length-1];
+        agent.growth = Math.round(agent.active - Number(last.active||0));
+      } else {
+        agent.growth = Math.round(agent.active - agent.prev_active);
+      }
+      agent.activation_rate = agent.total_users ? +( (agent.active / agent.total_users) * 100 ) : 0;
+      agent.activation_rate = Math.round(agent.activation_rate*10)/10; // one decimal
+      if(required !== null){
+        const rawDeficit = required - agent.activation_rate;
+        agent.deficit_percent = Math.max(0, Math.round(rawDeficit*10)/10);
+        const neededUsers = Math.round((required/100) * agent.total_users);
+        agent.required_users = neededUsers;
+        agent.deficit_users = Math.max(0, neededUsers - agent.active);
+      } else {
+        agent.deficit_percent = 0;
+        agent.required_users = 0;
+        agent.deficit_users = 0;
+      }
+
+      if(months < 6) agent.status='جديد';
+      else if(agent.activation_rate >= required + 5) agent.status='متفوق';
+      else if(agent.activation_rate >= required) agent.status='مطابق';
+      else agent.status='عجز';
+
+      return agent;
+    }
+
+    function renderTable(){
+      let filtered = agents.slice();
+
+      const phase = phaseFilter.value;
+      if(phase) filtered = filtered.filter(a => (a.phase || '').toUpperCase() === phase.toUpperCase());
+
+      const q = (searchBox.value || '').trim().toLowerCase();
+      if(q){
+        filtered = filtered.filter(a => ((a.name||'') + ' ' + (a.itpc_site||'') + ' ' + arabicPhaseLabel(a.phase)).toLowerCase().includes(q));
+      }
+
+      // sorting
+      const sort = sortBy.value;
+      if(sort === 'total_users_desc') filtered.sort((a,b)=>b.total_users - a.total_users);
+      else if(sort === 'active_desc') filtered.sort((a,b)=> b.active - a.active );
+      else if(sort === 'deficit_desc') filtered.sort((a,b)=>b.deficit_users - a.deficit_users);
+      else filtered.sort((a,b)=> (a.name||'').localeCompare(b.name || '', 'ar') );
+
+      tbody.innerHTML = '';
+      const PHASE_ORDER = ['PHASE1','OLD','PHASE2','PHASE3'];
+      const phaseToItems = {};
+      filtered.forEach((a)=>{
+        const key = (a.phase||'').toUpperCase();
+        if(!phaseToItems[key]) phaseToItems[key] = [];
+        phaseToItems[key].push(a);
+      });
+      const allPhases = PHASE_ORDER.filter(p=>phaseToItems[p] && phaseToItems[p].length>0);
+      let runningIndex = 0;
+      allPhases.forEach(phaseKey=>{
+        const items = phaseToItems[phaseKey];
+        const hdr = document.createElement('tr');
+        hdr.innerHTML = `<td colspan="14" style="text-align:right; font-weight:700; background:var(--glass);">${arabicPhaseLabel(phaseKey)}</td>`;
+        tbody.appendChild(hdr);
+
+        items.forEach((a)=>{
+          const idx = runningIndex++;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:left">
+            <strong>${escapeHtml(a.name||'---')}</strong>
+              <small>${escapeHtml(a.note||'')}</small>
+          </td>
+          <td>${a.contract_date}</td>
+            <td>${escapeHtml(a.fdt||'')}</td>
+          <td>${num(a.total_users)}</td>
+          <td>${num(a.active)}</td>
+            
+          <td>${a.activation_rate}%</td>
+          <td>${a.required_rate === null ? '-' : a.required_rate + '%'}</td>
+            <td>${a.required_rate === null ? '-' : num(a.required_users)}</td>
+          <td>${a.required_rate === null ? '-' : a.deficit_percent + '%'}</td>
+          <td>${a.deficit_users ? num(a.deficit_users) : '-'}</td>
+          <td>${statusBadge(a.status)}</td>
+          <td>
+              <div class="flex" style="justify-content:center; gap:6px;">
+                <button class="btn secondary" data-action="edit" data-id="${a._id}">تحديث </button>
+                <button class="btn" data-action="edit-info" data-id="${a._id}">تعديل</button>
+              </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+        });
+
+        const totals = items.reduce((acc, a)=>{
+          acc.total += Number(a.total_users||0);
+          acc.active += Number(a.active||0);
+          acc.deficit_users += Number(a.deficit_users||0);
+          return acc;
+        }, {total:0, active:0, deficit_users:0});
+        const sub = document.createElement('tr');
+        sub.innerHTML = `
+          <td colspan="2" style="text-align:right; font-weight:600;">مجموع ${escapeHtml(arabicPhaseLabel(phaseKey))}</td>
+          <td>${num(totals.total)}</td>
+          <td>${num(totals.active)}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>${totals.deficit_users ? num(totals.deficit_users) : '-'}</td>
+          <td></td>
+          <td></td>
+        `;
+        tbody.appendChild(sub);
+      });
+
+      updateStats(filtered);
+      updateCharts(filtered);
+    }
+
+    function updateStats(list){
+      const totalAgents = list.length;
+      const totalUsers = list.reduce((s,a)=>s + Number(a.total_users||0), 0);
+      const totalActive = list.reduce((s,a)=>s + Number(a.active||0), 0);
+      const overallActivation = totalUsers ? Math.round((totalActive / totalUsers) * 1000)/10 : 0;
+      totalAgentsEl.textContent = num(totalAgents);
+      totalUsersEl.textContent = num(totalUsers);
+      totalActiveEl.textContent = num(totalActive);
+      overallActEl.textContent = overallActivation + '%';
+    }
+
+    function updateCharts(filtered){
+      const top = filtered.slice().sort((a,b)=>b.total_users - a.total_users).slice(0,10);
+      const labels = top.map(a=>a.name || a.itpc_site || '—');
+      const totalData = top.map(a=>a.total_users);
+      const activeData = top.map(a=>a.active);
+
+      const barCtx = document.getElementById('barChart').getContext('2d');
+      if(barChart) barChart.destroy();
+      barChart = new Chart(barCtx, {
+        type:'bar',
+        data:{
+          labels,
+          datasets:[
+            { label:'إجمالي المستخدمين', data: totalData },
+            { label:'المستخدمون النشطون', data: activeData }
+          ]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          plugins:{legend:{display:true, position:'top'}},
+          scales:{x:{ticks:{color:'#e6eef8'}}, y:{beginAtZero:true, ticks:{color:'#e6eef8'}}}
+        }
+      });
+
+      const sumActive = filtered.reduce((s,a)=>s + a.active,0);
+      const sumTotal = filtered.reduce((s,a)=>s + a.total_users,0);
+      const inactive = Math.max(0, sumTotal - sumActive);
+      const pieCtx = document.getElementById('pieChart').getContext('2d');
+      if(pieChart) pieChart.destroy();
+      pieChart = new Chart(pieCtx, {
+        type:'doughnut',
+        data:{
+          labels:['نشطون','غير نشطين'],
+          datasets:[{ data:[sumActive, inactive] }]
+        },
+        options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}}
+      });
+    }
+
+    function num(n){ return new Intl.NumberFormat('en-US').format(Number(n||0)); }
+    function signedNum(n){ if(n>0) return '+'+num(n); if(n<0) return num(n); return num(0); }
+    function statusBadge(status){
+      if(status==='متفوق') return `<span class="badge good">${status}</span>`;
+      if(status==='مطابق') return `<span class="badge ok">${status}</span>`;
+      if(status==='عجز') return `<span class="badge fail">${status}</span>`;
+      return `<span class="badge" style="background:rgba(245,158,11,0.08); color:var(--warning);">${status}</span>`;
+    }
+    function escapeHtml(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    tbody.addEventListener('click', (ev)=>{
+      const btn = ev.target.closest('button[data-action="edit"]');
+      if(!btn) return;
+      const id = btn.dataset.id;
+      if(!id) return;
+      const idx = agents.findIndex(a=>a._id === id);
+      openEditModal(idx);
+    });
+
+    tbody.addEventListener('click', (ev)=>{
+      const btn = ev.target.closest('button[data-action="edit-info"]');
+      if(!btn) return;
+      const id = btn.dataset.id;
+      const idx = agents.findIndex(a=>a._id === id);
+      if(idx < 0) return;
+      const a = agents[idx];
+      modalEditInfo.classList.add('open');
+      document.getElementById('info_name').value = a.name || '';
+      document.getElementById('info_note').value = a.note || '';
+      document.getElementById('info_date').value = a.contract_date || '';
+      document.getElementById('info_phase').value = a.phase || '';
+      document.getElementById('info_site').value = a.itpc_site || '';
+      document.getElementById('info_fdt').value = a.fdt || '';
+      document.getElementById('info_total').value = a.total_users || 0;
+      modalEditInfo.dataset.editIndex = String(idx);
+    });
+
+    closeInfoModal.addEventListener('click', ()=> modalEditInfo.classList.remove('open'));
+    saveInfo.addEventListener('click', ()=>{
+      const idx = Number(modalEditInfo.dataset.editIndex || -1);
+      if(idx < 0) return;
+      const a = agents[idx];
+      a.name = document.getElementById('info_name').value.trim() || a.name;
+      a.note = document.getElementById('info_note').value.trim();
+      a.contract_date = document.getElementById('info_date').value || a.contract_date;
+      a.phase = normalizePhase(document.getElementById('info_phase').value);
+      a.itpc_site = document.getElementById('info_site').value.trim();
+      a.fdt = document.getElementById('info_fdt').value.trim();
+      a.total_users = Number(document.getElementById('info_total').value || a.total_users);
+      computeAgent(a);
+      saveToStorage();
+      renderTable();
+      modalEditInfo.classList.remove('open');
+    });
+
+    function openEditModal(idx){
+      const agent = agents[idx];
+      if(!agent) return;
+      modalEdit.classList.add('open');
+      editName.value = agent.name || '';
+      editTotal.value = agent.total_users || 0;
+      editPrevActive.value = '';
+      editActive.value = agent.active || 0;
+      modalEdit.dataset.editIndex = idx;
+    }
+
+    closeModalBtn.addEventListener('click', ()=> modalEdit.classList.remove('open'));
+    saveActiveBtn.addEventListener('click', ()=>{
+      const idx = Number(modalEdit.dataset.editIndex || -1);
+      if(idx < 0) return;
+      const agent = agents[idx];
+      if(!agent) return;
+      const newActive = Number(editActive.value || 0);
+      if(!Array.isArray(agent.history)) agent.history = [];
+      agent.history.push({ date: toYMDLocal(new Date()), active: Number(agent.active||0) });
+      agent.active = newActive;
+      computeAgent(agent);
+      saveToStorage();
+      renderTable();
+      modalEdit.classList.remove('open');
+    });
+
+    btnAddAgent.addEventListener('click', ()=> modalAdd.classList.add('open'));
+    closeAddModal.addEventListener('click', ()=> modalAdd.classList.remove('open'));
+    saveNewAgent.addEventListener('click', ()=>{
+      const name = document.getElementById('new_name').value.trim();
+      const date = document.getElementById('new_date').value;
+      const phase = normalizePhase(document.getElementById('new_phase').value);
+      const site = document.getElementById('new_site').value.trim();
+      const fdt = document.getElementById('new_fdt').value.trim();
+      const note = document.getElementById('new_note').value.trim();
+      const total = Number(document.getElementById('new_total').value || 0);
+      const active = Number(document.getElementById('new_active').value || 0);
+      if(!name){
+        alert(' اسم الوكيل');
+        return;
+      }
+      const obj = { name, contract_date: date || toYMDLocal(new Date()), phase, itpc_site: site, fdt, note, total_users: total, active, prev_active: 0 };
+      computeAgent(obj);
+      agents.push(obj);
+      saveToStorage();
+      renderTable();
+      modalAdd.classList.remove('open');
+      document.getElementById('new_name').value='';
+      document.getElementById('new_date').value='';
+      document.getElementById('new_site').value='';
+      document.getElementById('new_fdt').value='';
+      document.getElementById('new_note').value='';
+      document.getElementById('new_total').value='';
+      document.getElementById('new_active').value='';
+    });
+
+    function saveToStorage(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(agents));
+    }
+    function loadFromStorage(){
+      try{
+        const s = localStorage.getItem(STORAGE_KEY);
+        if(!s) return null;
+        const arr = JSON.parse(s);
+        arr.forEach(a => computeAgent(a));
+        return arr;
+      }catch(e){ return null; }
+    }
+
+    function computeAll(){
+      agents.forEach(a=>computeAgent(a));
+      saveToStorage();
+      renderTable();
+    }
+
+    phaseFilter.addEventListener('change', renderTable);
+    searchBox.addEventListener('input', renderTable);
+    sortBy.addEventListener('change', renderTable);
+
+    function safeNum(x){ return Number(x||0) || 0; }
+
+    if(agents.length === 0){
+      agents = INITIAL_AGENTS.map(a=>({
+        name:a.name,
+        contract_date:a.contract_date,
+        phase: a.phase,
+        itpc_site:a.itpc_site,
+        total_users:a.total_users,
+        active:a.active,
+        prev_active:a.prev_active
+      }));
+      agents.forEach(a=>computeAgent(a));
+      saveToStorage();
+    }
+    migrateData();
+    computeAll();
+
+    function applyTheme(theme){
+      const root = document.documentElement;
+      const bodyEl = document.body;
+      if(theme === 'light'){
+        root.classList.add('light');
+        bodyEl.classList.add('light');
+        btnTheme.textContent = 'light';
+      } else {
+        root.classList.remove('light');
+        bodyEl.classList.remove('light');
+        btnTheme.textContent = 'dark';
+      }
+    }
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    applyTheme(savedTheme);
+    btnTheme.addEventListener('click', ()=>{
+      const current = localStorage.getItem('theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      applyTheme(next);
+    });
+
+
+    document.addEventListener('click', (e)=>{
+      if(e.target === modalEdit) modalEdit.classList.remove('open');
+      if(e.target === modalAdd) modalAdd.classList.remove('open');
+    });
+
+    document.getElementById('btnWeeklyReport').addEventListener('click', ()=>{
+      const header = ['date','name','phase','itpc_site','total_users','prev_active','active','growth','activation_rate','required_rate','deficit_users','status'];
+      const lines = [header.join(',')];
+      const today = toYMDLocal(new Date());
+      agents.forEach(a=>{
+        const rowObj = {
+          date: today,
+          name: a.name,
+          phase: arabicPhaseLabel(a.phase),
+          itpc_site: a.itpc_site,
+          total_users: a.total_users,
+          prev_active: a.prev_active,
+          active: a.active,
+          growth: a.growth,
+          activation_rate: a.activation_rate,
+          required_rate: a.required_rate,
+          deficit_users: a.deficit_users,
+          status: a.status
+        };
+        const row = header.map(h=>{
+          let v = rowObj[h];
+          if(v === null || v === undefined) v = '';
+          v = String(v).replace(/"/g,'""');
+          if(v.includes(',') || v.includes('"') || v.includes('\n')) v = `"${v}`+`"`;
+          return v;
+        }).join(',');
+        lines.push(row);
+      });
+      const csv = lines.join('\n');
+      const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'weekly_report.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+  </script>
+</body>
+</html>
