@@ -13,25 +13,39 @@
   <!-- Simple CSS (RTL, responsive) -->
   <style>
     :root{
-      --bg:#0a0e1a; --card:#1a1f2e; --accent:#6366f1; --muted:#94a3b8; --success:#10b981; --danger:#f43f5e; --warning:#f59e0b;
-      --panel-bg:#1e2430;
-      --glass: rgba(255,255,255,0.05);
-      --glass-hover: rgba(255,255,255,0.08);
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.3);
-      --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
-      --border-radius: 12px;
+      --bg: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+      --card: rgba(255,255,255,0.08);
+      --accent: #6366f1;
+      --accent-hover: #5b5bd6;
+      --muted: #94a3b8;
+      --success: #10b981;
+      --danger: #f43f5e;
+      --warning: #f59e0b;
+      --panel-bg: rgba(255,255,255,0.05);
+      --glass: rgba(255,255,255,0.08);
+      --glass-hover: rgba(255,255,255,0.12);
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.15);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.2);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.3);
+      --border-radius: 16px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       font-family: "Inter", "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
     }
     :root.light{
-      --bg:#f8fafc; --card:#ffffff; --accent:#6366f1; --muted:#64748b; --success:#10b981; --danger:#f43f5e; --warning:#f59e0b;
-      --panel-bg:#ffffff;
-      --glass: rgba(0,0,0,0.02);
-      --glass-hover: rgba(0,0,0,0.04);
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-      --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+      --bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+      --card: rgba(255,255,255,0.9);
+      --accent: #6366f1;
+      --accent-hover: #5b5bd6;
+      --muted: #64748b;
+      --success: #10b981;
+      --danger: #f43f5e;
+      --warning: #f59e0b;
+      --panel-bg: rgba(255,255,255,0.8);
+      --glass: rgba(0,0,0,0.03);
+      --glass-hover: rgba(0,0,0,0.06);
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.16);
     }
     
     /* تنسيقات الوضع النهاري للجدول */
@@ -42,43 +56,66 @@
     :root.light tr.subtotal-title td{background:rgba(0,0,0,0.08); border-bottom:1px solid rgba(0,0,0,0.12);}
     :root.light tr.subtotal-values td{background:rgba(0,0,0,0.04); border-bottom:1px solid rgba(0,0,0,0.08);}
     :root.light .phase-header td{background:rgba(0,0,0,0.08); border-bottom:1px solid rgba(0,0,0,0.12);}
+    
+    /* ألوان الكاردات في الوضع النهاري */
+    :root.light .stat:nth-child(1) {
+      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(99,102,241,0.03));
+      border-color: rgba(99,102,241,0.2);
+    }
+    :root.light .stat:nth-child(2) {
+      background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(16,185,129,0.03));
+      border-color: rgba(16,185,129,0.2);
+    }
+    :root.light .stat:nth-child(3) {
+      background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.03));
+      border-color: rgba(245,158,11,0.2);
+    }
+    :root.light .stat:nth-child(4) {
+      background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.03));
+      border-color: rgba(239,68,68,0.2);
+    }
     body{
-      background: linear-gradient(135deg, #0a0e1a 0%, #1a1f2e 50%, #0f1419 100%); 
-      color:#e2e8f0; 
-      margin:0; 
-      padding:18px; 
+      background: var(--bg); 
+      color: #e2e8f0; 
+      margin: 0; 
+      padding: 24px; 
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       font-smooth: always;
       text-rendering: optimizeLegibility;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
       min-height: 100vh;
       font-weight: 400;
-      line-height: 1.5;
+      line-height: 1.6;
     }
     body.light{
-      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%); 
+      background: var(--bg); 
       color:#1e293b;
     }
     .container{max-width:1200px; margin:0 auto;}
     header{
-      display:flex; 
-      gap:16px; 
-      align-items:center; 
-      justify-content:space-between; 
-      margin-bottom:24px;
-      padding: 16px 0;
+      display: flex; 
+      gap: 16px; 
+      align-items: center; 
+      justify-content: space-between; 
+      margin-bottom: 20px;
+      padding: 16px 20px;
+      background: var(--card);
+      border-radius: var(--border-radius);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow-md);
     }
     h1{
-      font-size:26px; 
-      margin:0; 
-      font-weight:600;
-      background: linear-gradient(135deg, var(--accent), #ffffff);
+      font-size: 24px; 
+      margin: 0; 
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), #a78bfa, #ffffff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      position: relative;
       letter-spacing: -0.02em;
+      position: relative;
     }
     h1::after{
       content: '';
@@ -91,10 +128,11 @@
       border-radius: 1px;
     }
     p.lead{
-      margin:0; 
+      margin:4px 0 0; 
       color:var(--muted); 
       font-size:14px;
       font-weight: 500;
+      letter-spacing: -0.01em;
     }
     .card{
       background: var(--card); 
@@ -140,18 +178,21 @@
     input[type="file"]{display:none;}
     .btn{
       background: var(--accent); 
-      color: #022; 
+      color: #fff; 
       border: none; 
-      padding: 10px 16px; 
+      padding: 8px 16px; 
       border-radius: 8px; 
       cursor: pointer; 
-      font-weight: 500;
-      font-size: 13px;
+      font-weight: 600;
+      font-size: 12px;
       letter-spacing: -0.01em;
       transition: var(--transition);
       position: relative;
       overflow: hidden;
       box-shadow: var(--shadow-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
     .btn::before{
       content: '';
@@ -167,7 +208,7 @@
       left: 100%;
     }
     .btn:hover{
-      transform: translateY(-1px);
+      transform: translateY(-2px);
       box-shadow: var(--shadow-md);
     }
     .btn.secondary{
@@ -184,19 +225,54 @@
       background: var(--warning); 
       color: #072;
     }
+    /* تم حذف CSS للزر الأحمر */
     .flex{display:flex; gap:8px; align-items:center;}
-    .stats{display:flex; gap:8px; flex-wrap:wrap;}
+    .stats{display:flex; gap:16px; flex-wrap:wrap;}
     .stat{
       flex: 1 1 160px; 
       background: var(--glass); 
       padding: 16px; 
       border-radius: var(--border-radius); 
       min-width: 140px;
-      border: 1px solid rgba(99,102,241,0.1);
-      backdrop-filter: blur(10px);
+      border: 1px solid rgba(99,102,241,0.15);
+      backdrop-filter: blur(20px);
       transition: var(--transition);
       position: relative;
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    /* ألوان الكاردات */
+    .stat:nth-child(1) {
+      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(99,102,241,0.05));
+      border-color: rgba(99,102,241,0.3);
+    }
+    .stat:nth-child(1)::before {
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    }
+    
+    .stat:nth-child(2) {
+      background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.05));
+      border-color: rgba(16,185,129,0.3);
+    }
+    .stat:nth-child(2)::before {
+      background: linear-gradient(90deg, #10b981, #34d399);
+    }
+    
+    .stat:nth-child(3) {
+      background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(245,158,11,0.05));
+      border-color: rgba(245,158,11,0.3);
+    }
+    .stat:nth-child(3)::before {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+    
+    .stat:nth-child(4) {
+      background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.05));
+      border-color: rgba(239,68,68,0.3);
+    }
+    .stat:nth-child(4)::before {
+      background: linear-gradient(90deg, #ef4444, #f87171);
     }
     .stat::before{
       content: '';
@@ -208,69 +284,126 @@
       background: linear-gradient(90deg, var(--accent), rgba(99,102,241,0.5), transparent);
     }
     .stat:hover{
-      transform: translateY(-2px);
-      background: var(--glass-hover);
-      box-shadow: var(--shadow-sm);
-      border-color: rgba(99,102,241,0.2);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(99,102,241,0.4);
+    }
+    
+    /* تأثيرات التمرير للكاردات الملونة */
+    .stat:nth-child(1):hover {
+      background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.08));
+      border-color: rgba(99,102,241,0.5);
+    }
+    
+    .stat:nth-child(2):hover {
+      background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.08));
+      border-color: rgba(16,185,129,0.5);
+    }
+    
+    .stat:nth-child(3):hover {
+      background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.08));
+      border-color: rgba(245,158,11,0.5);
+    }
+    
+    .stat:nth-child(4):hover {
+      background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.08));
+      border-color: rgba(239,68,68,0.5);
     }
     .stat h3{margin:0; font-size:20px; font-weight:700;}
-    .stat p{margin:8px 0 0; color:var(--muted); font-size:13px;}
+    .stat p{margin:4px 0 0; color:var(--muted); font-size:12px; font-weight:500;}
+    
+    /* ألوان النصوص في الكاردات */
+    .stat:nth-child(1) h3 {
+      color: #6366f1;
+    }
+    .stat:nth-child(1) p {
+      color: #8b5cf6;
+    }
+    
+    .stat:nth-child(2) h3 {
+      color: #10b981;
+    }
+    .stat:nth-child(2) p {
+      color: #34d399;
+    }
+    
+    .stat:nth-child(3) h3 {
+      color: #f59e0b;
+    }
+    .stat:nth-child(3) p {
+      color: #fbbf24;
+    }
+    
+    .stat:nth-child(4) h3 {
+      color: #ef4444;
+    }
+    .stat:nth-child(4) p {
+      color: #f87171;
+    }
     .row{display:flex; gap:12px;}
     .col{flex:1;}
     table{
       width:100%; 
       border-collapse:collapse; 
-      font-size:12px; 
+      font-size:11px; 
       table-layout:fixed;
       border-radius: var(--border-radius);
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-md);
       background: var(--card);
       font-weight: 400;
       letter-spacing: -0.01em;
-      border: 1px solid rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.15);
+      backdrop-filter: blur(20px);
     }
     th, td{
-      padding:8px 6px; 
+      padding:6px 4px; 
       border-bottom:1px solid rgba(255,255,255,0.08); 
       text-align:center; 
       white-space:nowrap; 
       overflow:hidden; 
       text-overflow:ellipsis;
       transition: var(--transition);
+      line-height: 1.3;
     }
     th{
-      font-size:11px; 
+      font-size:10px; 
       color:var(--muted); 
-      font-weight:500; 
+      font-weight:600; 
       border-bottom:1px solid rgba(99,102,241,0.2);
-      background: rgba(99,102,241,0.03);
-      backdrop-filter: blur(10px);
+      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(99,102,241,0.03));
+      backdrop-filter: blur(20px);
       letter-spacing: -0.01em;
       white-space: nowrap;
+      padding: 8px 4px;
+      text-transform: uppercase;
       overflow: visible;
       text-overflow: unset;
     }
-    td small{display:block; color:var(--muted); font-size:10px; font-weight: 400; letter-spacing: -0.01em;}
+    td small{display:block; color:var(--muted); font-size:9px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.2;}
     
     /* تنسيق الصفوف */
     tbody tr:nth-child(even){background:rgba(99,102,241,0.02);}
     tbody tr:hover{
-      background:rgba(99,102,241,0.05);
-      transform: scale(1.001);
+      background:rgba(99,102,241,0.08);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     
     /* تنسيق صفوف المجموع */
     tr.subtotal-title td{background:rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.12);}
     tr.subtotal-values td{background:rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.08);}
     .badge{
-      padding:4px 8px; 
-      border-radius:6px; 
+      padding:6px 12px; 
+      border-radius:8px; 
       font-weight:600; 
-      font-size:9px;
+      font-size:10px;
       transition: var(--transition);
       position: relative;
       overflow: hidden;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .badge::before{
       content: '';
@@ -304,13 +437,15 @@
       box-shadow: 0 2px 8px rgba(148,163,184,0.05);
     }
     .search{
-      padding:10px 12px; 
-      border-radius:8px; 
-      border:1px solid rgba(255,255,255,0.1); 
-      background:rgba(255,255,255,0.02); 
+      padding:12px 16px; 
+      border-radius:12px; 
+      border:1px solid rgba(255,255,255,0.15); 
+      background:var(--glass); 
       color:inherit;
       transition: var(--transition);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
+      min-width: 120px;
+      font-size: 14px;
     }
     .search:focus{
       outline: none;
@@ -318,26 +453,26 @@
       box-shadow: 0 0 0 2px rgba(14,165,169,0.1);
       background: rgba(255,255,255,0.05);
     }
-    .filters{display:flex; gap:8px; flex-wrap:wrap;}
+    .filters{display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
     .modal{
       position:fixed; 
       inset:0; 
       display:none; 
       align-items:center; 
       justify-content:center; 
-      background:rgba(2,6,23,0.8); 
+      background:rgba(2,6,23,0.9); 
       z-index:40;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
     }
     .modal.open{display:flex;}
     .modal .box{
-      width:560px; 
+      width:600px; 
       max-width:95%; 
-      background:var(--panel-bg); 
-      padding:24px; 
+      background:var(--card); 
+      padding:32px; 
       border-radius:var(--border-radius);
       box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
       backdrop-filter: blur(20px);
       animation: modalSlideIn 0.3s ease-out;
     }
@@ -351,16 +486,17 @@
         transform: translateY(0) scale(1);
       }
     }
-    label{display:block; font-size:13px; margin-bottom:6px; color:var(--muted);}
+    label{display:block; font-size:14px; margin-bottom:8px; color:var(--muted); font-weight:600;}
     input[type="text"], input[type="number"], input[type="date"], select{
       width:100%; 
-      padding:10px 12px; 
-      border-radius:8px; 
-      border:1px solid rgba(255,255,255,0.1); 
-      background:rgba(255,255,255,0.02); 
+      padding:12px 16px; 
+      border-radius:12px; 
+      border:1px solid rgba(255,255,255,0.15); 
+      background:var(--glass); 
       color:inherit;
       transition: var(--transition);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
+      font-size:14px;
     }
     input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus{
       outline: none;
@@ -371,6 +507,30 @@
     .actions{display:flex; gap:12px; justify-content:flex-end; margin-top:16px;}
     .small{font-size:12px; color:var(--muted);}
     .chart-row{display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;}
+    
+    /* مؤشر حالة الاتصال */
+    #connectionStatus{
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+    #connectionStatus.connected{
+      background: rgba(16,185,129,0.2);
+      border-color: rgba(16,185,129,0.4);
+      color: var(--success);
+    }
+    #connectionStatus.error{
+      background: rgba(244,63,94,0.2);
+      border-color: rgba(244,63,94,0.4);
+      color: var(--danger);
+    }
+    #connectionStatus.connecting{
+      background: rgba(245,158,11,0.2);
+      border-color: rgba(245,158,11,0.4);
+      color: var(--warning);
+    }
     .chart-card{
       flex:1 1 360px; 
       min-height:260px; 
@@ -387,6 +547,7 @@
       box-shadow: var(--shadow-md);
     }
     footer{color:var(--muted); margin-top:14px; font-size:13px;}
+    .icon{font-size:16px; margin-right:4px;}
     /* تنسيقات خاصة للأعمدة */
     td:nth-child(1){text-align:right; padding-right:8px; min-width:180px; max-width:220px;}
     td:nth-child(2), td:nth-child(3){min-width:100px; max-width:120px;}
@@ -411,7 +572,7 @@
     td:nth-child(4){white-space:normal; word-wrap:break-word; text-align:center;}
     
     /* تنسيق للأزرار */
-    .btn{font-size:10px; padding:4px 6px;}
+    .btn{font-size:12px; padding:8px 12px;}
     
     @media (max-width:1200px){
       table{font-size:11px;}
@@ -429,7 +590,7 @@
       td:nth-child(12){min-width:110px; max-width:130px;}
       td:nth-child(13){min-width:50px; max-width:70px;}
       td:nth-child(14){min-width:90px; max-width:110px;}
-      .btn{font-size:11px; padding:6px 8px;}
+      .btn{font-size:11px; padding:6px 10px;}
       .badge{font-size:9px; padding:2px 4px;}
     }
     
@@ -451,7 +612,7 @@
       td:nth-child(12){min-width:100px; max-width:120px;}
       td:nth-child(13){min-width:45px; max-width:65px;}
       td:nth-child(14){min-width:80px; max-width:100px;}
-      .btn{font-size:10px; padding:4px 6px;}
+      .btn{font-size:10px; padding:6px 8px;}
       .badge{font-size:8px; padding:2px 4px;}
     }
   </style>
@@ -463,13 +624,26 @@
   <div class="container">
     <header>
       <div>
-        <h1> متابعة الوكلاء </h1>
-        <p class="lead">Ameer Helwas </p>
+        <h1>متابعة الوكلاء</h1>
+        <p class="lead">قسم العمليات التجارية لشركة عراق سيل</p>
+        <div id="connectionStatus" style="font-size: 12px; margin-top: 4px; padding: 2px 6px; border-radius: 4px; display: inline-block;">
+          <span id="statusIcon">🔄</span>
+          <span id="statusText">جاري الاتصال...</span>
+        </div>
       </div>
-      <div class="controls">
-        <button class="btn secondary" id="btnAddAgent">إضافة وكيل</button>
-        <button class="btn warn" id="btnWeeklyReport">تقرير </button>
-        <button class="btn secondary" id="btnTheme">الوضع: ليلي</button>
+      <div class="controls" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+        <button class="btn secondary" id="btnAddAgent">
+          <span class="icon">➕</span>
+          إضافة وكيل
+        </button>
+        <button class="btn warn" id="btnWeeklyReport">
+          <span class="icon">📊</span>
+          تقرير
+        </button>
+        <button class="btn secondary" id="btnTheme">
+          <span class="icon">🌙</span>
+          الوضع: ليلي
+        </button>
       </div>
     </header>
 
@@ -478,17 +652,17 @@
         <div class="col">
           <div class="filters">
             <select id="phaseFilter" class="search">
-              <option value="">كل المراحل</option>
-              <option value="OLD">المشروع القديم</option>
-              <option value="PHASE2">المرحلة الثانية </option>
-              <option value="PHASE3">المرحلة الثالثة</option>
+              <option value="">🔍 كل المراحل</option>
+              <option value="OLD">📜 المشروع القديم</option>
+              <option value="PHASE2">🚀 المرحلة الثانية</option>
+              <option value="PHASE3">⭐ المرحلة الثالثة</option>
             </select>
-            <input id="searchBox" class="search" placeholder="بحث" />
+            <input id="searchBox" class="search" placeholder="🔍 بحث عن وكيل..." />
             <select id="sortBy" class="search">
-              <option value="name">ترتيب حسب الاسم</option>
-              <option value="total_users_desc">أعلى إجمالي</option>
-              <option value="active_desc">أعلى نشط</option>
-              <option value="deficit_desc">أعلى عجز (عدد)</option>
+              <option value="name">📝 ترتيب حسب الاسم</option>
+              <option value="total_users_desc">📊 أعلى إجمالي</option>
+              <option value="active_desc">🔥 أعلى نشط</option>
+              <option value="deficit_desc">⚠️ أعلى عجز</option>
             </select>
           </div>
         </div>
@@ -497,19 +671,19 @@
           <div class="stats">
             <div class="stat card">
               <h3 id="totalAgents">0</h3>
-              <p>الوكلاء</p>
+              <p>👥 الوكلاء</p>
             </div>
             <div class="stat card">
               <h3 id="totalUsers">0</h3>
-              <p>إجمالي المستخدمين</p>
+              <p>📊 إجمالي المستخدمين</p>
             </div>
             <div class="stat card">
               <h3 id="totalActive">0</h3>
-              <p>المستخدمون النشطون</p>
+              <p>🔥 المستخدمون النشطون</p>
             </div>
             <div class="stat card">
               <h3 id="overallActivation">0%</h3>
-              <p>معدل النمو العام</p>
+              <p>📈 معدل النمو العام</p>
             </div>
           </div>
         </div>
@@ -528,8 +702,6 @@
               <th>اسم اللوحة</th>
               <th>إجمالي المستخدمين</th>
               <th>النشط الحالي</th>
-              
-              
               <th>معدل التفعيل</th>
               <th>النسبة المطلوبة</th>
               <th>المطلوب للوصول</th>
@@ -578,8 +750,14 @@
         <input type="number" id="editActive" />
       </div>
       <div class="actions">
-        <button class="btn secondary" id="closeModal">إلغاء</button>
-        <button class="btn" id="saveActive">حفظ</button>
+        <button class="btn secondary" id="closeModal">
+          <span class="icon">❌</span>
+          إلغاء
+        </button>
+        <button class="btn" id="saveActive">
+          <span class="icon">💾</span>
+          حفظ
+        </button>
       </div>
     </div>
   </div>
@@ -633,9 +811,18 @@
         </div>
       </div>
       <div class="actions">
-        <button class="btn secondary" id="closeInfoModal">إلغاء</button>
-        <button class="btn warn" id="deleteFromInfoModal">حذف</button>
-        <button class="btn" id="saveInfo">حفظ</button>
+        <button class="btn secondary" id="closeInfoModal">
+          <span class="icon">❌</span>
+          إلغاء
+        </button>
+        <button class="btn warn" id="deleteFromInfoModal">
+          <span class="icon">🗑️</span>
+          حذف
+        </button>
+        <button class="btn" id="saveInfo">
+          <span class="icon">💾</span>
+          حفظ
+        </button>
       </div>
     </div>
   </div>
@@ -688,8 +875,14 @@
         </div>
       </div>
       <div class="actions">
-        <button class="btn secondary" id="closeAddModal">إلغاء</button>
-        <button class="btn" id="saveNewAgent">إضافة</button>
+        <button class="btn secondary" id="closeAddModal">
+          <span class="icon">❌</span>
+          إلغاء
+        </button>
+        <button class="btn" id="saveNewAgent">
+          <span class="icon">➕</span>
+          إضافة
+        </button>
       </div>
     </div>
   </div>
@@ -698,9 +891,220 @@
     // Supabase init
     const SUPABASE_URL = 'https://vpvvjascwgivdjyyhzwp.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // نمط Singleton لـ Supabase Client
+    const SupabaseManager = {
+      _instance: null,
+      _isInitialized: false,
+      connectionStatus: 'disconnected',
+      _creationAttempts: 0,
+      _maxAttempts: 3,
+      
+      getInstance() {
+        // إذا كان موجود بالفعل، استخدمه
+        if (this._instance) {
+          return this._instance;
+        }
+        
+        // إذا تم تجاوز عدد المحاولات، لا تحاول مرة أخرى
+        if (this._creationAttempts >= this._maxAttempts) {
+          console.warn('Max creation attempts reached, not creating new instance');
+          return null;
+        }
+        
+        if (!this._isInitialized) {
+          this._isInitialized = true;
+          this._creationAttempts++;
+          
+          try {
+            console.log(`Creating Supabase client (Singleton) - Attempt ${this._creationAttempts}...`);
+            this._instance = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+              auth: {
+                persistSession: false,
+                autoRefreshToken: false,
+                detectSessionInUrl: false
+              }
+            });
+            console.log('Supabase client created successfully');
+          } catch (e) {
+            console.error('Failed to create Supabase client:', e);
+            this._isInitialized = false;
+            return null;
+          }
+        }
+        return this._instance;
+      },
+      
+      reset() {
+        console.log('Resetting Supabase client...');
+        // لا نحذف الـ instance، فقط نعيد تعيين الحالة
+        this.connectionStatus = 'disconnected';
+        // إعادة تعيين عدد المحاولات للسماح بمحاولة جديدة
+        this._creationAttempts = 0;
+        this._isInitialized = false;
+      },
+      
+      isConnected() {
+        return this._instance !== null && this.connectionStatus === 'connected';
+      },
+      
+      hasInstance() {
+        return this._instance !== null;
+      }
+    };
+    
+    // دالة للحصول على Supabase Client
+    function getSupabaseClient() {
+      return SupabaseManager.getInstance();
+    }
+    
+    // دالة لإعادة تهيئة Supabase Client
+    function reinitializeSupabase() {
+      try {
+        console.log('Reinitializing Supabase client...');
+        
+        // إذا كان هناك instance موجود، استخدمه بدلاً من إنشاء واحد جديد
+        if (SupabaseManager.hasInstance()) {
+          console.log('Using existing Supabase instance');
+          SupabaseManager.connectionStatus = 'disconnected';
+          return true;
+        }
+        
+        // فقط إذا لم يكن هناك instance، أنشئ واحد جديد
+        SupabaseManager.reset();
+        const client = getSupabaseClient();
+        if (client) {
+          console.log('Supabase client reinitialized successfully');
+          return true;
+        } else {
+          console.error('Failed to reinitialize Supabase client');
+          return false;
+        }
+      } catch (e) {
+        console.error('Failed to reinitialize Supabase client:', e);
+        return false;
+      }
+    }
    
     const STORAGE_KEY = 'agents_dashboard_data_v1';
+
+    // دالة لتحديث مؤشر حالة الاتصال
+    function updateConnectionStatus(status) {
+      const statusEl = document.getElementById('connectionStatus');
+      const iconEl = document.getElementById('statusIcon');
+      const textEl = document.getElementById('statusText');
+      
+      if (!statusEl || !iconEl || !textEl) return;
+      
+    
+      statusEl.className = '';
+      
+      switch(status) {
+        case 'connected':
+          statusEl.classList.add('connected');
+          iconEl.textContent = '';
+          textEl.textContent = 'Ameer Helwas';
+          break;
+        case 'error':
+          statusEl.classList.add('error');
+          iconEl.textContent = '❌';
+          textEl.textContent = 'فشل الاتصال';
+          break;
+        case 'connecting':
+          statusEl.classList.add('connecting');
+          iconEl.textContent = '🔄';
+          textEl.textContent = 'جاري الاتصال...';
+          break;
+        default:
+          statusEl.classList.add('connecting');
+          iconEl.textContent = '🔄';
+          textEl.textContent = 'جاري الاتصال...';
+      }
+    }
+
+
+    // دالة للتحقق من صحة البيانات قبل الحفظ
+    function validateAgentData(agent) {
+      const errors = [];
+      
+      if (!agent.name || agent.name.trim() === '') {
+        errors.push('اسم الوكيل مطلوب');
+      }
+      
+      if (!agent.contract_date) {
+        errors.push('تاريخ العقد مطلوب');
+      }
+      
+      if (!agent.phase || !['PHASE1', 'PHASE2', 'PHASE3', 'OLD'].includes(agent.phase)) {
+        errors.push('المرحلة يجب أن تكون PHASE1, PHASE2, PHASE3, أو OLD');
+      }
+      
+      if (typeof agent.total_users !== 'number' || agent.total_users < 0) {
+        errors.push('إجمالي المستخدمين يجب أن يكون رقم موجب');
+      }
+      
+      if (typeof agent.active !== 'number' || agent.active < 0) {
+        errors.push('المستخدمون النشطون يجب أن يكون رقم موجب');
+      }
+      
+      if (typeof agent.prev_active !== 'number' || agent.prev_active < 0) {
+        errors.push('المستخدمون النشطون السابقون يجب أن يكون رقم موجب');
+      }
+      
+      return {
+        isValid: errors.length === 0,
+        errors: errors
+      };
+    }
+
+    // Test Supabase connection
+    async function testSupabaseConnection() {
+      try {
+        console.log('Testing Supabase connection...');
+        updateConnectionStatus('connecting');
+        console.log('Supabase URL:', SUPABASE_URL);
+        console.log('Supabase Key (first 20 chars):', SUPABASE_ANON_KEY.substring(0, 20) + '...');
+        
+        // الحصول على Supabase client من الـ Singleton
+        const supabase = getSupabaseClient();
+        if (!supabase) {
+          console.error('Failed to get Supabase client');
+          updateConnectionStatus('error');
+          return false;
+        }
+        
+        // اختبار الاتصال الأساسي
+        const { data, error } = await supabase
+          .from('agents')
+          .select('id, name, active, total_users')
+          .limit(1);
+          
+        if (error) {
+          console.error('Supabase connection test failed:', error);
+          console.error('Error code:', error.code);
+          console.error('Error message:', error.message);
+          console.error('Error details:', error.details);
+          console.error('Error hint:', error.hint);
+          SupabaseManager.connectionStatus = 'error';
+          updateConnectionStatus('error');
+          return false;
+        } else {
+          console.log('Supabase connection test successful');
+          console.log('Data received:', data);
+          SupabaseManager.connectionStatus = 'connected';
+          updateConnectionStatus('connected');
+          return true;
+        }
+      } catch (e) {
+        console.error('Supabase connection test error:', e);
+        console.error('Error type:', e.name);
+        console.error('Error message:', e.message);
+        console.error('Error stack:', e.stack);
+        SupabaseManager.connectionStatus = 'error';
+        updateConnectionStatus('error');
+        return false;
+      }
+    }
 
     const tbody = document.querySelector('#agentsTable tbody');
     const totalAgentsEl = document.getElementById('totalAgents');
@@ -930,8 +1334,14 @@
           <td>${statusBadge(a.status)}</td>
           <td>
               <div class="flex" style="justify-content:center; gap:4px; flex-wrap:wrap;">
-                <button class="btn secondary" data-action="edit" data-id="${a._id}" style="font-size:9px; padding:3px 5px;">تحديث</button>
-                <button class="btn" data-action="edit-info" data-id="${a._id}" style="font-size:9px; padding:3px 5px;">تعديل</button>
+                <button class="btn secondary" data-action="edit" data-id="${a._id}" style="font-size:8px; padding:2px 4px;">
+                  <span class="icon">🔄</span>
+                  تحديث
+                </button>
+                <button class="btn" data-action="edit-info" data-id="${a._id}" style="font-size:8px; padding:2px 4px;">
+                  <span class="icon">✏️</span>
+                  تعديل
+                </button>
               </div>
           </td>
         `;
@@ -947,15 +1357,15 @@
         const sub = document.createElement('tr');
         sub.className = 'subtotal-title';
         sub.innerHTML = `
-          <td colspan="4" style="text-align:right; font-weight:600; font-size:10px;">مجموع ${escapeHtml(arabicPhaseLabel(phaseKey))}</td>
+          <td colspan="4" style="text-align:right; font-weight:600; font-size:9px; padding:4px;">مجموع ${escapeHtml(arabicPhaseLabel(phaseKey))}</td>
           <td></td>
-          <td style="font-weight:600; font-size:10px;">${num(totals.total)}</td>
-          <td style="font-weight:600; font-size:10px;">${num(totals.active)}</td>
-          <td></td>
-          <td></td>
+          <td style="font-weight:600; font-size:9px; padding:4px;">${num(totals.total)}</td>
+          <td style="font-weight:600; font-size:9px; padding:4px;">${num(totals.active)}</td>
           <td></td>
           <td></td>
-          <td style="font-weight:600; font-size:10px;">${totals.deficit_users ? num(totals.deficit_users) : '-'}</td>
+          <td></td>
+          <td></td>
+          <td style="font-weight:600; font-size:9px; padding:4px;">${totals.deficit_users ? num(totals.deficit_users) : '-'}</td>
           <td></td>
           <td></td>
         `;
@@ -1076,6 +1486,11 @@
         const dbId = dbIdByLocalId.get(a._id);
         if(dbId){
           console.log('Updating agent info in Supabase:', a.name);
+          const supabase = getSupabaseClient();
+          if (!supabase) {
+            console.error('Supabase client not available');
+            return;
+          }
           const { error } = await supabase
             .from('agents')
             .update({
@@ -1083,10 +1498,10 @@
               note: a.note,
               contract_date: a.contract_date,
               phase: a.phase,
-              site: a.itpc_site,
               fdt: a.fdt,
-              board_name: a.board_name || null,
-              total_users: a.total_users
+              total_users: a.total_users,
+              active: a.active,
+              prev_active: a.prev_active
             })
             .eq('id', dbId);
           if(error) {
@@ -1120,8 +1535,11 @@
       try{
         const dbId = dbIdByLocalId.get(a._id);
         if(dbId){
+          const supabase = getSupabaseClient();
+          if (supabase) {
           const { error } = await supabase.from('agents').delete().eq('id', dbId);
           if(error) console.error('Delete error:', error);
+          }
           localIdByDbId.delete(dbId);
           dbIdByLocalId.delete(a._id);
         }
@@ -1161,14 +1579,22 @@
         const dbId = dbIdByLocalId.get(agent._id);
         if(dbId){
           console.log('Updating active users for agent:', agent.name, 'to:', newActive);
+          const supabase = getSupabaseClient();
+          if (supabase) {
           const { error } = await supabase
             .from('agents')
-            .update({ active_users: agent.active })
+              .update({ 
+                active: agent.active,
+                prev_active: agent.prev_active
+              })
             .eq('id', dbId);
           if(error) {
             console.error('Supabase update active error:', error);
           } else {
             console.log('Active users updated successfully in Supabase');
+            }
+          } else {
+            console.log('Supabase client not available, saving locally only');
           }
         } else {
           console.log('No database ID found for agent, saving locally only');
@@ -1188,6 +1614,7 @@
     });
 
     btnAddAgent.addEventListener('click', ()=> modalAdd.classList.add('open'));
+    
     closeAddModal.addEventListener('click', ()=> modalAdd.classList.remove('open'));
     saveNewAgent.addEventListener('click', async ()=>{
       const name = document.getElementById('new_name').value.trim();
@@ -1220,27 +1647,62 @@
       
       computeAgent(obj);
       
+      // التحقق من صحة البيانات
+      const validation = validateAgentData(obj);
+      if (!validation.isValid) {
+        alert('خطأ في البيانات:\n' + validation.errors.join('\n'));
+        return;
+      }
+      
       try{
         console.log('Attempting to insert new agent:', obj);
+        console.log('Supabase URL:', SUPABASE_URL);
+        
+        const supabase = getSupabaseClient();
+        if (!supabase) {
+          console.error('Supabase client not available, saving locally only');
+          obj._id = genId();
+          agents.push(obj);
+          saveToStorage();
+          renderTable();
+          modalAdd.classList.remove('open');
+          alert(`تم إضافة الوكيل "${name}" محلياً فقط (لا يوجد اتصال بقاعدة البيانات)`);
+          return;
+        }
+        
+        const insertData = {
+          name: obj.name,
+          note: obj.note,
+          contract_date: obj.contract_date,
+          phase: obj.phase,
+          fdt: obj.fdt,
+          board_name: obj.board_name,
+          total_users: obj.total_users,
+          active: obj.active,
+          prev_active: obj.prev_active
+        };
+        
+        console.log('Insert data:', insertData);
+        
         const { data, error } = await supabase
           .from('agents')
-          .insert({
-            name: obj.name,
-            note: obj.note,
-            contract_date: obj.contract_date,
-            phase: obj.phase,
-            site: obj.itpc_site,
-            fdt: obj.fdt,
-            board_name: obj.board_name || null,
-            total_users: obj.total_users,
-            active_users: obj.active,
-            prev_active: obj.prev_active
-          })
+          .insert(insertData)
           .select('*')
           .single();
           
         if(error){
           console.error('Supabase insert error:', error);
+          console.error('Error details:', error.message, error.details, error.hint);
+          console.error('Error code:', error.code);
+          
+          // عرض رسالة خطأ مفصلة للمستخدم
+          let errorMessage = 'فشل في حفظ البيانات في قاعدة البيانات:\n';
+          if (error.message) errorMessage += error.message + '\n';
+          if (error.details) errorMessage += 'التفاصيل: ' + error.details + '\n';
+          if (error.hint) errorMessage += 'نصيحة: ' + error.hint;
+          
+          alert(errorMessage);
+          
           // في حالة فشل الإدراج في Supabase، احفظ محلياً فقط
           obj._id = genId();
           agents.push(obj);
@@ -1255,6 +1717,7 @@
         }
       }catch(e){
         console.error('Error inserting agent:', e);
+        console.error('Error stack:', e.stack);
         // في حالة الخطأ، احفظ محلياً فقط
         obj._id = genId();
         agents.push(obj);
@@ -1281,9 +1744,16 @@
     });
 
     function saveToStorage(){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(agents));
-      localStorage.setItem(STORAGE_KEY + '_timestamp', Date.now().toString());
-      console.log('Data saved to local storage at:', new Date().toLocaleString());
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(agents));
+        localStorage.setItem(STORAGE_KEY + '_timestamp', Date.now().toString());
+        console.log('Data saved to local storage successfully at:', new Date().toLocaleString());
+        console.log('Agents count:', agents.length);
+        return true;
+      } catch (error) {
+        console.error('Error saving to local storage:', error);
+        return false;
+      }
     }
     function loadFromStorage(){
       try{
@@ -1302,6 +1772,15 @@
 
     async function loadFromSupabase(){
       try {
+        console.log('Attempting to load data from Supabase...');
+        console.log('Supabase URL:', SUPABASE_URL);
+        
+        const supabase = getSupabaseClient();
+        if (!supabase) {
+          console.error('Supabase client not available');
+          return;
+        }
+        
         const { data, error } = await supabase
           .from('agents')
           .select('*')
@@ -1309,9 +1788,11 @@
 
         if(error){
           console.error('Supabase load error:', error);
-          // إذا كان هناك خطأ في الاتصال، استخدم البيانات المحلية
+          console.error('Error details:', error.message, error.details, error.hint);
+          
           let source = loadFromStorage();
           if(!Array.isArray(source) || source.length === 0){
+            console.log('No local data found, using initial data');
             source = INITIAL_AGENTS.map(a=>({
               name:a.name,
               contract_date:a.contract_date,
@@ -1323,6 +1804,8 @@
               active:a.active,
               prev_active:a.prev_active
             }));
+          } else {
+            console.log('Using local storage data:', source.length, 'agents');
           }
           agents = source.map(s=> computeAgent({ ...s, _id: genId() }));
           saveToStorage();
@@ -1352,11 +1835,9 @@
                 note: null,
                 contract_date: s.contract_date,
                 phase: normalizePhase(s.phase),
-                site: s.itpc_site,
                 fdt: s.fdt,
-                board_name: s.board_name || null,
                 total_users: Number(s.total_users)||0,
-                active_users: Number(s.active)||0,
+                active: Number(s.active)||0,
                 prev_active: Number(s.prev_active)||0
               }));
               const { error: seedErr } = await supabase.from('agents').insert(payload);
@@ -1369,6 +1850,8 @@
           return;
         }
 
+        console.log('Data loaded from Supabase:', data.length, 'agents');
+        
         // تحميل البيانات من Supabase بنجاح
         agents = data.map(row=>{
           const obj = {
@@ -1378,11 +1861,11 @@
             note: row.note,
             contract_date: row.contract_date,
             phase: row.phase,
-            itpc_site: row.site,
+            itpc_site: '', // سيتم حفظه محلياً فقط
             fdt: row.fdt,
-            board_name: row.board_name || '',
+            board_name: row.board_name || '', // تحميل من قاعدة البيانات
             total_users: row.total_users,
-            active: row.active_users,
+            active: row.active,
             prev_active: row.prev_active || 0,
             history: []
           };
@@ -1425,40 +1908,205 @@
     // تحميل البيانات مع إعطاء الأولوية للبيانات المحلية المحدثة
     async function initializeData() {
       try {
-        // أولاً، تحقق من وجود بيانات محلية محدثة
-        const localData = loadFromStorage();
-        if (localData && localData.length > 0) {
-          console.log('Found local data, loading from Supabase to sync...');
-          await loadFromSupabase();
-          
-          // إذا كانت البيانات المحلية أكثر حداثة، استخدمها
-          const localTimestamp = localStorage.getItem(STORAGE_KEY + '_timestamp');
-          const now = Date.now();
-          if (localTimestamp && (now - parseInt(localTimestamp)) < 300000) { // أقل من 5 دقائق
-            console.log('Using recent local data');
+        console.log('Initializing application...');
+        updateConnectionStatus('connecting');
+        
+        // اختبار الاتصال بـ Supabase أولاً
+        let connectionOk = await testSupabaseConnection();
+        
+        // إذا فشل الاتصال، جرب إعادة تهيئة Supabase (فقط إذا لم يكن هناك instance)
+        if (!connectionOk && !SupabaseManager.hasInstance()) {
+          console.warn('Supabase connection failed, trying to reinitialize...');
+          updateConnectionStatus('connecting');
+          reinitializeSupabase();
+          connectionOk = await testSupabaseConnection();
+        } else if (!connectionOk) {
+          console.warn('Supabase connection failed, but instance exists - using local storage');
+        }
+        
+        if (!connectionOk) {
+          console.warn('Supabase connection failed after retry, using local storage only');
+          updateConnectionStatus('error');
+          const localData = loadFromStorage();
+          if (localData && localData.length > 0) {
             agents = localData;
+            computeAll();
+            return;
+          } else {
+            // استخدام البيانات الأولية
+            agents = INITIAL_AGENTS.map(a=>({
+              name:a.name,
+              contract_date:a.contract_date,
+              phase:a.phase,
+              itpc_site:a.itpc_site,
+              fdt:a.fdt || '',
+              board_name:'',
+              total_users:a.total_users,
+              active:a.active,
+              prev_active:a.prev_active
+            })).map(s=> computeAgent({ ...s, _id: genId() }));
+            saveToStorage();
             computeAll();
             return;
           }
         }
         
-        // إذا لم تكن هناك بيانات محلية، حمّل من Supabase
+        // تحميل البيانات من Supabase
         await loadFromSupabase();
       } catch (e) {
         console.error('Error initializing data:', e);
-        // في حالة الخطأ، استخدم البيانات المحلية أو الأولية
+        // في حالة الخطأ، استخدم البيانات المحلية فقط
         const localData = loadFromStorage();
         if (localData && localData.length > 0) {
           agents = localData;
           computeAll();
         } else {
-          await loadFromSupabase();
+          // ابدأ بجدول فارغ
+          agents = [];
+          computeAll();
         }
       }
     }
     
+    // إنشاء Supabase Client مرة واحدة فقط عند بدء التطبيق
+    function initializeSupabase() {
+      console.log('Initializing Supabase client...');
+      const client = getSupabaseClient();
+      if (client) {
+        console.log('Supabase client initialized successfully');
+        return true;
+      } else {
+        console.error('Failed to initialize Supabase client');
+        return false;
+      }
+    }
+
+    // تنظيف الذاكرة عند إعادة تحميل الصفحة
+    window.addEventListener('beforeunload', function() {
+      console.log('Cleaning up Supabase instance...');
+      SupabaseManager.reset();
+    });
+
+    // دالة لإدراج البيانات المطلوبة (مرة واحدة فقط)
+    async function insertInitialData() {
+      try {
+        const supabase = getSupabaseClient();
+        if (!supabase) {
+          console.error('Supabase client not available');
+          return;
+        }
+
+        // فحص إذا كانت البيانات موجودة بالفعل
+        const { data: existingData, error: checkError } = await supabase
+          .from('agents')
+          .select('id')
+          .limit(1);
+
+        if (checkError) {
+          console.error('Error checking existing data:', checkError);
+          return;
+        }
+
+        // إذا كانت هناك بيانات موجودة، لا نضيف البيانات مرة أخرى
+        if (existingData && existingData.length > 0) {
+          console.log('Data already exists in database, skipping initial data insert');
+          return;
+        }
+
+        const initialData = [
+          // المشروع القديم
+          { name: 'حسنين صاحب', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '1-2-4-6-7', board_name: 'gsm', total_users: 2384, active: 1183, prev_active: 0 },
+          { name: 'حسين عادل', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '8', board_name: 'digital', total_users: 512, active: 231, prev_active: 0 },
+          { name: 'سامر العامري', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '10_11', board_name: 'mega', total_users: 1024, active: 413, prev_active: 0 },
+          { name: 'ضياء عبد الحسين', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '3_5_9', board_name: 'alamri', total_users: 1536, active: 532, prev_active: 0 },
+          
+          // المرحلة الثانية
+          { name: 'حسن حميد', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-26', phase: 'PHASE2', fdt: '13,14', board_name: 'IQCELL_25', total_users: 1280, active: 343, prev_active: 0 },
+          { name: 'حسين علي عبد الامير', note: '', contract_date: '2024-12-17', phase: 'PHASE2', fdt: '21', board_name: 'IQCELL_23', total_users: 640, active: 190, prev_active: 0 },
+          { name: 'حسين علي عبد الامير', note: '', contract_date: '2025-09-19', phase: 'PHASE2', fdt: '10', board_name: 'IQCELL_28', total_users: 640, active: 172, prev_active: 0 },
+          { name: 'حيدرهاني', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '11,12,16,17,18,13(1-23),19,1,2', board_name: 'IQCELL_19', total_users: 5488, active: 1322, prev_active: 0 },
+          { name: 'زيد صلاح', note: 'Al-Mualmeen ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '15,16,17,18,19,22,23,24,25', board_name: 'IQCELL_17', total_users: 5760, active: 1654, prev_active: 0 },
+          { name: 'ضرغام باسم', note: 'Said Al-shohdaa ITPC', contract_date: '2025-02-02', phase: 'PHASE2', fdt: '22,31,32', board_name: 'IQCEEL-26', total_users: 1920, active: 935, prev_active: 0 },
+          { name: 'عيسى حسين', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-21', phase: 'PHASE2', fdt: '29,30,31,32', board_name: 'IQCELL_24', total_users: 2560, active: 985, prev_active: 0 },
+          { name: 'فؤاد عايد', note: '', contract_date: '2024-05-12', phase: 'PHASE2', fdt: '12-13-30-29-28', board_name: 'Fouad', total_users: 3200, active: 1384, prev_active: 0 },
+          { name: 'محمد ابراهيم', note: 'Al-Mualmeen ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '26,27,28,20', board_name: 'IQCELL_16', total_users: 2560, active: 799, prev_active: 0 },
+          { name: 'محمد عباس', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '3(1-21),10,14(18-24)', board_name: 'IQCELL_18', total_users: 1088, active: 581, prev_active: 0 },
+          { name: 'منتظر ماجد', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '3(22-40),4,5,6,7,8,9,13(24-40),14(15-40),15', board_name: 'IQCELL_15', total_users: 5488, active: 1621, prev_active: 0 },
+          { name: 'وليد علاوي', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-28', phase: 'PHASE2', fdt: '11,12', board_name: 'IQCELL_22', total_users: 1280, active: 342, prev_active: 0 },
+          
+          // المرحلة الثالثة
+          { name: 'حسنين صاحب', note: 'IQCELL_29', contract_date: '2025-09-20', phase: 'PHASE3', fdt: '33', board_name: 'IQCELL_29', total_users: 640, active: 264, prev_active: 0 },
+          { name: 'عراق سيل', note: '', contract_date: '2025-09-16', phase: 'PHASE3', fdt: '1-2-3-4-5-6-7-8-9', board_name: 'IQCELL_30', total_users: 4880, active: 454, prev_active: 0 },
+          { name: 'عراق سيل', note: '', contract_date: '2025-09-16', phase: 'PHASE3', fdt: '9-10-11-12-13-14-15', board_name: 'IQCELL_31', total_users: 4256, active: 0, prev_active: 0 }
+        ];
+
+        console.log('Inserting initial data...', initialData.length, 'agents');
+        
+        const { data, error } = await supabase
+          .from('agents')
+          .insert(initialData)
+          .select('*');
+
+        if (error) {
+          console.error('Initial data insert error:', error);
+          alert('فشل في إدراج البيانات الأولية: ' + error.message);
+        } else {
+          console.log('Initial data inserted successfully:', data.length, 'agents');
+          alert('تم إدراج ' + data.length + ' وكيل بنجاح في قاعدة البيانات!');
+          
+          // إعادة تحميل البيانات
+          const { data: reloadData, error: reloadError } = await supabase
+            .from('agents')
+            .select('*')
+            .order('id', { ascending: true });
+
+          if (!reloadError && reloadData) {
+            agents = reloadData.map(row=>{
+              const obj = {
+                _id: genId(),
+                db_id: row.id,
+                name: row.name,
+                note: row.note,
+                contract_date: row.contract_date,
+                phase: row.phase,
+                itpc_site: '',
+                fdt: row.fdt,
+                board_name: row.board_name || '',
+                total_users: row.total_users,
+                active: row.active,
+                prev_active: row.prev_active || 0,
+                history: []
+              };
+              dbIdByLocalId.set(obj._id, row.id);
+              localIdByDbId.set(row.id, obj._id);
+              return computeAgent(obj);
+            });
+            saveToStorage();
+            computeAll();
+            renderTable();
+          }
+        }
+      } catch (e) {
+        console.error('Error inserting initial data:', e);
+        alert('خطأ في إدراج البيانات الأولية: ' + e.message);
+      }
+    }
+    
     // بدء التطبيق
+    initializeSupabase();
     initializeData();
+    
+    // إدراج البيانات الأولية بعد 3 ثوان (مرة واحدة فقط)
+    setTimeout(() => {
+      insertInitialData();
+    }, 3000);
+    
+    
+    // تم حذف دالة removeDuplicateData() لأنها لم تعد مطلوبة
+
+    // تم إزالة الإدراج التلقائي للبيانات
+
+    // تم حذف دالة deleteAllAgents ووظيفة زر حذف الكل
 
     function applyTheme(theme){
       const root = document.documentElement;
@@ -1466,11 +2114,11 @@
       if(theme === 'light'){
         root.classList.add('light');
         bodyEl.classList.add('light');
-        btnTheme.textContent = 'light';
+        btnTheme.innerHTML = '<span class="icon">☀️</span>  ';
       } else {
         root.classList.remove('light');
         bodyEl.classList.remove('light');
-        btnTheme.textContent = 'dark';
+        btnTheme.innerHTML = '<span class="icon">🌙</span>  ';
       }
     }
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -1747,6 +2395,7 @@
       const w = window.open('about:blank','_blank');
       if(w){ w.document.open(); w.document.write(html); w.document.close(); }
     });
+
 
   </script>
 </body>
