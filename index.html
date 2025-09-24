@@ -1484,6 +1484,8 @@
       
       try{
         const dbId = dbIdByLocalId.get(a._id);
+        console.log('Updating agent:', a.name, 'Local ID:', a._id, 'DB ID:', dbId);
+        
         if(dbId){
           console.log('Updating agent info in Supabase:', a.name);
           const supabase = getSupabaseClient();
@@ -1491,26 +1493,34 @@
             console.error('Supabase client not available');
             return;
           }
+          
+          const updateData = {
+            name: a.name,
+            note: a.note,
+            contract_date: a.contract_date,
+            phase: a.phase,
+            fdt: a.fdt,
+            total_users: a.total_users,
+            active: a.active,
+            prev_active: a.prev_active
+          };
+          
+          console.log('Updating with data:', updateData);
+          
           const { error } = await supabase
             .from('agents')
-            .update({
-              name: a.name,
-              note: a.note,
-              contract_date: a.contract_date,
-              phase: a.phase,
-              fdt: a.fdt,
-              total_users: a.total_users,
-              active: a.active,
-              prev_active: a.prev_active
-            })
+            .update(updateData)
             .eq('id', dbId);
+            
           if(error) {
             console.error('Supabase update info error:', error);
+            console.error('Error details:', error.message, error.details, error.hint);
           } else {
             console.log('Agent info updated successfully in Supabase');
           }
         } else {
           console.log('No database ID found for agent, saving locally only');
+          console.log('Available dbIdByLocalId:', Array.from(dbIdByLocalId.entries()));
         }
       }catch(e){ 
         console.error('Error updating agent info:', e); 
@@ -1773,7 +1783,15 @@
         const s = localStorage.getItem(STORAGE_KEY);
         if(!s) return null;
         const arr = JSON.parse(s);
-        arr.forEach(a => computeAgent(a));
+        arr.forEach(a => {
+          computeAgent(a);
+          // إعادة تعيين dbIdByLocalId من البيانات المحفوظة
+          if(a.db_id) {
+            dbIdByLocalId.set(a._id, a.db_id);
+            localIdByDbId.set(a.db_id, a._id);
+          }
+        });
+        console.log('Loaded from storage, dbIdByLocalId entries:', Array.from(dbIdByLocalId.entries()));
         return arr;
       }catch(e){ return null; }
     }
@@ -1781,6 +1799,112 @@
     function computeAll(){
       agents.forEach(a=>computeAgent(a));
       renderTable();
+    }
+
+    async function loadFromSupabaseWithLocalMerge() {
+      try {
+        console.log('Loading data from Supabase with local merge...');
+        
+        // تحميل البيانات المحلية أولاً
+        const localData = loadFromStorage();
+        console.log('Local data loaded:', localData ? localData.length : 0, 'agents');
+        
+        // تحميل البيانات من Supabase
+        const supabase = getSupabaseClient();
+        if (!supabase) {
+          console.error('Supabase client not available');
+          if (localData && localData.length > 0) {
+            agents = localData;
+            computeAll();
+          }
+          return;
+        }
+        
+        const { data, error } = await supabase
+          .from('agents')
+          .select('*')
+          .order('id', { ascending: true });
+
+        if (error) {
+          console.error('Supabase load error:', error);
+          if (localData && localData.length > 0) {
+            agents = localData;
+            computeAll();
+          }
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          console.log('No data in Supabase, using local data');
+          if (localData && localData.length > 0) {
+            agents = localData;
+            computeAll();
+          }
+          return;
+        }
+
+        console.log('Data loaded from Supabase:', data.length, 'agents');
+        
+        // دمج البيانات من Supabase مع البيانات المحلية
+        const mergedAgents = [];
+        
+        // إضافة البيانات من Supabase
+        data.forEach(row => {
+          const obj = {
+            _id: genId(),
+            db_id: row.id,
+            name: row.name,
+            note: row.note,
+            contract_date: row.contract_date,
+            phase: row.phase,
+            itpc_site: '', // سيتم حفظه محلياً فقط
+            fdt: row.fdt,
+            board_name: '', // سيتم حفظه محلياً فقط
+            total_users: row.total_users,
+            active: row.active,
+            prev_active: row.prev_active || 0,
+            history: []
+          };
+          dbIdByLocalId.set(obj._id, row.id);
+          localIdByDbId.set(row.id, obj._id);
+          mergedAgents.push(computeAgent(obj));
+        });
+        
+        // دمج التعديلات المحلية
+        if (localData && localData.length > 0) {
+          localData.forEach(localAgent => {
+            // البحث عن وكيل مطابق في البيانات من Supabase
+            const existingAgent = mergedAgents.find(agent => 
+              agent.db_id && localAgent.db_id && agent.db_id === localAgent.db_id
+            );
+            
+            if (existingAgent) {
+              // دمج التعديلات المحلية مع البيانات من Supabase
+              existingAgent.itpc_site = localAgent.itpc_site || '';
+              existingAgent.board_name = localAgent.board_name || '';
+              existingAgent.history = localAgent.history || [];
+              console.log('Merged local changes for:', existingAgent.name);
+            } else if (localAgent.db_id) {
+              // وكيل محلي لم يعد موجود في Supabase
+              console.log('Local agent not found in Supabase, keeping locally:', localAgent.name);
+              mergedAgents.push(computeAgent(localAgent));
+            }
+          });
+        }
+        
+        agents = mergedAgents;
+        saveToStorage();
+        computeAll();
+        console.log('Data merged successfully:', agents.length, 'agents');
+        
+      } catch (e) {
+        console.error('Error loading from Supabase with merge:', e);
+        const localData = loadFromStorage();
+        if (localData && localData.length > 0) {
+          agents = localData;
+          computeAll();
+        }
+      }
     }
 
     async function loadFromSupabase(){
@@ -1884,8 +2008,11 @@
           };
           dbIdByLocalId.set(obj._id, row.id);
           localIdByDbId.set(row.id, obj._id);
+          console.log('Loaded agent:', obj.name, 'Local ID:', obj._id, 'DB ID:', row.id);
           return computeAgent(obj);
         });
+        
+        console.log('dbIdByLocalId entries:', Array.from(dbIdByLocalId.entries()));
         saveToStorage();
         computeAll();
         console.log('Data loaded successfully from Supabase:', agents.length, 'agents');
@@ -1964,8 +2091,8 @@
           }
         }
         
-        // تحميل البيانات من Supabase
-        await loadFromSupabase();
+        // تحميل البيانات من Supabase مع الحفاظ على التعديلات المحلية
+        await loadFromSupabaseWithLocalMerge();
       } catch (e) {
         console.error('Error initializing data:', e);
         // في حالة الخطأ، استخدم البيانات المحلية فقط
