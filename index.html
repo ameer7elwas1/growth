@@ -1500,6 +1500,7 @@
             contract_date: a.contract_date,
             phase: a.phase,
             fdt: a.fdt,
+            board_name: a.board_name,
             total_users: a.total_users,
             active: a.active,
             prev_active: a.prev_active
@@ -1683,13 +1684,14 @@
           return;
         }
         
-        // إنشاء insertData بدون board_name - نسخ صريح للحقول المطلوبة فقط
+        // إنشاء insertData مع board_name - نسخ صريح للحقول المطلوبة
         const insertData = {
           name: String(obj.name || ''),
           note: String(obj.note || ''),
           contract_date: String(obj.contract_date || ''),
           phase: String(obj.phase || ''),
           fdt: String(obj.fdt || ''),
+          board_name: String(obj.board_name || ''),
           total_users: Number(obj.total_users || 0),
           active: Number(obj.active || 0),
           prev_active: Number(obj.prev_active || 0)
@@ -1859,7 +1861,7 @@
             phase: row.phase,
             itpc_site: '', // سيتم حفظه محلياً فقط
             fdt: row.fdt,
-            board_name: '', // سيتم حفظه محلياً فقط
+            board_name: row.board_name || '', // تحميل من قاعدة البيانات
             total_users: row.total_users,
             active: row.active,
             prev_active: row.prev_active || 0,
@@ -2000,7 +2002,7 @@
             phase: row.phase,
             itpc_site: '', // سيتم حفظه محلياً فقط
             fdt: row.fdt,
-            board_name: '', // سيتم حفظه محلياً فقط
+            board_name: row.board_name || '', // تحميل من قاعدة البيانات
             total_users: row.total_users,
             active: row.active,
             prev_active: row.prev_active || 0,
@@ -2008,7 +2010,7 @@
           };
           dbIdByLocalId.set(obj._id, row.id);
           localIdByDbId.set(row.id, obj._id);
-          console.log('Loaded agent:', obj.name, 'Local ID:', obj._id, 'DB ID:', row.id);
+          console.log('Loaded agent:', obj.name, 'Local ID:', obj._id, 'DB ID:', row.id, 'Board:', obj.board_name);
           return computeAgent(obj);
         });
         
@@ -2155,29 +2157,29 @@
 
         const initialData = [
           // المشروع القديم
-          { name: 'حسنين صاحب', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '1-2-4-6-7', total_users: 2384, active: 1183, prev_active: 0 },
-          { name: 'حسين عادل', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '8', total_users: 512, active: 231, prev_active: 0 },
-          { name: 'سامر العامري', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '10_11', total_users: 1024, active: 413, prev_active: 0 },
-          { name: 'ضياء عبد الحسين', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '3_5_9', total_users: 1536, active: 532, prev_active: 0 },
+          { name: 'حسنين صاحب', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '1-2-4-6-7', board_name: 'gsm', total_users: 2384, active: 1183, prev_active: 0 },
+          { name: 'حسين عادل', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '8', board_name: 'digital', total_users: 512, active: 231, prev_active: 0 },
+          { name: 'سامر العامري', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '10_11', board_name: 'mega', total_users: 1024, active: 413, prev_active: 0 },
+          { name: 'ضياء عبد الحسين', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '3_5_9', board_name: 'alamri', total_users: 1536, active: 532, prev_active: 0 },
           
           // المرحلة الثانية
-          { name: 'حسن حميد', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-26', phase: 'PHASE2', fdt: '13,14', total_users: 1280, active: 343, prev_active: 0 },
-          { name: 'حسين علي عبد الامير', note: '', contract_date: '2024-12-17', phase: 'PHASE2', fdt: '21', total_users: 640, active: 190, prev_active: 0 },
-          { name: 'حسين علي عبد الامير', note: '', contract_date: '2025-09-19', phase: 'PHASE2', fdt: '10', total_users: 640, active: 172, prev_active: 0 },
-          { name: 'حيدرهاني', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '11,12,16,17,18,13(1-23),19,1,2', total_users: 5488, active: 1322, prev_active: 0 },
-          { name: 'زيد صلاح', note: 'Al-Mualmeen ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '15,16,17,18,19,22,23,24,25', total_users: 5760, active: 1654, prev_active: 0 },
-          { name: 'ضرغام باسم', note: 'Said Al-shohdaa ITPC', contract_date: '2025-02-02', phase: 'PHASE2', fdt: '22,31,32', total_users: 1920, active: 935, prev_active: 0 },
-          { name: 'عيسى حسين', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-21', phase: 'PHASE2', fdt: '29,30,31,32', total_users: 2560, active: 985, prev_active: 0 },
-          { name: 'فؤاد عايد', note: '', contract_date: '2024-05-12', phase: 'PHASE2', fdt: '12-13-30-29-28', total_users: 3200, active: 1384, prev_active: 0 },
-          { name: 'محمد ابراهيم', note: 'Al-Mualmeen ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '26,27,28,20', total_users: 2560, active: 799, prev_active: 0 },
-          { name: 'محمد عباس', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '3(1-21),10,14(18-24)', total_users: 1088, active: 581, prev_active: 0 },
-          { name: 'منتظر ماجد', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '3(22-40),4,5,6,7,8,9,13(24-40),14(15-40),15', total_users: 5488, active: 1621, prev_active: 0 },
-          { name: 'وليد علاوي', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-28', phase: 'PHASE2', fdt: '11,12', total_users: 1280, active: 342, prev_active: 0 },
+          { name: 'حسن حميد', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-26', phase: 'PHASE2', fdt: '13,14', board_name: 'IQCELL_25', total_users: 1280, active: 343, prev_active: 0 },
+          { name: 'حسين علي عبد الامير', note: '', contract_date: '2024-12-17', phase: 'PHASE2', fdt: '21', board_name: 'IQCELL_23', total_users: 640, active: 190, prev_active: 0 },
+          { name: 'حسين علي عبد الامير', note: '', contract_date: '2025-09-19', phase: 'PHASE2', fdt: '10', board_name: 'IQCELL_28', total_users: 640, active: 172, prev_active: 0 },
+          { name: 'حيدرهاني', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '11,12,16,17,18,13(1-23),19,1,2', board_name: 'IQCELL_19', total_users: 5488, active: 1322, prev_active: 0 },
+          { name: 'زيد صلاح', note: 'Al-Mualmeen ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '15,16,17,18,19,22,23,24,25', board_name: 'IQCELL_17', total_users: 5760, active: 1654, prev_active: 0 },
+          { name: 'ضرغام باسم', note: 'Said Al-shohdaa ITPC', contract_date: '2025-02-02', phase: 'PHASE2', fdt: '22,31,32', board_name: 'IQCEEL-26', total_users: 1920, active: 935, prev_active: 0 },
+          { name: 'عيسى حسين', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-21', phase: 'PHASE2', fdt: '29,30,31,32', board_name: 'IQCELL_24', total_users: 2560, active: 985, prev_active: 0 },
+          { name: 'فؤاد عايد', note: '', contract_date: '2024-05-12', phase: 'PHASE2', fdt: '12-13-30-29-28', board_name: 'Fouad', total_users: 3200, active: 1384, prev_active: 0 },
+          { name: 'محمد ابراهيم', note: 'Al-Mualmeen ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '26,27,28,20', board_name: 'IQCELL_16', total_users: 2560, active: 799, prev_active: 0 },
+          { name: 'محمد عباس', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '3(1-21),10,14(18-24)', board_name: 'IQCELL_18', total_users: 1088, active: 581, prev_active: 0 },
+          { name: 'منتظر ماجد', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '3(22-40),4,5,6,7,8,9,13(24-40),14(15-40),15', board_name: 'IQCELL_15', total_users: 5488, active: 1621, prev_active: 0 },
+          { name: 'وليد علاوي', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-28', phase: 'PHASE2', fdt: '11,12', board_name: 'IQCELL_22', total_users: 1280, active: 342, prev_active: 0 },
           
           // المرحلة الثالثة
-          { name: 'حسنين صاحب', note: 'IQCELL_29', contract_date: '2025-09-20', phase: 'PHASE3', fdt: '33', total_users: 640, active: 264, prev_active: 0 },
-          { name: 'عراق سيل', note: '', contract_date: '2025-09-16', phase: 'PHASE3', fdt: '1-2-3-4-5-6-7-8-9', total_users: 4880, active: 454, prev_active: 0 },
-          { name: 'عراق سيل', note: '', contract_date: '2025-09-16', phase: 'PHASE3', fdt: '9-10-11-12-13-14-15', total_users: 4256, active: 0, prev_active: 0 }
+          { name: 'حسنين صاحب', note: 'IQCELL_29', contract_date: '2025-09-20', phase: 'PHASE3', fdt: '33', board_name: 'IQCELL_29', total_users: 640, active: 264, prev_active: 0 },
+          { name: 'عراق سيل', note: '', contract_date: '2025-09-16', phase: 'PHASE3', fdt: '1-2-3-4-5-6-7-8-9', board_name: 'IQCELL_30', total_users: 4880, active: 454, prev_active: 0 },
+          { name: 'عراق سيل', note: '', contract_date: '2025-09-16', phase: 'PHASE3', fdt: '9-10-11-12-13-14-15', board_name: 'IQCELL_31', total_users: 4256, active: 0, prev_active: 0 }
         ];
 
         console.log('Inserting initial data...', initialData.length, 'agents');
@@ -2211,7 +2213,7 @@
                 phase: row.phase,
                 itpc_site: '',
                 fdt: row.fdt,
-                board_name: '',
+                board_name: row.board_name || '',
                 total_users: row.total_users,
                 active: row.active,
                 prev_active: row.prev_active || 0,
