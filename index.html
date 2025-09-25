@@ -1684,13 +1684,22 @@
       }
 
       hasPermission(permission) {
-        if (!this.currentUser) return false;
-        return this.permissions[this.currentUser.role]?.includes(permission) || false;
+        if (!this.currentUser) {
+          console.log('hasPermission - no currentUser');
+          return false;
+        }
+        const result = this.permissions[this.currentUser.role]?.includes(permission) || false;
+        console.log('hasPermission - role:', this.currentUser.role, 'permission:', permission, 'result:', result);
+        return result;
       }
 
       canView() { return this.hasPermission('view'); }
       canAdd() { return this.hasPermission('add'); }
-      canEdit() { return this.hasPermission('edit'); }
+      canEdit() { 
+        const result = this.hasPermission('edit');
+        console.log('canEdit check - currentUser:', this.currentUser, 'result:', result);
+        return result;
+      }
       canDelete() { return this.hasPermission('delete'); }
       canManageUsers() { return this.hasPermission('manage_users'); }
       canExport() { return this.hasPermission('export'); }
@@ -1854,7 +1863,12 @@
       }
 
       updateUI() {
-        if (!this.currentUser) return;
+        if (!this.currentUser) {
+          console.log('updateUI - no currentUser');
+          return;
+        }
+
+        console.log('updateUI - currentUser:', this.currentUser);
 
         // Update user info in header
         document.getElementById('userName').textContent = this.getUserName();
@@ -1873,21 +1887,28 @@
         const canEdit = this.canEdit();
         const canDelete = this.canDelete();
         
+        console.log('Updating table action buttons - canEdit:', canEdit, 'canDelete:', canDelete);
+        
         // Update all action buttons in the table
         const editButtons = document.querySelectorAll('button[data-action="edit"]');
         const editInfoButtons = document.querySelectorAll('button[data-action="edit-info"]');
         const deleteButtons = document.querySelectorAll('button[data-action="delete"]');
         
+        console.log('Found buttons - edit:', editButtons.length, 'edit-info:', editInfoButtons.length, 'delete:', deleteButtons.length);
+        
         editButtons.forEach(btn => {
           btn.style.display = canEdit ? 'inline-flex' : 'none';
+          console.log('Edit button display set to:', btn.style.display);
         });
         
         editInfoButtons.forEach(btn => {
           btn.style.display = canEdit ? 'inline-flex' : 'none';
+          console.log('Edit-info button display set to:', btn.style.display);
         });
         
         deleteButtons.forEach(btn => {
           btn.style.display = canDelete ? 'inline-flex' : 'none';
+          console.log('Delete button display set to:', btn.style.display);
         });
       }
 
@@ -1978,9 +1999,11 @@
           await new Promise(resolve => setTimeout(resolve, 1000));
 
           const validation = await this.validateUser(username, password);
+          console.log('Login validation result:', validation);
           
           if (validation.success) {
             this.currentUser = validation.user;
+            console.log('Login successful, currentUser set to:', this.currentUser);
             this.saveUserSession(validation.user);
             
             this.showSuccess(`مرحباً ${validation.user.name}! تم تسجيل الدخول بنجاح`);
