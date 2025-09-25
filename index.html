@@ -1171,7 +1171,6 @@
       transform: translateY(0) scale(0.98);
     }
     
-    /* تحسين زر تسجيل الخروج في الوضع النهاري */
     body.light .logout-btn {
       background: linear-gradient(135deg, #dc2626, #b91c1c);
       color: white;
@@ -2473,13 +2472,19 @@
 
     function renderTable(){
       let filtered = agents.slice();
+      console.log('renderTable - total agents:', agents.length);
+      console.log('renderTable - initial filtered:', filtered.length);
 
       const phase = phaseFilter.value;
-      if(phase) filtered = filtered.filter(a => (a.phase || '').toUpperCase() === phase.toUpperCase());
+      if(phase) {
+        filtered = filtered.filter(a => (a.phase || '').toUpperCase() === phase.toUpperCase());
+        console.log('renderTable - after phase filter:', filtered.length, 'phase:', phase);
+      }
 
       const q = (searchBox.value || '').trim().toLowerCase();
       if(q){
         filtered = filtered.filter(a => ((a.name||'') + ' ' + (a.itpc_site||'') + ' ' + arabicPhaseLabel(a.phase)).toLowerCase().includes(q));
+        console.log('renderTable - after search filter:', filtered.length, 'query:', q);
       }
 
       // sorting
@@ -2497,10 +2502,15 @@
         if(!phaseToItems[key]) phaseToItems[key] = [];
         phaseToItems[key].push(a);
       });
+      
+      console.log('renderTable - phaseToItems:', phaseToItems);
+      console.log('renderTable - PHASE_ORDER:', PHASE_ORDER);
       const allPhases = PHASE_ORDER.filter(p=>phaseToItems[p] && phaseToItems[p].length>0);
+      console.log('renderTable - allPhases:', allPhases);
       let runningIndex = 0;
       allPhases.forEach(phaseKey=>{
         const items = phaseToItems[phaseKey];
+        console.log('renderTable - processing phase:', phaseKey, 'items:', items.length);
         const hdr = document.createElement('tr');
         hdr.className = 'phase-header';
         hdr.innerHTML = `<td colspan="14" style="text-align:right; font-weight:700; background:rgba(255,255,255,0.08); font-size:11px; padding:8px; border-bottom:1px solid rgba(255,255,255,0.12);">${arabicPhaseLabel(phaseKey)}</td>`;
@@ -2508,6 +2518,7 @@
 
         items.forEach((a)=>{
           const idx = runningIndex++;
+          console.log('renderTable - adding agent:', a.name, 'phase:', a.phase, 'index:', idx);
         const tr = document.createElement('tr');
         const todayStr = toYMDLocal(new Date());
         tr.innerHTML = `
@@ -2572,6 +2583,9 @@
 
       updateStats(filtered);
       updateCharts(filtered);
+      
+      console.log('renderTable - final runningIndex:', runningIndex);
+      console.log('renderTable - total rows added:', tbody.children.length);
       
       // Update permissions after rendering
       if (typeof authSystem !== 'undefined') {
@@ -3139,6 +3153,7 @@
         }
 
         console.log('Data loaded from Supabase:', data.length, 'agents');
+        console.log('Raw data from Supabase:', data);
         
         // تحميل البيانات من Supabase بنجاح
         agents = data.map(row=>{
@@ -3159,11 +3174,12 @@
           };
           dbIdByLocalId.set(obj._id, row.id);
           localIdByDbId.set(row.id, obj._id);
-          console.log('Loaded agent:', obj.name, 'Local ID:', obj._id, 'DB ID:', row.id, 'Board:', obj.board_name);
+          console.log('Loaded agent:', obj.name, 'Local ID:', obj._id, 'DB ID:', row.id, 'Board:', obj.board_name, 'Phase:', obj.phase);
           return computeAgent(obj);
         });
         
         console.log('dbIdByLocalId entries:', Array.from(dbIdByLocalId.entries()));
+        console.log('Final agents array:', agents);
         computeAll();
         console.log('Data loaded successfully from Supabase:', agents.length, 'agents');
       } catch(e) {
