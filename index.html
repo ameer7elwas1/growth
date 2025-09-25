@@ -1077,7 +1077,7 @@
         // اختبار الاتصال الأساسي
         const { data, error } = await supabase
           .from('agents')
-          .select('id, name, active, total_users') // الأعمدة الأساسية فقط
+          .select('id, name, active, total_users, board_name') // الأعمدة الأساسية + board_name
           .limit(1);
           
         if (error) {
@@ -1086,6 +1086,28 @@
           console.error('Error message:', error.message);
           console.error('Error details:', error.details);
           console.error('Error hint:', error.hint);
+          
+          // إذا كان الخطأ متعلق بـ board_name، جرب بدون هذا العمود
+          if (error.message && error.message.includes('board_name')) {
+            console.warn('board_name column not found, trying without it...');
+            const { data: retryData, error: retryError } = await supabase
+              .from('agents')
+              .select('id, name, active, total_users')
+              .limit(1);
+              
+            if (retryError) {
+              console.error('Retry also failed:', retryError);
+              SupabaseManager.connectionStatus = 'error';
+              updateConnectionStatus('error');
+              return false;
+            } else {
+              console.log('Connection successful without board_name column');
+              SupabaseManager.connectionStatus = 'connected';
+              updateConnectionStatus('connected');
+              return true;
+            }
+          }
+          
           console.error('Note: Make sure the database has the required columns: name, note, contract_date, phase, fdt, total_users, active, prev_active');
           SupabaseManager.connectionStatus = 'error';
           updateConnectionStatus('error');
@@ -1499,6 +1521,32 @@
           if(error) {
             console.error('Supabase update info error:', error);
             console.error('Error details:', error.message, error.details, error.hint);
+            
+            // إذا كان الخطأ متعلق بـ board_name، جرب التحديث بدون هذا العمود
+            if (error.message && error.message.includes('board_name')) {
+              console.warn('board_name column not found, updating without it...');
+              const updateDataWithoutBoard = {
+                name: a.name,
+                note: a.note,
+                contract_date: a.contract_date,
+                phase: a.phase,
+                fdt: a.fdt,
+                total_users: a.total_users,
+                active: a.active,
+                prev_active: a.prev_active
+              };
+              
+              const { error: retryError } = await supabase
+                .from('agents')
+                .update(updateDataWithoutBoard)
+                .eq('id', dbId);
+                
+              if (retryError) {
+                console.error('Retry update also failed:', retryError);
+              } else {
+                console.log('Agent info updated successfully without board_name');
+              }
+            }
           } else {
             console.log('Agent info updated successfully in Supabase');
           }
@@ -1707,18 +1755,54 @@
           console.error('Error details:', error.message, error.details, error.hint);
           console.error('Error code:', error.code);
           
-          // عرض رسالة خطأ مفصلة للمستخدم
-          let errorMessage = 'فشل في حفظ البيانات في قاعدة البيانات:\n';
-          if (error.message) errorMessage += error.message + '\n';
-          if (error.details) errorMessage += 'التفاصيل: ' + error.details + '\n';
-          if (error.hint) errorMessage += 'نصيحة: ' + error.hint;
-          
-          alert(errorMessage);
-          
-          // في حالة فشل الإدراج في Supabase، احفظ محلياً فقط
-          obj._id = genId();
-          agents.push(obj);
-          console.log('Agent added locally due to Supabase error');
+          // إذا كان الخطأ متعلق بـ board_name، جرب الإدراج بدون هذا العمود
+          if (error.message && error.message.includes('board_name')) {
+            console.warn('board_name column not found, inserting without it...');
+            const insertDataWithoutBoard = {
+              name: String(obj.name || ''),
+              note: String(obj.note || ''),
+              contract_date: String(obj.contract_date || ''),
+              phase: String(obj.phase || ''),
+              fdt: String(obj.fdt || ''),
+              total_users: Number(obj.total_users || 0),
+              active: Number(obj.active || 0),
+              prev_active: Number(obj.prev_active || 0)
+            };
+            
+            const { data: retryData, error: retryError } = await supabase
+              .from('agents')
+              .insert(insertDataWithoutBoard)
+              .select('*')
+              .single();
+              
+            if (retryError) {
+              console.error('Retry insert also failed:', retryError);
+              // في حالة فشل الإدراج في Supabase، احفظ محلياً فقط
+              obj._id = genId();
+              agents.push(obj);
+              console.log('Agent added locally due to Supabase error');
+            } else {
+              console.log('Agent inserted successfully without board_name:', retryData);
+              obj._id = genId();
+              obj.db_id = retryData.id;
+              dbIdByLocalId.set(obj._id, retryData.id);
+              localIdByDbId.set(retryData.id, obj._id);
+              agents.push(obj);
+            }
+          } else {
+            // عرض رسالة خطأ مفصلة للمستخدم
+            let errorMessage = 'فشل في حفظ البيانات في قاعدة البيانات:\n';
+            if (error.message) errorMessage += error.message + '\n';
+            if (error.details) errorMessage += 'التفاصيل: ' + error.details + '\n';
+            if (error.hint) errorMessage += 'نصيحة: ' + error.hint;
+            
+            alert(errorMessage);
+            
+            // في حالة فشل الإدراج في Supabase، احفظ محلياً فقط
+            obj._id = genId();
+            agents.push(obj);
+            console.log('Agent added locally due to Supabase error');
+          }
         } else {
           console.log('Agent inserted successfully in Supabase:', data);
           obj._id = genId();
