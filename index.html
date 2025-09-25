@@ -1158,32 +1158,7 @@
       if(changed){ saveToStorage(); }
     }
 
-    const INITIAL_AGENTS = [
-      { name:'gsm2 علاء صاحب', phase:'المشروع الجديد PHASE2', itpc_site:'Said Al-shohdaa ITPC', fdt:'', contract_date:'18/05/2024', total_users:2560, active:1046, growth:-1002 },
-      { name:'ghaith غيث علاء زكي', phase:'المشروع الجديد PHASE2', itpc_site:'Said Al-shohdaa ITPC', fdt:'', contract_date:'12/05/2024', total_users:1920, active:826, growth:-710 },
-      { name:'vlan محمد صاحب جابر', phase:'المشروع الجديد PHASE2', itpc_site:'Said Al-shohdaa&Al-Mualmeen ITPC', contract_date:'05/05/2024', total_users:3200, active:1241, growth:-1319 },
-      { name:'alnaqeeb منتظر النقيب', phase:'المشروع الجديد PHASE2', itpc_site:'Al-Mualmeen ITPC', contract_date:'11/05/2024', total_users:2128, active:1105, growth:-597 },
-      { name:'Fouad فؤاد عايد', phase:'المشروع الجديد PHASE2', itpc_site:'Said Al-shohdaa ITPC', contract_date:'12/05/2024', total_users:3200, active:1384, growth:-1176 },
-      { name:'moh محمد ابراهيم', phase:'المشروع الجديد PHASE2', itpc_site:'Al-Mualmeen ITPC', contract_date:'30/04/2024', total_users:2352, active:1209, growth:-673 },
-      { name:'digital حسين عادل', phase:'المشروع القديم', itpc_site:'Said Al-shohdaa ITPC', contract_date:'01/09/2024', total_users:512, active:231, growth:-105 },
-      { name:'mega سامر العامري', phase:'المشروع القديم', itpc_site:'Said Al-shohdaa ITPC', contract_date:'01/09/2024', total_users:1024, active:413, growth:-271 },
-      { name:'alamri ضياء العامري', phase:'المشروع القديم', itpc_site:'Said Al-shohdaa ITPC', contract_date:'01/09/2024', total_users:1536, active:532, growth:-441 },
-      { name:'gsm حسنين صاحب', phase:'المشروع القديم', itpc_site:'Said Al-shohdaa ITPC', contract_date:'01/09/2024', total_users:2384, active:1183, growth:605 },
-      { name:'abbas عباس حلواص', phase:'المشروع الجديد PHASE2', itpc_site:'Said Al-shohdaa ITPC', contract_date:'01/09/2024', total_users:1920, active:815, growth:-721 },
-      { name:'منتظر النقيب nakib@IQCELL_15', phase:' المشروع الجديد PHASE2', itpc_site:'ABS ITPC', contract_date:'23/11/2024', total_users:5488, active:1621, growth:-1672 },
-      { name:'محمد ابراهيم Moh2@IQCELL_16', phase:' المشروع الجديد PHASE2', itpc_site:'Al-Mualmeen ITPC', contract_date:'23/11/2024', total_users:2560, active:799, growth:-737 },
-      { name:'زيد صلاح ZAID@IQCELL_17', phase:'  المشروع الجديد PHASE2', itpc_site:'Al-Mualmeen ITPC', contract_date:'23/11/2024', total_users:5760, active:1654, growth:-1802 },
-      { name:'محمد عباس mtdx@iqcell_18', phase:'المشروع الجديد PHASE2  ', itpc_site:'ABS ITPC', contract_date:'23/11/2024', total_users:1088, active:581, growth:-72 },
-      { name:'حيدرهاني hider@iqcell_19', phase:'المشروع الجديد PHASE2  ', itpc_site:'ABS ITPC', contract_date:'23/11/2024', total_users:5488, active:1322, growth:-1971 },
-      { name:'حسين النصراوي IQCELL_23', phase:' المشروع الجديد PHASE2 ', itpc_site:'Al-Mualmeen ITPC', contract_date:'17/12/2024', total_users:640, active:190, growth:-130 },
-      { name:'وليد علاوي IQCELL_22', phase:'المشروع الجديد PHASE2  ', itpc_site:'Al-Mualmeen ITPC', contract_date:'28/12/2024', total_users:1280, active:342, growth:-298 },
-      { name:'حسن حميد HUSS@IQCELL_25', phase:'المشروع الجديد PHASE2  ', itpc_site:'Al-Mualmeen ITPC', contract_date:'26/12/2024', total_users:1280, active:343, growth:-297 },
-      { name:'عيسى حسين ISSA@IQCELL_24', phase:'المشروع الجديد PHASE2', itpc_site:'Al-Mualmeen ITPC', contract_date:'21/12/2024', total_users:2560, active:985, growth:-295 },
-      { name:'IQCEEL-26 ضرغام', phase:'المشروع الجديد PHASE2', itpc_site:'Said Al-shohdaa ITPC', contract_date:'02/02/2025', total_users:1920, active:935, growth:359 }
-    ].map(a=> ({
-      ...a,
-      prev_active: Number(a.active) - Number(a.growth||0)
-    }));
+    // تم حذف جميع البيانات الأولية - البيانات من قاعدة البيانات فقط
 
     function parseDateAuto(s){
       if(!s) return null;
@@ -1506,6 +1481,7 @@
             contract_date: a.contract_date,
             phase: a.phase,
             fdt: a.fdt,
+            board_name: a.board_name,
             total_users: a.total_users,
             active: a.active,
             prev_active: a.prev_active
@@ -1603,7 +1579,8 @@
             .from('agents')
               .update({ 
                 active: agent.active, // مطابق لقاعدة البيانات
-                prev_active: agent.prev_active
+                prev_active: agent.prev_active,
+                board_name: agent.board_name
               })
             .eq('id', dbId);
           if(error) {
@@ -1698,6 +1675,7 @@
           contract_date: String(obj.contract_date || ''),
           phase: String(obj.phase || ''),
           fdt: String(obj.fdt || ''),
+          board_name: String(obj.board_name || ''),
           total_users: Number(obj.total_users || 0),
           active: Number(obj.active || 0),
           prev_active: Number(obj.prev_active || 0)
@@ -1812,111 +1790,7 @@
       renderTable();
     }
 
-    async function loadFromSupabaseWithLocalMerge() {
-      try {
-        console.log('Loading data from Supabase with local merge...');
-        
-        // تحميل البيانات المحلية أولاً
-        const localData = loadFromStorage();
-        console.log('Local data loaded:', localData ? localData.length : 0, 'agents');
-        
-        // تحميل البيانات من Supabase
-        const supabase = getSupabaseClient();
-        if (!supabase) {
-          console.error('Supabase client not available');
-          if (localData && localData.length > 0) {
-            agents = localData;
-            computeAll();
-          }
-          return;
-        }
-        
-        const { data, error } = await supabase
-          .from('agents')
-          .select('*')
-          .order('id', { ascending: true });
-
-        if (error) {
-          console.error('Supabase load error:', error);
-          if (localData && localData.length > 0) {
-            agents = localData;
-            computeAll();
-          }
-          return;
-        }
-
-        if (!data || data.length === 0) {
-          console.log('No data in Supabase, using local data');
-          if (localData && localData.length > 0) {
-            agents = localData;
-            computeAll();
-          }
-          return;
-        }
-
-        console.log('Data loaded from Supabase:', data.length, 'agents');
-        
-        // دمج البيانات من Supabase مع البيانات المحلية
-        const mergedAgents = [];
-        
-        // إضافة البيانات من Supabase
-        data.forEach(row => {
-          const obj = {
-            _id: genId(),
-            db_id: row.id,
-            name: row.name,
-            note: row.note,
-            contract_date: row.contract_date,
-            phase: row.phase,
-            itpc_site: '', // محفوظ محلياً فقط
-            fdt: row.fdt,
-            board_name: '', // محفوظ محلياً فقط
-            total_users: row.total_users,
-            active: row.active, // مطابق لقاعدة البيانات
-            prev_active: row.prev_active || 0,
-            history: []
-          };
-          dbIdByLocalId.set(obj._id, row.id);
-          localIdByDbId.set(row.id, obj._id);
-          mergedAgents.push(computeAgent(obj));
-        });
-        
-        // دمج التعديلات المحلية
-        if (localData && localData.length > 0) {
-          localData.forEach(localAgent => {
-            // البحث عن وكيل مطابق في البيانات من Supabase
-            const existingAgent = mergedAgents.find(agent => 
-              agent.db_id && localAgent.db_id && agent.db_id === localAgent.db_id
-            );
-            
-            if (existingAgent) {
-              // دمج التعديلات المحلية مع البيانات من Supabase
-              existingAgent.itpc_site = localAgent.itpc_site || '';
-              existingAgent.board_name = localAgent.board_name || '';
-              existingAgent.history = localAgent.history || [];
-              console.log('Merged local changes for:', existingAgent.name);
-            } else if (localAgent.db_id) {
-              // وكيل محلي لم يعد موجود في Supabase
-              console.log('Local agent not found in Supabase, keeping locally:', localAgent.name);
-              mergedAgents.push(computeAgent(localAgent));
-            }
-          });
-        }
-        
-        agents = mergedAgents;
-        saveToStorage();
-        computeAll();
-        console.log('Data merged successfully:', agents.length, 'agents');
-        
-      } catch (e) {
-        console.error('Error loading from Supabase with merge:', e);
-        const localData = loadFromStorage();
-        if (localData && localData.length > 0) {
-          agents = localData;
-          computeAll();
-        }
-      }
-    }
+    // تم حذف دالة loadFromSupabaseWithLocalMerge - البيانات من قاعدة البيانات فقط
 
     async function loadFromSupabase(){
       try {
@@ -1937,63 +1811,15 @@
         if(error){
           console.error('Supabase load error:', error);
           console.error('Error details:', error.message, error.details, error.hint);
-          
-          let source = loadFromStorage();
-          if(!Array.isArray(source) || source.length === 0){
-            console.log('No local data found, using initial data');
-            source = INITIAL_AGENTS.map(a=>({
-              name:a.name,
-              contract_date:a.contract_date,
-              phase:a.phase,
-              itpc_site:a.itpc_site,
-              fdt:a.fdt || '',
-              board_name:'',
-              total_users:a.total_users,
-              active:a.active,
-              prev_active:a.prev_active
-            }));
-          } else {
-            console.log('Using local storage data:', source.length, 'agents');
-          }
-          agents = source.map(s=> computeAgent({ ...s, _id: genId() }));
-          saveToStorage();
+          // في حالة الخطأ، ابدأ بجدول فارغ
+          agents = [];
           computeAll();
           return;
         }
 
         if(!data || data.length === 0){
-          console.log('No data in Supabase, using local storage or initial data');
-          let source = loadFromStorage();
-          if(!Array.isArray(source) || source.length === 0){
-            source = INITIAL_AGENTS.map(a=>({
-              name:a.name,
-              contract_date:a.contract_date,
-              phase:a.phase,
-              itpc_site:a.itpc_site,
-              fdt:a.fdt || '',
-              board_name:'',
-              total_users:a.total_users,
-              active:a.active,
-              prev_active:a.prev_active
-            }));
-            // محاولة إدراج البيانات الأولية في Supabase
-            try{
-              const payload = source.map(s=>({
-                name: s.name,
-                note: null,
-                contract_date: s.contract_date,
-                phase: normalizePhase(s.phase),
-                fdt: s.fdt,
-                total_users: Number(s.total_users)||0,
-                active: Number(s.active)||0,
-                prev_active: Number(s.prev_active)||0
-              }));
-              const { error: seedErr } = await supabase.from('agents').insert(payload);
-              if(seedErr) console.warn('Seed insert warning:', seedErr.message);
-            }catch(se){ console.warn('Seed insert error:', se); }
-          }
-          agents = source.map(s=> computeAgent({ ...s, _id: genId() }));
-          saveToStorage();
+          console.log('No data in Supabase, starting with empty table');
+          agents = [];
           computeAll();
           return;
         }
@@ -2011,7 +1837,7 @@
             phase: row.phase,
             itpc_site: '', // محفوظ محلياً فقط
             fdt: row.fdt,
-            board_name: '', // محفوظ محلياً فقط
+            board_name: row.board_name || '', // محفوظ في قاعدة البيانات
             total_users: row.total_users,
             active: row.active, // مطابق لقاعدة البيانات
             prev_active: row.prev_active || 0,
@@ -2024,28 +1850,12 @@
         });
         
         console.log('dbIdByLocalId entries:', Array.from(dbIdByLocalId.entries()));
-        saveToStorage();
         computeAll();
         console.log('Data loaded successfully from Supabase:', agents.length, 'agents');
       } catch(e) {
         console.error('Error loading from Supabase:', e);
-        // في حالة الخطأ، استخدم البيانات المحلية
-        let source = loadFromStorage();
-        if(!Array.isArray(source) || source.length === 0){
-          source = INITIAL_AGENTS.map(a=>({
-            name:a.name,
-            contract_date:a.contract_date,
-            phase:a.phase,
-            itpc_site:a.itpc_site,
-            fdt:a.fdt || '',
-            board_name:'',
-            total_users:a.total_users,
-            active:a.active,
-            prev_active:a.prev_active
-          }));
-        }
-        agents = source.map(s=> computeAgent({ ...s, _id: genId() }));
-        saveToStorage();
+        // في حالة الخطأ، ابدأ بجدول فارغ
+        agents = [];
         computeAll();
       }
     }
@@ -2062,10 +1872,8 @@
         console.log('Initializing application...');
         updateConnectionStatus('connecting');
         
-        // اختبار الاتصال بـ Supabase أولاً
         let connectionOk = await testSupabaseConnection();
         
-        // إذا فشل الاتصال، جرب إعادة تهيئة Supabase (فقط إذا لم يكن هناك instance)
         if (!connectionOk && !SupabaseManager.hasInstance()) {
           console.warn('Supabase connection failed, trying to reinitialize...');
           updateConnectionStatus('connecting');
@@ -2076,50 +1884,21 @@
         }
         
         if (!connectionOk) {
-          console.warn('Supabase connection failed after retry, using local storage only');
+          console.warn('Supabase connection failed after retry, starting with empty table');
           updateConnectionStatus('error');
-          const localData = loadFromStorage();
-          if (localData && localData.length > 0) {
-            agents = localData;
-            computeAll();
-            return;
-          } else {
-            // استخدام البيانات الأولية
-            agents = INITIAL_AGENTS.map(a=>({
-              name:a.name,
-              contract_date:a.contract_date,
-              phase:a.phase,
-              itpc_site:a.itpc_site,
-              fdt:a.fdt || '',
-              board_name:'',
-              total_users:a.total_users,
-              active:a.active,
-              prev_active:a.prev_active
-            })).map(s=> computeAgent({ ...s, _id: genId() }));
-            saveToStorage();
-            computeAll();
-            return;
-          }
-        }
-        
-        // تحميل البيانات من Supabase مع الحفاظ على التعديلات المحلية
-        await loadFromSupabaseWithLocalMerge();
-      } catch (e) {
-        console.error('Error initializing data:', e);
-        // في حالة الخطأ، استخدم البيانات المحلية فقط
-        const localData = loadFromStorage();
-        if (localData && localData.length > 0) {
-          agents = localData;
-          computeAll();
-        } else {
-          // ابدأ بجدول فارغ
           agents = [];
           computeAll();
+          return;
         }
+        
+        await loadFromSupabase();
+      } catch (e) {
+        console.error('Error initializing data:', e);
+        agents = [];
+        computeAll();
       }
     }
     
-    // إنشاء Supabase Client مرة واحدة فقط عند بدء التطبيق
     function initializeSupabase() {
       console.log('Initializing Supabase client...');
       const client = getSupabaseClient();
@@ -2132,133 +1911,15 @@
       }
     }
 
-    // تنظيف الذاكرة عند إعادة تحميل الصفحة
     window.addEventListener('beforeunload', function() {
       console.log('Cleaning up Supabase instance...');
       SupabaseManager.reset();
     });
 
-    // دالة لإدراج البيانات المطلوبة (مرة واحدة فقط)
-    async function insertInitialData() {
-      try {
-        const supabase = getSupabaseClient();
-        if (!supabase) {
-          console.error('Supabase client not available');
-          return;
-        }
-
-        // فحص إذا كانت البيانات موجودة بالفعل
-        const { data: existingData, error: checkError } = await supabase
-          .from('agents')
-          .select('id')
-          .limit(1);
-
-        if (checkError) {
-          console.error('Error checking existing data:', checkError);
-          return;
-        }
-
-        // إذا كانت هناك بيانات موجودة، لا نضيف البيانات مرة أخرى
-        if (existingData && existingData.length > 0) {
-          console.log('Data already exists in database, skipping initial data insert');
-          return;
-        }
-
-        const initialData = [
-          // المشروع القديم
-          { name: 'حسنين صاحب', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '1-2-4-6-7', total_users: 2384, active: 1183, prev_active: 0 },
-          { name: 'حسين عادل', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '8', total_users: 512, active: 231, prev_active: 0 },
-          { name: 'سامر العامري', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '10_11', total_users: 1024, active: 413, prev_active: 0 },
-          { name: 'ضياء عبد الحسين', note: 'Said Al-shohdaa ITPC', contract_date: '2024-09-01', phase: 'OLD', fdt: '3_5_9', total_users: 1536, active: 532, prev_active: 0 },
-          
-          // المرحلة الثانية
-          { name: 'حسن حميد', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-26', phase: 'PHASE2', fdt: '13,14', total_users: 1280, active: 343, prev_active: 0 },
-          { name: 'حسين علي عبد الامير', note: '', contract_date: '2024-12-17', phase: 'PHASE2', fdt: '21', total_users: 640, active: 190, prev_active: 0 },
-          { name: 'حسين علي عبد الامير', note: '', contract_date: '2025-09-19', phase: 'PHASE2', fdt: '10', total_users: 640, active: 172, prev_active: 0 },
-          { name: 'حيدرهاني', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '11,12,16,17,18,13(1-23),19,1,2', total_users: 5488, active: 1322, prev_active: 0 },
-          { name: 'زيد صلاح', note: 'Al-Mualmeen ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '15,16,17,18,19,22,23,24,25', total_users: 5760, active: 1654, prev_active: 0 },
-          { name: 'ضرغام باسم', note: 'Said Al-shohdaa ITPC', contract_date: '2025-02-02', phase: 'PHASE2', fdt: '22,31,32', total_users: 1920, active: 935, prev_active: 0 },
-          { name: 'عيسى حسين', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-21', phase: 'PHASE2', fdt: '29,30,31,32', total_users: 2560, active: 985, prev_active: 0 },
-          { name: 'فؤاد عايد', note: '', contract_date: '2024-05-12', phase: 'PHASE2', fdt: '12-13-30-29-28', total_users: 3200, active: 1384, prev_active: 0 },
-          { name: 'محمد ابراهيم', note: 'Al-Mualmeen ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '26,27,28,20', total_users: 2560, active: 799, prev_active: 0 },
-          { name: 'محمد عباس', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '3(1-21),10,14(18-24)', total_users: 1088, active: 581, prev_active: 0 },
-          { name: 'منتظر ماجد', note: 'ABS ITPC', contract_date: '2024-11-23', phase: 'PHASE2', fdt: '3(22-40),4,5,6,7,8,9,13(24-40),14(15-40),15', total_users: 5488, active: 1621, prev_active: 0 },
-          { name: 'وليد علاوي', note: 'Al-Mualmeen ITPC', contract_date: '2024-12-28', phase: 'PHASE2', fdt: '11,12', total_users: 1280, active: 342, prev_active: 0 },
-          
-          // المرحلة الثالثة
-          { name: 'حسنين صاحب', note: 'IQCELL_29', contract_date: '2025-09-20', phase: 'PHASE3', fdt: '33', total_users: 640, active: 264, prev_active: 0 },
-          { name: 'عراق سيل', note: '', contract_date: '2025-09-16', phase: 'PHASE3', fdt: '1-2-3-4-5-6-7-8-9', total_users: 4880, active: 454, prev_active: 0 },
-          { name: 'عراق سيل', note: '', contract_date: '2025-09-16', phase: 'PHASE3', fdt: '9-10-11-12-13-14-15', total_users: 4256, active: 0, prev_active: 0 }
-        ];
-
-        console.log('Inserting initial data...', initialData.length, 'agents');
-        
-        const { data, error } = await supabase
-          .from('agents')
-          .insert(initialData)
-          .select('*');
-
-        if (error) {
-          console.error('Initial data insert error:', error);
-          alert('فشل في إدراج البيانات الأولية: ' + error.message);
-        } else {
-          console.log('Initial data inserted successfully:', data.length, 'agents');
-          alert('تم إدراج ' + data.length + ' وكيل بنجاح في قاعدة البيانات!');
-          
-          // إعادة تحميل البيانات
-          const { data: reloadData, error: reloadError } = await supabase
-            .from('agents')
-            .select('*')
-            .order('id', { ascending: true });
-
-          if (!reloadError && reloadData) {
-            agents = reloadData.map(row=>{
-              const obj = {
-                _id: genId(),
-                db_id: row.id,
-                name: row.name,
-                note: row.note,
-                contract_date: row.contract_date,
-                phase: row.phase,
-                itpc_site: '',
-                fdt: row.fdt,
-                board_name: row.board_name || '',
-                total_users: row.total_users,
-                active: row.active,
-                prev_active: row.prev_active || 0,
-                history: []
-              };
-              dbIdByLocalId.set(obj._id, row.id);
-              localIdByDbId.set(row.id, obj._id);
-              return computeAgent(obj);
-            });
-            saveToStorage();
-            computeAll();
-            renderTable();
-          }
-        }
-      } catch (e) {
-        console.error('Error inserting initial data:', e);
-        alert('خطأ في إدراج البيانات الأولية: ' + e.message);
-      }
-    }
     
-    // بدء التطبيق
     initializeSupabase();
     initializeData();
     
-    // إدراج البيانات الأولية بعد 3 ثوان (مرة واحدة فقط)
-    setTimeout(() => {
-      insertInitialData();
-    }, 3000);
-    
-    
-    // تم حذف دالة removeDuplicateData() لأنها لم تعد مطلوبة
-
-    // تم إزالة الإدراج التلقائي للبيانات
-
-    // تم حذف دالة deleteAllAgents ووظيفة زر حذف الكل
-
     function applyTheme(theme){
       const root = document.documentElement;
       const bodyEl = document.body;
