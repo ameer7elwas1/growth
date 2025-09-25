@@ -95,44 +95,95 @@
     .container{max-width:1200px; margin:0 auto;}
     header{
       display: flex; 
-      gap: 16px; 
+      gap: 20px; 
       align-items: center; 
       justify-content: space-between; 
-      margin-bottom: 20px;
-      padding: 16px 20px;
-      background: var(--card);
-      border-radius: var(--border-radius);
+      margin-bottom: 24px;
+      padding: 20px 24px;
+      background: linear-gradient(135deg, var(--card), rgba(99,102,241,0.05));
+      border-radius: 16px;
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(99,102,241,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+      }
+      
+      .header-left,
+      .header-right {
+        margin-left: 0;
+        justify-content: center;
+      }
+      
+      .controls {
+        justify-content: center;
+      }
+    }
+    header::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.8;
+    }
+    header::after{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(99,102,241,0.03), transparent);
+      pointer-events: none;
+    }
+    .header-content{
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
     }
     h1{
-      font-size: 24px; 
+      font-size: 28px; 
       margin: 0; 
-      font-weight: 700;
+      font-weight: 800;
       background: linear-gradient(135deg, var(--accent), #a78bfa, #ffffff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       position: relative;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     h1::after{
       content: '';
       position: absolute;
-      bottom: -4px;
+      bottom: -6px;
       left: 0;
       width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-      border-radius: 1px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), rgba(99,102,241,0.5), transparent);
+      border-radius: 2px;
+      opacity: 0.8;
     }
     p.lead{
-      margin:4px 0 0; 
-      color:var(--muted); 
-      font-size:14px;
+      margin: 0; 
+      color: var(--muted); 
+      font-size: 15px;
       font-weight: 500;
       letter-spacing: -0.01em;
+      opacity: 0.9;
     }
     .card{
       background: var(--card); 
@@ -174,25 +225,59 @@
     .card:hover::before{
       opacity: 1;
     }
-    .controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
+    .controls{
+      display: flex; 
+      gap: 12px; 
+      flex-wrap: wrap; 
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      order: 2;
+    }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      order: 1;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      order: 3;
+      margin-left: auto;
+    }
+    .controls-group{
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
     input[type="file"]{display:none;}
     .btn{
-      background: var(--accent); 
+      background: linear-gradient(135deg, var(--accent), #8b5cf6); 
       color: #fff; 
       border: none; 
-      padding: 8px 16px; 
-      border-radius: 8px; 
+      padding: 10px 18px; 
+      border-radius: 10px; 
       cursor: pointer; 
       font-weight: 600;
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: -0.01em;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 12px rgba(99,102,241,0.3);
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      min-height: 40px;
     }
     .btn::before{
       content: '';
@@ -201,31 +286,80 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s ease;
     }
     .btn:hover::before{
       left: 100%;
     }
     .btn:hover{
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(99,102,241,0.4);
+      background: linear-gradient(135deg, #8b5cf6, var(--accent));
+    }
+    .btn:active{
+      transform: translateY(-1px) scale(0.98);
+      box-shadow: 0 4px 15px rgba(99,102,241,0.3);
     }
     .btn.secondary{
-      background: transparent; 
-      border: 1px solid rgba(255,255,255,0.1); 
+      background: rgba(255,255,255,0.08); 
+      border: 1px solid rgba(255,255,255,0.2); 
       color: var(--muted);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     .btn.secondary:hover{
-      background: rgba(255,255,255,0.05);
-      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.3);
+      color: #fff;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
     .btn.warn{
-      background: var(--warning); 
-      color: #072;
+      background: linear-gradient(135deg, var(--warning), #f59e0b); 
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(245,158,11,0.3);
     }
-    /* تم حذف CSS للزر الأحمر */
+    .btn.warn:hover{
+      background: linear-gradient(135deg, #f59e0b, var(--warning));
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(245,158,11,0.4);
+    }
+    .btn.danger{
+      background: linear-gradient(135deg, var(--danger), #dc2626); 
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(239,68,68,0.3);
+    }
+    .btn.danger:hover{
+      background: linear-gradient(135deg, #dc2626, var(--danger));
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(239,68,68,0.4);
+    }
+    .btn.small{
+      padding: 4px 8px;
+      font-size: 9px;
+      min-height: 24px;
+      border-radius: 6px;
+    }
+    
+    .btn.tiny{
+      padding: 2px 6px;
+      font-size: 8px;
+      min-height: 20px;
+      border-radius: 4px;
+    }
+    .modal .btn{
+      min-width: 90px;
+      justify-content: center;
+    }
+    .btn-icon{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      font-size: 14px;
+    }
     .flex{display:flex; gap:8px; align-items:center;}
     .stats{display:flex; gap:16px; flex-wrap:wrap;}
     .stat{
@@ -345,7 +479,7 @@
     table{
       width:100%; 
       border-collapse:collapse; 
-      font-size:11px; 
+      font-size:10px; 
       table-layout:fixed;
       border-radius: var(--border-radius);
       overflow: hidden;
@@ -357,17 +491,18 @@
       backdrop-filter: blur(20px);
     }
     th, td{
-      padding:6px 4px; 
+      padding:4px 3px; 
       border-bottom:1px solid rgba(255,255,255,0.08); 
       text-align:center; 
       white-space:nowrap; 
       overflow:hidden; 
       text-overflow:ellipsis;
       transition: var(--transition);
-      line-height: 1.3;
+      line-height: 1.2;
+      font-size: 10px;
     }
     th{
-      font-size:10px; 
+      font-size:9px; 
       color:var(--muted); 
       font-weight:600; 
       border-bottom:1px solid rgba(99,102,241,0.2);
@@ -375,12 +510,12 @@
       backdrop-filter: blur(20px);
       letter-spacing: -0.01em;
       white-space: nowrap;
-      padding: 8px 4px;
+      padding: 6px 3px;
       text-transform: uppercase;
       overflow: visible;
       text-overflow: unset;
     }
-    td small{display:block; color:var(--muted); font-size:9px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.2;}
+    td small{display:block; color:var(--muted); font-size:8px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1;}
     
     /* تنسيق الصفوف */
     tbody tr:nth-child(even){background:rgba(99,102,241,0.02);}
@@ -463,18 +598,24 @@
       background:rgba(2,6,23,0.9); 
       z-index:40;
       backdrop-filter: blur(20px);
+      overflow-y: auto;
+      padding: 20px;
+      box-sizing: border-box;
     }
     .modal.open{display:flex;}
     .modal .box{
-      width:600px; 
-      max-width:95%; 
+      width:500px; 
+      max-width:90%; 
       background:var(--card); 
-      padding:32px; 
+      padding:24px; 
       border-radius:var(--border-radius);
       box-shadow: var(--shadow-lg);
       border: 1px solid rgba(255,255,255,0.15);
       backdrop-filter: blur(20px);
       animation: modalSlideIn 0.3s ease-out;
+      margin: auto;
+      max-height: 90vh;
+      overflow-y: auto;
     }
     @keyframes modalSlideIn {
       from {
@@ -486,17 +627,19 @@
         transform: translateY(0) scale(1);
       }
     }
-    label{display:block; font-size:14px; margin-bottom:8px; color:var(--muted); font-weight:600;}
+    label{display:block; font-size:13px; margin-bottom:6px; color:var(--muted); font-weight:600;}
     input[type="text"], input[type="number"], input[type="date"], select{
       width:100%; 
-      padding:12px 16px; 
-      border-radius:12px; 
+      padding:10px 12px; 
+      border-radius:8px; 
       border:1px solid rgba(255,255,255,0.15); 
       background:var(--glass); 
       color:inherit;
       transition: var(--transition);
       backdrop-filter: blur(20px);
-      font-size:14px;
+      font-size:13px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
     }
     input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus{
       outline: none;
@@ -504,7 +647,22 @@
       box-shadow: 0 0 0 2px rgba(14,165,169,0.1);
       background: rgba(255,255,255,0.05);
     }
-    .actions{display:flex; gap:12px; justify-content:flex-end; margin-top:16px;}
+    .actions{
+      display: flex; 
+      gap: 12px; 
+      justify-content: flex-end; 
+      margin-top: 24px; 
+      flex-wrap: wrap;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .actions .btn{
+      min-width: 100px;
+      justify-content: center;
+    }
+    .form-group{margin-bottom: 16px;}
+    .form-row{display: flex; gap: 12px; margin-bottom: 16px;}
+    .form-row .form-group{flex: 1; margin-bottom: 0;}
     .small{font-size:12px; color:var(--muted);}
     .chart-row{display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;}
     
@@ -619,31 +777,620 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- نظام المصادقة -->
+  <style>
+    .auth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      backdrop-filter: blur(20px);
+      pointer-events: auto;
+    }
+    
+    .auth-container {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(255,255,255,0.08);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: visible;
+      z-index: 1;
+    }
+    
+    .auth-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #a78bfa, #6366f1);
+      border-radius: 16px 16px 0 0;
+    }
+    
+    .auth-logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .auth-logo h1 {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #6366f1, #a78bfa, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    
+    .auth-logo p {
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .auth-form-group {
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .auth-form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .auth-form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      color: inherit;
+      font-size: 14px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      pointer-events: auto;
+      user-select: text;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+    }
+    
+    .auth-form-group input:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.1);
+      background: rgba(255,255,255,0.05);
+    }
+    
+    .auth-form-group input:not(:disabled) {
+      cursor: text;
+      pointer-events: auto;
+    }
+    
+    .auth-form-group input:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    
+    .auth-form-group input::placeholder {
+      color: #94a3b8;
+    }
+    
+    /* إصلاح مشكلة عدم إمكانية الكتابة */
+    .auth-form-group input[type="text"],
+    .auth-form-group input[type="password"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-color: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #e2e8f0;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 12px 16px;
+      width: 100%;
+      box-sizing: border-box;
+      pointer-events: auto;
+      user-select: text;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      cursor: text;
+    }
+    
+    .auth-form-group input[type="text"]:focus,
+    .auth-form-group input[type="password"]:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.1);
+      background-color: rgba(255,255,255,0.05);
+    }
+    
+    .auth-btn {
+      width: 100%;
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .auth-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .auth-btn:hover::before {
+      left: 100%;
+    }
+    
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      background: #5b5bd6;
+    }
+    
+    .auth-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .auth-error {
+      background: rgba(244,63,94,0.1);
+      border: 1px solid rgba(244,63,94,0.2);
+      color: #f43f5e;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .auth-success {
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.2);
+      color: #10b981;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .auth-loading {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .auth-loading .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid #6366f1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .auth-demo {
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+    
+    .auth-demo h4 {
+      color: #6366f1;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .auth-demo p {
+      margin: 4px 0;
+      color: #94a3b8;
+    }
+    
+    .auth-demo strong {
+      color: #fff;
+    }
+    
+    .auth-footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+    
+    .user-info {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(15px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .user-info:hover {
+      background: rgba(0,0,0,0.8);
+      border-color: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+    }
+    
+    /* تحسين العرض في الوضع النهاري */
+    body.light .user-info {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(0,0,0,0.1);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    body.light .user-info:hover {
+      background: rgba(255,255,255,0.95);
+      border-color: rgba(0,0,0,0.2);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+    }
+    
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #a78bfa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+      border: 2px solid rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+    .user-avatar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(99,102,241,0.4);
+    }
+    
+    /* تحسين الصورة الرمزية في الوضع النهاري */
+    body.light .user-avatar {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+      border: 2px solid rgba(99,102,241,0.3);
+    }
+    
+    body.light .user-avatar:hover {
+      box-shadow: 0 4px 12px rgba(99,102,241,0.4);
+      border-color: rgba(99,102,241,0.5);
+    }
+    
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .user-details h3 {
+      font-size: 13px;
+      margin: 0;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.2;
+    }
+    
+    .user-details p {
+      font-size: 11px;
+      color: #94a3b8;
+      margin: 0;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    
+    /* تحسين النصوص في الوضع النهاري */
+    body.light .user-details h3 {
+      color: #1e293b;
+      font-weight: 700;
+      text-shadow: none;
+    }
+    
+    body.light .user-details p {
+      color: #64748b;
+      font-weight: 600;
+    }
+    
+    .logout-btn {
+      background: linear-gradient(135deg, #f43f5e, #dc2626);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(244,63,94,0.3);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 28px;
+    }
+    
+    .logout-btn:hover {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 4px 12px rgba(244,63,94,0.4);
+    }
+    
+    .logout-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+    
+    /* تحسين زر تسجيل الخروج في الوضع النهاري */
+    body.light .logout-btn {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      color: white;
+      box-shadow: 0 2px 6px rgba(220,38,38,0.3);
+    }
+    
+    body.light .logout-btn:hover {
+      background: linear-gradient(135deg, #b91c1c, #991b1b);
+      box-shadow: 0 4px 12px rgba(220,38,38,0.4);
+    }
+    
+    /* استجابة للشاشات الصغيرة */
+    @media (max-width: 768px) {
+      .user-info {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        gap: 8px;
+      }
+      
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+      }
+      
+      .user-details h3 {
+        font-size: 12px;
+      }
+      
+      .user-details p {
+        font-size: 10px;
+      }
+      
+      .logout-btn {
+        padding: 4px 8px;
+        font-size: 10px;
+        min-height: 24px;
+      }
+    }
+    
+    .permission-restricted {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    
+    /* إصلاح مشكلة عدم إمكانية الكتابة في حقول تسجيل الدخول */
+    #authUsername, #authPassword {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-color: rgba(255,255,255,0.08) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      color: #e2e8f0 !important;
+      font-family: inherit !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      padding: 12px 16px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      pointer-events: auto !important;
+      user-select: text !important;
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      cursor: text !important;
+      z-index: 10 !important;
+      position: relative !important;
+    }
+    
+    #authUsername:focus, #authPassword:focus {
+      outline: none !important;
+      border-color: #6366f1 !important;
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.1) !important;
+      background-color: rgba(255,255,255,0.05) !important;
+    }
+    
+    #authUsername:hover, #authPassword:hover {
+      border-color: rgba(255,255,255,0.3) !important;
+    }
+    
+    /* إصلاح مشكلة عدم إمكانية الكتابة - CSS إضافي */
+    .auth-form-group input[type="text"]:not(:disabled),
+    .auth-form-group input[type="password"]:not(:disabled) {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      background-color: rgba(255,255,255,0.08) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      color: #e2e8f0 !important;
+      font-family: inherit !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      padding: 12px 16px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      pointer-events: auto !important;
+      user-select: text !important;
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      cursor: text !important;
+      z-index: 10 !important;
+      position: relative !important;
+      opacity: 1 !important;
+    }
+    
+    .auth-form-group input[type="text"]:not(:disabled):focus,
+    .auth-form-group input[type="password"]:not(:disabled):focus {
+      outline: none !important;
+      border-color: #6366f1 !important;
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.1) !important;
+      background-color: rgba(255,255,255,0.05) !important;
+    }
+    
+    .auth-form-group input[type="text"]:not(:disabled):hover,
+    .auth-form-group input[type="password"]:not(:disabled):hover {
+      border-color: rgba(255,255,255,0.3) !important;
+    }
+    
+    @media (max-width: 480px) {
+      .auth-container {
+        padding: 30px 20px;
+      }
+      
+      .auth-logo h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- واجهة تسجيل الدخول -->
+  <div id="authOverlay" class="auth-overlay">
+    <div class="auth-container">
+      <div class="auth-logo">
+        <h1>قسم العمليات التجارية </h1>
+        <p>نظام متابعة نمو الوكلاء</p>
+      </div>
+
+      <div id="authError" class="auth-error"></div>
+      <div id="authSuccess" class="auth-success"></div>
+
+  
+
+      <form id="authForm">
+        <div class="auth-form-group">
+          <label for="authUsername">اسم المستخدم</label>
+          <input type="text" id="authUsername" name="username" placeholder="أدخل اسم المستخدم" required>
+        </div>
+
+        <div class="auth-form-group">
+          <label for="authPassword">كلمة المرور</label>
+          <input type="password" id="authPassword" name="password" placeholder="أدخل كلمة المرور" required>
+        </div>
+
+        <button type="submit" class="auth-btn" id="authLoginBtn">
+          تسجيل الدخول
+        </button>
+      </form>
+
+      <div id="authLoading" class="auth-loading">
+        <div class="spinner"></div>
+        <p>جاري تسجيل الدخول...</p>
+      </div>
+
+      <div class="auth-footer">
+        <p>© 2025 عراق سيل   </p>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <header>
-      <div>
-        <h1>متابعة الوكلاء</h1>
-        <p class="lead">قسم العمليات التجارية لشركة عراق سيل</p>
-        <div id="connectionStatus" style="font-size: 12px; margin-top: 4px; padding: 2px 6px; border-radius: 4px; display: inline-block;">
-          <span id="statusIcon">🔄</span>
-          <span id="statusText">جاري الاتصال...</span>
+      <div class="header-left">
+        <div class="header-content">
+          <h1>متابعة الوكلاء</h1>
+          <p class="lead">قسم العمليات التجارية لشركة عراق سيل</p>
+          <div id="connectionStatus" style="font-size: 12px; margin-top: 4px; padding: 2px 6px; border-radius: 4px; display: inline-block;">
+            <span id="statusIcon">🔄</span>
+            <span id="statusText">جاري الاتصال...</span>
+          </div>
         </div>
       </div>
-      <div class="controls" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-        <button class="btn secondary" id="btnAddAgent">
-          <span class="icon">➕</span>
-          إضافة وكيل
+      
+      <div class="controls">
+        <div class="controls-group">
+          <button class="btn secondary" id="btnAddAgent">
+            <span class="icon">➕</span>
+            إضافة وكيل
+          </button>
+          <button class="btn warn" id="btnWeeklyReport">
+            <span class="icon">📊</span>
+            تقرير
+          </button>
+          <button class="btn secondary" id="btnTheme">
+            <span class="icon">🌙</span>
+            الوضع: ليلي
+          </button>
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <button class="btn secondary" id="btnUserManagement" style="display: none;">
+          <span class="icon">👥</span>
+          إدارة المستخدمين
         </button>
-        <button class="btn warn" id="btnWeeklyReport">
-          <span class="icon">📊</span>
-          تقرير
-        </button>
-        <button class="btn secondary" id="btnTheme">
-          <span class="icon">🌙</span>
-          الوضع: ليلي
-        </button>
+        <div class="user-info" id="userInfo" style="display: none;">
+          <div class="user-avatar" id="userAvatar">A</div>
+          <div class="user-details">
+            <h3 id="userName">مدير النظام</h3>
+            <p id="userRole">مدير</p>
+          </div>
+          <button class="logout-btn" id="logoutBtn">
+            <span class="icon">🚪</span>
+            تسجيل الخروج
+          </button>
+        </div>
       </div>
     </header>
 
@@ -888,6 +1635,431 @@
   </div>
 
   <script>
+    // نظام المصادقة
+    class AuthSystem {
+      constructor() {
+        this.currentUser = null;
+        this.permissions = {
+          admin: ['view', 'add', 'edit', 'delete', 'manage_users', 'export', 'reports'],
+          supervisor: ['view', 'add', 'edit', 'export', 'reports'],
+          viewer: ['view', 'export']
+        };
+        this.init();
+      }
+
+      init() {
+        this.loadCurrentUser();
+        this.checkAuthentication();
+        this.setupEventListeners();
+      }
+
+      loadCurrentUser() {
+        const session = localStorage.getItem('userSession');
+        if (session) {
+          try {
+            this.currentUser = JSON.parse(session);
+            // Check if session is not too old (24 hours)
+            const loginTime = new Date(this.currentUser.loginTime);
+            const now = new Date();
+            const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
+            
+            if (hoursDiff >= 24) {
+              this.logout();
+              return;
+            }
+            this.hideAuthOverlay();
+            this.updateUI();
+          } catch (error) {
+            this.logout();
+          }
+        }
+      }
+
+      checkAuthentication() {
+        if (!this.currentUser) {
+          this.showAuthOverlay();
+          return false;
+        }
+        return true;
+      }
+
+      hasPermission(permission) {
+        if (!this.currentUser) return false;
+        return this.permissions[this.currentUser.role]?.includes(permission) || false;
+      }
+
+      canView() { return this.hasPermission('view'); }
+      canAdd() { return this.hasPermission('add'); }
+      canEdit() { return this.hasPermission('edit'); }
+      canDelete() { return this.hasPermission('delete'); }
+      canManageUsers() { return this.hasPermission('manage_users'); }
+      canExport() { return this.hasPermission('export'); }
+      canGenerateReports() { return this.hasPermission('reports'); }
+
+      getCurrentUser() { return this.currentUser; }
+      getUserRole() { return this.currentUser?.role || 'viewer'; }
+      getUserName() { return this.currentUser?.name || 'مستخدم'; }
+
+      getRoleName(role) {
+        const roles = {
+          'admin': 'مدير',
+          'supervisor': 'مشرف',
+          'viewer': 'مشاهد'
+        };
+        return roles[role] || role;
+      }
+
+      showAuthOverlay() {
+        document.getElementById('authOverlay').style.display = 'flex';
+        document.querySelector('.container').style.display = 'none';
+      }
+
+      hideAuthOverlay() {
+        document.getElementById('authOverlay').style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+      }
+
+      showError(message) {
+        const errorEl = document.getElementById('authError');
+        errorEl.textContent = message;
+        errorEl.style.display = 'block';
+        document.getElementById('authSuccess').style.display = 'none';
+      }
+
+      showSuccess(message) {
+        const successEl = document.getElementById('authSuccess');
+        successEl.textContent = message;
+        successEl.style.display = 'block';
+        document.getElementById('authError').style.display = 'none';
+      }
+
+      hideMessages() {
+        document.getElementById('authError').style.display = 'none';
+        document.getElementById('authSuccess').style.display = 'none';
+      }
+
+      showLoading() {
+        document.getElementById('authLoading').style.display = 'block';
+        document.getElementById('authLoginBtn').disabled = true;
+        document.getElementById('authLoginBtn').textContent = 'جاري تسجيل الدخول...';
+      }
+
+      hideLoading() {
+        document.getElementById('authLoading').style.display = 'none';
+        document.getElementById('authLoginBtn').disabled = false;
+        document.getElementById('authLoginBtn').textContent = 'تسجيل الدخول';
+      }
+
+      async validateUser(username, password) {
+        try {
+          // Try to load from database first
+          const supabase = getSupabaseClient();
+          if (supabase) {
+            const { data, error } = await supabase
+              .from('users')
+              .select('*')
+              .eq('username', username)
+              .eq('password_hash', password)
+              .eq('status', 'active')
+              .single();
+
+            if (error) {
+              console.error('Database validation error:', error);
+              // Fallback to local storage
+              return this.validateUserFromLocalStorage(username, password);
+            }
+
+            if (data) {
+              return {
+                success: true,
+                user: {
+                  id: data.id,
+                  username: data.username,
+                  role: data.role,
+                  name: data.full_name || data.username
+                }
+              };
+            }
+          }
+
+          // Fallback to local storage
+          return this.validateUserFromLocalStorage(username, password);
+        } catch (error) {
+          console.error('User validation error:', error);
+          // Fallback to local storage
+          return this.validateUserFromLocalStorage(username, password);
+        }
+      }
+
+      validateUserFromLocalStorage(username, password) {
+        try {
+          // Load users from local storage
+          const savedUsers = localStorage.getItem('systemUsers');
+          if (savedUsers) {
+            const users = JSON.parse(savedUsers);
+            const user = users.find(u => 
+              u.username === username && 
+              u.password_hash === password && 
+              u.status === 'active'
+            );
+            
+            if (user) {
+              return {
+                success: true,
+                user: {
+                  id: user.id,
+                  username: user.username,
+                  role: user.role,
+                  name: user.full_name || user.username
+                }
+              };
+            }
+          }
+
+          // Demo users for testing (fallback)
+          const demoUsers = {
+            'admin': { password: 'admin123', role: 'admin', name: 'مدير النظام' },
+            'supervisor': { password: 'sup123', role: 'supervisor', name: 'مشرف النظام' },
+            'viewer': { password: 'view123', role: 'viewer', name: 'مشاهد النظام' }
+          };
+
+          const user = demoUsers[username];
+          if (user && user.password === password) {
+            return {
+              success: true,
+              user: {
+                id: username,
+                username: username,
+                role: user.role,
+                name: user.name
+              }
+            };
+          }
+
+          return { success: false, message: 'اسم المستخدم أو كلمة المرور غير صحيحة' };
+        } catch (error) {
+          console.error('Local storage validation error:', error);
+          return { success: false, message: 'خطأ في التحقق من بيانات المستخدم' };
+        }
+      }
+
+      saveUserSession(user) {
+        const session = {
+          username: user.username,
+          role: user.role,
+          name: user.name,
+          loginTime: new Date().toISOString()
+        };
+        localStorage.setItem('userSession', JSON.stringify(session));
+      }
+
+      updateUI() {
+        if (!this.currentUser) return;
+
+        // Update user info in header
+        document.getElementById('userName').textContent = this.getUserName();
+        document.getElementById('userRole').textContent = this.getRoleName(this.getUserRole());
+        document.getElementById('userAvatar').textContent = this.getUserName().charAt(0);
+        document.getElementById('userInfo').style.display = 'flex';
+
+        // Update permissions
+        this.updateElementVisibility();
+        
+        // Update table action buttons
+        this.updateTableActionButtons();
+      }
+
+      updateTableActionButtons() {
+        const canEdit = this.canEdit();
+        const canDelete = this.canDelete();
+        
+        // Update all action buttons in the table
+        const editButtons = document.querySelectorAll('button[data-action="edit"]');
+        const editInfoButtons = document.querySelectorAll('button[data-action="edit-info"]');
+        const deleteButtons = document.querySelectorAll('button[data-action="delete"]');
+        
+        editButtons.forEach(btn => {
+          btn.style.display = canEdit ? 'inline-flex' : 'none';
+        });
+        
+        editInfoButtons.forEach(btn => {
+          btn.style.display = canEdit ? 'inline-flex' : 'none';
+        });
+        
+        deleteButtons.forEach(btn => {
+          btn.style.display = canDelete ? 'inline-flex' : 'none';
+        });
+      }
+
+      updateElementVisibility() {
+        // Hide/show add button
+        const addButton = document.getElementById('btnAddAgent');
+        if (addButton) {
+          addButton.style.display = this.canAdd() ? 'inline-flex' : 'none';
+        }
+
+        // Hide/show export button
+        const exportButton = document.getElementById('btnWeeklyReport');
+        if (exportButton) {
+          exportButton.style.display = this.canExport() ? 'inline-flex' : 'none';
+        }
+
+        // Hide/show user management button
+        const userMgmtButton = document.getElementById('btnUserManagement');
+        if (userMgmtButton) {
+          userMgmtButton.style.display = this.canManageUsers() ? 'inline-flex' : 'none';
+        }
+
+        // Disable form inputs for viewers
+        if (this.getUserRole() === 'viewer') {
+          const inputs = document.querySelectorAll('input, select, textarea');
+          inputs.forEach(input => {
+            input.disabled = true;
+          });
+        }
+      }
+
+      setupEventListeners() {
+        document.getElementById('authForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          this.handleLogin();
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+          this.logout();
+        });
+
+        document.getElementById('btnUserManagement').addEventListener('click', () => {
+          window.open('user_management_database.html', '_blank');
+        });
+
+        // إصلاح مشكلة عدم إمكانية الكتابة
+        const usernameInput = document.getElementById('authUsername');
+        const passwordInput = document.getElementById('authPassword');
+        
+        if (usernameInput) {
+          usernameInput.addEventListener('focus', () => {
+            usernameInput.style.pointerEvents = 'auto';
+            usernameInput.style.userSelect = 'text';
+          });
+          
+          usernameInput.addEventListener('click', () => {
+            usernameInput.focus();
+          });
+        }
+        
+        if (passwordInput) {
+          passwordInput.addEventListener('focus', () => {
+            passwordInput.style.pointerEvents = 'auto';
+            passwordInput.style.userSelect = 'text';
+          });
+          
+          passwordInput.addEventListener('click', () => {
+            passwordInput.focus();
+          });
+        }
+      }
+
+      async handleLogin() {
+        this.hideMessages();
+
+        const username = document.getElementById('authUsername').value.trim();
+        const password = document.getElementById('authPassword').value;
+
+        if (!username || !password) {
+          this.showError('يرجى إدخال اسم المستخدم وكلمة المرور');
+          return;
+        }
+
+        this.showLoading();
+
+        try {
+          // Simulate network delay
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+          const validation = await this.validateUser(username, password);
+          
+          if (validation.success) {
+            this.currentUser = validation.user;
+            this.saveUserSession(validation.user);
+            
+            this.showSuccess(`مرحباً ${validation.user.name}! تم تسجيل الدخول بنجاح`);
+            
+            setTimeout(() => {
+              this.hideAuthOverlay();
+              this.updateUI();
+            }, 1500);
+          } else {
+            this.hideLoading();
+            this.showError(validation.message);
+          }
+        } catch (error) {
+          this.hideLoading();
+          this.showError('حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى');
+          console.error('Login error:', error);
+        }
+      }
+
+      logout() {
+        this.currentUser = null;
+        localStorage.removeItem('userSession');
+        this.showAuthOverlay();
+        document.getElementById('authForm').reset();
+        this.hideMessages();
+      }
+    }
+
+    // Initialize auth system
+    const authSystem = new AuthSystem();
+    
+    // إصلاح مشكلة عدم إمكانية الكتابة
+    document.addEventListener('DOMContentLoaded', () => {
+      const usernameInput = document.getElementById('authUsername');
+      const passwordInput = document.getElementById('authPassword');
+      
+      if (usernameInput) {
+        usernameInput.style.pointerEvents = 'auto';
+        usernameInput.style.userSelect = 'text';
+        usernameInput.style.cursor = 'text';
+        usernameInput.removeAttribute('readonly');
+        usernameInput.removeAttribute('disabled');
+        usernameInput.setAttribute('autocomplete', 'username');
+        usernameInput.setAttribute('spellcheck', 'false');
+      }
+      
+      if (passwordInput) {
+        passwordInput.style.pointerEvents = 'auto';
+        passwordInput.style.userSelect = 'text';
+        passwordInput.style.cursor = 'text';
+        passwordInput.removeAttribute('readonly');
+        passwordInput.removeAttribute('disabled');
+        passwordInput.setAttribute('autocomplete', 'current-password');
+        passwordInput.setAttribute('spellcheck', 'false');
+      }
+    });
+    
+    // إصلاح إضافي لمشكلة عدم إمكانية الكتابة
+    setTimeout(() => {
+      const usernameInput = document.getElementById('authUsername');
+      const passwordInput = document.getElementById('authPassword');
+      
+      if (usernameInput) {
+        usernameInput.style.pointerEvents = 'auto';
+        usernameInput.style.userSelect = 'text';
+        usernameInput.style.cursor = 'text';
+        usernameInput.removeAttribute('readonly');
+        usernameInput.removeAttribute('disabled');
+      }
+      
+      if (passwordInput) {
+        passwordInput.style.pointerEvents = 'auto';
+        passwordInput.style.userSelect = 'text';
+        passwordInput.style.cursor = 'text';
+        passwordInput.removeAttribute('readonly');
+        passwordInput.removeAttribute('disabled');
+      }
+    }, 1000);
+
     // Supabase init
     const SUPABASE_URL = 'https://vpvvjascwgivdjyyhzwp.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
@@ -1337,11 +2509,11 @@
           <td>${statusBadge(a.status)}</td>
           <td>
               <div class="flex" style="justify-content:center; gap:4px; flex-wrap:wrap;">
-                <button class="btn secondary" data-action="edit" data-id="${a._id}" style="font-size:8px; padding:2px 4px;">
+                <button class="btn secondary tiny" data-action="edit" data-id="${a._id}" style="display: ${(typeof authSystem !== 'undefined' && authSystem.canEdit()) ? 'inline-flex' : 'none'};">
                   <span class="icon">🔄</span>
                   تحديث
                 </button>
-                <button class="btn" data-action="edit-info" data-id="${a._id}" style="font-size:8px; padding:2px 4px;">
+                <button class="btn tiny" data-action="edit-info" data-id="${a._id}" style="display: ${(typeof authSystem !== 'undefined' && authSystem.canEdit()) ? 'inline-flex' : 'none'};">
                   <span class="icon">✏️</span>
                   تعديل
                 </button>
@@ -1360,15 +2532,15 @@
         const sub = document.createElement('tr');
         sub.className = 'subtotal-title';
         sub.innerHTML = `
-          <td colspan="4" style="text-align:right; font-weight:600; font-size:9px; padding:4px;">مجموع ${escapeHtml(arabicPhaseLabel(phaseKey))}</td>
+          <td colspan="4" style="text-align:right; font-weight:600; font-size:8px; padding:3px;">مجموع ${escapeHtml(arabicPhaseLabel(phaseKey))}</td>
           <td></td>
-          <td style="font-weight:600; font-size:9px; padding:4px;">${num(totals.total)}</td>
-          <td style="font-weight:600; font-size:9px; padding:4px;">${num(totals.active)}</td>
-          <td></td>
-          <td></td>
+          <td style="font-weight:600; font-size:8px; padding:3px;">${num(totals.total)}</td>
+          <td style="font-weight:600; font-size:8px; padding:3px;">${num(totals.active)}</td>
           <td></td>
           <td></td>
-          <td style="font-weight:600; font-size:9px; padding:4px;">${totals.deficit_users ? num(totals.deficit_users) : '-'}</td>
+          <td></td>
+          <td></td>
+          <td style="font-weight:600; font-size:8px; padding:3px;">${totals.deficit_users ? num(totals.deficit_users) : '-'}</td>
           <td></td>
           <td></td>
         `;
@@ -1377,6 +2549,11 @@
 
       updateStats(filtered);
       updateCharts(filtered);
+      
+      // Update permissions after rendering
+      if (typeof authSystem !== 'undefined') {
+        authSystem.updateElementVisibility();
+      }
     }
 
     function updateStats(list){
@@ -1466,6 +2643,36 @@
       document.getElementById('info_total').value = a.total_users || 0;
       const infoBoardEl = document.getElementById('info_board'); if(infoBoardEl) infoBoardEl.value = a.board_name || '';
       modalEditInfo.dataset.editIndex = String(idx);
+    });
+
+    // Delete handler
+    tbody.addEventListener('click', async (ev)=>{
+      const btn = ev.target.closest('button[data-action="delete"]');
+      if(!btn) return;
+      const id = btn.dataset.id;
+      const idx = agents.findIndex(a=>a._id === id);
+      if(idx < 0) return;
+      const a = agents[idx];
+      
+      if(!confirm(`هل تريد حذف الوكيل: ${a.name || ''} ؟`)) return;
+      
+      try{
+        const dbId = dbIdByLocalId.get(a._id);
+        if(dbId){
+          const supabase = getSupabaseClient();
+          if (supabase) {
+            const { error } = await supabase.from('agents').delete().eq('id', dbId);
+            if(error) console.error('Delete error:', error);
+          }
+          localIdByDbId.delete(dbId);
+          dbIdByLocalId.delete(a._id);
+        }
+      }catch(e){ console.error(e); }
+      
+      agents.splice(idx,1);
+      saveToStorage();
+      renderTable();
+      alert(`تم حذف الوكيل "${a.name}" بنجاح!`);
     });
 
     closeInfoModal.addEventListener('click', ()=> modalEditInfo.classList.remove('open'));
@@ -2003,6 +3210,13 @@
     
     initializeSupabase();
     initializeData();
+    
+    // Update UI with permissions after initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof authSystem !== 'undefined') {
+        authSystem.updateUI();
+      }
+    });
     
     function applyTheme(theme){
       const root = document.documentElement;
