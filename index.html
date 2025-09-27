@@ -48,7 +48,6 @@
       --shadow-lg: 0 16px 48px rgba(0,0,0,0.16);
     }
     
-    /* تنسيقات الوضع النهاري للجدول */
     :root.light tbody tr:nth-child(even){background:rgba(0,0,0,0.02);}
     :root.light tbody tr:hover{background:rgba(0,0,0,0.05);}
     :root.light th, :root.light td{border-bottom:1px solid rgba(0,0,0,0.08);}
@@ -57,7 +56,6 @@
     :root.light tr.subtotal-values td{background:rgba(0,0,0,0.04); border-bottom:1px solid rgba(0,0,0,0.08);}
     :root.light .phase-header td{background:rgba(0,0,0,0.08); border-bottom:1px solid rgba(0,0,0,0.12);}
     
-    /* ألوان الكاردات في الوضع النهاري */
     :root.light .stat:nth-child(1) {
       background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(99,102,241,0.03));
       border-color: rgba(99,102,241,0.2);
@@ -721,15 +719,13 @@
     td:nth-child(13){min-width:60px; max-width:80px;}
     td:nth-child(14){min-width:100px; max-width:120px;}
     
-    /* تنسيق خاص للعمود الأول (اسم الوكيل) */
+   
     td:nth-child(1){white-space:normal; word-wrap:break-word;}
     td:nth-child(1) strong{font-size:11px; line-height:1.2; word-break:break-word;}
     td:nth-child(1) small{font-size:8px; margin-top:2px; word-break:break-word;}
     
-    /* تنسيق خاص لعمود FDT */
     td:nth-child(4){white-space:normal; word-wrap:break-word; text-align:center;}
     
-    /* تنسيق للأزرار */
     .btn{font-size:12px; padding:8px 12px;}
     
     @media (max-width:1200px){
@@ -778,7 +774,6 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
-  <!-- نظام المصادقة -->
   <style>
     .auth-overlay {
       position: fixed;
@@ -893,7 +888,6 @@
       color: #94a3b8;
     }
     
-    /* إصلاح مشكلة عدم إمكانية الكتابة */
     .auth-form-group input[type="text"],
     .auth-form-group input[type="password"] {
       -webkit-appearance: none;
@@ -1097,7 +1091,6 @@
       box-shadow: 0 4px 12px rgba(99,102,241,0.4);
     }
     
-    /* تحسين الصورة الرمزية في الوضع النهاري */
     body.light .user-avatar {
       background: linear-gradient(135deg, #6366f1, #8b5cf6);
       color: white;
@@ -1132,7 +1125,6 @@
       line-height: 1.2;
     }
     
-    /* تحسين النصوص في الوضع النهاري */
     body.light .user-details h3 {
       color: #1e293b;
       font-weight: 700;
@@ -1182,7 +1174,6 @@
       box-shadow: 0 4px 12px rgba(220,38,38,0.4);
     }
     
-    /* استجابة للشاشات الصغيرة */
     @media (max-width: 768px) {
       .user-info {
         top: 10px;
@@ -1218,7 +1209,6 @@
       pointer-events: none;
     }
     
-    /* إصلاح مشكلة عدم إمكانية الكتابة في حقول تسجيل الدخول */
     #authUsername, #authPassword {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -1253,7 +1243,6 @@
       border-color: rgba(255,255,255,0.3) !important;
     }
     
-    /* إصلاح مشكلة عدم إمكانية الكتابة - CSS إضافي */
     .auth-form-group input[type="text"]:not(:disabled),
     .auth-form-group input[type="password"]:not(:disabled) {
       -webkit-appearance: none !important;
@@ -1304,12 +1293,11 @@
   </style>
 </head>
 <body>
-  <!-- واجهة تسجيل الدخول -->
   <div id="authOverlay" class="auth-overlay">
     <div class="auth-container">
       <div class="auth-logo">
         <h1>قسم العمليات التجارية </h1>
-        <p>نظام متابعة نمو الوكلاء</p>
+        <p> متابعة نمو الوكلاء</p>
       </div>
 
       <div id="authError" class="auth-error"></div>
@@ -1399,16 +1387,16 @@
           <div class="filters">
             <select id="phaseFilter" class="search">
               <option value="">🔍 كل المراحل</option>
-              <option value="OLD">📜 المشروع القديم</option>
-              <option value="PHASE2">🚀 المرحلة الثانية</option>
-              <option value="PHASE3">⭐ المرحلة الثالثة</option>
+              <option value="OLD"> المشروع القديم</option>
+              <option value="PHASE2"> المرحلة الثانية</option>
+              <option value="PHASE3"> المرحلة الثالثة</option>
             </select>
             <input id="searchBox" class="search" placeholder="🔍 بحث عن وكيل..." />
             <select id="sortBy" class="search">
-              <option value="name">📝 ترتيب حسب الاسم</option>
+              <option value="name"> ترتيب حسب الاسم</option>
               <option value="total_users_desc">📊 أعلى إجمالي</option>
-              <option value="active_desc">🔥 أعلى نشط</option>
-              <option value="deficit_desc">⚠️ أعلى عجز</option>
+              <option value="active_desc"> أعلى نشط</option>
+              <option value="deficit_desc"> أعلى عجز</option>
             </select>
           </div>
         </div>
@@ -1488,10 +1476,6 @@
         <input type="number" id="editTotal" readonly />
       </div>
       <div>
-        <label>النشط السابق</label>
-        <input type="number" id="editPrevActive" readonly />
-      </div>
-      <div>
         <label>النشط الحالي (ادخله يدوياً)</label>
         <input type="number" id="editActive" />
       </div>
@@ -1508,7 +1492,6 @@
     </div>
   </div>
 
-  <!-- Modal: Edit Agent Info -->
   <div id="modalEditInfo" class="modal">
     <div class="box">
       <h3>تعديل معلومات الوكيل</h3>
@@ -1634,7 +1617,6 @@
   </div>
 
   <script>
-    // نظام المصادقة
     class AuthSystem {
       constructor() {
         this.currentUser = null;
@@ -1657,7 +1639,6 @@
         if (session) {
           try {
             this.currentUser = JSON.parse(session);
-            // Check if session is not too old (24 hours)
             const loginTime = new Date(this.currentUser.loginTime);
             const now = new Date();
             const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
@@ -1760,7 +1741,6 @@
 
       async validateUser(username, password) {
         try {
-          // Try to load from database first
           const supabase = getSupabaseClient();
           if (supabase) {
             const { data, error } = await supabase
@@ -1773,7 +1753,6 @@
 
             if (error) {
               console.error('Database validation error:', error);
-              // Fallback to local storage
               return this.validateUserFromLocalStorage(username, password);
             }
 
@@ -1790,18 +1769,15 @@
             }
           }
 
-          // Fallback to local storage
           return this.validateUserFromLocalStorage(username, password);
         } catch (error) {
           console.error('User validation error:', error);
-          // Fallback to local storage
           return this.validateUserFromLocalStorage(username, password);
         }
       }
 
       validateUserFromLocalStorage(username, password) {
         try {
-          // Load users from local storage
           const savedUsers = localStorage.getItem('systemUsers');
           if (savedUsers) {
             const users = JSON.parse(savedUsers);
@@ -1824,12 +1800,7 @@
             }
           }
 
-          // Demo users for testing (fallback)
-          const demoUsers = {
-            'admin': { password: 'admin123', role: 'admin', name: 'مدير النظام' },
-            'supervisor': { password: 'sup123', role: 'supervisor', name: 'مشرف النظام' },
-            'viewer': { password: 'view123', role: 'viewer', name: 'مشاهد النظام' }
-          };
+          
 
           const user = demoUsers[username];
           if (user && user.password === password) {
@@ -1869,16 +1840,13 @@
 
         console.log('updateUI - currentUser:', this.currentUser);
 
-        // Update user info in header
         document.getElementById('userName').textContent = this.getUserName();
         document.getElementById('userRole').textContent = this.getRoleName(this.getUserRole());
         document.getElementById('userAvatar').textContent = this.getUserName().charAt(0);
         document.getElementById('userInfo').style.display = 'flex';
 
-        // Update permissions
         this.updateElementVisibility();
         
-        // Update table action buttons
         this.updateTableActionButtons();
       }
 
@@ -1888,7 +1856,6 @@
         
         console.log('Updating table action buttons - canEdit:', canEdit, 'canDelete:', canDelete);
         
-        // Update all action buttons in the table
         const editButtons = document.querySelectorAll('button[data-action="edit"]');
         const editInfoButtons = document.querySelectorAll('button[data-action="edit-info"]');
         const deleteButtons = document.querySelectorAll('button[data-action="delete"]');
@@ -1912,25 +1879,21 @@
       }
 
       updateElementVisibility() {
-        // Hide/show add button
         const addButton = document.getElementById('btnAddAgent');
         if (addButton) {
           addButton.style.display = this.canAdd() ? 'inline-flex' : 'none';
         }
 
-        // Hide/show export button
         const exportButton = document.getElementById('btnWeeklyReport');
         if (exportButton) {
           exportButton.style.display = this.canExport() ? 'inline-flex' : 'none';
         }
 
-        // Hide/show user management button
         const userMgmtButton = document.getElementById('btnUserManagement');
         if (userMgmtButton) {
           userMgmtButton.style.display = this.canManageUsers() ? 'inline-flex' : 'none';
         }
 
-        // Disable form inputs for viewers
         if (this.getUserRole() === 'viewer') {
           const inputs = document.querySelectorAll('input, select, textarea');
           inputs.forEach(input => {
@@ -1953,7 +1916,6 @@
           window.open('user_management_database.html', '_blank');
         });
 
-        // إصلاح مشكلة عدم إمكانية الكتابة
         const usernameInput = document.getElementById('authUsername');
         const passwordInput = document.getElementById('authPassword');
         
@@ -1994,7 +1956,6 @@
         this.showLoading();
 
         try {
-          // Simulate network delay
           await new Promise(resolve => setTimeout(resolve, 1000));
 
           const validation = await this.validateUser(username, password);
@@ -2031,10 +1992,8 @@
       }
     }
 
-    // Initialize auth system
     const authSystem = new AuthSystem();
     
-    // إصلاح مشكلة عدم إمكانية الكتابة
     document.addEventListener('DOMContentLoaded', () => {
       const usernameInput = document.getElementById('authUsername');
       const passwordInput = document.getElementById('authPassword');
@@ -2060,7 +2019,6 @@
       }
     });
     
-    // إصلاح إضافي لمشكلة عدم إمكانية الكتابة
     setTimeout(() => {
       const usernameInput = document.getElementById('authUsername');
       const passwordInput = document.getElementById('authPassword');
@@ -2082,11 +2040,9 @@
       }
     }, 1000);
 
-    // Supabase init
     const SUPABASE_URL = 'https://vpvvjascwgivdjyyhzwp.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
     
-    // نمط Singleton لـ Supabase Client
     const SupabaseManager = {
       _instance: null,
       _isInitialized: false,
@@ -2095,12 +2051,10 @@
       _maxAttempts: 3,
       
       getInstance() {
-        // إذا كان موجود بالفعل، استخدمه
         if (this._instance) {
           return this._instance;
         }
         
-        // إذا تم تجاوز عدد المحاولات، لا تحاول مرة أخرى
         if (this._creationAttempts >= this._maxAttempts) {
           console.warn('Max creation attempts reached, not creating new instance');
           return null;
@@ -2131,9 +2085,7 @@
       
       reset() {
         console.log('Resetting Supabase client...');
-        // لا نحذف الـ instance، فقط نعيد تعيين الحالة
         this.connectionStatus = 'disconnected';
-        // إعادة تعيين عدد المحاولات للسماح بمحاولة جديدة
         this._creationAttempts = 0;
         this._isInitialized = false;
       },
@@ -2147,24 +2099,20 @@
       }
     };
     
-    // دالة للحصول على Supabase Client
     function getSupabaseClient() {
       return SupabaseManager.getInstance();
     }
     
-    // دالة لإعادة تهيئة Supabase Client
     function reinitializeSupabase() {
       try {
         console.log('Reinitializing Supabase client...');
         
-        // إذا كان هناك instance موجود، استخدمه بدلاً من إنشاء واحد جديد
         if (SupabaseManager.hasInstance()) {
           console.log('Using existing Supabase instance');
           SupabaseManager.connectionStatus = 'disconnected';
           return true;
         }
         
-        // فقط إذا لم يكن هناك instance، أنشئ واحد جديد
         SupabaseManager.reset();
         const client = getSupabaseClient();
         if (client) {
@@ -2182,7 +2130,6 @@
    
     const STORAGE_KEY = 'agents_dashboard_data_v1';
 
-    // دالة لتحديث مؤشر حالة الاتصال
     function updateConnectionStatus(status) {
       const statusEl = document.getElementById('connectionStatus');
       const iconEl = document.getElementById('statusIcon');
@@ -2217,7 +2164,6 @@
     }
 
 
-    // دالة للتحقق من صحة البيانات قبل الحفظ
     function validateAgentData(agent) {
       const errors = [];
       
@@ -2241,17 +2187,12 @@
         errors.push('المستخدمون النشطون يجب أن يكون رقم موجب');
       }
       
-      if (typeof agent.prev_active !== 'number' || agent.prev_active < 0) {
-        errors.push('المستخدمون النشطون السابقون يجب أن يكون رقم موجب');
-      }
-      
       return {
         isValid: errors.length === 0,
         errors: errors
       };
     }
 
-    // Test Supabase connection
     async function testSupabaseConnection() {
       try {
         console.log('Testing Supabase connection...');
@@ -2260,7 +2201,6 @@
         console.log('Supabase Key (first 20 chars):', SUPABASE_ANON_KEY.substring(0, 20) + '...');
         console.log('Testing with columns: id, name, active, total_users');
         
-        // الحصول على Supabase client من الـ Singleton
         const supabase = getSupabaseClient();
         if (!supabase) {
           console.error('Failed to get Supabase client');
@@ -2268,10 +2208,9 @@
           return false;
         }
         
-        // اختبار الاتصال الأساسي
         const { data, error } = await supabase
           .from('agents')
-          .select('id, name, active, total_users, board_name') // الأعمدة الأساسية + board_name
+          .select('id, name, active, total_users, board_name') 
           .limit(1);
           
         if (error) {
@@ -2281,7 +2220,6 @@
           console.error('Error details:', error.details);
           console.error('Error hint:', error.hint);
           
-          // إذا كان الخطأ متعلق بـ board_name، جرب بدون هذا العمود
           if (error.message && error.message.includes('board_name')) {
             console.warn('board_name column not found, trying without it...');
             const { data: retryData, error: retryError } = await supabase
@@ -2343,7 +2281,6 @@
     const modalEdit = document.getElementById('modalEdit');
     const editName = document.getElementById('editName');
     const editTotal = document.getElementById('editTotal');
-    const editPrevActive = document.getElementById('editPrevActive');
     const editActive = document.getElementById('editActive');
     const saveActiveBtn = document.getElementById('saveActive');
     const closeModalBtn = document.getElementById('closeModal');
@@ -2374,7 +2311,6 @@
       if(changed){ saveToStorage(); }
     }
 
-    // تم حذف جميع البيانات الأولية - البيانات من قاعدة البيانات فقط
 
     function parseDateAuto(s){
       if(!s) return null;
@@ -2440,16 +2376,15 @@
 
       agent.total_users = Number(agent.total_users) || 0;
       agent.active = Number(agent.active) || 0;
-      agent.prev_active = Number(agent.prev_active || 0);
 
       if(Array.isArray(agent.history) && agent.history.length>0){
         const last = agent.history[agent.history.length-1];
         agent.growth = Math.round(agent.active - Number(last.active||0));
       } else {
-        agent.growth = Math.round(agent.active - agent.prev_active);
+        agent.growth = 0;
       }
       agent.activation_rate = agent.total_users ? +( (agent.active / agent.total_users) * 100 ) : 0;
-      agent.activation_rate = Math.round(agent.activation_rate*10)/10; // one decimal
+      agent.activation_rate = Math.round(agent.activation_rate*10)/10;
       if(required !== null){
         const rawDeficit = required - agent.activation_rate;
         agent.deficit_percent = Math.max(0, Math.round(rawDeficit*10)/10);
@@ -2487,7 +2422,6 @@
         console.log('renderTable - after search filter:', filtered.length, 'query:', q);
       }
 
-      // sorting
       const sort = sortBy.value;
       if(sort === 'total_users_desc') filtered.sort((a,b)=>b.total_users - a.total_users);
       else if(sort === 'active_desc') filtered.sort((a,b)=> b.active - a.active );
@@ -2587,7 +2521,6 @@
       console.log('renderTable - final runningIndex:', runningIndex);
       console.log('renderTable - total rows added:', tbody.children.length);
       
-      // Update permissions after rendering
       if (typeof authSystem !== 'undefined') {
         authSystem.updateElementVisibility();
       }
@@ -2682,7 +2615,6 @@
       modalEditInfo.dataset.editIndex = String(idx);
     });
 
-    // Delete handler
     tbody.addEventListener('click', async (ev)=>{
       const btn = ev.target.closest('button[data-action="delete"]');
       if(!btn) return;
@@ -2718,7 +2650,6 @@
       if(idx < 0) return;
       const a = agents[idx];
       
-      // تحديث البيانات المحلية
       a.name = document.getElementById('info_name').value.trim() || a.name;
       a.note = document.getElementById('info_note').value.trim();
       a.contract_date = document.getElementById('info_date').value || a.contract_date;
@@ -2749,8 +2680,7 @@
             fdt: a.fdt,
             board_name: a.board_name,
             total_users: a.total_users,
-            active: a.active,
-            prev_active: a.prev_active
+            active: a.active
           };
           
           console.log('Updating with data:', updateData);
@@ -2766,7 +2696,6 @@
             console.error('Supabase update info error:', error);
             console.error('Error details:', error.message, error.details, error.hint);
             
-            // إذا كان الخطأ متعلق بـ board_name، جرب التحديث بدون هذا العمود
             if (error.message && error.message.includes('board_name')) {
               console.warn('board_name column not found, updating without it...');
               const updateDataWithoutBoard = {
@@ -2774,10 +2703,9 @@
                 note: a.note,
                 contract_date: a.contract_date,
                 phase: a.phase,
-                fdt: a.fdt,
-                total_users: a.total_users,
-                active: a.active,
-                prev_active: a.prev_active
+            fdt: a.fdt,
+            total_users: a.total_users,
+            active: a.active
               };
               
               const { error: retryError } = await supabase
@@ -2802,17 +2730,14 @@
         console.error('Error updating agent info:', e); 
       }
       
-      // احفظ في التخزين المحلي دائماً
       saveToStorage();
       renderTable();
       modalEditInfo.classList.remove('open');
       console.log('Agent info updated successfully');
       
-      // إظهار رسالة تأكيد
       alert(`تم تحديث معلومات الوكيل "${a.name}" بنجاح!`);
     });
 
-    // Delete handler for info modal
     document.getElementById('deleteFromInfoModal').addEventListener('click', async ()=>{
       const idx = Number(modalEditInfo.dataset.editIndex || -1);
       if(idx < 0) return;
@@ -2843,7 +2768,6 @@
       modalEdit.classList.add('open');
       editName.value = agent.name || '';
       editTotal.value = agent.total_users || 0;
-      editPrevActive.value = '';
       editActive.value = agent.active || 0;
       modalEdit.dataset.editIndex = idx;
     }
@@ -2858,6 +2782,7 @@
       
       if(!Array.isArray(agent.history)) agent.history = [];
       agent.history.push({ date: toYMDLocal(new Date()), active: Number(agent.active||0) });
+      agent.prev_active = agent.active;
       agent.active = newActive;
       computeAgent(agent);
       
@@ -2869,11 +2794,10 @@
           if (supabase) {
           const { error } = await supabase
             .from('agents')
-              .update({ 
-                active: agent.active, // مطابق لقاعدة البيانات
-                prev_active: agent.prev_active,
-                board_name: agent.board_name
-              })
+            .update({ 
+              active: agent.active,
+              board_name: agent.board_name
+            })
             .eq('id', dbId);
           if(error) {
             console.error('Supabase update active error:', error);
@@ -2890,13 +2814,11 @@
         console.error('Error updating active users:', e); 
       }
       
-      // احفظ في التخزين المحلي دائماً
       saveToStorage();
       renderTable();
       modalEdit.classList.remove('open');
       console.log('Active users updated successfully');
       
-      // إظهار رسالة تأكيد
       alert(`تم تحديث المستخدمين النشطين للوكيل "${agent.name}" بنجاح!`);
     });
 
@@ -2926,10 +2848,9 @@
         itpc_site: site, 
         fdt, 
         note, 
-        board_name: board, // سيتم حفظه محلياً فقط
+        board_name: board, 
         total_users: total, 
-        active, 
-        prev_active: 0 
+        active 
       };
       
       console.log('Created obj with keys:', Object.keys(obj));
@@ -2937,7 +2858,6 @@
       
       computeAgent(obj);
       
-      // التحقق من صحة البيانات
       const validation = validateAgentData(obj);
       if (!validation.isValid) {
         alert('خطأ في البيانات:\n' + validation.errors.join('\n'));
@@ -2960,7 +2880,6 @@
           return;
         }
         
-        // إنشاء insertData مع board_name - نسخ صريح للحقول المطلوبة
         const insertData = {
           name: String(obj.name || ''),
           note: String(obj.note || ''),
@@ -2969,8 +2888,7 @@
           fdt: String(obj.fdt || ''),
           board_name: String(obj.board_name || ''),
           total_users: Number(obj.total_users || 0),
-          active: Number(obj.active || 0),
-          prev_active: Number(obj.prev_active || 0)
+          active: Number(obj.active || 0)
         };
         
         console.log('Insert data (before send):', JSON.stringify(insertData, null, 2));
@@ -2979,7 +2897,6 @@
         console.log('Board name in obj:', obj.board_name);
         console.log('Board name in insertData:', insertData.board_name);
         
-        // التأكد من وجود board_name في insertData
         if (insertData.hasOwnProperty('board_name')) {
           console.log('SUCCESS: board_name found in insertData!');
         } else {
@@ -2999,7 +2916,6 @@
           console.error('Error details:', error.message, error.details, error.hint);
           console.error('Error code:', error.code);
           
-          // إذا كان الخطأ متعلق بـ board_name، جرب الإدراج بدون هذا العمود
           if (error.message && error.message.includes('board_name')) {
             console.warn('board_name column not found, inserting without it...');
             const insertDataWithoutBoard = {
@@ -3007,10 +2923,9 @@
               note: String(obj.note || ''),
               contract_date: String(obj.contract_date || ''),
               phase: String(obj.phase || ''),
-              fdt: String(obj.fdt || ''),
-              total_users: Number(obj.total_users || 0),
-              active: Number(obj.active || 0),
-              prev_active: Number(obj.prev_active || 0)
+            fdt: String(obj.fdt || ''),
+            total_users: Number(obj.total_users || 0),
+            active: Number(obj.active || 0)
             };
             
             const { data: retryData, error: retryError } = await supabase
@@ -3021,7 +2936,6 @@
               
             if (retryError) {
               console.error('Retry insert also failed:', retryError);
-              // في حالة فشل الإدراج في Supabase، احفظ محلياً فقط
               obj._id = genId();
               agents.push(obj);
               console.log('Agent added locally due to Supabase error');
@@ -3034,7 +2948,6 @@
               agents.push(obj);
             }
           } else {
-            // عرض رسالة خطأ مفصلة للمستخدم
             let errorMessage = 'فشل في حفظ البيانات في قاعدة البيانات:\n';
             if (error.message) errorMessage += error.message + '\n';
             if (error.details) errorMessage += 'التفاصيل: ' + error.details + '\n';
@@ -3042,7 +2955,6 @@
             
             alert(errorMessage);
             
-            // في حالة فشل الإدراج في Supabase، احفظ محلياً فقط
             obj._id = genId();
             agents.push(obj);
             console.log('Agent added locally due to Supabase error');
@@ -3058,16 +2970,13 @@
       }catch(e){
         console.error('Error inserting agent:', e);
         console.error('Error stack:', e.stack);
-        // في حالة الخطأ، احفظ محلياً فقط
         obj._id = genId();
         agents.push(obj);
       }
       
-      // احفظ في التخزين المحلي دائماً
       saveToStorage();
       renderTable();
       
-      // إغلاق النافذة وتنظيف الحقول
       modalAdd.classList.remove('open');
       document.getElementById('new_name').value='';
       document.getElementById('new_date').value='';
@@ -3079,7 +2988,6 @@
       
       console.log('New agent added successfully. Total agents:', agents.length);
       
-      // إظهار رسالة تأكيد
       alert(`تم إضافة الوكيل "${name}" بنجاح!`);
     });
 
@@ -3102,7 +3010,7 @@
         const arr = JSON.parse(s);
         arr.forEach(a => {
           computeAgent(a);
-          // إعادة تعيين dbIdByLocalId من البيانات المحفوظة
+       
           if(a.db_id) {
             dbIdByLocalId.set(a._id, a.db_id);
             localIdByDbId.set(a.db_id, a._id);
@@ -3118,7 +3026,6 @@
       renderTable();
     }
 
-    // تم حذف دالة loadFromSupabaseWithLocalMerge - البيانات من قاعدة البيانات فقط
 
     async function loadFromSupabase(){
       try {
@@ -3139,7 +3046,6 @@
         if(error){
           console.error('Supabase load error:', error);
           console.error('Error details:', error.message, error.details, error.hint);
-          // في حالة الخطأ، ابدأ بجدول فارغ
           agents = [];
           computeAll();
           return;
@@ -3155,7 +3061,6 @@
         console.log('Data loaded from Supabase:', data.length, 'agents');
         console.log('Raw data from Supabase:', data);
         
-        // تحميل البيانات من Supabase بنجاح
         agents = data.map(row=>{
           const obj = {
             _id: genId(),
@@ -3164,12 +3069,11 @@
             note: row.note,
             contract_date: row.contract_date,
             phase: row.phase,
-            itpc_site: '', // محفوظ محلياً فقط
+            itpc_site: '', 
             fdt: row.fdt,
-            board_name: row.board_name || '', // محفوظ في قاعدة البيانات
+            board_name: row.board_name || '', 
             total_users: row.total_users,
-            active: row.active, // مطابق لقاعدة البيانات
-            prev_active: row.prev_active || 0,
+            active: row.active, 
             history: []
           };
           dbIdByLocalId.set(obj._id, row.id);
@@ -3184,7 +3088,7 @@
         console.log('Data loaded successfully from Supabase:', agents.length, 'agents');
       } catch(e) {
         console.error('Error loading from Supabase:', e);
-        // في حالة الخطأ، ابدأ بجدول فارغ
+       
         agents = [];
         computeAll();
       }
@@ -3196,7 +3100,7 @@
 
     function safeNum(x){ return Number(x||0) || 0; }
 
-    // تحميل البيانات مع إعطاء الأولوية للبيانات المحلية المحدثة
+    
     async function initializeData() {
       try {
         console.log('Initializing application...');
@@ -3250,7 +3154,6 @@
     initializeSupabase();
     initializeData();
     
-    // Update UI with permissions after initialization
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof authSystem !== 'undefined') {
         authSystem.updateUI();
