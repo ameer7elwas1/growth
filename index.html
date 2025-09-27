@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title> IraqCell</title>
   
-  <!-- Google Fonts - Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Simple CSS (RTL, responsive) -->
   <style>
     :root{
       --bg: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
@@ -29,7 +27,7 @@
       --shadow-lg: 0 16px 48px rgba(0,0,0,0.3);
       --border-radius: 16px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-family: "Inter", "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+      font-family: "Noto Sans Arabic", "Roboto", "Almarai", "Inter", "SF Pro Display", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     }
     :root.light{
       --bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
@@ -374,7 +372,6 @@
       box-shadow: var(--shadow-sm);
     }
     
-    /* ألوان الكاردات */
     .stat:nth-child(1) {
       background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(99,102,241,0.05));
       border-color: rgba(99,102,241,0.3);
@@ -421,7 +418,6 @@
       border-color: rgba(99,102,241,0.4);
     }
     
-    /* تأثيرات التمرير للكاردات الملونة */
     .stat:nth-child(1):hover {
       background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.08));
       border-color: rgba(99,102,241,0.5);
@@ -444,7 +440,6 @@
     .stat h3{margin:0; font-size:20px; font-weight:700;}
     .stat p{margin:4px 0 0; color:var(--muted); font-size:12px; font-weight:500;}
     
-    /* ألوان النصوص في الكاردات */
     .stat:nth-child(1) h3 {
       color: #6366f1;
     }
@@ -515,7 +510,6 @@
     }
     td small{display:block; color:var(--muted); font-size:8px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1;}
     
-    /* تنسيق الصفوف */
     tbody tr:nth-child(even){background:rgba(99,102,241,0.02);}
     tbody tr:hover{
       background:rgba(99,102,241,0.08);
@@ -523,7 +517,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     
-    /* تنسيق صفوف المجموع */
     tr.subtotal-title td{background:rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.12);}
     tr.subtotal-values td{background:rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.08);}
     .badge{
@@ -664,7 +657,6 @@
     .small{font-size:12px; color:var(--muted);}
     .chart-row{display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;}
     
-    /* مؤشر حالة الاتصال */
     #connectionStatus{
       background: var(--glass);
       border: 1px solid rgba(255,255,255,0.2);
@@ -704,7 +696,6 @@
     }
     footer{color:var(--muted); margin-top:14px; font-size:13px;}
     .icon{font-size:16px; margin-right:4px;}
-    /* تنسيقات خاصة للأعمدة */
     td:nth-child(1){text-align:right; padding-right:8px; min-width:180px; max-width:220px;}
     td:nth-child(2), td:nth-child(3){min-width:100px; max-width:120px;}
     td:nth-child(4){min-width:100px; max-width:140px;}
@@ -1058,7 +1049,6 @@
       box-shadow: 0 6px 25px rgba(0,0,0,0.4);
     }
     
-    /* تحسين العرض في الوضع النهاري */
     body.light .user-info {
       background: rgba(255,255,255,0.9);
       border: 1px solid rgba(0,0,0,0.1);
@@ -1433,7 +1423,7 @@
               <th>تاريخ العقد</th>
               <th>تاريخ اليوم</th>
               <th>FDT</th>
-              <th>اسم اللوحة</th>
+              <th> اللوحة</th>
               <th>إجمالي المستخدمين</th>
               <th>النشط الحالي</th>
               <th>معدل التفعيل</th>
@@ -1476,7 +1466,7 @@
         <input type="number" id="editTotal" readonly />
       </div>
       <div>
-        <label>النشط الحالي (ادخله يدوياً)</label>
+        <label>النشط الحالي </label>
         <input type="number" id="editActive" />
       </div>
       <div class="actions">
@@ -1505,7 +1495,7 @@
           <input type="text" id="info_note" />
         </div>
         <div style="flex:1; min-width:200px;">
-          <label>اسم اللوحة</label>
+          <label> اللوحة</label>
           <input type="text" id="info_board" />
         </div>
       </div>
@@ -1586,7 +1576,7 @@
         <input type="text" id="new_fdt" />
       </div>
       <div>
-        <label>اسم اللوحة</label>
+        <label> اللوحة</label>
         <input type="text" id="new_board" />
       </div>
       <div>
@@ -2187,6 +2177,10 @@
         errors.push('المستخدمون النشطون يجب أن يكون رقم موجب');
       }
       
+      if (typeof agent.prev_active !== 'number' || agent.prev_active < 0) {
+        errors.push('المستخدمون النشطون السابقون يجب أن يكون رقم موجب');
+      }
+      
       return {
         isValid: errors.length === 0,
         errors: errors
@@ -2680,7 +2674,8 @@
             fdt: a.fdt,
             board_name: a.board_name,
             total_users: a.total_users,
-            active: a.active
+            active: a.active,
+            prev_active: a.prev_active
           };
           
           console.log('Updating with data:', updateData);
@@ -2703,9 +2698,10 @@
                 note: a.note,
                 contract_date: a.contract_date,
                 phase: a.phase,
-            fdt: a.fdt,
-            total_users: a.total_users,
-            active: a.active
+                fdt: a.fdt,
+                total_users: a.total_users,
+                active: a.active,
+                prev_active: a.prev_active
               };
               
               const { error: retryError } = await supabase
@@ -2794,10 +2790,11 @@
           if (supabase) {
           const { error } = await supabase
             .from('agents')
-            .update({ 
-              active: agent.active,
-              board_name: agent.board_name
-            })
+              .update({ 
+                active: agent.active, 
+                prev_active: agent.prev_active,
+                board_name: agent.board_name
+              })
             .eq('id', dbId);
           if(error) {
             console.error('Supabase update active error:', error);
@@ -2850,7 +2847,8 @@
         note, 
         board_name: board, 
         total_users: total, 
-        active 
+        active, 
+        prev_active: 0 
       };
       
       console.log('Created obj with keys:', Object.keys(obj));
@@ -2888,7 +2886,8 @@
           fdt: String(obj.fdt || ''),
           board_name: String(obj.board_name || ''),
           total_users: Number(obj.total_users || 0),
-          active: Number(obj.active || 0)
+          active: Number(obj.active || 0),
+          prev_active: Number(obj.prev_active || 0)
         };
         
         console.log('Insert data (before send):', JSON.stringify(insertData, null, 2));
@@ -2923,9 +2922,10 @@
               note: String(obj.note || ''),
               contract_date: String(obj.contract_date || ''),
               phase: String(obj.phase || ''),
-            fdt: String(obj.fdt || ''),
-            total_users: Number(obj.total_users || 0),
-            active: Number(obj.active || 0)
+              fdt: String(obj.fdt || ''),
+              total_users: Number(obj.total_users || 0),
+              active: Number(obj.active || 0),
+              prev_active: Number(obj.prev_active || 0)
             };
             
             const { data: retryData, error: retryError } = await supabase
@@ -3074,6 +3074,7 @@
             board_name: row.board_name || '', 
             total_users: row.total_users,
             active: row.active, 
+            prev_active: row.prev_active || 0,
             history: []
           };
           dbIdByLocalId.set(obj._id, row.id);
@@ -3191,7 +3192,7 @@
 
     document.getElementById('btnWeeklyReport').addEventListener('click', ()=>{
       const todayStr = toYMDLocal(new Date());
-      const headers = ['الوكيل','تاريخ العقد','تاريخ اليوم','FDT','اسم اللوحة','إجمالي المستخدمين','النشط الحالي','معدل التفعيل','النسبة المطلوبة','المطلوب للوصول','نسبة العجز','عدد العجز','الحالة'];
+      const headers = ['الوكيل','تاريخ العقد','تاريخ اليوم','FDT',' اللوحة','إجمالي المستخدمين','النشط الحالي','معدل التفعيل','النسبة المطلوبة','المطلوب للوصول','نسبة العجز','عدد العجز','الحالة'];
 
       const PHASE_ORDER = ['OLD','PHASE2','PHASE3'];
       let list = agents.slice();
