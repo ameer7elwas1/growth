@@ -3,11 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title> IraqCell</title>
+  <title> Agents Growth Iraqcell</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -70,6 +72,107 @@
       background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.03));
       border-color: rgba(239,68,68,0.2);
     }
+    
+    /* Light mode button styles */
+    :root.light .btn.secondary{
+      background: rgba(99,102,241,0.15); 
+      border: 1px solid rgba(99,102,241,0.4); 
+      color: #4f46e5;
+      font-weight: 700;
+    }
+    :root.light .btn.secondary:hover{
+      background: rgba(99,102,241,0.25);
+      border-color: rgba(99,102,241,0.6);
+      color: #3730a3;
+    }
+    
+    :root.light .btn{
+      background: linear-gradient(135deg, #6366f1, #8b5cf6); 
+      color: #fff;
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    :root.light .btn:hover{
+      background: linear-gradient(135deg, #5b5bd6, #7c3aed);
+    }
+    
+    /* Light mode modal styles */
+    :root.light .modal{
+      background:none;
+    }
+    :root.light .modal .box{
+      background:#ffffff;
+      border: 2px solid rgba(99,102,241,0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    :root.light input[type="text"], 
+    :root.light input[type="number"], 
+    :root.light input[type="date"], 
+    :root.light select{
+      background:#f8fafc;
+      border:1px solid rgba(0,0,0,0.15);
+      color:#1e293b;
+    }
+    
+    :root.light input[type="text"]:focus, 
+    :root.light input[type="number"]:focus, 
+    :root.light input[type="date"]:focus, 
+    :root.light select:focus{
+      background:#ffffff;
+      border-color: var(--accent);
+    }
+    
+    :root.light .badge.good{
+      background:rgba(16,185,129,0.15); 
+      color:#059669; 
+      border:1px solid rgba(16,185,129,0.3);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    :root.light .badge.fail{
+      background:rgba(239,68,68,0.15); 
+      color:#dc2626; 
+      border:1px solid rgba(239,68,68,0.3);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    :root.light .badge.ok{
+      background:rgba(16,185,129,0.1); 
+      color:#059669; 
+      border:1px solid rgba(16,185,129,0.2);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    /* Light mode deficit colors for reports */
+    :root.light .deficit-green{
+      color: #059669 !important;
+      font-weight: 700 !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+    }
+    
+    :root.light .deficit-orange{
+      color: #d97706 !important;
+      font-weight: 700 !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+    }
+    
+    :root.light .deficit-red{
+      color: #dc2626 !important;
+      font-weight: 700 !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+    }
+    
+    /* Dark mode button improvements */
+    .btn.secondary{
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .btn.secondary:hover{
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
     body{
       background: var(--bg); 
       color: #e2e8f0; 
@@ -107,10 +210,19 @@
     }
     
     @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+      
+      .container {
+        max-width: 100%;
+      }
+      
       header {
         flex-direction: column;
         gap: 16px;
         align-items: stretch;
+        padding: 16px;
       }
       
       .header-left,
@@ -121,6 +233,68 @@
       
       .controls {
         justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      
+      .controls-group {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+      
+      h1 {
+        font-size: 24px;
+        text-align: center;
+      }
+      
+      .lead {
+        text-align: center;
+        font-size: 14px;
+      }
+      
+      .stats {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .stat {
+        min-width: 100%;
+        text-align: center;
+      }
+      
+      .filters {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+      
+      .search, select {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px;
+      }
+      
+      .row {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .chart-row {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .chart-card {
+        min-height: 200px;
+        width: 100%;
       }
     }
     header::before{
@@ -153,14 +327,15 @@
     h1{
       font-size: 28px; 
       margin: 0; 
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), #a78bfa, #ffffff);
+      font-weight: 700;
+      font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -0.03em;
+      letter-spacing: 0.02em;
       position: relative;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-shadow: 0 3px 6px rgba(0,0,0,0.15);
     }
     h1::after{
       content: '';
@@ -263,7 +438,7 @@
       padding: 10px 18px; 
       border-radius: 10px; 
       cursor: pointer; 
-      font-weight: 600;
+      font-weight: 700;
       font-size: 13px;
       letter-spacing: -0.01em;
       transition: all 0.3s ease;
@@ -274,6 +449,7 @@
       align-items: center;
       gap: 8px;
       min-height: 40px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     }
     .btn::before{
       content: '';
@@ -292,24 +468,28 @@
       transform: translateY(-3px) scale(1.02);
       box-shadow: 0 8px 25px rgba(99,102,241,0.4);
       background: linear-gradient(135deg, #8b5cf6, var(--accent));
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
     .btn:active{
       transform: translateY(-1px) scale(0.98);
       box-shadow: 0 4px 15px rgba(99,102,241,0.3);
     }
     .btn.secondary{
-      background: rgba(255,255,255,0.08); 
-      border: 1px solid rgba(255,255,255,0.2); 
-      color: var(--muted);
+      background: rgba(99,102,241,0.15); 
+      border: 1px solid rgba(99,102,241,0.4); 
+      color: #a5b4fc;
       backdrop-filter: blur(15px);
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     .btn.secondary:hover{
-      background: rgba(255,255,255,0.15);
-      border-color: rgba(255,255,255,0.3);
-      color: #fff;
+      background: rgba(99,102,241,0.25);
+      border-color: rgba(99,102,241,0.6);
+      color: #c7d2fe;
       transform: translateY(-2px) scale(1.02);
       box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
     }
     .btn.warn{
       background: linear-gradient(135deg, var(--warning), #f59e0b); 
@@ -332,10 +512,28 @@
       box-shadow: 0 8px 25px rgba(239,68,68,0.4);
     }
     .btn.small{
-      padding: 4px 8px;
-      font-size: 9px;
-      min-height: 24px;
+      padding: 6px 10px;
+      font-size: 11px;
+      min-height: 28px;
       border-radius: 6px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    .btn.small.secondary{
+      background: rgba(99,102,241,0.15); 
+      border: 1px solid rgba(99,102,241,0.4); 
+      color: #a5b4fc;
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    
+    .btn.small.secondary:hover{
+      background: rgba(99,102,241,0.25);
+      border-color: rgba(99,102,241,0.6);
+      color: #c7d2fe;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
     }
     
     .btn.tiny{
@@ -352,9 +550,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 20px;
-      height: 20px;
-      font-size: 14px;
+      width: 16px;
+      height: 16px;
+      font-size: 12px;
+      margin-right: 4px;
     }
     .flex{display:flex; gap:8px; align-items:center;}
     .stats{display:flex; gap:16px; flex-wrap:wrap;}
@@ -472,95 +671,76 @@
     table{
       width:100%; 
       border-collapse:collapse; 
-      font-size:10px; 
+      font-size:11px; 
       table-layout:fixed;
-      border-radius: var(--border-radius);
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: var(--shadow-md);
       background: var(--card);
       font-weight: 400;
       letter-spacing: -0.01em;
-      border: 1px solid rgba(99,102,241,0.15);
-      backdrop-filter: blur(20px);
+      border: 1px solid rgba(99,102,241,0.2);
     }
     th, td{
-      padding:4px 3px; 
-      border-bottom:1px solid rgba(255,255,255,0.08); 
+      padding:8px 6px; 
+      border-bottom:1px solid rgba(255,255,255,0.1); 
       text-align:center; 
       white-space:nowrap; 
       overflow:hidden; 
       text-overflow:ellipsis;
-      transition: var(--transition);
-      line-height: 1.2;
-      font-size: 10px;
+      line-height: 1.3;
+      font-size: 11px;
     }
     th{
-      font-size:9px; 
+      font-size:10px; 
       color:var(--muted); 
       font-weight:600; 
-      border-bottom:1px solid rgba(99,102,241,0.2);
-      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(99,102,241,0.03));
-      backdrop-filter: blur(20px);
+      border-bottom:1px solid rgba(99,102,241,0.3);
+      background: rgba(99,102,241,0.1);
       letter-spacing: -0.01em;
       white-space: nowrap;
-      padding: 6px 3px;
+      padding: 10px 6px;
       text-transform: uppercase;
       overflow: visible;
       text-overflow: unset;
     }
     td small{display:block; color:var(--muted); font-size:8px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1;}
     
-    tbody tr:nth-child(even){background:rgba(99,102,241,0.02);}
+    tbody tr:nth-child(even){background:rgba(99,102,241,0.03);}
     tbody tr:hover{
-      background:rgba(99,102,241,0.08);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background:rgba(99,102,241,0.06);
     }
     
-    tr.subtotal-title td{background:rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.12);}
-    tr.subtotal-values td{background:rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.08);}
+    tr.subtotal-title td{background:rgba(99,102,241,0.08); border-bottom:1px solid rgba(99,102,241,0.2); font-weight:600;}
+    tr.subtotal-values td{background:rgba(99,102,241,0.04); border-bottom:1px solid rgba(99,102,241,0.15);}
     .badge{
-      padding:6px 12px; 
-      border-radius:8px; 
+      padding:4px 8px; 
+      border-radius:6px; 
       font-weight:600; 
-      font-size:10px;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
+      font-size:9px;
       display: inline-block;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .badge::before{
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.3s;
-    }
-    .badge:hover::before{
-      left: 100%;
+      letter-spacing: 0.3px;
     }
     .badge.good{
-      background:rgba(22,163,74,0.15); 
-      color:var(--success); 
-      border:1px solid rgba(22,163,74,0.25);
-      box-shadow: 0 2px 8px rgba(22,163,74,0.1);
+      background:rgba(16,185,129,0.25); 
+      color:#10b981; 
+      border:1px solid rgba(16,185,129,0.4);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     .badge.fail{
-      background:rgba(239,68,68,0.12); 
-      color:var(--danger); 
-      border:1px solid rgba(239,68,68,0.2);
-      box-shadow: 0 2px 8px rgba(239,68,68,0.1);
+      background:rgba(239,68,68,0.25); 
+      color:#ef4444; 
+      border:1px solid rgba(239,68,68,0.4);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     .badge.ok{
-      background:rgba(148,163,184,0.08); 
-      color:var(--muted); 
-      border:1px solid rgba(148,163,184,0.12);
-      box-shadow: 0 2px 8px rgba(148,163,184,0.05);
+      background:rgba(16,185,129,0.2); 
+      color:#10b981; 
+      border:1px solid rgba(16,185,129,0.3);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     .search{
       padding:12px 16px; 
@@ -582,52 +762,104 @@
     .filters{display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
     .modal{
       position:fixed; 
-      inset:0; 
+      top:0;
+      left:0;
+      width:100vw;
+      height:100vh;
       display:none; 
       align-items:center; 
       justify-content:center; 
-      background:rgba(2,6,23,0.9); 
-      z-index:40;
-      backdrop-filter: blur(20px);
+      background:none; 
+      z-index:1000;
       overflow-y: auto;
       padding: 20px;
       box-sizing: border-box;
     }
     .modal.open{display:flex;}
     .modal .box{
-      width:500px; 
+      width:700px; 
       max-width:90%; 
-      background:var(--card); 
-      padding:24px; 
-      border-radius:var(--border-radius);
-      box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(255,255,255,0.15);
-      backdrop-filter: blur(20px);
+      background:#1e293b; 
+      padding:20px; 
+      border-radius:12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.2);
+      border: 2px solid rgba(99,102,241,0.4);
       animation: modalSlideIn 0.3s ease-out;
-      margin: auto;
-      max-height: 90vh;
+      margin: 0 auto;
+      max-height: 70vh;
       overflow-y: auto;
+      position: relative;
+      transform: translateY(0);
+      flex-shrink: 0;
+    }
+    
+    .modal .box::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #a78bfa, #6366f1);
+      border-radius: 16px 16px 0 0;
     }
     @keyframes modalSlideIn {
       from {
         opacity: 0;
-        transform: translateY(-20px) scale(0.95);
+        transform: translateY(-30px) scale(0.9);
       }
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
       }
     }
+    
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .modal {
+      animation: modalFadeIn 0.3s ease-out;
+    }
+    
+    /* Ensure proper positioning */
+    .modal.open {
+      display: flex !important;
+      align-items: flex-start !important;
+      justify-content: center !important;
+    }
+    
+    .modal .box {
+      margin: 0 auto !important;
+      position: relative !important;
+      top: 0 !important;
+      left: 0 !important;
+      transform: none !important;
+    }
+    .modal h3{
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 16px 0;
+      color: #6366f1;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(99,102,241,0.2);
+    }
+    
     label{display:block; font-size:13px; margin-bottom:6px; color:var(--muted); font-weight:600;}
     input[type="text"], input[type="number"], input[type="date"], select{
       width:100%; 
       padding:10px 12px; 
       border-radius:8px; 
       border:1px solid rgba(255,255,255,0.15); 
-      background:var(--glass); 
+      background:#334155; 
       color:inherit;
       transition: var(--transition);
-      backdrop-filter: blur(20px);
       font-size:13px;
       margin-bottom: 10px;
       box-sizing: border-box;
@@ -636,13 +868,13 @@
       outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 2px rgba(14,165,169,0.1);
-      background: rgba(255,255,255,0.05);
+      background: #475569;
     }
     .actions{
       display: flex; 
-      gap: 12px; 
-      justify-content: flex-end; 
-      margin-top: 24px; 
+      gap: 10px; 
+      justify-content: center; 
+      margin-top: 16px; 
       flex-wrap: wrap;
       padding-top: 16px;
       border-top: 1px solid rgba(255,255,255,0.1);
@@ -651,9 +883,20 @@
       min-width: 100px;
       justify-content: center;
     }
-    .form-group{margin-bottom: 16px;}
-    .form-row{display: flex; gap: 12px; margin-bottom: 16px;}
+    .form-group{margin-bottom: 12px;}
+    .form-row{display: flex; gap: 12px; margin-bottom: 12px;}
     .form-row .form-group{flex: 1; margin-bottom: 0;}
+    
+    .form-grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .form-grid .form-group{
+      margin-bottom: 0;
+    }
     .small{font-size:12px; color:var(--muted);}
     .chart-row{display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;}
     
@@ -696,24 +939,24 @@
     }
     footer{color:var(--muted); margin-top:14px; font-size:13px;}
     .icon{font-size:16px; margin-right:4px;}
-    td:nth-child(1){text-align:right; padding-right:8px; min-width:180px; max-width:220px;}
-    td:nth-child(2), td:nth-child(3){min-width:100px; max-width:120px;}
-    td:nth-child(4){min-width:100px; max-width:140px;}
-    td:nth-child(5){min-width:100px; max-width:120px;}
-    td:nth-child(6){min-width:120px; max-width:140px;}
-    td:nth-child(7){min-width:100px; max-width:120px;}
-    td:nth-child(8){min-width:100px; max-width:120px;}
-    td:nth-child(9){min-width:110px; max-width:130px;}
-    td:nth-child(10){min-width:120px; max-width:140px;}
-    td:nth-child(11){min-width:100px; max-width:120px;}
-    td:nth-child(12){min-width:120px; max-width:140px;}
-    td:nth-child(13){min-width:60px; max-width:80px;}
-    td:nth-child(14){min-width:100px; max-width:120px;}
+    td:nth-child(1){text-align:right; padding-right:12px; min-width:200px; max-width:250px;}
+    td:nth-child(2), td:nth-child(3){min-width:110px; max-width:130px;}
+    td:nth-child(4){min-width:110px; max-width:150px;}
+    td:nth-child(5){min-width:110px; max-width:130px;}
+    td:nth-child(6){min-width:130px; max-width:150px;}
+    td:nth-child(7){min-width:110px; max-width:130px;}
+    td:nth-child(8){min-width:110px; max-width:130px;}
+    td:nth-child(9){min-width:120px; max-width:140px;}
+    td:nth-child(10){min-width:130px; max-width:150px;}
+    td:nth-child(11){min-width:110px; max-width:130px;}
+    td:nth-child(12){min-width:130px; max-width:150px;}
+    td:nth-child(13){min-width:80px; max-width:100px;}
+    td:nth-child(14){min-width:120px; max-width:140px;}
     
    
     td:nth-child(1){white-space:normal; word-wrap:break-word;}
-    td:nth-child(1) strong{font-size:11px; line-height:1.2; word-break:break-word;}
-    td:nth-child(1) small{font-size:8px; margin-top:2px; word-break:break-word;}
+    td:nth-child(1) strong{font-size:12px; line-height:1.3; word-break:break-word; font-weight:600;}
+    td:nth-child(1) small{font-size:9px; margin-top:3px; word-break:break-word; color:var(--muted);}
     
     td:nth-child(4){white-space:normal; word-wrap:break-word; text-align:center;}
     
@@ -739,26 +982,404 @@
       .badge{font-size:9px; padding:2px 4px;}
     }
     
-    @media (max-width:800px){ 
-      .row{flex-direction:column;} 
-      .stats{flex-direction:column;} 
-      th, td{font-size:10px; padding:4px 2px;} 
-      table{font-size:10px;}
-      td:nth-child(1){min-width:120px; max-width:150px;}
-      td:nth-child(2), td:nth-child(3){min-width:80px; max-width:100px;}
-      td:nth-child(4){min-width:80px; max-width:100px;}
-      td:nth-child(5){min-width:80px; max-width:100px;}
-      td:nth-child(6){min-width:100px; max-width:120px;}
-      td:nth-child(7){min-width:80px; max-width:100px;}
-      td:nth-child(8){min-width:80px; max-width:100px;}
-      td:nth-child(9){min-width:90px; max-width:110px;}
-      td:nth-child(10){min-width:100px; max-width:120px;}
-      td:nth-child(11){min-width:80px; max-width:100px;}
-      td:nth-child(12){min-width:100px; max-width:120px;}
-      td:nth-child(13){min-width:45px; max-width:65px;}
-      td:nth-child(14){min-width:80px; max-width:100px;}
-      .btn{font-size:10px; padding:6px 8px;}
-      .badge{font-size:8px; padding:2px 4px;}
+    @media (max-width: 768px) {
+      table {
+        font-size: 9px;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      thead, tbody, tr {
+        display: block;
+      }
+      
+      thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      th, td {
+        padding: 6px 4px;
+        font-size: 9px;
+        text-align: center;
+        border-right: 1px solid rgba(255,255,255,0.05);
+      }
+      
+      th {
+        background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.08));
+        font-weight: 700;
+        font-size: 8px;
+        padding: 8px 4px;
+      }
+      
+      td:nth-child(1) {
+        min-width: 120px;
+        max-width: 150px;
+        text-align: right;
+        padding-right: 8px;
+      }
+      
+      td:nth-child(2), td:nth-child(3) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(4) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(5) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(6) {
+        min-width: 80px;
+        max-width: 100px;
+      }
+      
+      td:nth-child(7) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(8) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(9) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(10) {
+        min-width: 80px;
+        max-width: 100px;
+      }
+      
+      td:nth-child(11) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(12) {
+        min-width: 80px;
+        max-width: 100px;
+      }
+      
+      td:nth-child(13) {
+        min-width: 40px;
+        max-width: 60px;
+      }
+      
+      td:nth-child(14) {
+        min-width: 80px;
+        max-width: 100px;
+      }
+      
+      .btn {
+        font-size: 8px;
+        padding: 4px 6px;
+        min-height: 24px;
+      }
+      
+      .badge {
+        font-size: 7px;
+        padding: 2px 4px;
+      }
+      
+      .modal .box {
+        width: 95%;
+        max-width: 600px;
+        padding: 16px;
+        margin: 10px;
+        max-height: 85vh;
+      }
+      
+      .modal h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      
+      .form-row .form-group {
+        flex: 1;
+        min-width: 100%;
+      }
+      
+      .actions {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .actions .btn {
+        width: 100%;
+        min-width: auto;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      body {
+        padding: 8px;
+      }
+      
+      .container {
+        padding: 0;
+      }
+      
+      header {
+        padding: 12px;
+        margin-bottom: 16px;
+      }
+      
+      h1 {
+        font-size: 20px;
+        margin-bottom: 8px;
+      }
+      
+      .lead {
+        font-size: 12px;
+      }
+      
+      .card {
+        padding: 12px;
+        margin-bottom: 12px;
+      }
+      
+      .stats {
+        gap: 8px;
+      }
+      
+      .stat {
+        padding: 12px;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .stat h3 {
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+      
+      .stat p {
+        font-size: 10px;
+        margin: 0;
+      }
+      
+      table {
+        font-size: 8px;
+        border-radius: 8px;
+      }
+      
+      th, td {
+        padding: 4px 2px;
+        font-size: 8px;
+        line-height: 1.1;
+      }
+      
+      th {
+        font-size: 7px;
+        padding: 6px 2px;
+      }
+      
+      td:nth-child(1) {
+        min-width: 100px;
+        max-width: 120px;
+        font-size: 8px;
+      }
+      
+      td:nth-child(1) strong {
+        font-size: 9px;
+        line-height: 1.1;
+      }
+      
+      td:nth-child(1) small {
+        font-size: 6px;
+        margin-top: 1px;
+      }
+      
+      td:nth-child(2), td:nth-child(3) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(4) {
+        min-width: 50px;
+        max-width: 70px;
+      }
+      
+      td:nth-child(5) {
+        min-width: 50px;
+        max-width: 70px;
+      }
+      
+      td:nth-child(6) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(7) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(8) {
+        min-width: 50px;
+        max-width: 70px;
+      }
+      
+      td:nth-child(9) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(10) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(11) {
+        min-width: 50px;
+        max-width: 70px;
+      }
+      
+      td:nth-child(12) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(13) {
+        min-width: 35px;
+        max-width: 55px;
+      }
+      
+      td:nth-child(14) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      .btn {
+        font-size: 7px;
+        padding: 3px 5px;
+        min-height: 20px;
+        border-radius: 4px;
+      }
+      
+      .btn.tiny {
+        font-size: 6px;
+        padding: 2px 4px;
+        min-height: 18px;
+      }
+      
+      .badge {
+        font-size: 6px;
+        padding: 1px 3px;
+        border-radius: 4px;
+      }
+      
+      .modal .box {
+        width: 98%;
+        max-width: 500px;
+        padding: 12px;
+        margin: 5px;
+        max-height: 85vh;
+        overflow-y: auto;
+      }
+      
+      .modal {
+        padding: 8px;
+        align-items: flex-start !important;
+      }
+      
+      .modal h3 {
+        font-size: 14px;
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+      }
+      
+      .form-group {
+        margin-bottom: 12px;
+      }
+      
+      .form-group label {
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+      
+      input[type="text"], 
+      input[type="number"], 
+      input[type="date"], 
+      select {
+        font-size: 12px;
+        padding: 8px 10px;
+        border-radius: 6px;
+      }
+      
+      .actions {
+        margin-top: 16px;
+        padding-top: 12px;
+      }
+      
+      .chart-card {
+        min-height: 180px;
+        padding: 12px;
+      }
+      
+      .user-info {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        margin: 0 0 16px 0;
+        padding: 8px 12px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .user-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+      }
+      
+      .user-details h3 {
+        font-size: 11px;
+      }
+      
+      .user-details p {
+        font-size: 9px;
+      }
+      
+      .logout-btn {
+        padding: 5px;
+        font-size: 9px;
+        min-height: 22px;
+        min-width: 22px;
+      }
     }
   </style>
 
@@ -777,7 +1398,6 @@
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      backdrop-filter: blur(20px);
       pointer-events: auto;
     }
     
@@ -789,7 +1409,6 @@
       border-radius: 16px;
       box-shadow: 0 16px 48px rgba(0,0,0,0.3);
       border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(20px);
       position: relative;
       overflow: visible;
       z-index: 1;
@@ -851,11 +1470,15 @@
       font-size: 14px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       backdrop-filter: blur(10px);
-      pointer-events: auto;
-      user-select: text;
-      -webkit-user-select: text;
-      -moz-user-select: text;
-      -ms-user-select: text;
+      pointer-events: auto !important;
+      user-select: text !important;
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      cursor: text !important;
+      opacity: 1 !important;
+      z-index: 10 !important;
+      position: relative !important;
     }
     
     .auth-form-group input:focus {
@@ -1130,7 +1753,7 @@
       background: linear-gradient(135deg, #f43f5e, #dc2626);
       color: white;
       border: none;
-      padding: 6px 12px;
+      padding: 8px;
       border-radius: 8px;
       cursor: pointer;
       font-size: 11px;
@@ -1139,8 +1762,9 @@
       box-shadow: 0 2px 6px rgba(244,63,94,0.3);
       display: flex;
       align-items: center;
-      gap: 4px;
+      justify-content: center;
       min-height: 28px;
+      min-width: 28px;
     }
     
     .logout-btn:hover {
@@ -1188,9 +1812,10 @@
       }
       
       .logout-btn {
-        padding: 4px 8px;
+        padding: 6px;
         font-size: 10px;
         min-height: 24px;
+        min-width: 24px;
       }
     }
     
@@ -1200,9 +1825,9 @@
     }
     
     #authUsername, #authPassword {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
       background-color: rgba(255,255,255,0.08) !important;
       border: 1px solid rgba(255,255,255,0.15) !important;
       color: #e2e8f0 !important;
@@ -1220,6 +1845,9 @@
       cursor: text !important;
       z-index: 10 !important;
       position: relative !important;
+      opacity: 1 !important;
+      display: block !important;
+      visibility: visible !important;
     }
     
     #authUsername:focus, #authPassword:focus {
@@ -1256,6 +1884,10 @@
       z-index: 10 !important;
       position: relative !important;
       opacity: 1 !important;
+      display: block !important;
+      visibility: visible !important;
+      -webkit-touch-callout: text !important;
+      -webkit-tap-highlight-color: rgba(99,102,241,0.2) !important;
     }
     
     .auth-form-group input[type="text"]:not(:disabled):focus,
@@ -1298,12 +1930,12 @@
       <form id="authForm">
         <div class="auth-form-group">
           <label for="authUsername">اسم المستخدم</label>
-          <input type="text" id="authUsername" name="username" placeholder="أدخل اسم المستخدم" required>
+          <input type="text" id="authUsername" name="username" placeholder="أدخل اسم المستخدم" required autocomplete="username" spellcheck="false">
         </div>
 
         <div class="auth-form-group">
           <label for="authPassword">كلمة المرور</label>
-          <input type="password" id="authPassword" name="password" placeholder="أدخل كلمة المرور" required>
+          <input type="password" id="authPassword" name="password" placeholder="أدخل كلمة المرور" required autocomplete="current-password" spellcheck="false">
         </div>
 
         <button type="submit" class="auth-btn" id="authLoginBtn">
@@ -1355,7 +1987,7 @@
       <div class="header-right">
         <button class="btn secondary" id="btnUserManagement" style="display: none;">
           <span class="icon">👥</span>
-          إدارة المستخدمين
+           المستخدمين
         </button>
         <div class="user-info" id="userInfo" style="display: none;">
           <div class="user-avatar" id="userAvatar">A</div>
@@ -1364,8 +1996,7 @@
             <p id="userRole">مدير</p>
           </div>
           <button class="logout-btn" id="logoutBtn">
-            <span class="icon">🚪</span>
-            تسجيل الخروج
+            <span class="icon">⏻</span>
           </button>
         </div>
       </div>
@@ -1984,7 +2615,45 @@
 
     const authSystem = new AuthSystem();
     
-    document.addEventListener('DOMContentLoaded', () => {
+    // Function to position modals at current scroll position
+    function positionModal(modalElement) {
+      if (!modalElement) return;
+      
+      // Get current scroll position
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const viewportHeight = window.innerHeight;
+      
+      // Position the modal container to start from current scroll position
+      modalElement.style.top = scrollTop + 'px';
+      modalElement.style.height = viewportHeight + 'px';
+      modalElement.style.display = 'flex';
+      modalElement.style.alignItems = 'flex-start';
+      modalElement.style.justifyContent = 'center';
+      modalElement.style.paddingTop = '100px';
+      
+      const modalBox = modalElement.querySelector('.box');
+      if (modalBox) {
+        modalBox.style.margin = '0 auto';
+        modalBox.style.position = 'relative';
+        modalBox.style.top = '0';
+        modalBox.style.left = '0';
+        modalBox.style.transform = 'none';
+      }
+    }
+    
+    // Function to close modals properly
+    function closeModal(modalElement) {
+      if (!modalElement) return;
+      modalElement.classList.remove('open');
+      modalElement.style.display = 'none';
+      // Reset positioning
+      modalElement.style.top = '0';
+      modalElement.style.height = '100vh';
+      modalElement.style.paddingTop = '20px';
+    }
+    
+    // Function to ensure input fields are editable
+    function ensureInputFieldsEditable() {
       const usernameInput = document.getElementById('authUsername');
       const passwordInput = document.getElementById('authPassword');
       
@@ -1996,6 +2665,19 @@
         usernameInput.removeAttribute('disabled');
         usernameInput.setAttribute('autocomplete', 'username');
         usernameInput.setAttribute('spellcheck', 'false');
+        usernameInput.style.opacity = '1';
+        usernameInput.style.zIndex = '10';
+        usernameInput.style.position = 'relative';
+        
+        // Force focus to make sure it's interactive
+        usernameInput.addEventListener('click', function() {
+          this.focus();
+        });
+        
+        usernameInput.addEventListener('focus', function() {
+          this.style.pointerEvents = 'auto';
+          this.style.userSelect = 'text';
+        });
       }
       
       if (passwordInput) {
@@ -2006,29 +2688,65 @@
         passwordInput.removeAttribute('disabled');
         passwordInput.setAttribute('autocomplete', 'current-password');
         passwordInput.setAttribute('spellcheck', 'false');
+        passwordInput.style.opacity = '1';
+        passwordInput.style.zIndex = '10';
+        passwordInput.style.position = 'relative';
+        
+        // Force focus to make sure it's interactive
+        passwordInput.addEventListener('click', function() {
+          this.focus();
+        });
+        
+        passwordInput.addEventListener('focus', function() {
+          this.style.pointerEvents = 'auto';
+          this.style.userSelect = 'text';
+        });
+      }
+    }
+
+    // Run immediately when DOM is ready
+    document.addEventListener('DOMContentLoaded', ensureInputFieldsEditable);
+    
+    // Run again after a short delay to ensure it works
+    setTimeout(ensureInputFieldsEditable, 100);
+    
+    // Run again after a longer delay as backup
+    setTimeout(ensureInputFieldsEditable, 1000);
+    
+    // Also run when the page is fully loaded
+    window.addEventListener('load', ensureInputFieldsEditable);
+    
+    // Run immediately when script loads (before DOM is ready)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', ensureInputFieldsEditable);
+    } else {
+      ensureInputFieldsEditable();
+    }
+    
+    // Additional safety check - run on any interaction
+    document.addEventListener('click', function(e) {
+      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
+        setTimeout(ensureInputFieldsEditable, 10);
       }
     });
     
-    setTimeout(() => {
-      const usernameInput = document.getElementById('authUsername');
-      const passwordInput = document.getElementById('authPassword');
-      
-      if (usernameInput) {
-        usernameInput.style.pointerEvents = 'auto';
-        usernameInput.style.userSelect = 'text';
-        usernameInput.style.cursor = 'text';
-        usernameInput.removeAttribute('readonly');
-        usernameInput.removeAttribute('disabled');
+    // Update modal position on window resize
+    window.addEventListener('resize', function() {
+      const openModals = document.querySelectorAll('.modal.open');
+      openModals.forEach(modal => {
+        positionModal(modal);
+      });
+    });
+    
+    // Close modals on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const openModals = document.querySelectorAll('.modal.open');
+        openModals.forEach(modal => {
+          closeModal(modal);
+        });
       }
-      
-      if (passwordInput) {
-        passwordInput.style.pointerEvents = 'auto';
-        passwordInput.style.userSelect = 'text';
-        passwordInput.style.cursor = 'text';
-        passwordInput.removeAttribute('readonly');
-        passwordInput.removeAttribute('disabled');
-      }
-    }, 1000);
+    });
 
     const SUPABASE_URL = 'https://vpvvjascwgivdjyyhzwp.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
@@ -2196,7 +2914,7 @@
         console.log('Testing with columns: id, name, active, total_users');
         
         const supabase = getSupabaseClient();
-        if (!supabase) {
+        if (!supabase) {5
           console.error('Failed to get Supabase client');
           updateConnectionStatus('error');
           return false;
@@ -2441,7 +3159,7 @@
         console.log('renderTable - processing phase:', phaseKey, 'items:', items.length);
         const hdr = document.createElement('tr');
         hdr.className = 'phase-header';
-        hdr.innerHTML = `<td colspan="14" style="text-align:right; font-weight:700; background:rgba(255,255,255,0.08); font-size:11px; padding:8px; border-bottom:1px solid rgba(255,255,255,0.12);">${arabicPhaseLabel(phaseKey)}</td>`;
+        hdr.innerHTML = `<td colspan="14" style="text-align:right; font-weight:700; background:rgba(99,102,241,0.15); font-size:12px; padding:12px; border-bottom:1px solid rgba(99,102,241,0.3); color:#6366f1;">${arabicPhaseLabel(phaseKey)}</td>`;
         tbody.appendChild(hdr);
 
         items.forEach((a)=>{
@@ -2460,22 +3178,22 @@
             <td>${todayStr}</td>
             <td>${escapeHtml(a.fdt||'')}</td>
           <td>${escapeHtml(a.board_name||'')}</td>
-          <td>${num(a.total_users)}</td>
-          <td>${num(a.active)}</td>
+          <td style="font-weight:600;">${num(a.total_users)}</td>
+          <td style="font-weight:600;">${num(a.active)}</td>
             
-          <td>${a.activation_rate}%</td>
-          <td>${a.required_rate === null ? '-' : a.required_rate + '%'}</td>
-            <td>${a.required_rate === null ? '-' : num(a.required_users)}</td>
-          <td>${a.required_rate === null ? '-' : a.deficit_percent + '%'}</td>
-          <td>${a.deficit_users ? num(a.deficit_users) : '-'}</td>
+          <td style="font-weight:600;">${a.activation_rate}%</td>
+          <td style="font-weight:600;">${a.required_rate === null ? '-' : a.required_rate + '%'}</td>
+            <td style="font-weight:600;">${a.required_rate === null ? '-' : num(a.required_users)}</td>
+          <td style="${a.required_rate === null ? 'font-weight:600;' : getDeficitColor(a.deficit_percent, a.required_rate)}">${a.required_rate === null ? '-' : a.deficit_percent + '%'}</td>
+          <td style="${a.deficit_users ? getDeficitUsersColor(a.deficit_users, a.total_users) : 'font-weight:600;'}">${a.deficit_users ? num(a.deficit_users) : '-'}</td>
           <td>${statusBadge(a.status)}</td>
           <td>
-              <div class="flex" style="justify-content:center; gap:4px; flex-wrap:wrap;">
-                <button class="btn secondary tiny" data-action="edit" data-id="${a._id}" style="display: ${(typeof authSystem !== 'undefined' && authSystem.canEdit()) ? 'inline-flex' : 'none'};">
+              <div class="flex" style="justify-content:center; gap:8px; flex-wrap:wrap;">
+                <button class="btn secondary small" data-action="edit" data-id="${a._id}" style="display: ${(typeof authSystem !== 'undefined' && authSystem.canEdit()) ? 'inline-flex' : 'none'};">
                   <span class="icon">🔄</span>
                   تحديث
                 </button>
-                <button class="btn tiny" data-action="edit-info" data-id="${a._id}" style="display: ${(typeof authSystem !== 'undefined' && authSystem.canEdit()) ? 'inline-flex' : 'none'};">
+                <button class="btn small" data-action="edit-info" data-id="${a._id}" style="display: ${(typeof authSystem !== 'undefined' && authSystem.canEdit()) ? 'inline-flex' : 'none'};">
                   <span class="icon">✏️</span>
                   تعديل
                 </button>
@@ -2494,15 +3212,15 @@
         const sub = document.createElement('tr');
         sub.className = 'subtotal-title';
         sub.innerHTML = `
-          <td colspan="4" style="text-align:right; font-weight:600; font-size:8px; padding:3px;">مجموع ${escapeHtml(arabicPhaseLabel(phaseKey))}</td>
+          <td colspan="4" style="text-align:right; font-weight:600; font-size:10px; padding:8px;">مجموع ${escapeHtml(arabicPhaseLabel(phaseKey))}</td>
           <td></td>
-          <td style="font-weight:600; font-size:8px; padding:3px;">${num(totals.total)}</td>
-          <td style="font-weight:600; font-size:8px; padding:3px;">${num(totals.active)}</td>
-          <td></td>
-          <td></td>
+          <td style="font-weight:600; font-size:10px; padding:8px;">${num(totals.total)}</td>
+          <td style="font-weight:600; font-size:10px; padding:8px;">${num(totals.active)}</td>
           <td></td>
           <td></td>
-          <td style="font-weight:600; font-size:8px; padding:3px;">${totals.deficit_users ? num(totals.deficit_users) : '-'}</td>
+          <td></td>
+          <td></td>
+          <td style="font-weight:600; font-size:10px; padding:8px; ${totals.deficit_users ? getDeficitUsersColor(totals.deficit_users, totals.total) : ''}">${totals.deficit_users ? num(totals.deficit_users) : '-'}</td>
           <td></td>
           <td></td>
         `;
@@ -2537,6 +3255,11 @@
       const totalData = top.map(a=>a.total_users);
       const activeData = top.map(a=>a.active);
 
+      // Check if light mode is active
+      const isLightMode = document.documentElement.classList.contains('light');
+      const textColor = isLightMode ? '#1e293b' : '#ffffff';
+      const gridColor = isLightMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+
       const barCtx = document.getElementById('barChart').getContext('2d');
       if(barChart) barChart.destroy();
       barChart = new Chart(barCtx, {
@@ -2551,8 +3274,46 @@
         options:{
           responsive:true,
           maintainAspectRatio:false,
-          plugins:{legend:{display:true, position:'top'}},
-          scales:{x:{ticks:{color:'#e6eef8'}}, y:{beginAtZero:true, ticks:{color:'#e6eef8'}}}
+          plugins:{
+            legend:{
+              display:true, 
+              position:'top',
+              labels:{
+                color: textColor,
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                }
+              }
+            }
+          },
+          scales:{
+            x:{
+              ticks:{
+                color: textColor,
+                font: {
+                  size: 12,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                color: gridColor
+              }
+            }, 
+            y:{
+              beginAtZero:true, 
+              ticks:{
+                color: textColor,
+                font: {
+                  size: 12,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                color: gridColor
+              }
+            }
+          }
         }
       });
 
@@ -2567,17 +3328,96 @@
           labels:['نشطون','غير نشطين'],
           datasets:[{ data:[sumActive, inactive] }]
         },
-        options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}}
+        options:{
+          responsive:true, 
+          maintainAspectRatio:false, 
+          plugins:{
+            legend:{
+              position:'bottom',
+              labels:{
+                color: textColor,
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                }
+              }
+            }
+          }
+        }
       });
     }
 
-    function num(n){ return new Intl.NumberFormat('en-US').format(Number(n||0)); }
+    function num(n){ 
+      const formatted = new Intl.NumberFormat('en-US').format(Number(n||0));
+      return formatted;
+    }
     function signedNum(n){ if(n>0) return '+'+num(n); if(n<0) return num(n); return num(0); }
     function statusBadge(status){
-      if(status==='متفوق') return `<span class="badge good">${status}</span>`;
-      if(status==='مطابق') return `<span class="badge ok">${status}</span>`;
-      if(status==='عجز') return `<span class="badge fail">${status}</span>`;
-      return `<span class="badge" style="background:rgba(245,158,11,0.08); color:var(--warning);">${status}</span>`;
+      if(status==='متفوق') return `<span class="badge good" style="font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
+      if(status==='مطابق') return `<span class="badge ok" style="font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
+      if(status==='عجز') return `<span class="badge fail" style="font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
+      if(status==='جديد') return `<span class="badge" style="background:rgba(245,158,11,0.2); color:#f59e0b; border:1px solid rgba(245,158,11,0.4); font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
+      return `<span class="badge" style="background:rgba(245,158,11,0.08); color:var(--warning); font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
+    }
+    
+    // Function to determine deficit color based on proximity to required rate
+    function getDeficitColor(deficitPercent, requiredRate) {
+      if (requiredRate === null || requiredRate === 0) return 'color: var(--text);';
+      
+      const deficitRatio = deficitPercent / requiredRate;
+      
+      // Green: Very close to target (deficit < 20% of required rate)
+      if (deficitRatio < 0.2) {
+        return 'color: #10b981; font-weight: 700;';
+      }
+      // Orange: Close to target (deficit 20-50% of required rate)
+      else if (deficitRatio < 0.5) {
+        return 'color: #f59e0b; font-weight: 700;';
+      }
+      // Red: Far from target (deficit > 50% of required rate)
+      else {
+        return 'color: #ef4444; font-weight: 700;';
+      }
+    }
+    
+    // Function to determine deficit users color based on total users
+    function getDeficitUsersColor(deficitUsers, totalUsers) {
+      if (totalUsers === 0 || deficitUsers === 0) return 'color: var(--text);';
+      
+      const deficitRatio = deficitUsers / totalUsers;
+      
+      // Green: Very low deficit (< 10% of total users)
+      if (deficitRatio < 0.1) {
+        return 'color: #10b981; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+      // Orange: Moderate deficit (10-25% of total users)
+      else if (deficitRatio < 0.25) {
+        return 'color: #f59e0b; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+      // Red: High deficit (> 25% of total users)
+      else {
+        return 'color: #ef4444; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+    }
+    
+    // Function to determine deficit users color for reports (more aggressive coloring)
+    function getDeficitUsersColorForReport(deficitUsers, totalUsers) {
+      if (totalUsers === 0 || deficitUsers === 0) return 'color: var(--text);';
+      
+      const deficitRatio = deficitUsers / totalUsers;
+      
+      // Green: Very low deficit (< 5% of total users)
+      if (deficitRatio < 0.05) {
+        return 'color: #10b981; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+      // Orange: Low deficit (5-15% of total users)
+      else if (deficitRatio < 0.15) {
+        return 'color: #f59e0b; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+      // Red: High deficit (> 15% of total users)
+      else {
+        return 'color: #ef4444; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
     }
     function escapeHtml(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
@@ -2607,6 +3447,9 @@
       document.getElementById('info_total').value = a.total_users || 0;
       const infoBoardEl = document.getElementById('info_board'); if(infoBoardEl) infoBoardEl.value = a.board_name || '';
       modalEditInfo.dataset.editIndex = String(idx);
+      
+      // Position modal at current scroll position
+      setTimeout(() => positionModal(modalEditInfo), 10);
     });
 
     tbody.addEventListener('click', async (ev)=>{
@@ -2635,10 +3478,10 @@
       agents.splice(idx,1);
       saveToStorage();
       renderTable();
-      alert(`تم حذف الوكيل "${a.name}" بنجاح!`);
+      console.log(`تم حذف الوكيل "${a.name}" بنجاح!`);
     });
 
-    closeInfoModal.addEventListener('click', ()=> modalEditInfo.classList.remove('open'));
+    closeInfoModal.addEventListener('click', ()=> closeModal(modalEditInfo));
     saveInfo.addEventListener('click', async ()=>{
       const idx = Number(modalEditInfo.dataset.editIndex || -1);
       if(idx < 0) return;
@@ -2728,10 +3571,8 @@
       
       saveToStorage();
       renderTable();
-      modalEditInfo.classList.remove('open');
+      closeModal(modalEditInfo);
       console.log('Agent info updated successfully');
-      
-      alert(`تم تحديث معلومات الوكيل "${a.name}" بنجاح!`);
     });
 
     document.getElementById('deleteFromInfoModal').addEventListener('click', async ()=>{
@@ -2766,9 +3607,12 @@
       editTotal.value = agent.total_users || 0;
       editActive.value = agent.active || 0;
       modalEdit.dataset.editIndex = idx;
+      
+      // Position modal at current scroll position
+      setTimeout(() => positionModal(modalEdit), 10);
     }
 
-    closeModalBtn.addEventListener('click', ()=> modalEdit.classList.remove('open'));
+    closeModalBtn.addEventListener('click', ()=> closeModal(modalEdit));
     saveActiveBtn.addEventListener('click', async ()=>{
       const idx = Number(modalEdit.dataset.editIndex || -1);
       if(idx < 0) return;
@@ -2813,15 +3657,18 @@
       
       saveToStorage();
       renderTable();
-      modalEdit.classList.remove('open');
+      closeModal(modalEdit);
       console.log('Active users updated successfully');
-      
-      alert(`تم تحديث المستخدمين النشطين للوكيل "${agent.name}" بنجاح!`);
     });
 
-    btnAddAgent.addEventListener('click', ()=> modalAdd.classList.add('open'));
+    btnAddAgent.addEventListener('click', ()=> {
+      modalAdd.classList.add('open');
+      
+      // Position modal at current scroll position
+      setTimeout(() => positionModal(modalAdd), 10);
+    });
     
-    closeAddModal.addEventListener('click', ()=> modalAdd.classList.remove('open'));
+    closeAddModal.addEventListener('click', ()=> closeModal(modalAdd));
     saveNewAgent.addEventListener('click', async ()=>{
       const name = document.getElementById('new_name').value.trim();
       const date = document.getElementById('new_date').value;
@@ -2873,8 +3720,8 @@
           agents.push(obj);
           saveToStorage();
           renderTable();
-          modalAdd.classList.remove('open');
-          alert(`تم إضافة الوكيل "${name}" محلياً فقط (لا يوجد اتصال بقاعدة البيانات)`);
+          closeModal(modalAdd);
+          console.log(`تم إضافة الوكيل "${name}" محلياً فقط (لا يوجد اتصال بقاعدة البيانات)`);
           return;
         }
         
@@ -2977,7 +3824,7 @@
       saveToStorage();
       renderTable();
       
-      modalAdd.classList.remove('open');
+      closeModal(modalAdd);
       document.getElementById('new_name').value='';
       document.getElementById('new_date').value='';
       document.getElementById('new_site').value='';
@@ -2988,7 +3835,7 @@
       
       console.log('New agent added successfully. Total agents:', agents.length);
       
-      alert(`تم إضافة الوكيل "${name}" بنجاح!`);
+      console.log(`تم إضافة الوكيل "${name}" بنجاح!`);
     });
 
     function saveToStorage(){
@@ -3185,8 +4032,15 @@
 
 
     document.addEventListener('click', (e)=>{
-      if(e.target === modalEdit) modalEdit.classList.remove('open');
-      if(e.target === modalAdd) modalAdd.classList.remove('open');
+      if(e.target === modalEdit) {
+        closeModal(modalEdit);
+      }
+      if(e.target === modalAdd) {
+        closeModal(modalAdd);
+      }
+      if(e.target === modalEditInfo) {
+        closeModal(modalEditInfo);
+      }
     });
 
 
@@ -3412,9 +4266,9 @@
             (a.activation_rate||0) + '%',
             (a.required_rate === null ? '-' : a.required_rate + '%'),
             (a.required_rate === null ? '-' : num(a.required_users)),
-            (a.required_rate === null ? '-' : (a.deficit_percent||0) + '%'),
-            (a.deficit_users ? num(a.deficit_users) : '-'),
-            a.status || ''
+            (a.required_rate === null ? '-' : `<span style="${getDeficitColor(a.deficit_percent||0, a.required_rate)}">${(a.deficit_percent||0) + '%'}</span>`),
+            (a.deficit_users ? `<span style="${getDeficitUsersColorForReport(a.deficit_users, a.total_users)}">${num(a.deficit_users)}</span>` : '-'),
+            statusBadge(a.status || '')
           ].map(v=>`<td>${v}</td>`).join('') + '</tr>';
         });
 
@@ -3430,14 +4284,14 @@
         const cells = new Array(headers.length).fill('');
         cells[5] = num(totals.total);
         cells[6] = num(totals.active);
-        cells[11] = totals.deficit_users ? num(totals.deficit_users) : '-';
+        cells[11] = totals.deficit_users ? `<span style="${getDeficitUsersColorForReport(totals.deficit_users, totals.total)}">${num(totals.deficit_users)}</span>` : '-';
         html += '<tr class=\"subtotal-values\">' + cells.map(v=>`<td>${v}</td>`).join('') + '</tr>';
       });
 
       const grandCells = new Array(headers.length).fill('');
       grandCells[5] = num(grand.total);
       grandCells[6] = num(grand.active);
-      grandCells[11] = grand.deficit_users ? num(grand.deficit_users) : '-';
+      grandCells[11] = grand.deficit_users ? `<span style="${getDeficitUsersColorForReport(grand.deficit_users, grand.total)}">${num(grand.deficit_users)}</span>` : '-';
       html += `<tr class=\"grand-total\"><td colspan=\"${headers.length}\" class=\"left\">المجموع الكل</td></tr>`;
       html += '<tr class=\"grand-total\">' + grandCells.map(v=>`<td>${v}</td>`).join('') + '</tr>';
 
