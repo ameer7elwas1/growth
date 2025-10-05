@@ -447,6 +447,7 @@
       box-shadow: 0 4px 12px rgba(99,102,241,0.3);
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       min-height: 40px;
       text-shadow: 0 1px 3px rgba(0,0,0,0.4);
@@ -482,6 +483,9 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       font-weight: 700;
       text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .btn.secondary:hover{
       background: rgba(99,102,241,0.25);
@@ -519,6 +523,9 @@
       font-weight: 700;
       letter-spacing: 0.2px;
       text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .btn.small.secondary{
@@ -527,6 +534,9 @@
       color: #a5b4fc;
       font-weight: 700;
       text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .btn.small.secondary:hover{
@@ -882,6 +892,110 @@
     .actions .btn{
       min-width: 100px;
       justify-content: center;
+    }
+    
+    /* تحسين أزرار الإجراءات في الجدول */
+    table .actions .btn {
+      min-width: 80px;
+      padding: 6px 12px;
+      font-size: 11px;
+      margin: 2px;
+      white-space: nowrap;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: var(--card);
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    
+    table .actions .btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    
+    table .actions .btn.secondary {
+      background: rgba(99,102,241,0.1);
+      color: var(--accent);
+      border-color: rgba(99,102,241,0.2);
+    }
+    
+    table .actions .btn.secondary:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    
+    table .actions .btn.warn {
+      background: rgba(245,158,11,0.1);
+      color: #f59e0b;
+      border-color: rgba(245,158,11,0.2);
+    }
+    
+    /* تحسين أزرار الإجراءات في الجدول للوضع المضيء */
+    body.light table .actions .btn {
+      background: #f8fafc;
+      color: #1e293b;
+      border-color: rgba(0,0,0,0.1);
+    }
+    
+    body.light table .actions .btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    
+    body.light table .actions .btn.secondary {
+      background: rgba(99,102,241,0.1);
+      color: var(--accent);
+      border-color: rgba(99,102,241,0.2);
+    }
+    
+    body.light table .actions .btn.warn {
+      background: rgba(245,158,11,0.1);
+      color: #f59e0b;
+      border-color: rgba(245,158,11,0.2);
+    }
+    
+    /* تحسين أزرار الإجراءات للشاشات الصغيرة */
+    @media (max-width: 768px) {
+      table .actions .btn {
+        min-width: 70px;
+        padding: 4px 8px;
+        font-size: 10px;
+        margin: 1px;
+      }
+      
+      table .actions .flex {
+        gap: 4px;
+      }
+      
+      table td:last-child {
+        min-width: 120px;
+        padding: 6px 2px;
+      }
+    }
+    
+    table .actions .flex {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    
+    /* تحسين عمود الإجراءات */
+    table td:last-child {
+      text-align: center;
+      vertical-align: middle;
+      padding: 8px 4px;
+      min-width: 140px;
+    }
+    
+    /* تحسين عرض الأزرار في الجدول */
+    table .btn {
+      margin: 1px;
+      flex-shrink: 0;
     }
     .form-group{margin-bottom: 12px;}
     .form-row{display: flex; gap: 12px; margin-bottom: 12px;}
@@ -2057,6 +2171,7 @@
               <th> اللوحة</th>
               <th>إجمالي المستخدمين</th>
               <th>النشط الحالي</th>
+              <th>النمو الأسبوعي</th>
               <th>معدل التفعيل</th>
               <th>النسبة المطلوبة</th>
               <th>المطلوب للوصول</th>
@@ -2286,11 +2401,9 @@
 
       hasPermission(permission) {
         if (!this.currentUser) {
-          console.log('hasPermission - no currentUser');
           return false;
         }
         const result = this.permissions[this.currentUser.role]?.includes(permission) || false;
-        console.log('hasPermission - role:', this.currentUser.role, 'permission:', permission, 'result:', result);
         return result;
       }
 
@@ -2298,7 +2411,6 @@
       canAdd() { return this.hasPermission('add'); }
       canEdit() { 
         const result = this.hasPermission('edit');
-        console.log('canEdit check - currentUser:', this.currentUser, 'result:', result);
         return result;
       }
       canDelete() { return this.hasPermission('delete'); }
@@ -2455,11 +2567,11 @@
 
       updateUI() {
         if (!this.currentUser) {
-          console.log('updateUI - no currentUser');
+          
           return;
         }
 
-        console.log('updateUI - currentUser:', this.currentUser);
+        
 
         document.getElementById('userName').textContent = this.getUserName();
         document.getElementById('userRole').textContent = this.getRoleName(this.getUserRole());
@@ -2475,27 +2587,27 @@
         const canEdit = this.canEdit();
         const canDelete = this.canDelete();
         
-        console.log('Updating table action buttons - canEdit:', canEdit, 'canDelete:', canDelete);
+        
         
         const editButtons = document.querySelectorAll('button[data-action="edit"]');
         const editInfoButtons = document.querySelectorAll('button[data-action="edit-info"]');
         const deleteButtons = document.querySelectorAll('button[data-action="delete"]');
         
-        console.log('Found buttons - edit:', editButtons.length, 'edit-info:', editInfoButtons.length, 'delete:', deleteButtons.length);
+        
         
         editButtons.forEach(btn => {
           btn.style.display = canEdit ? 'inline-flex' : 'none';
-          console.log('Edit button display set to:', btn.style.display);
+          
         });
         
         editInfoButtons.forEach(btn => {
           btn.style.display = canEdit ? 'inline-flex' : 'none';
-          console.log('Edit-info button display set to:', btn.style.display);
+          
         });
         
         deleteButtons.forEach(btn => {
           btn.style.display = canDelete ? 'inline-flex' : 'none';
-          console.log('Delete button display set to:', btn.style.display);
+          
         });
       }
 
@@ -2580,11 +2692,11 @@
           await new Promise(resolve => setTimeout(resolve, 1000));
 
           const validation = await this.validateUser(username, password);
-          console.log('Login validation result:', validation);
+          
           
           if (validation.success) {
             this.currentUser = validation.user;
-            console.log('Login successful, currentUser set to:', this.currentUser);
+            
             this.saveUserSession(validation.user);
             
             this.showSuccess(`مرحباً ${validation.user.name}! تم تسجيل الدخول بنجاح`);
@@ -2781,7 +2893,7 @@
                 detectSessionInUrl: false
               }
             });
-            console.log('Supabase client created successfully');
+            
           } catch (e) {
             console.error('Failed to create Supabase client:', e);
             this._isInitialized = false;
@@ -2792,7 +2904,7 @@
       },
       
       reset() {
-        console.log('Resetting Supabase client...');
+        
         this.connectionStatus = 'disconnected';
         this._creationAttempts = 0;
         this._isInitialized = false;
@@ -2813,10 +2925,10 @@
     
     function reinitializeSupabase() {
       try {
-        console.log('Reinitializing Supabase client...');
+        
         
         if (SupabaseManager.hasInstance()) {
-          console.log('Using existing Supabase instance');
+          
           SupabaseManager.connectionStatus = 'disconnected';
           return true;
         }
@@ -2824,7 +2936,7 @@
         SupabaseManager.reset();
         const client = getSupabaseClient();
         if (client) {
-          console.log('Supabase client reinitialized successfully');
+          
           return true;
         } else {
           console.error('Failed to reinitialize Supabase client');
@@ -2907,11 +3019,11 @@
 
     async function testSupabaseConnection() {
       try {
-        console.log('Testing Supabase connection...');
+        
         updateConnectionStatus('connecting');
-        console.log('Supabase URL:', SUPABASE_URL);
+        
         console.log('Supabase Key (first 20 chars):', SUPABASE_ANON_KEY.substring(0, 20) + '...');
-        console.log('Testing with columns: id, name, active, total_users');
+        
         
         const supabase = getSupabaseClient();
         if (!supabase) {5
@@ -2945,7 +3057,7 @@
               updateConnectionStatus('error');
               return false;
             } else {
-              console.log('Connection successful without board_name column');
+              
               SupabaseManager.connectionStatus = 'connected';
               updateConnectionStatus('connected');
               return true;
@@ -2957,10 +3069,10 @@
           updateConnectionStatus('error');
           return false;
         } else {
-          console.log('Supabase connection test successful');
-          console.log('Data received:', data);
+          
+          
           if (data && data.length > 0) {
-            console.log('Board name in database:', data[0].board_name);
+            
             console.log('Available columns:', Object.keys(data[0]));
           }
           SupabaseManager.connectionStatus = 'connected';
@@ -3089,12 +3201,8 @@
       agent.total_users = Number(agent.total_users) || 0;
       agent.active = Number(agent.active) || 0;
 
-      if(Array.isArray(agent.history) && agent.history.length>0){
-        const last = agent.history[agent.history.length-1];
-        agent.growth = Math.round(agent.active - Number(last.active||0));
-      } else {
-        agent.growth = 0;
-      }
+      // حساب النمو الأسبوعي من قاعدة البيانات
+      agent.growth = Math.round(agent.active - Number(agent.prev_active||0));
       agent.activation_rate = agent.total_users ? +( (agent.active / agent.total_users) * 100 ) : 0;
       agent.activation_rate = Math.round(agent.activation_rate*10)/10;
       if(required !== null){
@@ -3119,19 +3227,19 @@
 
     function renderTable(){
       let filtered = agents.slice();
-      console.log('renderTable - total agents:', agents.length);
-      console.log('renderTable - initial filtered:', filtered.length);
+      
+      
 
       const phase = phaseFilter.value;
       if(phase) {
         filtered = filtered.filter(a => (a.phase || '').toUpperCase() === phase.toUpperCase());
-        console.log('renderTable - after phase filter:', filtered.length, 'phase:', phase);
+        
       }
 
       const q = (searchBox.value || '').trim().toLowerCase();
       if(q){
         filtered = filtered.filter(a => ((a.name||'') + ' ' + (a.itpc_site||'') + ' ' + arabicPhaseLabel(a.phase)).toLowerCase().includes(q));
-        console.log('renderTable - after search filter:', filtered.length, 'query:', q);
+        
       }
 
       const sort = sortBy.value;
@@ -3140,7 +3248,9 @@
       else if(sort === 'deficit_desc') filtered.sort((a,b)=>b.deficit_users - a.deficit_users);
       else filtered.sort((a,b)=> (a.name||'').localeCompare(b.name || '', 'ar') );
 
-      tbody.innerHTML = '';
+      while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
+      }
       const PHASE_ORDER = ['OLD','PHASE2','PHASE3'];
       const phaseToItems = {};
       filtered.forEach((a)=>{
@@ -3149,14 +3259,14 @@
         phaseToItems[key].push(a);
       });
       
-      console.log('renderTable - phaseToItems:', phaseToItems);
-      console.log('renderTable - PHASE_ORDER:', PHASE_ORDER);
+      
+      
       const allPhases = PHASE_ORDER.filter(p=>phaseToItems[p] && phaseToItems[p].length>0);
-      console.log('renderTable - allPhases:', allPhases);
+      
       let runningIndex = 0;
       allPhases.forEach(phaseKey=>{
         const items = phaseToItems[phaseKey];
-        console.log('renderTable - processing phase:', phaseKey, 'items:', items.length);
+        
         const hdr = document.createElement('tr');
         hdr.className = 'phase-header';
         hdr.innerHTML = `<td colspan="14" style="text-align:right; font-weight:700; background:rgba(99,102,241,0.15); font-size:12px; padding:12px; border-bottom:1px solid rgba(99,102,241,0.3); color:#6366f1;">${arabicPhaseLabel(phaseKey)}</td>`;
@@ -3164,7 +3274,7 @@
 
         items.forEach((a)=>{
           const idx = runningIndex++;
-          console.log('renderTable - adding agent:', a.name, 'phase:', a.phase, 'index:', idx);
+          
         const tr = document.createElement('tr');
         const todayStr = toYMDLocal(new Date());
         tr.innerHTML = `
@@ -3180,7 +3290,7 @@
           <td>${escapeHtml(a.board_name||'')}</td>
           <td style="font-weight:600;">${num(a.total_users)}</td>
           <td style="font-weight:600;">${num(a.active)}</td>
-            
+          <td style="font-weight:700; color: ${(a.growth||0) > 0 ? '#10b981' : (a.growth||0) < 0 ? '#ef4444' : 'inherit'};">${signedNum(a.growth||0)}</td>
           <td style="font-weight:600;">${a.activation_rate}%</td>
           <td style="font-weight:600;">${a.required_rate === null ? '-' : a.required_rate + '%'}</td>
             <td style="font-weight:600;">${a.required_rate === null ? '-' : num(a.required_users)}</td>
@@ -3230,8 +3340,8 @@
       updateStats(filtered);
       updateCharts(filtered);
       
-      console.log('renderTable - final runningIndex:', runningIndex);
-      console.log('renderTable - total rows added:', tbody.children.length);
+      
+      
       
       if (typeof authSystem !== 'undefined') {
         authSystem.updateElementVisibility();
@@ -3473,12 +3583,15 @@
           localIdByDbId.delete(dbId);
           dbIdByLocalId.delete(a._id);
         }
-      }catch(e){ console.error(e); }
+      }catch(e){ 
+        console.error('Error deleting agent from database:', e);
+        // Continue with local deletion even if database operation fails
+      }
       
       agents.splice(idx,1);
       saveToStorage();
       renderTable();
-      console.log(`تم حذف الوكيل "${a.name}" بنجاح!`);
+      
     });
 
     closeInfoModal.addEventListener('click', ()=> closeModal(modalEditInfo));
@@ -3499,10 +3612,10 @@
       
       try{
         const dbId = dbIdByLocalId.get(a._id);
-        console.log('Updating agent:', a.name, 'Local ID:', a._id, 'DB ID:', dbId);
+        
         
         if(dbId){
-          console.log('Updating agent info in Supabase:', a.name);
+          
           const supabase = getSupabaseClient();
           if (!supabase) {
             console.error('Supabase client not available');
@@ -3521,9 +3634,9 @@
             prev_active: a.prev_active
           };
           
-          console.log('Updating with data:', updateData);
-          console.log('Board name value:', a.board_name);
-          console.log('Board name type:', typeof a.board_name);
+          
+          
+          
           
           const { error } = await supabase
             .from('agents')
@@ -3555,14 +3668,14 @@
               if (retryError) {
                 console.error('Retry update also failed:', retryError);
               } else {
-                console.log('Agent info updated successfully without board_name');
+                
               }
             }
           } else {
-            console.log('Agent info updated successfully in Supabase');
+            
           }
         } else {
-          console.log('No database ID found for agent, saving locally only');
+          
           console.log('Available dbIdByLocalId:', Array.from(dbIdByLocalId.entries()));
         }
       }catch(e){ 
@@ -3572,7 +3685,7 @@
       saveToStorage();
       renderTable();
       closeModal(modalEditInfo);
-      console.log('Agent info updated successfully');
+      
     });
 
     document.getElementById('deleteFromInfoModal').addEventListener('click', async ()=>{
@@ -3591,7 +3704,10 @@
           localIdByDbId.delete(dbId);
           dbIdByLocalId.delete(a._id);
         }
-      }catch(e){ console.error(e); }
+      }catch(e){ 
+        console.error('Error deleting agent from database:', e);
+        // Continue with local deletion even if database operation fails
+      }
       agents.splice(idx,1);
       saveToStorage();
       renderTable();
@@ -3622,14 +3738,14 @@
       
       if(!Array.isArray(agent.history)) agent.history = [];
       agent.history.push({ date: toYMDLocal(new Date()), active: Number(agent.active||0) });
-      agent.prev_active = agent.active;
+      agent.prev_active = Number(agent.active||0); // حفظ القيمة السابقة قبل التحديث
       agent.active = newActive;
       computeAgent(agent);
       
       try{
         const dbId = dbIdByLocalId.get(agent._id);
         if(dbId){
-          console.log('Updating active users for agent:', agent.name, 'to:', newActive);
+          
           const supabase = getSupabaseClient();
           if (supabase) {
           const { error } = await supabase
@@ -3643,13 +3759,13 @@
           if(error) {
             console.error('Supabase update active error:', error);
           } else {
-            console.log('Active users updated successfully in Supabase');
+            
             }
           } else {
-            console.log('Supabase client not available, saving locally only');
+            
           }
         } else {
-          console.log('No database ID found for agent, saving locally only');
+          
         }
       }catch(e){ 
         console.error('Error updating active users:', e); 
@@ -3658,7 +3774,7 @@
       saveToStorage();
       renderTable();
       closeModal(modalEdit);
-      console.log('Active users updated successfully');
+      
     });
 
     btnAddAgent.addEventListener('click', ()=> {
@@ -3699,7 +3815,7 @@
       };
       
       console.log('Created obj with keys:', Object.keys(obj));
-      console.log('obj.board_name:', obj.board_name);
+      
       
       computeAgent(obj);
       
@@ -3710,8 +3826,8 @@
       }
       
       try{
-        console.log('Attempting to insert new agent:', obj);
-        console.log('Supabase URL:', SUPABASE_URL);
+        
+        
         
         const supabase = getSupabaseClient();
         if (!supabase) {
@@ -3740,16 +3856,16 @@
         console.log('Insert data (before send):', JSON.stringify(insertData, null, 2));
         console.log('Original obj keys:', Object.keys(obj));
         console.log('Insert data keys:', Object.keys(insertData));
-        console.log('Board name in obj:', obj.board_name);
-        console.log('Board name in insertData:', insertData.board_name);
+        
+        
         
         if (insertData.hasOwnProperty('board_name')) {
-          console.log('SUCCESS: board_name found in insertData!');
+          
         } else {
           console.error('ERROR: board_name NOT found in insertData!');
         }
         
-        console.log('Final insert data:', insertData);
+        
         
         const { data, error } = await supabase
           .from('agents')
@@ -3785,9 +3901,9 @@
               console.error('Retry insert also failed:', retryError);
               obj._id = genId();
               agents.push(obj);
-              console.log('Agent added locally due to Supabase error');
+              
             } else {
-              console.log('Agent inserted successfully without board_name:', retryData);
+              
               obj._id = genId();
               obj.db_id = retryData.id;
               dbIdByLocalId.set(obj._id, retryData.id);
@@ -3804,10 +3920,10 @@
             
             obj._id = genId();
             agents.push(obj);
-            console.log('Agent added locally due to Supabase error');
+            
           }
         } else {
-          console.log('Agent inserted successfully in Supabase:', data);
+          
           obj._id = genId();
           obj.db_id = data.id;
           dbIdByLocalId.set(obj._id, data.id);
@@ -3833,9 +3949,9 @@
       document.getElementById('new_total').value='';
       document.getElementById('new_active').value='';
       
-      console.log('New agent added successfully. Total agents:', agents.length);
       
-      console.log(`تم إضافة الوكيل "${name}" بنجاح!`);
+      
+      
     });
 
     function saveToStorage(){
@@ -3843,7 +3959,7 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(agents));
         localStorage.setItem(STORAGE_KEY + '_timestamp', Date.now().toString());
         console.log('Data saved to local storage successfully at:', new Date().toLocaleString());
-        console.log('Agents count:', agents.length);
+        
         return true;
       } catch (error) {
         console.error('Error saving to local storage:', error);
@@ -3876,8 +3992,8 @@
 
     async function loadFromSupabase(){
       try {
-        console.log('Attempting to load data from Supabase...');
-        console.log('Supabase URL:', SUPABASE_URL);
+        
+        
         
         const supabase = getSupabaseClient();
         if (!supabase) {
@@ -3899,14 +4015,14 @@
         }
 
         if(!data || data.length === 0){
-          console.log('No data in Supabase, starting with empty table');
+          
           agents = [];
           computeAll();
           return;
         }
 
-        console.log('Data loaded from Supabase:', data.length, 'agents');
-        console.log('Raw data from Supabase:', data);
+        
+        
         
         agents = data.map(row=>{
           const obj = {
@@ -3926,14 +4042,14 @@
           };
           dbIdByLocalId.set(obj._id, row.id);
           localIdByDbId.set(row.id, obj._id);
-          console.log('Loaded agent:', obj.name, 'Local ID:', obj._id, 'DB ID:', row.id, 'Board:', obj.board_name, 'Phase:', obj.phase);
+          
           return computeAgent(obj);
         });
         
         console.log('dbIdByLocalId entries:', Array.from(dbIdByLocalId.entries()));
-        console.log('Final agents array:', agents);
+        
         computeAll();
-        console.log('Data loaded successfully from Supabase:', agents.length, 'agents');
+        
       } catch(e) {
         console.error('Error loading from Supabase:', e);
        
@@ -3951,7 +4067,7 @@
     
     async function initializeData() {
       try {
-        console.log('Initializing application...');
+        
         updateConnectionStatus('connecting');
         
         let connectionOk = await testSupabaseConnection();
@@ -3982,10 +4098,10 @@
     }
     
     function initializeSupabase() {
-      console.log('Initializing Supabase client...');
+      
       const client = getSupabaseClient();
       if (client) {
-        console.log('Supabase client initialized successfully');
+        
         return true;
       } else {
         console.error('Failed to initialize Supabase client');
@@ -3994,7 +4110,7 @@
     }
 
     window.addEventListener('beforeunload', function() {
-      console.log('Cleaning up Supabase instance...');
+      
       SupabaseManager.reset();
     });
 
@@ -4014,11 +4130,21 @@
       if(theme === 'light'){
         root.classList.add('light');
         bodyEl.classList.add('light');
-        btnTheme.innerHTML = '<span class="icon">☀️</span>  ';
+        btnTheme.textContent = '';
+        const sunIcon = document.createElement('span');
+        sunIcon.className = 'icon';
+        sunIcon.textContent = '☀️';
+        btnTheme.appendChild(sunIcon);
+        btnTheme.appendChild(document.createTextNode('  '));
       } else {
         root.classList.remove('light');
         bodyEl.classList.remove('light');
-        btnTheme.innerHTML = '<span class="icon">🌙</span>  ';
+        btnTheme.textContent = '';
+        const moonIcon = document.createElement('span');
+        moonIcon.className = 'icon';
+        moonIcon.textContent = '🌙';
+        btnTheme.appendChild(moonIcon);
+        btnTheme.appendChild(document.createTextNode('  '));
       }
     }
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -4046,7 +4172,7 @@
 
     document.getElementById('btnWeeklyReport').addEventListener('click', ()=>{
       const todayStr = toYMDLocal(new Date());
-      const headers = ['الوكيل','تاريخ العقد','تاريخ اليوم','FDT',' اللوحة','إجمالي المستخدمين','النشط الحالي','معدل التفعيل','النسبة المطلوبة','المطلوب للوصول','نسبة العجز','عدد العجز','الحالة'];
+      const headers = ['الوكيل','تاريخ العقد','تاريخ اليوم','FDT',' اللوحة','إجمالي المستخدمين','النشط الحالي','النمو الأسبوعي','معدل التفعيل','النسبة المطلوبة','المطلوب للوصول','نسبة العجز','عدد العجز','الحالة'];
 
       const PHASE_ORDER = ['OLD','PHASE2','PHASE3'];
       let list = agents.slice();
@@ -4156,6 +4282,17 @@
       color: #000;
       font-size: 10px;
       height: 20px;
+      border: none;
+    }
+    
+    tr.phase-row td:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    
+    tr.phase-row td:last-child {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
     }
     tr.subtotal-title td { 
       background: #c0c0c0; 
@@ -4163,18 +4300,67 @@
       text-align: right; 
       color: #000;
       height: 18px;
+      border: none;
+    }
+    
+    tr.subtotal-title td:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    
+    tr.subtotal-title td:last-child {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
     }
     tr.subtotal-values td { 
       background: #e0e0e0; 
       font-weight: bold; 
       color: #000;
       height: 16px;
+      border: none;
+    }
+    
+    tr.subtotal-values td:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    
+    tr.subtotal-values td:last-child {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
     }
     tr.grand-total td { 
       background: #a0a0a0; 
       font-weight: bold; 
       color: #000;
       height: 18px;
+      border: none;
+    }
+    
+    tr.grand-total td:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    
+    /* تحسين صفوف المشروع للوضع المضيء */
+    body.light tr.phase-row td { 
+      background: #e2e8f0; 
+      color: #1e293b;
+    }
+    
+    body.light tr.subtotal-title td { 
+      background: #cbd5e1; 
+      color: #1e293b;
+    }
+    
+    body.light tr.subtotal-values td { 
+      background: #f1f5f9; 
+      color: #1e293b;
+    }
+    
+    body.light tr.grand-total td { 
+      background: #94a3b8; 
+      color: #1e293b;
     }
     .left { text-align: right; }
     @media print { 
@@ -4269,7 +4455,7 @@
         size: A4 landscape !important;
         margin: 5mm !important;
       }
-      .signature { position: absolute; bottom: 20px; left: 20px; font-size: 10px; font-weight: normal; color: #666; z-index: 1000; }
+      .signature { position: fixed; bottom: 20px; left: 20px; font-size: 8px; font-weight: normal; color: #999; z-index: 9999; background: white; padding: 5px; }
     }
   </style>
 </head>
@@ -4293,6 +4479,7 @@
             (a.board_name || ''),
             num(a.total_users),
             num(a.active),
+            `<span style="font-weight:700; color: ${(a.growth||0) > 0 ? '#10b981' : (a.growth||0) < 0 ? '#ef4444' : '#000'};">${signedNum(a.growth||0)}</span>`,
             (a.activation_rate||0) + '%',
             (a.required_rate === null ? '-' : a.required_rate + '%'),
             (a.required_rate === null ? '-' : num(a.required_users)),
@@ -4326,7 +4513,6 @@
       html += '<tr class=\"grand-total\">' + grandCells.map(v=>`<td>${v}</td>`).join('') + '</tr>';
 
       html += '</tbody></table>';
-      html += '<div class="signature">Ameer Helwas</div>';
       html += '</body>';
       html += '<script>setTimeout(function(){ if(window.print) window.print(); }, 300);<\/script>';
       html += '</html>';
