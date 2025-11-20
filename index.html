@@ -3464,7 +3464,11 @@
         overlay.style.pointerEvents = 'auto';
         document.querySelector('.container').style.display = 'none';
         // Ensure auth inputs are editable when overlay is shown
-        setTimeout(() => ensureInputFieldsEditable(), 50);
+        setTimeout(() => {
+          ensureInputFieldsEditable();
+          // إعادة التأكد بعد فترة قصيرة
+          setTimeout(() => ensureInputFieldsEditable(), 200);
+        }, 50);
       }
 
       hideAuthOverlay() {
@@ -3760,10 +3764,130 @@
         this.showAuthOverlay();
         document.getElementById('authForm').reset();
         this.hideMessages();
+        // إيقاف inactivity timer عند تسجيل الخروج
+        if (window.stopInactivityTimer) {
+          window.stopInactivityTimer();
+        }
       }
     }
 
     const authSystem = new AuthSystem();
+    
+    // نظام تسجيل الخروج التلقائي عند عدم النشاط
+    (function() {
+      const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 دقيقة بالميلي ثانية
+      let inactivityTimer = null;
+      
+      // دالة لإعادة تعيين الـ timer
+      function resetInactivityTimer(event) {
+        // تجاهل الأحداث من حقول تسجيل الدخول (لا نريد إعادة تعيين الـ timer عند الكتابة في حقول تسجيل الدخول)
+        if (event && event.target) {
+          const target = event.target;
+          if (target.id === 'authUsername' || target.id === 'authPassword' || 
+              target.closest('#authOverlay') || target.closest('.auth-container')) {
+            // إذا كان المستخدم في شاشة تسجيل الدخول، لا نعيد تعيين الـ timer
+            if (!authSystem.getCurrentUser()) {
+              return;
+            }
+          }
+        }
+        
+        // إلغاء الـ timer السابق إن وجد
+        if (inactivityTimer) {
+          clearTimeout(inactivityTimer);
+        }
+        
+        // التحقق من أن المستخدم مسجل دخول
+        if (!authSystem.getCurrentUser()) {
+          return;
+        }
+        
+        // إنشاء timer جديد
+        inactivityTimer = setTimeout(() => {
+          // التحقق مرة أخرى من أن المستخدم لا يزال مسجل دخول
+          if (authSystem.getCurrentUser()) {
+            console.log('تم تسجيل الخروج تلقائياً بسبب عدم النشاط');
+            authSystem.logout();
+            alert('تم تسجيل الخروج تلقائياً بسبب عدم النشاط لمدة 30 دقيقة');
+          }
+        }, INACTIVITY_TIMEOUT);
+      }
+      
+      // دالة لإيقاف الـ timer (مثلاً عند تسجيل الخروج اليدوي)
+      function stopInactivityTimer() {
+        if (inactivityTimer) {
+          clearTimeout(inactivityTimer);
+          inactivityTimer = null;
+        }
+      }
+      
+      // أحداث لتتبع نشاط المستخدم
+      const activityEvents = [
+        'mousedown',
+        'mousemove',
+        'keypress',
+        'scroll',
+        'touchstart',
+        'click'
+      ];
+      
+      // إضافة مستمعات الأحداث مع استثناء حقول تسجيل الدخول
+      activityEvents.forEach(event => {
+        document.addEventListener(event, function(e) {
+          // تجاهل الأحداث من حقول تسجيل الدخول والـ overlay
+          if (e.target && (
+            e.target.id === 'authUsername' || 
+            e.target.id === 'authPassword' ||
+            e.target.closest('#authOverlay') ||
+            e.target.closest('.auth-container')
+          )) {
+            // إذا كان المستخدم في شاشة تسجيل الدخول، لا نعيد تعيين الـ timer
+            if (!authSystem.getCurrentUser()) {
+              return;
+            }
+          }
+          resetInactivityTimer(e);
+        }, true);
+      });
+      
+      // إعادة تعيين الـ timer عند تحميل الصفحة إذا كان المستخدم مسجل دخول
+      // استخدام setTimeout للتأكد من أن authSystem تم تهيئته بالكامل
+      setTimeout(() => {
+        if (authSystem.getCurrentUser()) {
+          resetInactivityTimer();
+        }
+      }, 500);
+      
+      // إعادة تعيين الـ timer بعد تسجيل الدخول
+      const originalHideAuthOverlay = authSystem.hideAuthOverlay.bind(authSystem);
+      authSystem.hideAuthOverlay = function() {
+        originalHideAuthOverlay();
+        resetInactivityTimer();
+      };
+      
+      // إيقاف الـ timer عند تسجيل الخروج
+      const originalLogout = authSystem.logout.bind(authSystem);
+      authSystem.logout = function() {
+        stopInactivityTimer();
+        originalLogout();
+      };
+      
+      // حفظ المرجع في window للوصول إليه من أي مكان
+      window.resetInactivityTimer = resetInactivityTimer;
+      window.stopInactivityTimer = stopInactivityTimer;
+      
+      // إعادة تعيين الـ timer عند التركيز على النافذة
+      window.addEventListener('focus', () => {
+        if (authSystem.getCurrentUser()) {
+          resetInactivityTimer();
+        }
+      });
+      
+      // إيقاف الـ timer عند فقدان التركيز (اختياري - يمكن إزالته)
+      // window.addEventListener('blur', () => {
+      //   // يمكن إبقاء الـ timer يعمل حتى عند فقدان التركيز
+      // });
+    })();
     
     // Function to position modals at center
     function positionModal(modalElement) {
@@ -3808,6 +3932,7 @@
       const passwordInput = document.getElementById('authPassword');
       
       if (usernameInput) {
+        // إزالة جميع القيود
         usernameInput.style.pointerEvents = 'auto';
         usernameInput.style.userSelect = 'text';
         usernameInput.style.cursor = 'text';
@@ -3816,22 +3941,44 @@
         usernameInput.setAttribute('autocomplete', 'username');
         usernameInput.setAttribute('spellcheck', 'false');
         usernameInput.style.opacity = '1';
-        usernameInput.style.zIndex = '10';
+        usernameInput.style.zIndex = '10000';
         usernameInput.style.position = 'relative';
         usernameInput.tabIndex = 0;
+        usernameInput.disabled = false;
+        usernameInput.readOnly = false;
         
-        // Force focus to make sure it's interactive
-        usernameInput.addEventListener('click', function() {
+        // إزالة جميع event listeners السابقة لتجنب التكرار
+        const newUsernameInput = usernameInput.cloneNode(true);
+        usernameInput.parentNode.replaceChild(newUsernameInput, usernameInput);
+        
+        // إضافة event listeners جديدة
+        newUsernameInput.addEventListener('click', function(e) {
+          e.stopPropagation();
           this.focus();
-        }, { once: false });
+        }, true);
         
-        usernameInput.addEventListener('focus', function() {
+        newUsernameInput.addEventListener('mousedown', function(e) {
+          e.stopPropagation();
+          this.style.pointerEvents = 'auto';
+        }, true);
+        
+        newUsernameInput.addEventListener('focus', function(e) {
+          e.stopPropagation();
           this.style.pointerEvents = 'auto';
           this.style.userSelect = 'text';
-        }, { once: false });
+        }, true);
+        
+        newUsernameInput.addEventListener('input', function(e) {
+          e.stopPropagation();
+        }, true);
+        
+        newUsernameInput.addEventListener('keydown', function(e) {
+          e.stopPropagation();
+        }, true);
       }
       
       if (passwordInput) {
+        // إزالة جميع القيود
         passwordInput.style.pointerEvents = 'auto';
         passwordInput.style.userSelect = 'text';
         passwordInput.style.cursor = 'text';
@@ -3840,19 +3987,40 @@
         passwordInput.setAttribute('autocomplete', 'current-password');
         passwordInput.setAttribute('spellcheck', 'false');
         passwordInput.style.opacity = '1';
-        passwordInput.style.zIndex = '10';
+        passwordInput.style.zIndex = '10000';
         passwordInput.style.position = 'relative';
         passwordInput.tabIndex = 0;
+        passwordInput.disabled = false;
+        passwordInput.readOnly = false;
         
-        // Force focus to make sure it's interactive
-        passwordInput.addEventListener('click', function() {
+        // إزالة جميع event listeners السابقة لتجنب التكرار
+        const newPasswordInput = passwordInput.cloneNode(true);
+        passwordInput.parentNode.replaceChild(newPasswordInput, passwordInput);
+        
+        // إضافة event listeners جديدة
+        newPasswordInput.addEventListener('click', function(e) {
+          e.stopPropagation();
           this.focus();
-        }, { once: false });
+        }, true);
         
-        passwordInput.addEventListener('focus', function() {
+        newPasswordInput.addEventListener('mousedown', function(e) {
+          e.stopPropagation();
+          this.style.pointerEvents = 'auto';
+        }, true);
+        
+        newPasswordInput.addEventListener('focus', function(e) {
+          e.stopPropagation();
           this.style.pointerEvents = 'auto';
           this.style.userSelect = 'text';
-        }, { once: false });
+        }, true);
+        
+        newPasswordInput.addEventListener('input', function(e) {
+          e.stopPropagation();
+        }, true);
+        
+        newPasswordInput.addEventListener('keydown', function(e) {
+          e.stopPropagation();
+        }, true);
       }
     }
 
@@ -3911,8 +4079,38 @@
     // Also run when the page is fully loaded
     window.addEventListener('load', initializeInputs);
     
+    // إعادة تفعيل حقول تسجيل الدخول بشكل دوري عند ظهور الـ overlay
+    setInterval(() => {
+      const overlay = document.getElementById('authOverlay');
+      if (overlay && overlay.style.display !== 'none' && overlay.style.display !== '') {
+        ensureInputFieldsEditable();
+      }
+    }, 1000);
+    
     // Additional safety check - run on any click interaction
     document.addEventListener('click', function(e) {
+      // استثناء حقول تسجيل الدخول - معالجة خاصة
+      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
+        e.stopPropagation();
+        const input = e.target;
+        input.style.pointerEvents = 'auto';
+        input.style.userSelect = 'text';
+        input.style.cursor = 'text';
+        input.removeAttribute('readonly');
+        input.removeAttribute('disabled');
+        input.disabled = false;
+        input.readOnly = false;
+        input.tabIndex = 0;
+        setTimeout(() => {
+          try {
+            input.focus();
+          } catch (err) {
+            // Ignore focus errors
+          }
+        }, 10);
+        return;
+      }
+      
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
         // Immediately enable the input
         if (!e.target.disabled && !e.target.readOnly) {
@@ -3936,10 +4134,38 @@
     
     // Also handle mousedown for better responsiveness
     document.addEventListener('mousedown', function(e) {
+      // استثناء حقول تسجيل الدخول
+      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
+        e.stopPropagation();
+        e.target.style.pointerEvents = 'auto';
+        e.target.disabled = false;
+        e.target.readOnly = false;
+        return;
+      }
+      
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
         if (!e.target.disabled && !e.target.readOnly) {
           e.target.style.pointerEvents = 'auto';
         }
+      }
+    }, true);
+    
+    // معالجة خاصة لحقول تسجيل الدخول عند الكتابة
+    document.addEventListener('keydown', function(e) {
+      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
+        e.stopPropagation();
+        e.target.style.pointerEvents = 'auto';
+        e.target.disabled = false;
+        e.target.readOnly = false;
+      }
+    }, true);
+    
+    document.addEventListener('input', function(e) {
+      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
+        e.stopPropagation();
+        e.target.style.pointerEvents = 'auto';
+        e.target.disabled = false;
+        e.target.readOnly = false;
       }
     }, true);
     
