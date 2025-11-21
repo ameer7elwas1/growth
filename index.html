@@ -172,10 +172,10 @@
       font-weight: 500;
     }
     
-    :root:not([data-theme="dark"]) tbody tr:nth-child(even){background:transparent;}
-    :root:not([data-theme="dark"]) tbody tr:hover{background:transparent;}
-    :root:not([data-theme="dark"]) th, :root:not([data-theme="dark"]) td{border-bottom:none;}
-    :root:not([data-theme="dark"]) th{border-bottom:none;}
+    :root:not([data-theme="dark"]) tbody tr:nth-child(even){background:rgba(128, 28, 50, 0.03);}
+    :root:not([data-theme="dark"]) tbody tr:hover{background:rgba(128, 28, 50, 0.08);}
+    :root:not([data-theme="dark"]) th, :root:not([data-theme="dark"]) td{border-bottom:1px solid rgba(128, 28, 50, 0.15); border-right:1px solid rgba(128, 28, 50, 0.1);}
+    :root:not([data-theme="dark"]) th{border-bottom:2px solid var(--primary-color); border-right:1px solid rgba(128, 28, 50, 0.2);}
     :root:not([data-theme="dark"]) tr.subtotal-title td{background:var(--card-bg); border-bottom:none; border: 1px solid var(--border-color); border-radius: var(--border-radius);}
     :root:not([data-theme="dark"]) tr.subtotal-values td{background:var(--card-bg); border-bottom:none; border: 1px solid var(--border-color); border-radius: var(--border-radius);}
     :root:not([data-theme="dark"]) .phase-header td{background:var(--card-bg); border-bottom:none; border: 1px solid var(--border-color); border-radius: var(--border-radius);}
@@ -243,7 +243,6 @@
       background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
     }
     
-    /* Light mode button styles */
     :root:not([data-theme="dark"]) .btn.secondary {
       background: var(--primary-light);
       border: 1.5px solid var(--primary-color);
@@ -313,7 +312,6 @@
       font-weight: 700;
     }
     
-    /* Light mode deficit colors for reports */
     :root:not([data-theme="dark"]) .deficit-green,
     :root:not([data-theme="dark"]) .deficit-orange,
     :root:not([data-theme="dark"]) .deficit-red {
@@ -321,7 +319,6 @@
       font-weight: 700 !important;
     }
     
-    /* Dark mode button improvements */
     .btn.secondary{
       text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
@@ -868,7 +865,6 @@
       font-weight: 800;
     }
     
-    /* ضمان الخط الأسود في الوضع النهاري */
     .card .stat h3,
     section.card .stat h3 {
       color: inherit;
@@ -889,7 +885,6 @@
       color: #000000 !important;
     }
     
-    /* الوضع الليلي - خط أبيض على خلفيات ملونة */
     [data-theme="dark"] .stat {
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
@@ -1056,23 +1051,35 @@
     }
     table {
       width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
       background: var(--table-bg);
       font-size: 0.9rem;
       font-weight: 500;
-      border: none;
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      overflow: hidden;
       font-family: 'Cairo', 'Segoe UI', 'Arial', sans-serif;
+      box-shadow: 0 2px 8px rgba(128, 28, 50, 0.1);
+    }
+    
+    [data-theme="dark"] table {
+      border-color: rgba(255, 71, 87, 0.5);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
     th {
       background: var(--table-header);
       color: white;
-      padding: 16px 18px;
+      padding: 14px 12px;
       text-align: right;
       font-weight: 800;
       font-size: 0.95rem;
       letter-spacing: 0.4px;
-      border: 1px solid var(--table-border);
-      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 10;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -1099,12 +1106,12 @@
     }
     
     td {
-      padding: 14px 18px;
-      border: 1px solid var(--table-border);
-      border-bottom: 1.5px solid var(--border-light);
-      color: var(--text-primary);
+      padding: 12px 10px;
+      border-right: 1px solid rgba(128, 28, 50, 0.1);
+      border-bottom: 1px solid rgba(128, 28, 50, 0.15);
+      color: #000000;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 800;
       letter-spacing: 0.1px;
       text-align: center;
       white-space: nowrap;
@@ -1114,6 +1121,61 @@
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
       line-height: 1.5;
+    }
+    
+    :root:not([data-theme="dark"]) td {
+      color: #000000 !important;
+      font-weight: 800 !important;
+    }
+    
+    td:first-child {
+      border-right: 1px solid rgba(128, 28, 50, 0.2);
+    }
+    
+    td:last-child {
+      border-right: none;
+    }
+    
+    th:first-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    th:last-child {
+      border-right: none;
+    }
+    
+    [data-theme="dark"] td {
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff !important;
+      font-weight: 800 !important;
+    }
+    
+    [data-theme="dark"] tbody tr td {
+      color: #ffffff !important;
+      font-weight: 800 !important;
+    }
+    
+    [data-theme="dark"] tbody tr td strong {
+      color: #ffffff !important;
+      font-weight: 900 !important;
+    }
+    
+    [data-theme="dark"] tbody tr td small {
+      color: #ffffff !important;
+      font-weight: 700 !important;
+    }
+    
+    [data-theme="dark"] td:first-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    [data-theme="dark"] th:first-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    [data-theme="dark"] th {
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     :root:not([data-theme="dark"]) td {
@@ -1130,16 +1192,26 @@
     
     tbody tr td strong {
       font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text-primary);
+      font-weight: 900;
+      color: #000000 !important;
       line-height: 1.4;
+    }
+    
+    :root:not([data-theme="dark"]) tbody tr td strong {
+      color: #000000 !important;
+      font-weight: 900 !important;
     }
     
     tbody tr td small {
       font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-secondary);
+      font-weight: 700;
+      color: #000000 !important;
       line-height: 1.4;
+    }
+    
+    :root:not([data-theme="dark"]) tbody tr td small {
+      color: #000000 !important;
+      font-weight: 700 !important;
     }
     
     [data-theme="dark"] tbody tr td strong {
@@ -1155,34 +1227,47 @@
       background: var(--card-bg);
       transition: all 0.2s ease;
       border: none;
+      border-bottom: 1px solid rgba(128, 28, 50, 0.15);
     }
     
     tbody tr:nth-child(even) {
-      background: var(--bg-tertiary);
+      background: rgba(128, 28, 50, 0.03);
+    }
+    
+    [data-theme="dark"] tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.03);
     }
     
     tbody tr:hover {
-      background: var(--bg-secondary);
-      transform: scale(1.01);
-      box-shadow: 0 2px 8px var(--shadow-sm);
+      background: rgba(128, 28, 50, 0.08) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(128, 28, 50, 0.15);
+      border-bottom-color: var(--primary-color);
     }
     
-    tbody tr:nth-child(even):hover {
-      background: var(--bg-secondary);
+    [data-theme="dark"] tbody tr:hover {
+      background: rgba(255, 71, 87, 0.1) !important;
+      box-shadow: 0 4px 12px rgba(255, 71, 87, 0.2);
     }
     
     tbody tr td {
       background: transparent !important;
-      border: 1px solid var(--table-border);
-      border-bottom: 1.5px solid var(--border-light);
-      padding: 14px 18px;
+      border-right: 1px solid rgba(128, 28, 50, 0.1);
+      border-bottom: 1px solid rgba(128, 28, 50, 0.15);
+      padding: 12px 10px;
       overflow: visible;
       white-space: normal;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 800;
+      color: #000000 !important;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
+    }
+    
+    :root:not([data-theme="dark"]) tbody tr td {
+      color: #000000 !important;
+      font-weight: 800 !important;
     }
     
     tbody tr:nth-child(even) td {
@@ -1199,9 +1284,7 @@
     tbody tr td .flex {
       background: transparent !important;
     }
-    /* تم تحديث td small أعلاه */
     
-    /* تمييز صفوف الوكلاء - تم تحديثه أعلاه */
     
     tr.subtotal-title td {
       background: var(--primary-light) !important;
@@ -1357,7 +1440,6 @@
       animation: modalFadeIn 0.3s ease-out;
     }
     
-    /* Ensure proper positioning */
     .modal.open {
       display: flex !important;
       align-items: center !important;
@@ -1580,7 +1662,7 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       min-width: 250px;
       max-width: 300px;
-      z-index: 10001;
+      z-index: 99999;
       display: none;
       opacity: 0;
       visibility: hidden;
@@ -1681,6 +1763,7 @@
       font-weight: 500;
     }
     .icon{font-size:16px; margin-right:4px;}
+    th{font-size:13px; font-weight:700;}
     th:nth-child(1), td:nth-child(1){text-align:right; padding-right:12px; width: 10%;}
     th:nth-child(2), td:nth-child(2){width: 7%;}
     th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4){width: 5%;}
@@ -1699,8 +1782,14 @@
     
    
     td:nth-child(1){white-space:normal; word-wrap:break-word; background:transparent !important;}
-    td:nth-child(1) strong{font-size:12px; line-height:1.3; word-break:break-word; font-weight:600; background:transparent !important;}
-    td:nth-child(1) small{font-size:9px; margin-top:3px; word-break:break-word; color:var(--muted); background:transparent !important;}
+    td:nth-child(1) strong{font-size:14px; line-height:1.3; word-break:break-word; font-weight:900; color:#000000 !important; background:transparent !important;}
+    td:nth-child(1) small{font-size:11px; margin-top:3px; word-break:break-word; color:#000000 !important; font-weight:700 !important; background:transparent !important;}
+    
+    :root:not([data-theme="dark"]) td:nth-child(1) strong{color:#000000 !important; font-weight:900 !important;}
+    :root:not([data-theme="dark"]) td:nth-child(1) small{color:#000000 !important; font-weight:700 !important;}
+    
+    [data-theme="dark"] td:nth-child(1) strong{color:#ffffff !important; font-weight:900 !important;}
+    [data-theme="dark"] td:nth-child(1) small{color:#ffffff !important; font-weight:700 !important;}
     td:nth-child(1) div{background:transparent !important;}
     
     td:nth-child(4){white-space:normal; word-wrap:break-word; text-align:center; background:transparent !important;}
@@ -1854,7 +1943,7 @@
     }
     
     @media (max-width:1200px){
-      table{font-size:11px;}
+      table{font-size:13px;}
       th, td{padding:4px 2px;}
       
       th {
@@ -2311,170 +2400,122 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
-      pointer-events: auto;
+      z-index: 10000 !important;
+      pointer-events: auto !important;
     }
     
-    .auth-overlay[style*="display: none"] {
-      pointer-events: none !important;
+    .auth-overlay.hidden {
+      display: none !important;
     }
     
     .auth-container {
       width: 100%;
-      max-width: 400px;
+      max-width: 450px;
       background: var(--card-bg);
-      padding: 40px;
+      border: 2px solid var(--border-color);
       border-radius: 16px;
-      box-shadow: 0 16px 48px var(--shadow-md);
-      border: 1px solid var(--border-color);
+      padding: 40px;
+      box-shadow: 0 8px 24px var(--shadow-lg);
       position: relative;
-      overflow: visible;
-      z-index: 1;
+      z-index: 10001 !important;
+      pointer-events: auto !important;
     }
     
-    .auth-container::before {
-      display: none;
-    }
-    
-    .auth-logo {
+    .auth-container h1 {
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      font-weight: 700;
       text-align: center;
       margin-bottom: 30px;
     }
     
-    .auth-logo h1 {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-    }
-    
-    .auth-logo p {
-      color: var(--text-secondary);
-      font-size: 14px;
-      font-weight: 500;
-    }
-    
     .auth-form-group {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       position: relative;
-      z-index: 2;
+      z-index: 10002 !important;
     }
     
     .auth-form-group label {
       display: block;
       margin-bottom: 8px;
-      color: #94a3b8;
-      font-weight: 600;
-      font-size: 14px;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
     }
     
     .auth-form-group input {
       width: 100%;
-      padding: 12px 16px;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 12px;
-      background: rgba(255,255,255,0.08);
-      color: inherit;
-      font-size: 14px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(10px);
+      padding: 12px 14px;
+      border: 2.5px solid var(--border-color);
+      border-radius: 10px;
+      background: var(--input-bg);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-weight: 500;
+      font-family: 'Cairo', sans-serif;
+      box-shadow: 0 2px 4px rgba(128, 28, 50, 0.1);
+      transition: all 0.3s ease;
       pointer-events: auto !important;
       user-select: text !important;
       -webkit-user-select: text !important;
       -moz-user-select: text !important;
       -ms-user-select: text !important;
       cursor: text !important;
+      position: relative;
+      z-index: 10003 !important;
       opacity: 1 !important;
-      z-index: 10 !important;
-      position: relative !important;
+      display: block !important;
+      visibility: visible !important;
     }
     
     .auth-form-group input:focus {
       outline: none;
-      border-color: #6366f1;
-      box-shadow: 0 0 0 2px rgba(99,102,241,0.1);
-      background: rgba(255,255,255,0.05);
-    }
-    
-    .auth-form-group input:not(:disabled) {
-      cursor: text;
-      pointer-events: auto;
-    }
-    
-    .auth-form-group input:disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
+      border-color: var(--primary-color);
+      border-width: 3px;
+      box-shadow: 0 0 0 4px rgba(128, 28, 50, 0.15), 0 4px 8px rgba(128, 28, 50, 0.12);
+      transform: translateY(-1px);
     }
     
     .auth-form-group input::placeholder {
-      color: #94a3b8;
+      color: var(--text-tertiary);
     }
     
-    .auth-form-group input[type="text"],
-    .auth-form-group input[type="password"] {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      background-color: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: #e2e8f0;
-      font-family: inherit;
-      font-size: 14px;
-      line-height: 1.5;
-      padding: 12px 16px;
-      width: 100%;
-      box-sizing: border-box;
-      pointer-events: auto;
-      user-select: text;
-      -webkit-user-select: text;
-      -moz-user-select: text;
-      -ms-user-select: text;
-      cursor: text;
-    }
-    
-    .auth-form-group input[type="text"]:focus,
-    .auth-form-group input[type="password"]:focus {
-      outline: none;
-      border-color: #6366f1;
-      box-shadow: 0 0 0 2px rgba(99,102,241,0.1);
-      background-color: rgba(255,255,255,0.05);
+    #authUsername,
+    #authPassword {
+      pointer-events: auto !important;
+      user-select: text !important;
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      cursor: text !important;
+      position: relative !important;
+      z-index: 10003 !important;
+      opacity: 1 !important;
+      display: block !important;
+      visibility: visible !important;
+      -webkit-touch-callout: text !important;
+      -webkit-tap-highlight-color: rgba(128, 28, 50, 0.2) !important;
     }
     
     .auth-btn {
       width: 100%;
-      background: #6366f1;
-      color: #fff;
+      background: var(--primary-color);
+      color: white;
       border: none;
       padding: 12px 16px;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
-      font-weight: 600;
-      font-size: 14px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    
-    .auth-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
-    }
-    
-    .auth-btn:hover::before {
-      left: 100%;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(128, 28, 50, 0.3);
     }
     
     .auth-btn:hover {
+      background: var(--primary-hover);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      background: #5b5bd6;
+      box-shadow: 0 6px 16px rgba(128, 28, 50, 0.4);
     }
     
     .auth-btn:disabled {
@@ -2484,24 +2525,26 @@
     }
     
     .auth-error {
-      background: rgba(244,63,94,0.1);
-      border: 1px solid rgba(244,63,94,0.2);
-      color: #f43f5e;
+      background: var(--error-light);
+      border: 1.5px solid var(--error-color);
+      color: var(--error-color);
       padding: 12px;
       border-radius: 8px;
       margin-bottom: 20px;
       font-size: 14px;
+      font-weight: 600;
       display: none;
     }
     
     .auth-success {
-      background: rgba(16,185,129,0.1);
-      border: 1px solid rgba(16,185,129,0.2);
-      color: #10b981;
+      background: var(--success-light);
+      border: 1.5px solid var(--success-color);
+      color: var(--success-color);
       padding: 12px;
       border-radius: 8px;
       margin-bottom: 20px;
       font-size: 14px;
+      font-weight: 600;
       display: none;
     }
     
@@ -2514,8 +2557,8 @@
     .auth-loading .spinner {
       width: 20px;
       height: 20px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top: 2px solid #6366f1;
+      border: 2px solid var(--border-light);
+      border-top: 2px solid var(--primary-color);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 0 auto 10px;
@@ -2526,35 +2569,30 @@
       100% { transform: rotate(360deg); }
     }
     
-    .auth-demo {
-      background: rgba(99,102,241,0.1);
-      border: 1px solid rgba(99,102,241,0.2);
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-size: 12px;
-    }
-    
-    .auth-demo h4 {
-      color: #6366f1;
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-    
-    .auth-demo p {
-      margin: 4px 0;
-      color: #94a3b8;
-    }
-    
-    .auth-demo strong {
-      color: #fff;
-    }
-    
     .auth-footer {
       text-align: center;
       margin-top: 30px;
-      color: #94a3b8;
+      color: var(--text-secondary);
       font-size: 12px;
+    }
+    
+    @media (max-width: 768px) {
+      .auth-container {
+        padding: 20px 15px;
+        margin: 10px;
+      }
+      .auth-container h1 {
+        font-size: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .auth-container {
+        padding: 15px 10px;
+      }
+      .auth-container h1 {
+        font-size: 1.3rem;
+      }
     }
     
     .user-info {
@@ -2732,94 +2770,6 @@
       pointer-events: none;
     }
     
-    #authUsername, #authPassword {
-      -webkit-appearance: none !important;
-      -moz-appearance: none !important;
-      appearance: none !important;
-      background-color: rgba(255,255,255,0.08) !important;
-      border: 1px solid rgba(255,255,255,0.15) !important;
-      color: #e2e8f0 !important;
-      font-family: inherit !important;
-      font-size: 14px !important;
-      line-height: 1.5 !important;
-      padding: 12px 16px !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      pointer-events: auto !important;
-      user-select: text !important;
-      -webkit-user-select: text !important;
-      -moz-user-select: text !important;
-      -ms-user-select: text !important;
-      cursor: text !important;
-      z-index: 10 !important;
-      position: relative !important;
-      opacity: 1 !important;
-      display: block !important;
-      visibility: visible !important;
-    }
-    
-    #authUsername:focus, #authPassword:focus {
-      outline: none !important;
-      border-color: #6366f1 !important;
-      box-shadow: 0 0 0 2px rgba(99,102,241,0.1) !important;
-      background-color: rgba(255,255,255,0.05) !important;
-    }
-    
-    #authUsername:hover, #authPassword:hover {
-      border-color: rgba(255,255,255,0.3) !important;
-    }
-    
-    .auth-form-group input[type="text"]:not(:disabled),
-    .auth-form-group input[type="password"]:not(:disabled) {
-      -webkit-appearance: none !important;
-      -moz-appearance: none !important;
-      appearance: none !important;
-      background-color: rgba(255,255,255,0.08) !important;
-      border: 1px solid rgba(255,255,255,0.15) !important;
-      color: #e2e8f0 !important;
-      font-family: inherit !important;
-      font-size: 14px !important;
-      line-height: 1.5 !important;
-      padding: 12px 16px !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      pointer-events: auto !important;
-      user-select: text !important;
-      -webkit-user-select: text !important;
-      -moz-user-select: text !important;
-      -ms-user-select: text !important;
-      cursor: text !important;
-      z-index: 10 !important;
-      position: relative !important;
-      opacity: 1 !important;
-      display: block !important;
-      visibility: visible !important;
-      -webkit-touch-callout: text !important;
-      -webkit-tap-highlight-color: rgba(99,102,241,0.2) !important;
-    }
-    
-    .auth-form-group input[type="text"]:not(:disabled):focus,
-    .auth-form-group input[type="password"]:not(:disabled):focus {
-      outline: none !important;
-      border-color: #6366f1 !important;
-      box-shadow: 0 0 0 2px rgba(99,102,241,0.1) !important;
-      background-color: rgba(255,255,255,0.05) !important;
-    }
-    
-    .auth-form-group input[type="text"]:not(:disabled):hover,
-    .auth-form-group input[type="password"]:not(:disabled):hover {
-      border-color: rgba(255,255,255,0.3) !important;
-    }
-    
-    @media (max-width: 480px) {
-      .auth-container {
-        padding: 30px 20px;
-      }
-      
-      .auth-logo h1 {
-        font-size: 24px;
-      }
-    }
     
     .notification-badge {
       position: relative;
@@ -2935,25 +2885,21 @@
 <body>
   <div id="authOverlay" class="auth-overlay">
     <div class="auth-container">
-      <div class="auth-logo">
-        <h1>قسم العمليات التجارية </h1>
-        <p> متابعة نمو الوكلاء</p>
-      </div>
+      <h1>قسم العمليات التجارية</h1>
+      <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px;">متابعة نمو الوكلاء</p>
 
       <div id="authError" class="auth-error"></div>
       <div id="authSuccess" class="auth-success"></div>
 
-  
-
-      <form id="authForm">
+      <form id="authForm" style="pointer-events: auto !important;">
         <div class="auth-form-group">
           <label for="authUsername">اسم المستخدم</label>
-          <input type="text" id="authUsername" name="username" placeholder="أدخل اسم المستخدم" required autocomplete="username" spellcheck="false">
+          <input type="text" id="authUsername" name="username" placeholder="أدخل اسم المستخدم" required autocomplete="username" style="pointer-events: auto !important; user-select: text !important; cursor: text !important;">
         </div>
 
         <div class="auth-form-group">
           <label for="authPassword">كلمة المرور</label>
-          <input type="password" id="authPassword" name="password" placeholder="أدخل كلمة المرور" required autocomplete="current-password" spellcheck="false">
+          <input type="password" id="authPassword" name="password" placeholder="أدخل كلمة المرور" required autocomplete="current-password" style="pointer-events: auto !important; user-select: text !important; cursor: text !important;">
         </div>
 
         <button type="submit" class="auth-btn" id="authLoginBtn">
@@ -2967,7 +2913,7 @@
       </div>
 
       <div class="auth-footer">
-        <p>© 2025 عراق سيل   </p>
+        <p>© 2025 عراق سيل</p>
       </div>
     </div>
   </div>
@@ -3067,7 +3013,6 @@
       </div>
     </header>
 
-    <!-- بطاقات الإحصائيات -->
     <section class="card" style="padding: 20px; margin-bottom: 20px;">
       <div class="stats">
         <div class="stat">
@@ -3089,7 +3034,6 @@
       </div>
     </section>
 
-    <!-- حقول الفلترة -->
     <section class="card" style="padding: 20px; margin-bottom: 20px;">
       <div class="filters">
         <select id="phaseFilter" class="search">
@@ -3247,12 +3191,10 @@
     </div>
   </div>
 
-  <!-- Notification Modal -->
   <div id="modalNotifications" class="modal">
     <div class="box" style="max-width: 600px;">
       <h3>إرسال تبليغ للوكلاء</h3>
       
-      <!-- الخطوة 1: اختيار الوكلاء -->
       <div style="margin-bottom: 20px;">
         <label style="display:block; margin-bottom: 8px; font-weight: 600;">الوكلاء</label>
         <select id="notificationGroup" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg); color:var(--text-primary);" required>
@@ -3264,13 +3206,11 @@
         </div>
       </div>
 
-      <!-- الخطوة 2: الرسالة -->
       <div style="margin-bottom: 20px;">
         <label style="display:block; margin-bottom: 8px; font-weight: 600;">الرسالة</label>
         <textarea id="notificationMessage" rows="5" placeholder="اكتب الرسالة هنا..." style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--border-color); background:var(--input-bg); color:var(--text-primary); font-family:inherit; resize:vertical;"></textarea>
       </div>
 
-      <!-- شريط التقدم -->
       <div id="sendingProgress" style="display:none; margin-top:16px; padding:16px; background:var(--bg-tertiary); border-radius:8px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <span id="progressText" style="font-weight:600;">جاري الإرسال...</span>
@@ -3282,7 +3222,6 @@
         <div id="progressDetails" style="margin-top:8px; font-size:12px; color:var(--text-secondary);"></div>
       </div>
 
-      <!-- الأزرار -->
       <div class="actions">
         <button class="btn secondary" id="closeNotificationsModal">إلغاء</button>
         <button class="btn" id="sendNotification">إرسال</button>
@@ -3368,10 +3307,8 @@
       }
 
       init() {
-        // Ensure overlay is properly initialized
         const overlay = document.getElementById('authOverlay');
         if (overlay) {
-          // Set initial state based on whether user is logged in
           const session = localStorage.getItem('userSession');
           if (!session) {
             overlay.style.display = 'flex';
@@ -3385,14 +3322,36 @@
         this.loadCurrentUser();
         this.checkAuthentication();
         this.setupEventListeners();
+        this.ensureInputsEditable();
+      }
         
-        // Ensure inputs are editable after initialization
+      ensureInputsEditable() {
         setTimeout(() => {
-          const overlay = document.getElementById('authOverlay');
-          if (overlay && overlay.style.display === 'none') {
-            ensureAllInputsEditable();
-          } else {
-            ensureInputFieldsEditable();
+          const usernameInput = document.getElementById('authUsername');
+          const passwordInput = document.getElementById('authPassword');
+          
+          if (usernameInput) {
+            usernameInput.disabled = false;
+            usernameInput.readOnly = false;
+            usernameInput.removeAttribute('disabled');
+            usernameInput.removeAttribute('readonly');
+            usernameInput.style.pointerEvents = 'auto';
+            usernameInput.style.userSelect = 'text';
+            usernameInput.style.cursor = 'text';
+            usernameInput.style.opacity = '1';
+            usernameInput.style.zIndex = '10003';
+          }
+          
+          if (passwordInput) {
+            passwordInput.disabled = false;
+            passwordInput.readOnly = false;
+            passwordInput.removeAttribute('disabled');
+            passwordInput.removeAttribute('readonly');
+            passwordInput.style.pointerEvents = 'auto';
+            passwordInput.style.userSelect = 'text';
+            passwordInput.style.cursor = 'text';
+            passwordInput.style.opacity = '1';
+            passwordInput.style.zIndex = '10003';
           }
         }, 100);
       }
@@ -3460,27 +3419,25 @@
 
       showAuthOverlay() {
         const overlay = document.getElementById('authOverlay');
+        overlay.classList.remove('hidden');
         overlay.style.display = 'flex';
         overlay.style.pointerEvents = 'auto';
         document.querySelector('.container').style.display = 'none';
-        // Ensure auth inputs are editable when overlay is shown
+        
         setTimeout(() => {
-          ensureInputFieldsEditable();
-          // إعادة التأكد بعد فترة قصيرة
-          setTimeout(() => ensureInputFieldsEditable(), 200);
+          this.ensureInputsEditable();
         }, 50);
       }
 
       hideAuthOverlay() {
         const overlay = document.getElementById('authOverlay');
+        overlay.classList.add('hidden');
         overlay.style.display = 'none';
         overlay.style.pointerEvents = 'none';
         const container = document.querySelector('.container');
         if (container) {
           container.style.display = 'block';
         }
-        // Ensure all inputs in the main container are editable
-        setTimeout(() => ensureAllInputsEditable(), 50);
       }
 
       showError(message) {
@@ -3527,7 +3484,6 @@
               .single();
 
             if (error) {
-              console.error('Database validation error:', error);
               return this.validateUserFromLocalStorage(username, password);
             }
 
@@ -3546,7 +3502,6 @@
 
           return this.validateUserFromLocalStorage(username, password);
         } catch (error) {
-          console.error('User validation error:', error);
           return this.validateUserFromLocalStorage(username, password);
         }
       }
@@ -3592,7 +3547,6 @@
 
           return { success: false, message: 'اسم المستخدم أو كلمة المرور غير صحيحة' };
         } catch (error) {
-          console.error('Local storage validation error:', error);
           return { success: false, message: 'خطأ في التحقق من بيانات المستخدم' };
         }
       }
@@ -3754,7 +3708,6 @@
         } catch (error) {
           this.hideLoading();
           this.showError('حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى');
-          console.error('Login error:', error);
         }
       }
 
@@ -3764,7 +3717,6 @@
         this.showAuthOverlay();
         document.getElementById('authForm').reset();
         this.hideMessages();
-        // إيقاف inactivity timer عند تسجيل الخروج
         if (window.stopInactivityTimer) {
           window.stopInactivityTimer();
         }
@@ -3773,47 +3725,109 @@
 
     const authSystem = new AuthSystem();
     
-    // نظام تسجيل الخروج التلقائي عند عدم النشاط
+    function forceEnableLoginInputs() {
+      const usernameInput = document.getElementById('authUsername');
+      const passwordInput = document.getElementById('authPassword');
+      
+      if (usernameInput) {
+        usernameInput.disabled = false;
+        usernameInput.readOnly = false;
+        usernameInput.removeAttribute('disabled');
+        usernameInput.removeAttribute('readonly');
+        usernameInput.style.pointerEvents = 'auto';
+        usernameInput.style.userSelect = 'text';
+        usernameInput.style.cursor = 'text';
+        usernameInput.style.opacity = '1';
+        usernameInput.style.zIndex = '10003';
+        usernameInput.tabIndex = 0;
+      }
+      
+      if (passwordInput) {
+        passwordInput.disabled = false;
+        passwordInput.readOnly = false;
+        passwordInput.removeAttribute('disabled');
+        passwordInput.removeAttribute('readonly');
+        passwordInput.style.pointerEvents = 'auto';
+        passwordInput.style.userSelect = 'text';
+        passwordInput.style.cursor = 'text';
+        passwordInput.style.opacity = '1';
+        passwordInput.style.zIndex = '10003';
+        passwordInput.tabIndex = 0;
+      }
+    }
+    
+    forceEnableLoginInputs();
+    setTimeout(forceEnableLoginInputs, 100);
+    setTimeout(forceEnableLoginInputs, 500);
+    setTimeout(forceEnableLoginInputs, 1000);
+    
+    document.addEventListener('DOMContentLoaded', forceEnableLoginInputs);
+    window.addEventListener('load', forceEnableLoginInputs);
+    
+    const overlayObserver = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+          const overlay = document.getElementById('authOverlay');
+          if (overlay && overlay.style.display === 'flex') {
+            setTimeout(forceEnableLoginInputs, 50);
+            setTimeout(forceEnableLoginInputs, 200);
+          }
+        }
+      });
+    });
+    
+    const authOverlayElement = document.getElementById('authOverlay');
+    if (authOverlayElement) {
+      overlayObserver.observe(authOverlayElement, { attributes: true, attributeFilter: ['style', 'class'] });
+    }
+    
+    document.addEventListener('click', function(e) {
+      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
+        forceEnableLoginInputs();
+        e.target.focus();
+      }
+    }, true);
+    
+    document.addEventListener('mousedown', function(e) {
+      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
+        forceEnableLoginInputs();
+      }
+    }, true);
+    
     (function() {
-      const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 دقيقة بالميلي ثانية
+      const INACTIVITY_TIMEOUT = 30 * 60 * 1000;
       let inactivityTimer = null;
       
-      // دالة لإعادة تعيين الـ timer
       function resetInactivityTimer(event) {
-        // تجاهل الأحداث من حقول تسجيل الدخول (لا نريد إعادة تعيين الـ timer عند الكتابة في حقول تسجيل الدخول)
         if (event && event.target) {
           const target = event.target;
-          if (target.id === 'authUsername' || target.id === 'authPassword' || 
-              target.closest('#authOverlay') || target.closest('.auth-container')) {
-            // إذا كان المستخدم في شاشة تسجيل الدخول، لا نعيد تعيين الـ timer
+          if (target && (
+            target.id === 'authUsername' || 
+            target.id === 'authPassword' || 
+            (target.closest && target.closest('#authOverlay')) || 
+            (target.closest && target.closest('.auth-container'))
+          )) {
             if (!authSystem.getCurrentUser()) {
               return;
             }
           }
         }
         
-        // إلغاء الـ timer السابق إن وجد
         if (inactivityTimer) {
           clearTimeout(inactivityTimer);
         }
         
-        // التحقق من أن المستخدم مسجل دخول
         if (!authSystem.getCurrentUser()) {
           return;
         }
         
-        // إنشاء timer جديد
         inactivityTimer = setTimeout(() => {
-          // التحقق مرة أخرى من أن المستخدم لا يزال مسجل دخول
           if (authSystem.getCurrentUser()) {
-            console.log('تم تسجيل الخروج تلقائياً بسبب عدم النشاط');
             authSystem.logout();
-            alert('تم تسجيل الخروج تلقائياً بسبب عدم النشاط لمدة 30 دقيقة');
           }
         }, INACTIVITY_TIMEOUT);
       }
       
-      // دالة لإيقاف الـ timer (مثلاً عند تسجيل الخروج اليدوي)
       function stopInactivityTimer() {
         if (inactivityTimer) {
           clearTimeout(inactivityTimer);
@@ -3821,7 +3835,6 @@
         }
       }
       
-      // أحداث لتتبع نشاط المستخدم
       const activityEvents = [
         'mousedown',
         'mousemove',
@@ -3831,17 +3844,14 @@
         'click'
       ];
       
-      // إضافة مستمعات الأحداث مع استثناء حقول تسجيل الدخول
       activityEvents.forEach(event => {
         document.addEventListener(event, function(e) {
-          // تجاهل الأحداث من حقول تسجيل الدخول والـ overlay
           if (e.target && (
             e.target.id === 'authUsername' || 
             e.target.id === 'authPassword' ||
-            e.target.closest('#authOverlay') ||
-            e.target.closest('.auth-container')
+            (e.target.closest && e.target.closest('#authOverlay')) ||
+            (e.target.closest && e.target.closest('.auth-container'))
           )) {
-            // إذا كان المستخدم في شاشة تسجيل الدخول، لا نعيد تعيين الـ timer
             if (!authSystem.getCurrentUser()) {
               return;
             }
@@ -3850,50 +3860,38 @@
         }, true);
       });
       
-      // إعادة تعيين الـ timer عند تحميل الصفحة إذا كان المستخدم مسجل دخول
-      // استخدام setTimeout للتأكد من أن authSystem تم تهيئته بالكامل
       setTimeout(() => {
         if (authSystem.getCurrentUser()) {
           resetInactivityTimer();
         }
       }, 500);
       
-      // إعادة تعيين الـ timer بعد تسجيل الدخول
       const originalHideAuthOverlay = authSystem.hideAuthOverlay.bind(authSystem);
       authSystem.hideAuthOverlay = function() {
         originalHideAuthOverlay();
         resetInactivityTimer();
       };
       
-      // إيقاف الـ timer عند تسجيل الخروج
       const originalLogout = authSystem.logout.bind(authSystem);
       authSystem.logout = function() {
         stopInactivityTimer();
         originalLogout();
       };
       
-      // حفظ المرجع في window للوصول إليه من أي مكان
       window.resetInactivityTimer = resetInactivityTimer;
       window.stopInactivityTimer = stopInactivityTimer;
       
-      // إعادة تعيين الـ timer عند التركيز على النافذة
       window.addEventListener('focus', () => {
         if (authSystem.getCurrentUser()) {
           resetInactivityTimer();
         }
       });
       
-      // إيقاف الـ timer عند فقدان التركيز (اختياري - يمكن إزالته)
-      // window.addEventListener('blur', () => {
-      //   // يمكن إبقاء الـ timer يعمل حتى عند فقدان التركيز
-      // });
     })();
     
-    // Function to position modals at center
     function positionModal(modalElement) {
       if (!modalElement) return;
       
-      // Reset to default centered position
       modalElement.style.top = '0';
       modalElement.style.left = '0';
       modalElement.style.width = '100vw';
@@ -3913,12 +3911,10 @@
       }
     }
     
-    // Function to close modals properly
     function closeModal(modalElement) {
       if (!modalElement) return;
       modalElement.classList.remove('open');
       modalElement.style.display = 'none';
-      // Reset positioning
       modalElement.style.top = '0';
       modalElement.style.left = '0';
       modalElement.style.width = '100vw';
@@ -3926,272 +3922,7 @@
       modalElement.style.padding = '20px';
     }
     
-    // Function to ensure input fields are editable
-    function ensureInputFieldsEditable() {
-      const usernameInput = document.getElementById('authUsername');
-      const passwordInput = document.getElementById('authPassword');
-      
-      if (usernameInput) {
-        // إزالة جميع القيود
-        usernameInput.style.pointerEvents = 'auto';
-        usernameInput.style.userSelect = 'text';
-        usernameInput.style.cursor = 'text';
-        usernameInput.removeAttribute('readonly');
-        usernameInput.removeAttribute('disabled');
-        usernameInput.setAttribute('autocomplete', 'username');
-        usernameInput.setAttribute('spellcheck', 'false');
-        usernameInput.style.opacity = '1';
-        usernameInput.style.zIndex = '10000';
-        usernameInput.style.position = 'relative';
-        usernameInput.tabIndex = 0;
-        usernameInput.disabled = false;
-        usernameInput.readOnly = false;
-        
-        // إزالة جميع event listeners السابقة لتجنب التكرار
-        const newUsernameInput = usernameInput.cloneNode(true);
-        usernameInput.parentNode.replaceChild(newUsernameInput, usernameInput);
-        
-        // إضافة event listeners جديدة
-        newUsernameInput.addEventListener('click', function(e) {
-          e.stopPropagation();
-          this.focus();
-        }, true);
-        
-        newUsernameInput.addEventListener('mousedown', function(e) {
-          e.stopPropagation();
-          this.style.pointerEvents = 'auto';
-        }, true);
-        
-        newUsernameInput.addEventListener('focus', function(e) {
-          e.stopPropagation();
-          this.style.pointerEvents = 'auto';
-          this.style.userSelect = 'text';
-        }, true);
-        
-        newUsernameInput.addEventListener('input', function(e) {
-          e.stopPropagation();
-        }, true);
-        
-        newUsernameInput.addEventListener('keydown', function(e) {
-          e.stopPropagation();
-        }, true);
-      }
-      
-      if (passwordInput) {
-        // إزالة جميع القيود
-        passwordInput.style.pointerEvents = 'auto';
-        passwordInput.style.userSelect = 'text';
-        passwordInput.style.cursor = 'text';
-        passwordInput.removeAttribute('readonly');
-        passwordInput.removeAttribute('disabled');
-        passwordInput.setAttribute('autocomplete', 'current-password');
-        passwordInput.setAttribute('spellcheck', 'false');
-        passwordInput.style.opacity = '1';
-        passwordInput.style.zIndex = '10000';
-        passwordInput.style.position = 'relative';
-        passwordInput.tabIndex = 0;
-        passwordInput.disabled = false;
-        passwordInput.readOnly = false;
-        
-        // إزالة جميع event listeners السابقة لتجنب التكرار
-        const newPasswordInput = passwordInput.cloneNode(true);
-        passwordInput.parentNode.replaceChild(newPasswordInput, passwordInput);
-        
-        // إضافة event listeners جديدة
-        newPasswordInput.addEventListener('click', function(e) {
-          e.stopPropagation();
-          this.focus();
-        }, true);
-        
-        newPasswordInput.addEventListener('mousedown', function(e) {
-          e.stopPropagation();
-          this.style.pointerEvents = 'auto';
-        }, true);
-        
-        newPasswordInput.addEventListener('focus', function(e) {
-          e.stopPropagation();
-          this.style.pointerEvents = 'auto';
-          this.style.userSelect = 'text';
-        }, true);
-        
-        newPasswordInput.addEventListener('input', function(e) {
-          e.stopPropagation();
-        }, true);
-        
-        newPasswordInput.addEventListener('keydown', function(e) {
-          e.stopPropagation();
-        }, true);
-      }
-    }
-
-    // Function to ensure all inputs in the page are editable (except disabled/readonly ones)
-    function ensureAllInputsEditable() {
-      // Get all inputs, textareas, and select elements
-      const allInputs = document.querySelectorAll('input:not([readonly]):not([disabled]), textarea:not([readonly]):not([disabled]), select:not([disabled])');
-      
-      allInputs.forEach(input => {
-        // Skip if it's in a hidden overlay
-        const overlay = document.getElementById('authOverlay');
-        if (overlay && overlay.contains(input) && overlay.style.display === 'none') {
-          return;
-        }
-        
-        // Ensure input is editable
-        input.style.pointerEvents = 'auto';
-        input.style.userSelect = 'text';
-        input.style.cursor = input.tagName === 'SELECT' ? 'pointer' : 'text';
-        input.removeAttribute('readonly');
-        if (input.hasAttribute('disabled') && input.getAttribute('disabled') !== 'true') {
-          input.removeAttribute('disabled');
-        }
-        input.style.opacity = '1';
-        input.style.zIndex = '1';
-        input.tabIndex = input.tabIndex >= 0 ? input.tabIndex : 0;
-        
-        // Add click handler to ensure focus
-        input.addEventListener('click', function(e) {
-          if (!this.disabled && !this.readOnly) {
-            this.focus();
-          }
-        }, { once: false });
-      });
-    }
-
-    // Function to initialize all inputs
-    function initializeInputs() {
-      ensureInputFieldsEditable();
-      ensureAllInputsEditable();
-    }
-
-    // Run immediately when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initializeInputs);
-    } else {
-      initializeInputs();
-    }
     
-    // Run again after a short delay to ensure it works
-    setTimeout(initializeInputs, 100);
-    
-    // Run again after a longer delay as backup
-    setTimeout(initializeInputs, 500);
-    
-    // Also run when the page is fully loaded
-    window.addEventListener('load', initializeInputs);
-    
-    // إعادة تفعيل حقول تسجيل الدخول بشكل دوري عند ظهور الـ overlay
-    setInterval(() => {
-      const overlay = document.getElementById('authOverlay');
-      if (overlay && overlay.style.display !== 'none' && overlay.style.display !== '') {
-        ensureInputFieldsEditable();
-      }
-    }, 1000);
-    
-    // Additional safety check - run on any click interaction
-    document.addEventListener('click', function(e) {
-      // استثناء حقول تسجيل الدخول - معالجة خاصة
-      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
-        e.stopPropagation();
-        const input = e.target;
-        input.style.pointerEvents = 'auto';
-        input.style.userSelect = 'text';
-        input.style.cursor = 'text';
-        input.removeAttribute('readonly');
-        input.removeAttribute('disabled');
-        input.disabled = false;
-        input.readOnly = false;
-        input.tabIndex = 0;
-        setTimeout(() => {
-          try {
-            input.focus();
-          } catch (err) {
-            // Ignore focus errors
-          }
-        }, 10);
-        return;
-      }
-      
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
-        // Immediately enable the input
-        if (!e.target.disabled && !e.target.readOnly) {
-          e.target.style.pointerEvents = 'auto';
-          e.target.style.userSelect = 'text';
-          e.target.style.cursor = e.target.tagName === 'SELECT' ? 'pointer' : 'text';
-          e.target.removeAttribute('readonly');
-          e.target.tabIndex = e.target.tabIndex >= 0 ? e.target.tabIndex : 0;
-          
-          // Force focus after a tiny delay to ensure it works
-          setTimeout(() => {
-            try {
-              e.target.focus();
-            } catch (err) {
-              // Ignore focus errors
-            }
-          }, 5);
-        }
-      }
-    }, true);
-    
-    // Also handle mousedown for better responsiveness
-    document.addEventListener('mousedown', function(e) {
-      // استثناء حقول تسجيل الدخول
-      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
-        e.stopPropagation();
-        e.target.style.pointerEvents = 'auto';
-        e.target.disabled = false;
-        e.target.readOnly = false;
-        return;
-      }
-      
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
-        if (!e.target.disabled && !e.target.readOnly) {
-          e.target.style.pointerEvents = 'auto';
-        }
-      }
-    }, true);
-    
-    // معالجة خاصة لحقول تسجيل الدخول عند الكتابة
-    document.addEventListener('keydown', function(e) {
-      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
-        e.stopPropagation();
-        e.target.style.pointerEvents = 'auto';
-        e.target.disabled = false;
-        e.target.readOnly = false;
-      }
-    }, true);
-    
-    document.addEventListener('input', function(e) {
-      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
-        e.stopPropagation();
-        e.target.style.pointerEvents = 'auto';
-        e.target.disabled = false;
-        e.target.readOnly = false;
-      }
-    }, true);
-    
-    // Run when overlay visibility changes
-    const overlayObserver = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-          const overlay = document.getElementById('authOverlay');
-          if (overlay) {
-            if (overlay.style.display === 'none' || overlay.style.display === '') {
-              setTimeout(ensureAllInputsEditable, 50);
-            } else {
-              setTimeout(ensureInputFieldsEditable, 50);
-            }
-          }
-        }
-      });
-    });
-    
-    // Observe overlay for style changes
-    const authOverlay = document.getElementById('authOverlay');
-    if (authOverlay) {
-      overlayObserver.observe(authOverlay, { attributes: true, attributeFilter: ['style'] });
-    }
-    
-    // Update modal position on window resize
     window.addEventListener('resize', function() {
       const openModals = document.querySelectorAll('.modal.open');
       openModals.forEach(modal => {
@@ -4199,7 +3930,6 @@
       });
     });
     
-    // Close modals on Escape key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         const openModals = document.querySelectorAll('.modal.open');
@@ -4225,7 +3955,6 @@
         }
         
         if (this._creationAttempts >= this._maxAttempts) {
-          console.warn('Max creation attempts reached, not creating new instance');
           return null;
         }
         
@@ -4234,7 +3963,6 @@
           this._creationAttempts++;
           
           try {
-            console.log(`Creating Supabase client (Singleton) - Attempt ${this._creationAttempts}...`);
             this._instance = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
               auth: {
                 persistSession: false,
@@ -4244,7 +3972,6 @@
             });
             
           } catch (e) {
-            console.error('Failed to create Supabase client:', e);
             this._isInitialized = false;
             return null;
           }
@@ -4288,11 +4015,9 @@
           
           return true;
         } else {
-          console.error('Failed to reinitialize Supabase client');
           return false;
         }
       } catch (e) {
-        console.error('Failed to reinitialize Supabase client:', e);
         return false;
       }
     }
@@ -4302,6 +4027,7 @@
     window.toggleUserContactPopup = function(event) {
       if (event) {
         event.stopPropagation();
+        event.preventDefault();
       }
       const popup = document.getElementById('userContactPopup');
       const sidebarUser = document.getElementById('sidebarUser');
@@ -4338,47 +4064,47 @@
         });
         
         const rect = sidebarUser.getBoundingClientRect();
-        const popupWidth = 250;
-        const popupHeight = 200;
+        const popupWidth = 280;
+        const popupHeight = 220;
         
-        const left = rect.left - popupWidth - 10;
-        const top = rect.top;
+        let left = rect.left - popupWidth - 15;
+        let top = rect.top;
         
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        let finalLeft = left;
-        let finalTop = top;
         
-        if (finalLeft < 10) {
-          finalLeft = rect.right + 10;
+        if (left < 10) {
+          left = rect.right + 15;
         }
-        if (finalLeft + popupWidth > windowWidth - 10) {
-          finalLeft = windowWidth - popupWidth - 10;
+        if (left + popupWidth > windowWidth - 10) {
+          left = windowWidth - popupWidth - 10;
         }
-        if (finalTop + popupHeight > windowHeight - 10) {
-          finalTop = windowHeight - popupHeight - 10;
+        if (top + popupHeight > windowHeight - 10) {
+          top = windowHeight - popupHeight - 10;
         }
-        if (finalTop < 10) {
-          finalTop = 10;
+        if (top < 10) {
+          top = 10;
         }
         
-        popup.style.left = finalLeft + 'px';
-        popup.style.top = finalTop + 'px';
-        popup.style.transform = 'translateY(0)';
-        
+        popup.style.left = left + 'px';
+        popup.style.top = top + 'px';
         popup.style.display = 'block';
         popup.style.visibility = 'visible';
         popup.style.pointerEvents = 'auto';
-        popup.style.transform = 'translateY(0)';
+        popup.style.opacity = '0';
+        popup.style.transform = 'translateY(-5px)';
         
-        setTimeout(() => {
-          popup.classList.add('show');
-        }, 10);
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            popup.classList.add('show');
+            popup.style.opacity = '1';
+            popup.style.transform = 'translateY(0)';
+          }, 10);
+        });
       }
       return false;
     };
     
-    // إغلاق popup عند النقر خارجها
     document.addEventListener('click', (e) => {
       const popup = document.getElementById('userContactPopup');
       const sidebarUser = document.getElementById('sidebarUser');
@@ -4462,23 +4188,17 @@
 
     async function testSupabaseConnection() {
       try {
-        // Warn if running from file:// but still try to connect
         if (window.location.protocol === 'file:') {
-          console.warn('Running from file:// protocol. Supabase may not work due to CORS, but will try anyway...');
         }
         
         updateConnectionStatus('connecting');
         
-        console.log('Supabase Key (first 20 chars):', SUPABASE_ANON_KEY.substring(0, 20) + '...');
-        
         const supabase = getSupabaseClient();
         if (!supabase) {
-          console.error('Failed to get Supabase client');
           updateConnectionStatus('error');
           return false;
         }
         
-        // Add timeout to prevent hanging
         const timeoutPromise = new Promise((_, reject) => 
           setTimeout(() => reject(new Error('Connection timeout')), 10000)
         );
@@ -4493,27 +4213,17 @@
         const { data, error } = result;
           
         if (error) {
-          console.error('Supabase connection test failed:', error);
-          console.error('Error code:', error.code);
-          console.error('Error message:', error.message);
-          console.error('Error details:', error.details);
-          console.error('Error hint:', error.hint);
           
-          // Check for network errors
           if (error.message && (error.message.includes('Failed to fetch') || error.message.includes('NetworkError'))) {
-            console.warn('Network error detected. This might be due to CORS or network issues.');
-            console.warn('The application will work with local storage only.');
           }
           
           if (error.message && error.message.includes('board_name')) {
-            console.warn('board_name column not found, trying without it...');
             const { data: retryData, error: retryError } = await supabase
               .from('agents')
               .select('id, name, active, total_users')
               .limit(1);
               
             if (retryError) {
-              console.error('Retry also failed:', retryError);
               SupabaseManager.connectionStatus = 'error';
               updateConnectionStatus('error');
               return false;
@@ -4524,31 +4234,17 @@
             }
           }
           
-          console.error('Note: Make sure the database has the required columns: name, note, contract_date, phase, fdt, total_users, active, prev_active');
           SupabaseManager.connectionStatus = 'error';
           updateConnectionStatus('error');
           return false;
         } else {
-          if (data && data.length > 0) {
-            console.log('Available columns:', Object.keys(data[0]));
-          }
           SupabaseManager.connectionStatus = 'connected';
           updateConnectionStatus('connected');
           return true;
         }
       } catch (e) {
-        console.error('Supabase connection test error:', e);
-        console.error('Error type:', e.name);
-        console.error('Error message:', e.message);
         
-        // Check if it's a network/CORS error
         if (e.message && (e.message.includes('Failed to fetch') || e.message.includes('NetworkError') || e.message.includes('timeout'))) {
-          console.warn('Network/CORS error. The application will work with local storage only.');
-          console.warn('To use Supabase, please run the application from a web server (not file://)');
-        }
-        
-        if (e.stack) {
-          console.error('Error stack:', e.stack);
         }
         
         SupabaseManager.connectionStatus = 'error';
@@ -4667,7 +4363,6 @@
       agent.total_users = Number(agent.total_users) || 0;
       agent.active = Number(agent.active) || 0;
 
-      // حساب النمو الأسبوعي من قاعدة البيانات
       agent.growth = Math.round(agent.active - Number(agent.prev_active||0));
       agent.activation_rate = agent.total_users ? +( (agent.active / agent.total_users) * 100 ) : 0;
       agent.activation_rate = Math.round(agent.activation_rate*10)/10;
@@ -4718,7 +4413,6 @@
         tbody.removeChild(tbody.firstChild);
       }
       
-      // Show message if no data
       if (filtered.length === 0) {
         const emptyRow = document.createElement('tr');
         emptyRow.innerHTML = `
@@ -4755,7 +4449,7 @@
         
         const hdr = document.createElement('tr');
         hdr.className = 'phase-header';
-        hdr.innerHTML = `<td colspan="16" style="text-align:right; font-weight:700; background:transparent; font-size:12px; padding:12px; border-bottom:1px solid var(--border-color); color:var(--text-primary);">${arabicPhaseLabel(phaseKey)}</td>`;
+        hdr.innerHTML = `<td colspan="16" style="text-align:right; font-weight:700; background:transparent; font-size:14px; padding:12px; border-bottom:1px solid var(--border-color); color:var(--text-primary);">${arabicPhaseLabel(phaseKey)}</td>`;
         tbody.appendChild(hdr);
 
         items.forEach((a)=>{
@@ -4772,25 +4466,25 @@
         }
         tr.innerHTML = `
           <td style="text-align:right; padding-right:8px; white-space:normal; word-wrap:break-word; background:transparent;">
-            <div style="line-height:1.1; background:transparent;">
-              <strong style="font-size:11px; display:block; word-break:break-word; background:transparent;">${escapeHtml(a.name||'---')}</strong>
-              <small style="font-size:8px; color:var(--muted); word-break:break-word; background:transparent;">${escapeHtml(a.note||'')}</small>
+            <div style="line-height:1.2; background:transparent;">
+              <strong style="font-size:14px; display:block; word-break:break-word; background:transparent;">${escapeHtml(a.name||'---')}</strong>
+              <small style="font-size:11px; color:var(--muted); word-break:break-word; background:transparent;">${escapeHtml(a.note||'')}</small>
             </div>
           </td>
-          <td style="font-size:10px;">${phoneDisplay}</td>
-          <td>${a.contract_date}</td>
-            <td>${todayStr}</td>
-            <td>${escapeHtml(a.fdt||'')}</td>
-          <td>${escapeHtml(a.board_name||'')}</td>
-          <td style="font-weight:600;">${num(a.total_users)}</td>
-          <td style="font-weight:600; color: #22c55e;">${num(a.active)}</td>
-          <td style="font-weight:700; color: #801c32;">${signedNum(a.growth||0)}</td>
-          <td style="font-weight:600;">${a.activation_rate}%</td>
-          <td style="font-weight:600;">${a.required_rate === null ? '-' : a.required_rate + '%'}</td>
-            <td style="font-weight:600;">${a.required_rate === null ? '-' : num(a.required_users)}</td>
-          <td style="${a.required_rate === null ? 'font-weight:600;' : getDeficitColor(a.deficit_percent, a.required_rate)}">${a.required_rate === null ? '-' : a.deficit_percent + '%'}</td>
-          <td style="${a.deficit_users ? getDeficitUsersColor(a.deficit_users, a.total_users) : 'font-weight:600;'}">${a.deficit_users ? num(a.deficit_users) : '-'}</td>
-          <td>${statusBadge(a.status)}</td>
+          <td style="font-size:13px; font-weight:800; color:#000000;">${phoneDisplay}</td>
+          <td style="font-size:13px; font-weight:800; color:#000000;">${a.contract_date}</td>
+            <td style="font-size:13px; font-weight:800; color:#000000;">${todayStr}</td>
+            <td style="font-size:13px; font-weight:800; color:#000000;">${escapeHtml(a.fdt||'')}</td>
+          <td style="font-size:13px; font-weight:800; color:#000000;">${escapeHtml(a.board_name||'')}</td>
+          <td style="font-weight:800; font-size:13px; color:#000000;">${num(a.total_users)}</td>
+          <td style="font-weight:800; font-size:13px; color:#000000;">${num(a.active)}</td>
+          <td style="font-weight:700; font-size:13px;"><span style="color: ${(a.growth||0) > 0 ? '#22c55e' : (a.growth||0) < 0 ? '#ef4444' : '#000000'} !important; font-weight:700;">${signedNum(a.growth||0)}</span></td>
+          <td style="font-weight:700; font-size:13px;">${a.required_rate === null ? a.activation_rate + '%' : `<span style="${getActivationRateColor(a.activation_rate, a.required_rate)}">${a.activation_rate}%</span>`}</td>
+          <td style="font-weight:800; font-size:13px; color:#000000;">${a.required_rate === null ? '-' : a.required_rate + '%'}</td>
+            <td style="font-weight:800; font-size:13px; color:#000000;">${a.required_rate === null ? '-' : num(a.required_users)}</td>
+          <td style="font-size:13px; font-weight:700;">${a.required_rate === null ? '-' : `<span style="${getDeficitColor(a.deficit_percent, a.required_rate)}">${a.deficit_percent + '%'}</span>`}</td>
+          <td style="font-size:13px; font-weight:700;">${a.deficit_users ? `<span style="${getDeficitUsersColor(a.deficit_users, a.total_users)}">${num(a.deficit_users)}</span>` : '-'}</td>
+          <td style="font-size:13px;">${statusBadge(a.status)}</td>
           <td style="background:transparent;">
               <div class="flex" style="justify-content:center; gap:8px; flex-wrap:wrap; background:transparent;">
                 <button class="btn secondary small" data-action="edit" data-id="${a._id}" style="display: ${(typeof authSystem !== 'undefined' && authSystem.canEdit()) ? 'inline-flex' : 'none'};">
@@ -4816,15 +4510,15 @@
         const sub = document.createElement('tr');
         sub.className = 'subtotal-title';
         sub.innerHTML = `
-          <td colspan="5" style="text-align:right; font-weight:600; font-size:10px; padding:8px;">مجموع ${escapeHtml(arabicPhaseLabel(phaseKey))}</td>
+          <td colspan="5" style="text-align:right; font-weight:600; font-size:12px; padding:8px;">مجموع ${escapeHtml(arabicPhaseLabel(phaseKey))}</td>
           <td></td>
-          <td style="font-weight:600; font-size:10px; padding:8px;">${num(totals.total)}</td>
-          <td style="font-weight:600; font-size:10px; padding:8px;">${num(totals.active)}</td>
-          <td></td>
-          <td></td>
+          <td style="font-weight:600; font-size:12px; padding:8px;">${num(totals.total)}</td>
+          <td style="font-weight:600; font-size:12px; padding:8px;">${num(totals.active)}</td>
           <td></td>
           <td></td>
-          <td style="font-weight:600; font-size:10px; padding:8px; ${totals.deficit_users ? getDeficitUsersColor(totals.deficit_users, totals.total) : ''}">${totals.deficit_users ? num(totals.deficit_users) : '-'}</td>
+          <td></td>
+          <td></td>
+          <td style="font-weight:600; font-size:12px; padding:8px;">${totals.deficit_users ? `<span style="${getDeficitUsersColor(totals.deficit_users, totals.total)}">${num(totals.deficit_users)}</span>` : '-'}</td>
           <td></td>
           <td></td>
         `;
@@ -4859,7 +4553,6 @@
       const totalData = top.map(a=>a.total_users);
       const activeData = top.map(a=>a.active);
 
-      // Check if light mode is active
       const isLightMode = !document.documentElement.hasAttribute('data-theme') || document.documentElement.getAttribute('data-theme') !== 'dark';
       const textColor = isLightMode ? '#333333' : '#f5f5f5';
       const gridColor = isLightMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
@@ -4964,35 +4657,94 @@
       return `<span class="badge" style="background:rgba(128,28,50,0.08); color:#801c32; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
     }
     
-    // Function to determine deficit color based on proximity to required rate
     function getDeficitColor(deficitPercent, requiredRate) {
       if (requiredRate === null || requiredRate === 0) {
         const isDark = document.documentElement.hasAttribute('data-theme') && document.documentElement.getAttribute('data-theme') === 'dark';
-        return isDark ? 'color: #ffffff; font-weight: 700;' : 'color: #000000; font-weight: 700;';
+        return isDark ? 'color: #ffffff !important; font-weight: 700;' : 'color: #000000 !important; font-weight: 700;';
       }
       
-      const isDark = document.documentElement.hasAttribute('data-theme') && document.documentElement.getAttribute('data-theme') === 'dark';
-      return isDark ? 'color: #801c32; font-weight: 700;' : 'color: #801c32; font-weight: 700;';
+      // إذا تطابق (العجز = 0) → أخضر
+      if (deficitPercent === 0 || deficitPercent < 0.1) {
+        return 'color: #22c55e !important; font-weight: 700;';
+      }
+      
+      // إذا قريب من النسبة المطلوبة (أقل من 20% من النسبة المطلوبة) → برتقالي
+      const threshold = requiredRate * 0.2; // 20% من النسبة المطلوبة
+      if (deficitPercent <= threshold) {
+        return 'color: #f97316 !important; font-weight: 700;';
+      }
+      
+      // إذا بعيد → أحمر
+      return 'color: #ef4444 !important; font-weight: 700;';
     }
     
-    // Function to determine deficit users color based on total users
     function getDeficitUsersColor(deficitUsers, totalUsers) {
-      if (totalUsers === 0 || deficitUsers === 0) {
+      if (totalUsers === 0) {
         const isDark = document.documentElement.hasAttribute('data-theme') && document.documentElement.getAttribute('data-theme') === 'dark';
-        return isDark ? 'color: #ffffff; font-weight: 700;' : 'color: #000000; font-weight: 700;';
+        return isDark ? 'color: #ffffff !important; font-weight: 700;' : 'color: #000000 !important; font-weight: 700;';
       }
       
-      const isDark = document.documentElement.hasAttribute('data-theme') && document.documentElement.getAttribute('data-theme') === 'dark';
-      return isDark ? 'color: #801c32; font-weight: 700;' : 'color: #801c32; font-weight: 700;';
+      // إذا تطابق (العجز = 0) → أخضر
+      if (deficitUsers === 0) {
+        return 'color: #22c55e !important; font-weight: 700;';
+      }
+      
+      // إذا قريب (أقل من 5% من إجمالي المستخدمين) → برتقالي
+      const threshold = totalUsers * 0.05; // 5% من إجمالي المستخدمين
+      if (deficitUsers <= threshold) {
+        return 'color: #f97316 !important; font-weight: 700;';
+      }
+      
+      // إذا بعيد → أحمر
+      return 'color: #ef4444 !important; font-weight: 700;';
     }
     
-    // Function to determine deficit users color for reports (more aggressive coloring)
     function getDeficitUsersColorForReport(deficitUsers, totalUsers) {
-      if (totalUsers === 0 || deficitUsers === 0) {
-        return 'color: #000000; font-weight: 700;';
+      if (totalUsers === 0) {
+        return 'color: #000000 !important; font-weight: 700;';
       }
       
-      return 'color: #801c32; font-weight: 700;';
+      // إذا تطابق (العجز = 0) → أخضر
+      if (deficitUsers === 0) {
+        return 'color: #22c55e !important; font-weight: 700;';
+      }
+      
+      // إذا قريب (أقل من 5% من إجمالي المستخدمين) → برتقالي
+      const threshold = totalUsers * 0.05; // 5% من إجمالي المستخدمين
+      if (deficitUsers <= threshold) {
+        return 'color: #f97316 !important; font-weight: 700;';
+      }
+      
+      // إذا بعيد → أحمر
+      return 'color: #ef4444 !important; font-weight: 700;';
+    }
+    
+    function getActivationRateColor(activationRate, requiredRate) {
+      if (requiredRate === null || requiredRate === 0) {
+        const isDark = document.documentElement.hasAttribute('data-theme') && document.documentElement.getAttribute('data-theme') === 'dark';
+        return isDark ? 'color: #ffffff !important; font-weight: 700;' : 'color: #000000 !important; font-weight: 700;';
+      }
+      
+      // إذا تجاوز 50% → برتقالي
+      if (activationRate >= 50) {
+        return 'color: #f97316 !important; font-weight: 700;';
+      }
+      
+      const diff = Math.abs(activationRate - requiredRate);
+      
+      // إذا طابق (الفرق أقل من 0.5%) → أخضر
+      if (diff < 0.5) {
+        return 'color: #22c55e !important; font-weight: 700;';
+      }
+      
+      // إذا قريب (الفرق أقل من 5% من النسبة المطلوبة) → برتقالي
+      const threshold = requiredRate * 0.05; // 5% من النسبة المطلوبة
+      if (diff <= threshold) {
+        return 'color: #f97316 !important; font-weight: 700;';
+      }
+      
+      // إذا بعيد → أحمر
+      return 'color: #ef4444 !important; font-weight: 700;';
     }
     function escapeHtml(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
@@ -5024,7 +4776,6 @@
       const infoBoardEl = document.getElementById('info_board'); if(infoBoardEl) infoBoardEl.value = a.board_name || '';
       modalEditInfo.dataset.editIndex = String(idx);
       
-      // Position modal at current scroll position
       setTimeout(() => positionModal(modalEditInfo), 10);
     });
 
@@ -5044,14 +4795,11 @@
           const supabase = getSupabaseClient();
           if (supabase) {
             const { error } = await supabase.from('agents').delete().eq('id', dbId);
-            if(error) console.error('Delete error:', error);
           }
           localIdByDbId.delete(dbId);
           dbIdByLocalId.delete(a._id);
         }
       }catch(e){ 
-        console.error('Error deleting agent from database:', e);
-        // Continue with local deletion even if database operation fails
       }
       
       agents.splice(idx,1);
@@ -5085,11 +4833,9 @@
           
           const supabase = getSupabaseClient();
           if (!supabase) {
-            console.error('Supabase client not available');
             return;
           }
           
-          // Build update data with only essential columns that definitely exist
           const updateData = {
             name: a.name,
             note: a.note || '',
@@ -5100,7 +4846,6 @@
             prev_active: a.prev_active || 0
           };
           
-          // Add optional columns if they exist (using 'site' instead of 'itpc_site' for database)
           if (a.itpc_site !== undefined) {
             updateData.site = String(a.itpc_site || '');
           }
@@ -5114,16 +4859,13 @@
             updateData.phone = String(a.phone || '');
           }
           
-          // Try to update
           let { error } = await supabase
             .from('agents')
             .update(updateData)
             .eq('id', dbId);
             
           if(error) {
-            // If error is due to missing columns, try again without optional columns
             if (error.message && (error.message.includes('site') || error.message.includes('fdt') || error.message.includes('board_name') || error.message.includes('phone') || error.message.includes('column'))) {
-              console.warn('Some columns not found, retrying update without optional columns...');
               const updateDataMinimal = {
                 name: a.name,
                 note: a.note || '',
@@ -5140,22 +4882,16 @@
                 .eq('id', dbId);
                 
               if (retryError) {
-                console.warn('Database update skipped (columns may not exist):', retryError.message);
               } else {
-                console.log('✓ Updated successfully (without optional columns)');
               }
             } else {
-              console.warn('Database update skipped:', error.message);
             }
           } else {
-            console.log('✓ Updated successfully');
           }
         } else {
           
-          console.log('Available dbIdByLocalId:', Array.from(dbIdByLocalId.entries()));
         }
-      }catch(e){ 
-        console.error('Error updating agent info:', e); 
+      }catch(e){  
       }
       
       saveToStorage();
@@ -5175,14 +4911,11 @@
           const supabase = getSupabaseClient();
           if (supabase) {
           const { error } = await supabase.from('agents').delete().eq('id', dbId);
-          if(error) console.error('Delete error:', error);
           }
           localIdByDbId.delete(dbId);
           dbIdByLocalId.delete(a._id);
         }
       }catch(e){ 
-        console.error('Error deleting agent from database:', e);
-        // Continue with local deletion even if database operation fails
       }
       agents.splice(idx,1);
       saveToStorage();
@@ -5200,7 +4933,6 @@
       editActive.value = agent.active || 0;
       modalEdit.dataset.editIndex = idx;
       
-      // Position modal at current scroll position
       setTimeout(() => positionModal(modalEdit), 10);
     }
 
@@ -5214,7 +4946,7 @@
       
       if(!Array.isArray(agent.history)) agent.history = [];
       agent.history.push({ date: toYMDLocal(new Date()), active: Number(agent.active||0) });
-      agent.prev_active = Number(agent.active||0); // حفظ القيمة السابقة قبل التحديث
+      agent.prev_active = Number(agent.active||0); 
       agent.active = newActive;
       computeAgent(agent);
       
@@ -5233,7 +4965,6 @@
               })
             .eq('id', dbId);
           if(error) {
-            console.error('Supabase update active error:', error);
           } else {
             
             }
@@ -5243,8 +4974,7 @@
         } else {
           
         }
-      }catch(e){ 
-        console.error('Error updating active users:', e); 
+      }catch(e){  
       }
       
       saveToStorage();
@@ -5256,7 +4986,6 @@
     btnAddAgent.addEventListener('click', ()=> {
       modalAdd.classList.add('open');
       
-      // Position modal at current scroll position
       setTimeout(() => positionModal(modalAdd), 10);
     });
     
@@ -5292,8 +5021,6 @@
         prev_active: 0 
       };
       
-      console.log('Created obj with keys:', Object.keys(obj));
-      
       
       computeAgent(obj);
       
@@ -5309,17 +5036,14 @@
         
         const supabase = getSupabaseClient();
         if (!supabase) {
-          console.error('Supabase client not available, saving locally only');
           obj._id = genId();
           agents.push(obj);
           saveToStorage();
           renderTable();
           closeModal(modalAdd);
-          console.log(`تم إضافة الوكيل "${name}" محلياً فقط (لا يوجد اتصال بقاعدة البيانات)`);
           return;
         }
         
-        // Build insert data - start with required fields
         const insertData = {
           name: String(obj.name || ''),
           note: String(obj.note || ''),
@@ -5330,7 +5054,6 @@
           prev_active: Number(obj.prev_active || 0)
         };
         
-        // Add optional columns if they exist (using 'site' instead of 'itpc_site' for database)
         if (obj.itpc_site !== undefined) {
           insertData.site = String(obj.itpc_site || '');
         }
@@ -5344,16 +5067,12 @@
           insertData.phone = String(obj.phone || '');
         }
         
-        console.log('Insert data (before send):', JSON.stringify(insertData, null, 2));
-        console.log('Original obj keys:', Object.keys(obj));
-        console.log('Insert data keys:', Object.keys(insertData));
         
         
         
         if (insertData.hasOwnProperty('board_name')) {
           
         } else {
-          console.error('ERROR: board_name NOT found in insertData!');
         }
         
         
@@ -5365,12 +5084,8 @@
           .single();
           
         if(error){
-          console.error('Supabase insert error:', error);
-          console.error('Error details:', error.message, error.details, error.hint);
-          console.error('Error code:', error.code);
           
           if (error.message && (error.message.includes('board_name') || error.message.includes('site') || error.message.includes('fdt') || error.message.includes('phone') || error.message.includes('column'))) {
-            console.warn('Some columns not found, inserting without optional columns...');
             const insertDataMinimal = {
               name: String(obj.name || ''),
               note: String(obj.note || ''),
@@ -5388,7 +5103,6 @@
               .single();
               
             if (retryError) {
-              console.error('Retry insert also failed:', retryError);
               obj._id = genId();
               agents.push(obj);
               
@@ -5420,9 +5134,7 @@
           localIdByDbId.set(data.id, obj._id);
           agents.push(obj);
         }
-      }catch(e){
-        console.error('Error inserting agent:', e);
-        console.error('Error stack:', e.stack);
+      }catch(e){ 
         obj._id = genId();
         agents.push(obj);
       }
@@ -5449,11 +5161,9 @@
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(agents));
         localStorage.setItem(STORAGE_KEY + '_timestamp', Date.now().toString());
-        console.log('Data saved to local storage successfully at:', new Date().toLocaleString());
         
         return true;
       } catch (error) {
-        console.error('Error saving to local storage:', error);
         return false;
       }
     }
@@ -5461,25 +5171,17 @@
       try{
         const s = localStorage.getItem(STORAGE_KEY);
         if(!s) {
-          console.log('No data found in localStorage with key:', STORAGE_KEY);
-          // Try to find any related keys
           const allKeys = Object.keys(localStorage);
           const relatedKeys = allKeys.filter(key => key.includes('agents') || key.includes('dashboard'));
-          if(relatedKeys.length > 0) {
-            console.log('Found related keys in localStorage:', relatedKeys);
-          }
           return null;
         }
         const arr = JSON.parse(s);
         if(!Array.isArray(arr)) {
-          console.error('Data in localStorage is not an array:', typeof arr);
           return null;
         }
         if(arr.length === 0) {
-          console.log('Data found in localStorage but array is empty');
           return null;
         }
-        console.log(`Loading ${arr.length} agents from localStorage...`);
         arr.forEach(a => {
           computeAgent(a);
        
@@ -5488,10 +5190,8 @@
             localIdByDbId.set(a.db_id, a._id);
           }
         });
-        console.log('Loaded from storage, dbIdByLocalId entries:', Array.from(dbIdByLocalId.entries()));
         return arr;
       }catch(e){ 
-        console.error('Error loading from localStorage:', e);
         return null; 
       }
     }
@@ -5504,40 +5204,27 @@
 
     async function loadFromSupabase(){
       try {
-        console.log('Attempting to load data from Supabase...');
         
         const supabase = getSupabaseClient();
         if (!supabase) {
-          console.error('Supabase client not available');
           throw new Error('Supabase client not available');
         }
         
-        console.log('Querying agents table...');
         const { data, error } = await supabase
           .from('agents')
           .select('*')
           .order('id', { ascending: true });
 
         if(error){
-          console.error('Supabase load error:', error);
-          console.error('Error details:', error.message, error.details, error.hint);
           throw error;
         }
 
         if(!data || data.length === 0){
-          console.log('No data found in Supabase database');
           agents = [];
           computeAll();
           return;
         }
 
-        console.log(`Found ${data.length} agents in database, processing...`);
-        
-        // Debug: Check first agent's structure
-        if (data.length > 0) {
-          console.log('Sample agent from database:', data[0]);
-          console.log('Available columns:', Object.keys(data[0]));
-        }
         
         agents = data.map(row=>{
           const obj = {
@@ -5547,22 +5234,15 @@
             note: row.note,
             contract_date: row.contract_date,
             phase: row.phase,
-            itpc_site: row.site || row.itpc_site || '', // Use 'site' from DB, fallback to 'itpc_site' for compatibility
+            itpc_site: row.site || row.itpc_site || '', 
             fdt: row.fdt || '',
             board_name: row.board_name || '', 
-            phone: row.phone || '', // Keep phone locally even if not in DB
+            phone: row.phone || '',
             total_users: row.total_users,
             active: row.active, 
             prev_active: row.prev_active || 0,
             history: []
           };
-          
-          // Debug: Log ITPC Site data
-          if (obj.itpc_site) {
-            console.log('Agent', obj.name, 'has itpc_site:', obj.itpc_site);
-          } else if (obj.note) {
-            console.log('Agent', obj.name, 'has note (may contain ITPC):', obj.note);
-          }
           
           dbIdByLocalId.set(obj._id, row.id);
           localIdByDbId.set(row.id, obj._id);
@@ -5570,17 +5250,12 @@
           return computeAgent(obj);
         });
         
-        console.log(`✓ Successfully loaded ${agents.length} agents from Supabase`);
-        console.log('dbIdByLocalId entries:', Array.from(dbIdByLocalId.entries()));
-        
-        // Save to localStorage as backup
         saveToStorage();
         
         computeAll();
         
       } catch(e) {
-        console.error('Error loading from Supabase:', e);
-        throw e; // Re-throw to let initializeData handle fallback
+        throw e; 
       }
     }
 
@@ -5595,49 +5270,35 @@
       try {
         updateConnectionStatus('connecting');
         
-        // Try to connect to Supabase first
         let connectionOk = await testSupabaseConnection();
         
         if (!connectionOk && !SupabaseManager.hasInstance()) {
-          console.warn('Supabase connection failed, trying to reinitialize...');
           updateConnectionStatus('connecting');
           reinitializeSupabase();
           connectionOk = await testSupabaseConnection();
         } else if (!connectionOk) {
-          console.warn('Supabase connection failed, but instance exists - will try to load from database anyway');
         }
         
-        // Try to load from Supabase if connection is OK or if we have an instance
         if (connectionOk || SupabaseManager.hasInstance()) {
           try {
             await loadFromSupabase();
-            // If loadFromSupabase succeeded, we're done
             return;
           } catch (e) {
-            console.error('Error loading from Supabase:', e);
-            // Fall through to load from localStorage
           }
         }
         
-        // If Supabase failed, try to load from local storage
-        console.warn('Loading from local storage as fallback');
         updateConnectionStatus('error');
         const localData = loadFromStorage();
         if (localData && localData.length > 0) {
           agents = localData;
-          console.log(`✓ Loaded ${agents.length} agents from local storage`);
         } else {
           agents = [];
-          console.log('No local data found, starting with empty table');
         }
         computeAll();
       } catch (e) {
-        console.error('Error initializing data:', e);
-        // Try to load from local storage as fallback
         const localData = loadFromStorage();
         if (localData && localData.length > 0) {
           agents = localData;
-          console.log(`Loaded ${agents.length} agents from local storage (fallback)`);
         } else {
           agents = [];
         }
@@ -5652,7 +5313,6 @@
         
         return true;
       } else {
-        console.error('Failed to initialize Supabase client');
         return false;
       }
     }
@@ -5724,34 +5384,21 @@
     
     function getUniqueITPCSites() {
       const sites = new Set();
-      console.log('getUniqueITPCSites: Total agents:', agents.length);
       
       agents.forEach(a => {
         let site = '';
-        // First check itpc_site field
         if (a.itpc_site && a.itpc_site.trim()) {
           site = a.itpc_site.trim();
-          console.log('Found ITPC Site in itpc_site field:', site, 'for agent:', a.name);
         } 
-        // Then check note field for ITPC Site
         else if (a.note && a.note.trim()) {
           const noteText = a.note.trim();
-          console.log('Checking note field for agent:', a.name, 'note:', noteText);
           
-          // Try multiple patterns to extract ITPC Site from note
-          // Examples: "Said Al-shohdaa ITPC", "Al-Mualmeen ITPC", "ABS ITPC", "IQCELL_29"
           const patterns = [
-            // Pattern: "[name] ITPC" - Most common format (e.g., "Said Al-shohdaa ITPC")
             /^([A-Za-z0-9][A-Za-z0-9\s\-_]+?)\s+(?:ITPC|itpc)$/i,
-            // Pattern: "[name] ITPC" anywhere in text
             /([A-Za-z0-9][A-Za-z0-9\s\-_]+?)\s+(?:ITPC|itpc)/i,
-            // Pattern: "ITPC Site: [name]" or "ITPC Site [name]"
             /(?:ITPC|itpc)[\s:]*Site[\s:]*([A-Za-z0-9][A-Za-z0-9\s\-_]+)/i,
-            // Pattern: "ITPC: [name]" or "ITPC [name]"
             /(?:ITPC|itpc)[\s:]+([A-Za-z0-9][A-Za-z0-9\s\-_]+)/i,
-            // Pattern: "Site: [name]" or "Site [name]"
             /Site[\s:]+([A-Za-z0-9][A-Za-z0-9\s\-_]+)/i,
-            // Pattern: Just the site name if note is simple (e.g., "IQCELL_29")
             /^([A-Za-z0-9][A-Za-z0-9\s\-_]+)$/i
           ];
           
@@ -5759,12 +5406,9 @@
             const noteMatch = noteText.match(pattern);
             if (noteMatch && noteMatch[1]) {
               site = noteMatch[1].trim();
-              // Clean up common prefixes/suffixes
               site = site.replace(/^(ITPC|itpc|Site|site)[\s:]*/i, '').trim();
-              // Remove trailing ITPC if exists
               site = site.replace(/\s+(?:ITPC|itpc)$/i, '').trim();
-              if (site && site.length > 0 && site.length < 50) { // Reasonable length check
-                console.log('Found ITPC Site in note:', site, 'for agent:', a.name);
+              if (site && site.length > 0 && site.length < 50) { 
                 break;
               }
             }
@@ -5774,42 +5418,29 @@
         if (site) {
           sites.add(site);
         } else {
-          console.log('No ITPC Site found for agent:', a.name, 'itpc_site:', a.itpc_site, 'note:', a.note);
         }
       });
       
       const sitesArray = Array.from(sites).sort();
-      console.log('getUniqueITPCSites: Found sites:', sitesArray);
       return sitesArray;
     }
     
     function getAgentsByITPCSite(site) {
       const targetSite = site.trim();
-      console.log('getAgentsByITPCSite: Looking for site:', targetSite);
       
       return agents.filter(a => {
         let agentSite = '';
-        // First check itpc_site field
         if (a.itpc_site && a.itpc_site.trim()) {
           agentSite = a.itpc_site.trim();
         } 
-        // Then check note field for ITPC Site
         else if (a.note && a.note.trim()) {
           const noteText = a.note.trim();
-          // Try multiple patterns to extract ITPC Site from note
-          // Examples: "Said Al-shohdaa ITPC", "Al-Mualmeen ITPC", "ABS ITPC", "IQCELL_29"
           const patterns = [
-            // Pattern: "[name] ITPC" - Most common format (e.g., "Said Al-shohdaa ITPC")
             /^([A-Za-z0-9][A-Za-z0-9\s\-_]+?)\s+(?:ITPC|itpc)$/i,
-            // Pattern: "[name] ITPC" anywhere in text
             /([A-Za-z0-9][A-Za-z0-9\s\-_]+?)\s+(?:ITPC|itpc)/i,
-            // Pattern: "ITPC Site: [name]" or "ITPC Site [name]"
             /(?:ITPC|itpc)[\s:]*Site[\s:]*([A-Za-z0-9][A-Za-z0-9\s\-_]+)/i,
-            // Pattern: "ITPC: [name]" or "ITPC [name]"
             /(?:ITPC|itpc)[\s:]+([A-Za-z0-9][A-Za-z0-9\s\-_]+)/i,
-            // Pattern: "Site: [name]" or "Site [name]"
             /Site[\s:]+([A-Za-z0-9][A-Za-z0-9\s\-_]+)/i,
-            // Pattern: Just the site name if note is simple (e.g., "IQCELL_29")
             /^([A-Za-z0-9][A-Za-z0-9\s\-_]+)$/i
           ];
           
@@ -5817,9 +5448,7 @@
             const noteMatch = noteText.match(pattern);
             if (noteMatch && noteMatch[1]) {
               agentSite = noteMatch[1].trim();
-              // Clean up common prefixes/suffixes
               agentSite = agentSite.replace(/^(ITPC|itpc|Site|site)[\s:]*/i, '').trim();
-              // Remove trailing ITPC if exists
               agentSite = agentSite.replace(/\s+(?:ITPC|itpc)$/i, '').trim();
               if (agentSite && agentSite.length > 0 && agentSite.length < 50) {
                 break;
@@ -5829,9 +5458,6 @@
         }
         
         const matches = agentSite && agentSite.toLowerCase() === targetSite.toLowerCase();
-        if (matches) {
-          console.log('Matched agent:', a.name, 'with site:', agentSite);
-        }
         return matches;
       });
     }
@@ -5874,13 +5500,9 @@
       const groupsList = document.getElementById('agentGroupsList');
       
       if (!select || !groupsList) {
-        console.error('renderNotificationGroups: select or groupsList not found');
         return;
       }
       
-      console.log('renderNotificationGroups: Starting, agents count:', agents.length);
-      
-      // Remove old event listeners by cloning the select
       const newSelect = select.cloneNode(true);
       select.parentNode.replaceChild(newSelect, select);
       
@@ -5888,27 +5510,22 @@
       newSelect.innerHTML += '<option value="ALL">جميع الوكلاء</option>';
       
       const sites = getUniqueITPCSites();
-      console.log('renderNotificationGroups: Found', sites.length, 'unique sites');
       
       if (sites.length > 0) {
         sites.forEach(site => {
           const option = document.createElement('option');
           option.value = site;
           const siteAgents = getAgentsByITPCSite(site);
-          console.log('Site:', site, 'has', siteAgents.length, 'agents');
           option.textContent = `${site} (${siteAgents.length} وكيل)`;
           newSelect.appendChild(option);
         });
       } else {
-        console.warn('renderNotificationGroups: No ITPC sites found! Check agents data.');
-        // Add a debug option to show all agents
         const debugOption = document.createElement('option');
         debugOption.value = 'DEBUG';
         debugOption.textContent = `[DEBUG] لا توجد مواقع - إجمالي الوكلاء: ${agents.length}`;
         newSelect.appendChild(debugOption);
       }
       
-      // Show message to select a site by default
       groupsList.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-secondary);"><div style="font-size:16px; margin-bottom:8px;">👆</div><div>يرجى اختيار ITPC Site من القائمة أعلاه</div></div>';
       updateSelectedCount();
       
@@ -5928,7 +5545,6 @@
         }
         
         if (selectedSite === 'DEBUG') {
-          // Show all agents for debugging
           groupsList.innerHTML = '';
           const debugHeader = document.createElement('div');
           debugHeader.style.cssText = 'font-weight:700; font-size:16px; padding:16px; background:var(--warning); color:white; border-radius:8px; margin-bottom:12px; text-align:center;';
@@ -5976,34 +5592,23 @@
         return;
       }
       
-      // Group agents by ITPC Site
       const agentsBySite = {};
       const agentsWithoutSite = [];
       
       agents.forEach(agent => {
-        // Check both itpc_site and note fields (note might contain ITPC Site info)
         let site = '';
-        // First check itpc_site field
         if (agent.itpc_site && agent.itpc_site.trim()) {
           site = agent.itpc_site.trim();
         } 
-        // Then check note field for ITPC Site
         else if (agent.note && agent.note.trim()) {
           const noteText = agent.note.trim();
-          // Try multiple patterns to extract ITPC Site from note
-          // Examples: "Said Al-shohdaa ITPC", "Al-Mualmeen ITPC", "ABS ITPC", "IQCELL_29"
+        
           const patterns = [
-            // Pattern: "[name] ITPC" - Most common format (e.g., "Said Al-shohdaa ITPC")
             /^([A-Za-z0-9][A-Za-z0-9\s\-_]+?)\s+(?:ITPC|itpc)$/i,
-            // Pattern: "[name] ITPC" anywhere in text
             /([A-Za-z0-9][A-Za-z0-9\s\-_]+?)\s+(?:ITPC|itpc)/i,
-            // Pattern: "ITPC Site: [name]" or "ITPC Site [name]"
             /(?:ITPC|itpc)[\s:]*Site[\s:]*([A-Za-z0-9][A-Za-z0-9\s\-_]+)/i,
-            // Pattern: "ITPC: [name]" or "ITPC [name]"
             /(?:ITPC|itpc)[\s:]+([A-Za-z0-9][A-Za-z0-9\s\-_]+)/i,
-            // Pattern: "Site: [name]" or "Site [name]"
             /Site[\s:]+([A-Za-z0-9][A-Za-z0-9\s\-_]+)/i,
-            // Pattern: Just the site name if note is simple (e.g., "IQCELL_29")
             /^([A-Za-z0-9][A-Za-z0-9\s\-_]+)$/i
           ];
           
@@ -6011,9 +5616,7 @@
             const noteMatch = noteText.match(pattern);
             if (noteMatch && noteMatch[1]) {
               site = noteMatch[1].trim();
-              // Clean up common prefixes/suffixes
               site = site.replace(/^(ITPC|itpc|Site|site)[\s:]*/i, '').trim();
-              // Remove trailing ITPC if exists
               site = site.replace(/\s+(?:ITPC|itpc)$/i, '').trim();
               if (site && site.length > 0 && site.length < 50) {
                 break;
@@ -6021,9 +5624,6 @@
             }
           }
         }
-        
-        // Debug: log agent data
-        console.log('displayAgentsBySite - Agent:', agent.name, 'itpc_site:', agent.itpc_site, 'note:', agent.note, 'extracted site:', site);
         
         if (!site || site === '') {
           agentsWithoutSite.push(agent);
@@ -6035,10 +5635,6 @@
         }
       });
       
-      console.log('Agents by site:', agentsBySite);
-      console.log('Agents without site:', agentsWithoutSite.length);
-      
-      // Display agents grouped by site
       const sortedSites = Object.keys(agentsBySite).sort();
       sortedSites.forEach(site => {
         const siteHeader = document.createElement('div');
@@ -6052,7 +5648,6 @@
         });
       });
       
-      // Display agents without site
       if (agentsWithoutSite.length > 0) {
         const siteHeader = document.createElement('div');
         siteHeader.style.cssText = 'font-weight:700; font-size:14px; padding:12px; background:var(--bg-tertiary); border-radius:8px; margin-top:12px; margin-bottom:8px; color:var(--text-primary); border:1px solid var(--border-color);';
@@ -6206,7 +5801,6 @@
       return { sent: phoneNumbers.length, failed: 0 };
     }
 
-    // Event Listeners
     document.getElementById('btnNotifications')?.addEventListener('click', () => {
       if (agents.length === 0) {
         alert('لا يوجد وكلاء في النظام');
@@ -6225,43 +5819,31 @@
       closeModal(document.getElementById('modalNotifications'));
     });
     
-    // متغيرات التحكم في الإرسال
     let isSending = false;
     let shouldStopSending = false;
     let sendingInterval = null;
     
-    // دالة لتنسيق رقم الهاتف لواتساب
     function formatPhoneForWhatsApp(phone) {
       if (!phone) return null;
       
-      // إزالة جميع الأحرف غير الرقمية
       let cleaned = phone.toString().replace(/[^0-9]/g, '');
       
-      // التحقق من أن الرقم ليس فارغاً
       if (!cleaned || cleaned.length === 0) {
-        console.warn('Empty phone number after cleaning:', phone);
         return null;
       }
       
-      // التحقق من طول الرقم (يجب أن يكون على الأقل 9 أرقام)
       if (cleaned.length < 9) {
-        console.warn('Phone number too short:', phone, 'cleaned:', cleaned);
         return null;
       }
       
-      // إذا كان الرقم يبدأ بـ 0، استبدله بـ 964 (كود العراق)
       if (cleaned.startsWith('0')) {
         cleaned = '964' + cleaned.substring(1);
       }
-      // إذا كان الرقم يبدأ بـ 964، اتركه كما هو
-      // إذا كان الرقم يبدأ برقم آخر، أضف 964
       else if (!cleaned.startsWith('964')) {
         cleaned = '964' + cleaned;
       }
       
-      // التحقق النهائي من طول الرقم (يجب أن يكون بين 12 و 15 رقم)
       if (cleaned.length < 12 || cleaned.length > 15) {
-        console.warn('Invalid phone number length:', phone, 'formatted:', cleaned, 'length:', cleaned.length);
         return null;
       }
       
@@ -6280,12 +5862,10 @@
       
       let selectedAgents = [];
       
-      // إذا تم اختيار وكلاء محددين، استخدمهم
       if (selectedItems.length > 0) {
         const agentIds = Array.from(selectedItems).map(item => item.dataset.agentId).filter(id => id);
         selectedAgents = agents.filter(a => agentIds.includes(a._id));
       } 
-      // إذا تم اختيار موقع ITPC Site
       else if (selectedSite && selectedSite !== '' && selectedSite !== 'DEBUG') {
         if (selectedSite === 'ALL') {
           selectedAgents = getAllAgents();
@@ -6293,7 +5873,6 @@
           selectedAgents = getAgentsByITPCSite(selectedSite);
         }
       }
-      // إذا لم يتم اختيار شيء
       else {
         alert('يرجى اختيار ITPC Site أو تحديد وكلاء أولاً');
         return;
@@ -6304,7 +5883,6 @@
         return;
       }
       
-      // جمع جميع أرقام الهواتف مع تجنب التكرار
       const phoneMap = new Map();
       selectedAgents.forEach(agent => {
         if (agent.phone) {
@@ -6329,7 +5907,6 @@
         return;
       }
       
-      // إعداد واجهة الإرسال
       isSending = true;
       shouldStopSending = false;
       const sendBtn = document.getElementById('sendNotification');
@@ -6344,7 +5921,6 @@
       sendBtn.disabled = true;
       sendBtn.textContent = 'جاري الإرسال...';
       
-      // إظهار شريط التقدم
       progressDiv.style.display = 'block';
       stopBtn.style.display = 'none';
       
@@ -6353,7 +5929,6 @@
         let failedCount = 0;
         const startTime = Date.now();
         
-        // فتح جميع المحادثات دفعة واحدة مع تأخير صغير جداً
         for (let i = 0; i < phoneNumbers.length; i++) {
           const phoneData = phoneNumbers[i];
           
@@ -6401,10 +5976,8 @@
         }
         
       } catch (error) {
-        console.error('Error sending notifications:', error);
         progressText.textContent = '❌ حدث خطأ';
         progressDetails.textContent = 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.';
-        alert('حدث خطأ أثناء الإرسال: ' + error.message);
       } finally {
         isSending = false;
         sendBtn.disabled = false;
@@ -6413,7 +5986,6 @@
       }
     });
     
-    // معالج زر الإيقاف
     document.getElementById('stopSending')?.addEventListener('click', () => {
       if (confirm('هل أنت متأكد من إيقاف الإرسال؟')) {
         shouldStopSending = true;
@@ -6422,7 +5994,6 @@
       }
     });
     
-    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       updateNotificationBadge();
     });
@@ -6599,7 +6170,6 @@
       border-bottom-left-radius: 8px;
     }
     
-    /* تحسين صفوف المشروع للوضع المضيء */
     :root:not([data-theme="dark"]) tr.phase-row td { 
       background: #e2e8f0; 
       color: #333333;
@@ -6736,8 +6306,8 @@
             (a.board_name || ''),
             num(a.total_users),
             num(a.active),
-            `<span style="font-weight:700; color: #801c32;">${signedNum(a.growth||0)}</span>`,
-            (a.activation_rate||0) + '%',
+            `<span style="font-weight:700; color: ${(a.growth||0) > 0 ? '#22c55e' : (a.growth||0) < 0 ? '#ef4444' : '#000000'} !important;">${signedNum(a.growth||0)}</span>`,
+            (a.required_rate === null ? (a.activation_rate||0) + '%' : `<span style="${getActivationRateColor(a.activation_rate||0, a.required_rate)}">${(a.activation_rate||0) + '%'}</span>`),
             (a.required_rate === null ? '-' : a.required_rate + '%'),
             (a.required_rate === null ? '-' : num(a.required_users)),
             (a.required_rate === null ? '-' : `<span style="${getDeficitColor(a.deficit_percent||0, a.required_rate)}">${(a.deficit_percent||0) + '%'}</span>`),
