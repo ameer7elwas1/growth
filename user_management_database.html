@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> نظام متابعة الوكلاء</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            --card: rgba(255,255,255,0.08);
+            --accent: #6366f1;
+            --accent-hover: #5b5bd6;
+            --muted: #94a3b8;
+            --success: #10b981;
+            --danger: #f43f5e;
+            --warning: #f59e0b;
+            --glass: rgba(255,255,255,0.08);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.15);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.2);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.3);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: "Inter", "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), #a78bfa, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-details h3 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .user-details p {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .logout-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            background: var(--glass);
+            color: inherit;
+            font-size: 14px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(99,102,241,0.1);
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn.secondary {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--muted);
+        }
+
+        .btn.secondary:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .btn.danger {
+            background: var(--danger);
+        }
+
+        .btn.danger:hover {
+            background: #dc2626;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .users-table {
+            background: var(--card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(99,102,241,0.05));
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .table-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .table-header p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .table th {
+            background: rgba(99,102,241,0.1);
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .table td {
+            font-size: 14px;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .role-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .role-admin {
+            background: rgba(244,63,94,0.2);
+            color: var(--danger);
+        }
+
+        .role-supervisor {
+            background: rgba(245,158,11,0.2);
+            color: var(--warning);
+        }
+
+        .role-viewer {
+            background: rgba(16,185,129,0.2);
+            color: var(--success);
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(16,185,129,0.2);
+            color: var(--success);
+        }
+
+        .status-inactive {
+            background: rgba(148,163,184,0.2);
+            color: var(--muted);
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .edit-btn {
+            background: rgba(99,102,241,0.2);
+            color: var(--accent);
+        }
+
+        .edit-btn:hover {
+            background: rgba(99,102,241,0.3);
+        }
+
+        .delete-btn {
+            background: rgba(244,63,94,0.2);
+            color: var(--danger);
+        }
+
+        .delete-btn:hover {
+            background: rgba(244,63,94,0.3);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .modal-header p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            background: var(--glass);
+            color: inherit;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(99,102,241,0.1);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--muted);
+        }
+
+        .error-message {
+            background: rgba(244,63,94,0.1);
+            border: 1px solid rgba(244,63,94,0.2);
+            color: var(--danger);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.2);
+            color: var(--success);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .table {
+                font-size: 12px;
+            }
+
+            .table th,
+            .table td {
+                padding: 10px 8px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>إدارة المستخدمين</h1>
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-details">
+                    <h3 id="userName">مدير النظام</h3>
+                    <p id="userRole">مدير</p>
+                </div>
+                <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+            </div>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+
+        <div class="controls">
+            <input type="text" class="search-box" id="searchBox" placeholder="البحث عن مستخدم...">
+            <button class="btn" onclick="openAddUserModal()">
+                <span>➕</span>
+                إضافة مستخدم
+            </button>
+            <button class="btn secondary" onclick="goToMainApp()">
+                <span>🏠</span>
+                العودة للتطبيق الرئيسي
+            </button>
+        </div>
+
+        <div class="users-table">
+            <div class="table-header">
+                <h2>قائمة المستخدمين</h2>
+                <p>إدارة صلاحيات المستخدمين في النظام</p>
+            </div>
+            <div id="loadingState" class="loading">
+                <p>جاري تحميل المستخدمين...</p>
+            </div>
+            <table class="table" id="usersTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>اسم المستخدم</th>
+                        <th>الاسم الكامل</th>
+                        <th>الدور</th>
+                        <th>الحالة</th>
+                        <th>آخر دخول</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- Users will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add/Edit User Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">إضافة مستخدم جديد</h3>
+                <p id="modalSubtitle">أدخل بيانات المستخدم الجديد</p>
+            </div>
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="username">اسم المستخدم</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="fullName">الاسم الكامل</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">الدور</label>
+                    <select id="role" name="role" required>
+                        <option value="viewer">مشاهد</option>
+                        <option value="supervisor">مشرف</option>
+                        <option value="admin">مدير</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="status">الحالة</label>
+                    <select id="status" name="status" required>
+                        <option value="active">نشط</option>
+                        <option value="inactive">غير نشط</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn secondary" onclick="closeUserModal()">إلغاء</button>
+                    <button type="submit" class="btn" id="saveUserBtn">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase configuration
+        const SUPABASE_URL = 'https://vpvvjascwgivdjyyhzwp.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
+
+        // Initialize Supabase
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // User management system with database
+        class UserManager {
+            constructor() {
+                this.users = [];
+                this.currentUser = null;
+                this.init();
+            }
+
+            async init() {
+                this.loadCurrentUser();
+                await this.loadUsersFromDatabase();
+                this.setupEventListeners();
+                this.updateUserInfo();
+            }
+
+            loadCurrentUser() {
+                const session = localStorage.getItem('userSession');
+                if (session) {
+                    this.currentUser = JSON.parse(session);
+                } else {
+                    window.location.href = 'agents_growth_iraqcell.html';
+                }
+            }
+
+      async loadUsersFromDatabase() {
+        try {
+          this.showLoading();
+          const { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .order('id', { ascending: false });
+
+          if (error) {
+            console.error('Error loading users:', error);
+            console.log('Falling back to local storage...');
+            this.loadUsersFromLocalStorage();
+            return;
+          }
+
+          this.users = data || [];
+          this.renderUsers();
+          this.hideLoading();
+        } catch (error) {
+          console.error('Error loading users:', error);
+          console.log('Falling back to local storage...');
+          this.loadUsersFromLocalStorage();
+        }
+      }
+
+      loadUsersFromLocalStorage() {
+        try {
+          const savedUsers = localStorage.getItem('systemUsers');
+          if (savedUsers) {
+            this.users = JSON.parse(savedUsers);
+          } else {
+            // Demo users
+            this.users = [
+              {
+                id: 1,
+                username: 'admin',
+                full_name: 'مدير النظام',
+                role: 'admin',
+                status: 'active',
+                last_login: '2025-01-25 10:30:00',
+                created_at: '2025-01-01 00:00:00'
+              },
+              {
+                id: 2,
+                username: 'supervisor',
+                full_name: 'مشرف النظام',
+                role: 'supervisor',
+                status: 'active',
+                last_login: '2025-01-25 09:15:00',
+                created_at: '2025-01-01 00:00:00'
+              },
+              {
+                id: 3,
+                username: 'viewer',
+                full_name: 'مشاهد النظام',
+                role: 'viewer',
+                status: 'active',
+                last_login: '2025-01-24 16:45:00',
+                created_at: '2025-01-01 00:00:00'
+              }
+            ];
+            this.saveUsersToLocalStorage();
+          }
+          this.renderUsers();
+          this.hideLoading();
+          this.showSuccess('تم تحميل المستخدمين من التخزين المحلي');
+        } catch (error) {
+          console.error('Error loading from local storage:', error);
+          this.showError('فشل في تحميل المستخدمين');
+          this.hideLoading();
+        }
+      }
+
+      saveUsersToLocalStorage() {
+        try {
+          localStorage.setItem('systemUsers', JSON.stringify(this.users));
+        } catch (error) {
+          console.error('Error saving to local storage:', error);
+        }
+      }
+
+            showLoading() {
+                document.getElementById('loadingState').style.display = 'block';
+                document.getElementById('usersTable').style.display = 'none';
+            }
+
+            hideLoading() {
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('usersTable').style.display = 'table';
+            }
+
+            showError(message) {
+                const errorEl = document.getElementById('errorMessage');
+                errorEl.textContent = message;
+                errorEl.style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+            }
+
+            showSuccess(message) {
+                const successEl = document.getElementById('successMessage');
+                successEl.textContent = message;
+                successEl.style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+            }
+
+            hideMessages() {
+                document.getElementById('errorMessage').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'none';
+            }
+
+            setupEventListeners() {
+                document.getElementById('searchBox').addEventListener('input', (e) => {
+                    this.filterUsers(e.target.value);
+                });
+
+                document.getElementById('userForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveUser();
+                });
+            }
+
+            updateUserInfo() {
+                if (this.currentUser) {
+                    document.getElementById('userName').textContent = this.currentUser.name;
+                    document.getElementById('userRole').textContent = this.getRoleName(this.currentUser.role);
+                    document.getElementById('userAvatar').textContent = this.currentUser.name.charAt(0);
+                }
+            }
+
+            getRoleName(role) {
+                const roles = {
+                    'admin': 'مدير',
+                    'supervisor': 'مشرف',
+                    'viewer': 'مشاهد'
+                };
+                return roles[role] || role;
+            }
+
+            renderUsers() {
+                const tbody = document.getElementById('usersTableBody');
+                if (this.users.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="empty-state">
+                                <h3>لا توجد مستخدمين</h3>
+                                <p>اضغط على "إضافة مستخدم" لبدء إضافة المستخدمين</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tbody.innerHTML = this.users.map(user => `
+                    <tr>
+                        <td>${user.username}</td>
+                        <td>${user.full_name}</td>
+                        <td><span class="role-badge role-${user.role}">${this.getRoleName(user.role)}</span></td>
+                        <td><span class="status-badge status-${user.status}">${user.status === 'active' ? 'نشط' : 'غير نشط'}</span></td>
+                        <td>${user.last_login ? new Date(user.last_login).toLocaleString('ar-SA') : 'لم يسجل دخول'}</td>
+                        <td>
+                            <div class="actions">
+                                <button class="action-btn edit-btn" onclick="userManager.editUser(${user.id})">تعديل</button>
+                                ${user.id !== this.currentUser?.id ? `<button class="action-btn delete-btn" onclick="userManager.deleteUser(${user.id})">حذف</button>` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            filterUsers(searchTerm) {
+                const filtered = this.users.filter(user => 
+                    user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    user.full_name.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+                
+                const tbody = document.getElementById('usersTableBody');
+                if (filtered.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="empty-state">
+                                <h3>لا توجد نتائج</h3>
+                                <p>لم يتم العثور على مستخدمين يطابقون البحث</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tbody.innerHTML = filtered.map(user => `
+                    <tr>
+                        <td>${user.username}</td>
+                        <td>${user.full_name}</td>
+                        <td><span class="role-badge role-${user.role}">${this.getRoleName(user.role)}</span></td>
+                        <td><span class="status-badge status-${user.status}">${user.status === 'active' ? 'نشط' : 'غير نشط'}</span></td>
+                        <td>${user.last_login ? new Date(user.last_login).toLocaleString('ar-SA') : 'لم يسجل دخول'}</td>
+                        <td>
+                            <div class="actions">
+                                <button class="action-btn edit-btn" onclick="userManager.editUser(${user.id})">تعديل</button>
+                                ${user.id !== this.currentUser?.id ? `<button class="action-btn delete-btn" onclick="userManager.deleteUser(${user.id})">حذف</button>` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            openAddUserModal() {
+                document.getElementById('modalTitle').textContent = 'إضافة مستخدم جديد';
+                document.getElementById('modalSubtitle').textContent = 'أدخل بيانات المستخدم الجديد';
+                document.getElementById('userForm').reset();
+                document.getElementById('userModal').classList.add('open');
+            }
+
+            editUser(userId) {
+                const userIdNum = parseInt(userId);
+                const user = this.users.find(u => parseInt(u.id) === userIdNum);
+                if (!user) return;
+
+                document.getElementById('modalTitle').textContent = 'تعديل المستخدم';
+                document.getElementById('modalSubtitle').textContent = `تعديل بيانات ${user.full_name}`;
+                
+                document.getElementById('username').value = user.username;
+                document.getElementById('fullName').value = user.full_name;
+                document.getElementById('password').value = '';
+                document.getElementById('role').value = user.role;
+                document.getElementById('status').value = user.status;
+                
+                document.getElementById('userModal').classList.add('open');
+                document.getElementById('userModal').dataset.userId = userIdNum;
+            }
+
+            closeUserModal() {
+                document.getElementById('userModal').classList.remove('open');
+                document.getElementById('userModal').dataset.userId = '';
+            }
+
+      async saveUser() {
+        const formData = new FormData(document.getElementById('userForm'));
+        const userId = document.getElementById('userModal').dataset.userId;
+        
+        const userData = {
+          username: formData.get('username'),
+          full_name: formData.get('fullName'),
+          password: formData.get('password'),
+          role: formData.get('role'),
+          status: formData.get('status')
+        };
+
+        // Validate
+        if (!userData.username || !userData.full_name || !userData.password) {
+          this.showError('يرجى ملء جميع الحقول المطلوبة');
+          return;
+        }
+
+        try {
+          // Try database first
+          if (userId) {
+            // Edit existing user
+            const userIdNum = parseInt(userId);
+            const { error } = await supabase
+              .from('users')
+              .update({
+                username: userData.username,
+                full_name: userData.full_name,
+                password_hash: userData.password,
+                role: userData.role,
+                status: userData.status
+              })
+              .eq('id', userIdNum);
+
+            if (error) throw error;
+            this.showSuccess('تم تحديث المستخدم بنجاح في قاعدة البيانات');
+          } else {
+            // Add new user
+            const { error } = await supabase
+              .from('users')
+              .insert({
+                username: userData.username,
+                full_name: userData.full_name,
+                password_hash: userData.password,
+                role: userData.role,
+                status: userData.status
+              });
+
+            if (error) throw error;
+            this.showSuccess('تم إضافة المستخدم بنجاح في قاعدة البيانات');
+          }
+
+          // Reload users
+          await this.loadUsersFromDatabase();
+          this.closeUserModal();
+        } catch (error) {
+          console.error('Error saving user to database:', error);
+          console.log('Falling back to local storage...');
+          
+          // Fallback to local storage
+          try {
+            if (userId) {
+              // Edit existing user
+              const userIdNum = parseInt(userId);
+              const userIndex = this.users.findIndex(u => parseInt(u.id) === userIdNum);
+              if (userIndex !== -1) {
+                this.users[userIndex] = {
+                  ...this.users[userIndex],
+                  username: userData.username,
+                  full_name: userData.full_name,
+                  password_hash: userData.password,
+                  role: userData.role,
+                  status: userData.status
+                };
+              }
+              this.showSuccess('تم تحديث المستخدم بنجاح في التخزين المحلي');
+            } else {
+              // Add new user
+              const newUser = {
+                id: Date.now(),
+                username: userData.username,
+                full_name: userData.full_name,
+                password_hash: userData.password,
+                role: userData.role,
+                status: userData.status,
+                last_login: null,
+                created_at: new Date().toISOString()
+              };
+              this.users.push(newUser);
+              this.showSuccess('تم إضافة المستخدم بنجاح في التخزين المحلي');
+            }
+
+            this.saveUsersToLocalStorage();
+            this.renderUsers();
+            this.closeUserModal();
+          } catch (localError) {
+            console.error('Error saving to local storage:', localError);
+            this.showError('فشل في حفظ المستخدم');
+          }
+        }
+      }
+
+      async deleteUser(userId) {
+        // Convert to number for comparison
+        const userIdNum = parseInt(userId);
+        const currentUserId = parseInt(this.currentUser?.id);
+        
+        if (userIdNum === currentUserId) {
+          this.showError('لا يمكنك حذف حسابك الخاص');
+          return;
+        }
+
+        if (!confirm('هل أنت متأكد من حذف هذا المستخدم؟')) return;
+
+        try {
+          // Try database first
+          const { error } = await supabase
+            .from('users')
+            .delete()
+            .eq('id', userIdNum);
+
+          if (error) throw error;
+
+          this.showSuccess('تم حذف المستخدم بنجاح من قاعدة البيانات');
+          await this.loadUsersFromDatabase();
+        } catch (error) {
+          console.error('Error deleting user from database:', error);
+          console.log('Falling back to local storage...');
+          
+          // Fallback to local storage
+          try {
+            this.users = this.users.filter(u => parseInt(u.id) !== userIdNum);
+            this.saveUsersToLocalStorage();
+            this.renderUsers();
+            this.showSuccess('تم حذف المستخدم بنجاح من التخزين المحلي');
+          } catch (localError) {
+            console.error('Error deleting from local storage:', localError);
+            this.showError('فشل في حذف المستخدم');
+          }
+        }
+      }
+        }
+
+        // Initialize user manager
+        const userManager = new UserManager();
+
+        // Global functions
+        function openAddUserModal() {
+            userManager.openAddUserModal();
+        }
+
+        function closeUserModal() {
+            userManager.closeUserModal();
+        }
+
+        function logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                localStorage.removeItem('userSession');
+                window.location.href = 'agents_growth_iraqcell.html';
+            }
+        }
+
+        function goToMainApp() {
+            window.location.href = 'agents_growth_iraqcell.html';
+        }
+    </script>
+</body>
+</html>

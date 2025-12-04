@@ -1,0 +1,4491 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> Agents Growth Iraqcell</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+      --card: rgba(255,255,255,0.08);
+      --accent: #6366f1;
+      --accent-hover: #5b5bd6;
+      --muted: #94a3b8;
+      --success: #10b981;
+      --danger: #f43f5e;
+      --warning: #f59e0b;
+      --panel-bg: rgba(255,255,255,0.05);
+      --glass: rgba(255,255,255,0.08);
+      --glass-hover: rgba(255,255,255,0.12);
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.15);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.2);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.3);
+      --border-radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: "Noto Sans Arabic", "Roboto", "Almarai", "Inter", "SF Pro Display", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+    :root.light{
+      --bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+      --card: rgba(255,255,255,0.9);
+      --accent: #6366f1;
+      --accent-hover: #5b5bd6;
+      --muted: #64748b;
+      --success: #10b981;
+      --danger: #f43f5e;
+      --warning: #f59e0b;
+      --panel-bg: rgba(255,255,255,0.8);
+      --glass: rgba(0,0,0,0.03);
+      --glass-hover: rgba(0,0,0,0.06);
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+      --shadow-lg: 0 16px 48px rgba(0,0,0,0.16);
+    }
+    
+    :root.light tbody tr:nth-child(even){background:rgba(0,0,0,0.02);}
+    :root.light tbody tr:hover{background:rgba(0,0,0,0.05);}
+    :root.light th, :root.light td{border-bottom:1px solid rgba(0,0,0,0.08);}
+    :root.light th{border-bottom:1px solid rgba(0,0,0,0.15);}
+    :root.light tr.subtotal-title td{background:rgba(0,0,0,0.08); border-bottom:1px solid rgba(0,0,0,0.12);}
+    :root.light tr.subtotal-values td{background:rgba(0,0,0,0.04); border-bottom:1px solid rgba(0,0,0,0.08);}
+    :root.light .phase-header td{background:rgba(0,0,0,0.08); border-bottom:1px solid rgba(0,0,0,0.12);}
+    
+    :root.light .stat:nth-child(1) {
+      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(99,102,241,0.03));
+      border-color: rgba(99,102,241,0.2);
+    }
+    :root.light .stat:nth-child(2) {
+      background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(16,185,129,0.03));
+      border-color: rgba(16,185,129,0.2);
+    }
+    :root.light .stat:nth-child(3) {
+      background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.03));
+      border-color: rgba(245,158,11,0.2);
+    }
+    :root.light .stat:nth-child(4) {
+      background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.03));
+      border-color: rgba(239,68,68,0.2);
+    }
+    
+    /* Light mode button styles */
+    :root.light .btn.secondary{
+      background: rgba(99,102,241,0.15); 
+      border: 1px solid rgba(99,102,241,0.4); 
+      color: #4f46e5;
+      font-weight: 700;
+    }
+    :root.light .btn.secondary:hover{
+      background: rgba(99,102,241,0.25);
+      border-color: rgba(99,102,241,0.6);
+      color: #3730a3;
+    }
+    
+    :root.light .btn{
+      background: linear-gradient(135deg, #6366f1, #8b5cf6); 
+      color: #fff;
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    :root.light .btn:hover{
+      background: linear-gradient(135deg, #5b5bd6, #7c3aed);
+    }
+    
+    :root.light .modal{
+      background:none;
+    }
+    :root.light .modal .box{
+      background:#ffffff;
+      border: 2px solid rgba(99,102,241,0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    :root.light input[type="text"], 
+    :root.light input[type="number"], 
+    :root.light input[type="date"], 
+    :root.light select{
+      background:#f8fafc;
+      border:1px solid rgba(0,0,0,0.15);
+      color:#1e293b;
+    }
+    
+    :root.light input[type="text"]:focus, 
+    :root.light input[type="number"]:focus, 
+    :root.light input[type="date"]:focus, 
+    :root.light select:focus{
+      background:#ffffff;
+      border-color: var(--accent);
+    }
+    
+    :root.light .badge.good{
+      background:rgba(16,185,129,0.15); 
+      color:#059669; 
+      border:1px solid rgba(16,185,129,0.3);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    :root.light .badge.fail{
+      background:rgba(239,68,68,0.15); 
+      color:#dc2626; 
+      border:1px solid rgba(239,68,68,0.3);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    :root.light .badge.ok{
+      background:rgba(16,185,129,0.1); 
+      color:#059669; 
+      border:1px solid rgba(16,185,129,0.2);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    
+    /* Light mode deficit colors for reports */
+    :root.light .deficit-green{
+      color: #059669 !important;
+      font-weight: 700 !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+    }
+    
+    :root.light .deficit-orange{
+      color: #d97706 !important;
+      font-weight: 700 !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+    }
+    
+    :root.light .deficit-red{
+      color: #dc2626 !important;
+      font-weight: 700 !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+    }
+    
+    /* Dark mode button improvements */
+    .btn.secondary{
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .btn.secondary:hover{
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    body{
+      background: var(--bg); 
+      color: #e2e8f0; 
+      margin: 0; 
+      padding: 24px; 
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-smooth: always;
+      text-rendering: optimizeLegibility;
+      backdrop-filter: blur(20px);
+      min-height: 100vh;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+    body.light{
+      background: var(--bg); 
+      color:#1e293b;
+    }
+    .container{max-width:1200px; margin:0 auto;}
+    header{
+      display: flex; 
+      gap: 20px; 
+      align-items: center; 
+      justify-content: space-between; 
+      margin-bottom: 24px;
+      padding: 20px 24px;
+      background: linear-gradient(135deg, var(--card), rgba(99,102,241,0.05));
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(99,102,241,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 0 0 1px rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+      
+      .container {
+        max-width: 100%;
+      }
+      
+      header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+        padding: 16px;
+      }
+      
+      .header-left,
+      .header-right {
+        margin-left: 0;
+        justify-content: center;
+      }
+      
+      .controls {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      
+      .controls-group {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+      
+      h1 {
+        font-size: 24px;
+        text-align: center;
+      }
+      
+      .lead {
+        text-align: center;
+        font-size: 14px;
+      }
+      
+      .stats {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .stat {
+        min-width: 100%;
+        text-align: center;
+      }
+      
+      .filters {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+      
+      .search, select {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px;
+      }
+      
+      .row {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .chart-row {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .chart-card {
+        min-height: 200px;
+        width: 100%;
+      }
+    }
+    header::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.8;
+    }
+    header::after{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(99,102,241,0.03), transparent);
+      pointer-events: none;
+    }
+    .header-content{
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      z-index: 1;
+    }
+    h1{
+      font-size: 28px; 
+      margin: 0; 
+      font-weight: 700;
+      font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.02em;
+      position: relative;
+      text-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
+    h1::after{
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), rgba(99,102,241,0.5), transparent);
+      border-radius: 2px;
+      opacity: 0.8;
+    }
+    p.lead{
+      margin: 0; 
+      color: var(--muted); 
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      opacity: 0.9;
+    }
+    .card{
+      background: var(--card); 
+      padding: 20px; 
+      border-radius: var(--border-radius); 
+      box-shadow: var(--shadow-md);
+      margin-bottom: 16px;
+      border: 1px solid rgba(99,102,241,0.1);
+      backdrop-filter: blur(20px);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.6;
+    }
+    .card::after{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(99,102,241,0.02), transparent);
+      pointer-events: none;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(99,102,241,0.2);
+    }
+    .card:hover::before{
+      opacity: 1;
+    }
+    .controls{
+      display: flex; 
+      gap: 12px; 
+      flex-wrap: wrap; 
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      order: 2;
+    }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      order: 1;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      order: 3;
+      margin-left: auto;
+    }
+    .controls-group{
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
+    input[type="file"]{display:none;}
+    .btn{
+      background: linear-gradient(135deg, var(--accent), #8b5cf6); 
+      color: #fff; 
+      border: none; 
+      padding: 10px 18px; 
+      border-radius: 10px; 
+      cursor: pointer; 
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+    .btn::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn:hover::before{
+      left: 100%;
+    }
+    .btn:hover{
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(99,102,241,0.4);
+      background: linear-gradient(135deg, #8b5cf6, var(--accent));
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+    .btn:active{
+      transform: translateY(-1px) scale(0.98);
+      box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+    }
+    .btn.secondary{
+      background: rgba(99,102,241,0.15); 
+      border: 1px solid rgba(99,102,241,0.4); 
+      color: #a5b4fc;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn.secondary:hover{
+      background: rgba(99,102,241,0.25);
+      border-color: rgba(99,102,241,0.6);
+      color: #c7d2fe;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+    .btn.warn{
+      background: linear-gradient(135deg, var(--warning), #f59e0b); 
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(245,158,11,0.3);
+    }
+    .btn.warn:hover{
+      background: linear-gradient(135deg, #f59e0b, var(--warning));
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(245,158,11,0.4);
+    }
+    .btn.danger{
+      background: linear-gradient(135deg, var(--danger), #dc2626); 
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(239,68,68,0.3);
+    }
+    .btn.danger:hover{
+      background: linear-gradient(135deg, #dc2626, var(--danger));
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(239,68,68,0.4);
+    }
+    .btn.small{
+      padding: 6px 10px;
+      font-size: 11px;
+      min-height: 28px;
+      border-radius: 6px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .btn.small.secondary{
+      background: rgba(99,102,241,0.15); 
+      border: 1px solid rgba(99,102,241,0.4); 
+      color: #a5b4fc;
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .btn.small.secondary:hover{
+      background: rgba(99,102,241,0.25);
+      border-color: rgba(99,102,241,0.6);
+      color: #c7d2fe;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+    
+    .btn.tiny{
+      padding: 2px 6px;
+      font-size: 8px;
+      min-height: 20px;
+      border-radius: 4px;
+    }
+    .modal .btn{
+      min-width: 90px;
+      justify-content: center;
+    }
+    .btn-icon{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      font-size: 12px;
+      margin-right: 4px;
+    }
+    .flex{display:flex; gap:8px; align-items:center;}
+    .stats{display:flex; gap:16px; flex-wrap:wrap;}
+    .stat{
+      flex: 1 1 160px; 
+      background: var(--glass); 
+      padding: 16px; 
+      border-radius: var(--border-radius); 
+      min-width: 140px;
+      border: 1px solid rgba(99,102,241,0.15);
+      backdrop-filter: blur(20px);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .stat:nth-child(1) {
+      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(99,102,241,0.05));
+      border-color: rgba(99,102,241,0.3);
+    }
+    .stat:nth-child(1)::before {
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    }
+    
+    .stat:nth-child(2) {
+      background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.05));
+      border-color: rgba(16,185,129,0.3);
+    }
+    .stat:nth-child(2)::before {
+      background: linear-gradient(90deg, #10b981, #34d399);
+    }
+    
+    .stat:nth-child(3) {
+      background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(245,158,11,0.05));
+      border-color: rgba(245,158,11,0.3);
+    }
+    .stat:nth-child(3)::before {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+    
+    .stat:nth-child(4) {
+      background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.05));
+      border-color: rgba(239,68,68,0.3);
+    }
+    .stat:nth-child(4)::before {
+      background: linear-gradient(90deg, #ef4444, #f87171);
+    }
+    .stat::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), rgba(99,102,241,0.5), transparent);
+    }
+    .stat:hover{
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(99,102,241,0.4);
+    }
+    
+    .stat:nth-child(1):hover {
+      background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.08));
+      border-color: rgba(99,102,241,0.5);
+    }
+    
+    .stat:nth-child(2):hover {
+      background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.08));
+      border-color: rgba(16,185,129,0.5);
+    }
+    
+    .stat:nth-child(3):hover {
+      background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.08));
+      border-color: rgba(245,158,11,0.5);
+    }
+    
+    .stat:nth-child(4):hover {
+      background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.08));
+      border-color: rgba(239,68,68,0.5);
+    }
+    .stat h3{margin:0; font-size:20px; font-weight:700;}
+    .stat p{margin:4px 0 0; color:var(--muted); font-size:12px; font-weight:500;}
+    
+    .stat:nth-child(1) h3 {
+      color: #6366f1;
+    }
+    .stat:nth-child(1) p {
+      color: #8b5cf6;
+    }
+    
+    .stat:nth-child(2) h3 {
+      color: #10b981;
+    }
+    .stat:nth-child(2) p {
+      color: #34d399;
+    }
+    
+    .stat:nth-child(3) h3 {
+      color: #f59e0b;
+    }
+    .stat:nth-child(3) p {
+      color: #fbbf24;
+    }
+    
+    .stat:nth-child(4) h3 {
+      color: #ef4444;
+    }
+    .stat:nth-child(4) p {
+      color: #f87171;
+    }
+    .row{display:flex; gap:12px;}
+    .col{flex:1;}
+    table{
+      width:100%; 
+      border-collapse:collapse; 
+      font-size:11px; 
+      table-layout:fixed;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--card);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      border: 1px solid rgba(99,102,241,0.2);
+    }
+    th, td{
+      padding:8px 6px; 
+      border-bottom:1px solid rgba(255,255,255,0.1); 
+      text-align:center; 
+      white-space:nowrap; 
+      overflow:hidden; 
+      text-overflow:ellipsis;
+      line-height: 1.3;
+      font-size: 11px;
+    }
+    th{
+      font-size:10px; 
+      color:var(--muted); 
+      font-weight:600; 
+      border-bottom:1px solid rgba(99,102,241,0.3);
+      background: rgba(99,102,241,0.1);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      padding: 10px 6px;
+      text-transform: uppercase;
+      overflow: visible;
+      text-overflow: unset;
+    }
+    td small{display:block; color:var(--muted); font-size:8px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1;}
+    
+    tbody tr:nth-child(even){background:rgba(99,102,241,0.03);}
+    tbody tr:hover{
+      background:rgba(99,102,241,0.06);
+    }
+    
+    tr.subtotal-title td{background:rgba(99,102,241,0.08); border-bottom:1px solid rgba(99,102,241,0.2); font-weight:600;}
+    tr.subtotal-values td{background:rgba(99,102,241,0.04); border-bottom:1px solid rgba(99,102,241,0.15);}
+    .badge{
+      padding:4px 8px; 
+      border-radius:6px; 
+      font-weight:600; 
+      font-size:9px;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .badge.good{
+      background:rgba(16,185,129,0.25); 
+      color:#10b981; 
+      border:1px solid rgba(16,185,129,0.4);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .badge.fail{
+      background:rgba(239,68,68,0.25); 
+      color:#ef4444; 
+      border:1px solid rgba(239,68,68,0.4);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .badge.ok{
+      background:rgba(16,185,129,0.2); 
+      color:#10b981; 
+      border:1px solid rgba(16,185,129,0.3);
+      font-weight: 700;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .search{
+      padding:12px 16px; 
+      border-radius:12px; 
+      border:1px solid rgba(255,255,255,0.15); 
+      background:var(--glass); 
+      color:inherit;
+      transition: var(--transition);
+      backdrop-filter: blur(20px);
+      min-width: 120px;
+      font-size: 14px;
+    }
+    .search:focus{
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(14,165,169,0.1);
+      background: rgba(255,255,255,0.05);
+    }
+    .filters{display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+    .modal{
+      position:fixed; 
+      top:0;
+      left:0;
+      width:100vw;
+      height:100vh;
+      display:none; 
+      align-items:center; 
+      justify-content:center; 
+      background:none; 
+      z-index:1000;
+      overflow-y: auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .modal.open{display:flex;}
+    .modal .box{
+      width:700px; 
+      max-width:90%; 
+      background:#1e293b; 
+      padding:20px; 
+      border-radius:12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.2);
+      border: 2px solid rgba(99,102,241,0.4);
+      animation: modalSlideIn 0.3s ease-out;
+      margin: 0 auto;
+      max-height: 70vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(0);
+      flex-shrink: 0;
+    }
+    
+    .modal .box::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #a78bfa, #6366f1);
+      border-radius: 16px 16px 0 0;
+    }
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .modal {
+      animation: modalFadeIn 0.3s ease-out;
+    }
+    
+    /* Ensure proper positioning */
+    .modal.open {
+      display: flex !important;
+      align-items: flex-start !important;
+      justify-content: center !important;
+    }
+    
+    .modal .box {
+      margin: 0 auto !important;
+      position: relative !important;
+      top: 0 !important;
+      left: 0 !important;
+      transform: none !important;
+    }
+    .modal h3{
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 16px 0;
+      color: #6366f1;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(99,102,241,0.2);
+    }
+    
+    label{display:block; font-size:13px; margin-bottom:6px; color:var(--muted); font-weight:600;}
+    input[type="text"], input[type="number"], input[type="date"], select{
+      width:100%; 
+      padding:10px 12px; 
+      border-radius:8px; 
+      border:1px solid rgba(255,255,255,0.15); 
+      background:#334155; 
+      color:inherit;
+      transition: var(--transition);
+      font-size:13px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus{
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(14,165,169,0.1);
+      background: #475569;
+    }
+    .actions{
+      display: flex; 
+      gap: 10px; 
+      justify-content: center; 
+      margin-top: 16px; 
+      flex-wrap: wrap;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .actions .btn{
+      min-width: 100px;
+      justify-content: center;
+    }
+    
+    /* تحسين أزرار الإجراءات في الجدول */
+    table .actions .btn {
+      min-width: 80px;
+      padding: 6px 12px;
+      font-size: 11px;
+      margin: 2px;
+      white-space: nowrap;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: var(--card);
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    
+    table .actions .btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    
+    table .actions .btn.secondary {
+      background: rgba(99,102,241,0.1);
+      color: var(--accent);
+      border-color: rgba(99,102,241,0.2);
+    }
+    
+    table .actions .btn.secondary:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    
+    table .actions .btn.warn {
+      background: rgba(245,158,11,0.1);
+      color: #f59e0b;
+      border-color: rgba(245,158,11,0.2);
+    }
+    
+    /* تحسين أزرار الإجراءات في الجدول للوضع المضيء */
+    body.light table .actions .btn {
+      background: #f8fafc;
+      color: #1e293b;
+      border-color: rgba(0,0,0,0.1);
+    }
+    
+    body.light table .actions .btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    
+    body.light table .actions .btn.secondary {
+      background: rgba(99,102,241,0.1);
+      color: var(--accent);
+      border-color: rgba(99,102,241,0.2);
+    }
+    
+    body.light table .actions .btn.warn {
+      background: rgba(245,158,11,0.1);
+      color: #f59e0b;
+      border-color: rgba(245,158,11,0.2);
+    }
+    
+    /* تحسين أزرار الإجراءات للشاشات الصغيرة */
+    @media (max-width: 768px) {
+      table .actions .btn {
+        min-width: 70px;
+        padding: 4px 8px;
+        font-size: 10px;
+        margin: 1px;
+      }
+      
+      table .actions .flex {
+        gap: 4px;
+      }
+      
+      table td:last-child {
+        min-width: 120px;
+        padding: 6px 2px;
+      }
+    }
+    
+    table .actions .flex {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    
+    /* تحسين عمود الإجراءات */
+    table td:last-child {
+      text-align: center;
+      vertical-align: middle;
+      padding: 8px 4px;
+      min-width: 140px;
+    }
+    
+    /* تحسين عرض الأزرار في الجدول */
+    table .btn {
+      margin: 1px;
+      flex-shrink: 0;
+    }
+    .form-group{margin-bottom: 12px;}
+    .form-row{display: flex; gap: 12px; margin-bottom: 12px;}
+    .form-row .form-group{flex: 1; margin-bottom: 0;}
+    
+    .form-grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .form-grid .form-group{
+      margin-bottom: 0;
+    }
+    .small{font-size:12px; color:var(--muted);}
+    .chart-row{display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;}
+    
+    #connectionStatus{
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+    #connectionStatus.connected{
+      background: rgba(16,185,129,0.2);
+      border-color: rgba(16,185,129,0.4);
+      color: var(--success);
+    }
+    #connectionStatus.error{
+      background: rgba(244,63,94,0.2);
+      border-color: rgba(244,63,94,0.4);
+      color: var(--danger);
+    }
+    #connectionStatus.connecting{
+      background: rgba(245,158,11,0.2);
+      border-color: rgba(245,158,11,0.4);
+      color: var(--warning);
+    }
+    .chart-card{
+      flex:1 1 360px; 
+      min-height:260px; 
+      padding:16px; 
+      background:var(--glass); 
+      border-radius:var(--border-radius);
+      border: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .chart-card:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    footer{color:var(--muted); margin-top:14px; font-size:13px;}
+    .icon{font-size:16px; margin-right:4px;}
+    td:nth-child(1){text-align:right; padding-right:12px; min-width:180px; max-width:220px;}
+    td:nth-child(2), td:nth-child(3){min-width:90px; max-width:110px;}
+    td:nth-child(4){min-width:90px; max-width:120px;}
+    td:nth-child(5){min-width:90px; max-width:110px;}
+    td:nth-child(6){min-width:120px; max-width:140px;}
+    td:nth-child(7){min-width:120px; max-width:140px;}
+    td:nth-child(8){min-width:80px; max-width:100px;}
+    td:nth-child(9){min-width:100px; max-width:120px;}
+    td:nth-child(10){min-width:80px; max-width:100px;}
+    td:nth-child(11){min-width:100px; max-width:120px;}
+    td:nth-child(12){min-width:80px; max-width:100px;}
+    td:nth-child(13){min-width:100px; max-width:120px;}
+    td:nth-child(14){min-width:120px; max-width:150px;}
+    
+   
+    td:nth-child(1){white-space:normal; word-wrap:break-word;}
+    td:nth-child(1) strong{font-size:12px; line-height:1.3; word-break:break-word; font-weight:600;}
+    td:nth-child(1) small{font-size:9px; margin-top:3px; word-break:break-word; color:var(--muted);}
+    
+    td:nth-child(4){white-space:normal; word-wrap:break-word; text-align:center;}
+    
+    .btn{font-size:12px; padding:8px 12px;}
+    
+    @media (max-width:1200px){
+      table{font-size:11px;}
+      th, td{padding:4px 2px;}
+      td:nth-child(1){min-width:140px; max-width:160px;}
+      td:nth-child(2), td:nth-child(3){min-width:70px; max-width:90px;}
+      td:nth-child(4){min-width:70px; max-width:100px;}
+      td:nth-child(5){min-width:70px; max-width:90px;}
+      td:nth-child(6){min-width:100px; max-width:120px;}
+      td:nth-child(7){min-width:100px; max-width:120px;}
+      td:nth-child(8){min-width:60px; max-width:80px;}
+      td:nth-child(9){min-width:80px; max-width:100px;}
+      td:nth-child(10){min-width:60px; max-width:80px;}
+      td:nth-child(11){min-width:80px; max-width:100px;}
+      td:nth-child(12){min-width:60px; max-width:80px;}
+      td:nth-child(13){min-width:80px; max-width:100px;}
+      td:nth-child(14){min-width:100px; max-width:120px;}
+      .btn{font-size:11px; padding:6px 10px;}
+      .badge{font-size:9px; padding:2px 4px;}
+    }
+    
+    @media (max-width: 768px) {
+      table {
+        font-size: 9px;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      thead, tbody, tr {
+        display: block;
+      }
+      
+      thead {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      th, td {
+        padding: 6px 4px;
+        font-size: 9px;
+        text-align: center;
+        border-right: 1px solid rgba(255,255,255,0.05);
+      }
+      
+      th {
+        background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(99,102,241,0.08));
+        font-weight: 700;
+        font-size: 8px;
+        padding: 8px 4px;
+      }
+      
+      td:nth-child(1) {
+        min-width: 120px;
+        max-width: 150px;
+        text-align: right;
+        padding-right: 8px;
+      }
+      
+      td:nth-child(2), td:nth-child(3) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(4) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(5) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(6) {
+        min-width: 80px;
+        max-width: 100px;
+      }
+      
+      td:nth-child(7) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(8) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(9) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(10) {
+        min-width: 80px;
+        max-width: 100px;
+      }
+      
+      td:nth-child(11) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(12) {
+        min-width: 80px;
+        max-width: 100px;
+      }
+      
+      td:nth-child(13) {
+        min-width: 40px;
+        max-width: 60px;
+      }
+      
+      td:nth-child(14) {
+        min-width: 80px;
+        max-width: 100px;
+      }
+      
+      .btn {
+        font-size: 8px;
+        padding: 4px 6px;
+        min-height: 24px;
+      }
+      
+      .badge {
+        font-size: 7px;
+        padding: 2px 4px;
+      }
+      
+      .modal .box {
+        width: 95%;
+        max-width: 600px;
+        padding: 16px;
+        margin: 10px;
+        max-height: 85vh;
+      }
+      
+      .modal h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      
+      .form-row .form-group {
+        flex: 1;
+        min-width: 100%;
+      }
+      
+      .actions {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .actions .btn {
+        width: 100%;
+        min-width: auto;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      body {
+        padding: 8px;
+      }
+      
+      .container {
+        padding: 0;
+      }
+      
+      header {
+        padding: 12px;
+        margin-bottom: 16px;
+      }
+      
+      h1 {
+        font-size: 20px;
+        margin-bottom: 8px;
+      }
+      
+      .lead {
+        font-size: 12px;
+      }
+      
+      .card {
+        padding: 12px;
+        margin-bottom: 12px;
+      }
+      
+      .stats {
+        gap: 8px;
+      }
+      
+      .stat {
+        padding: 12px;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .stat h3 {
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+      
+      .stat p {
+        font-size: 10px;
+        margin: 0;
+      }
+      
+      table {
+        font-size: 8px;
+        border-radius: 8px;
+      }
+      
+      th, td {
+        padding: 4px 2px;
+        font-size: 8px;
+        line-height: 1.1;
+      }
+      
+      th {
+        font-size: 7px;
+        padding: 6px 2px;
+      }
+      
+      td:nth-child(1) {
+        min-width: 100px;
+        max-width: 120px;
+        font-size: 8px;
+      }
+      
+      td:nth-child(1) strong {
+        font-size: 9px;
+        line-height: 1.1;
+      }
+      
+      td:nth-child(1) small {
+        font-size: 6px;
+        margin-top: 1px;
+      }
+      
+      td:nth-child(2), td:nth-child(3) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(4) {
+        min-width: 50px;
+        max-width: 70px;
+      }
+      
+      td:nth-child(5) {
+        min-width: 50px;
+        max-width: 70px;
+      }
+      
+      td:nth-child(6) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(7) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(8) {
+        min-width: 50px;
+        max-width: 70px;
+      }
+      
+      td:nth-child(9) {
+        min-width: 60px;
+        max-width: 80px;
+      }
+      
+      td:nth-child(10) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(11) {
+        min-width: 50px;
+        max-width: 70px;
+      }
+      
+      td:nth-child(12) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      td:nth-child(13) {
+        min-width: 35px;
+        max-width: 55px;
+      }
+      
+      td:nth-child(14) {
+        min-width: 70px;
+        max-width: 90px;
+      }
+      
+      .btn {
+        font-size: 7px;
+        padding: 3px 5px;
+        min-height: 20px;
+        border-radius: 4px;
+      }
+      
+      .btn.tiny {
+        font-size: 6px;
+        padding: 2px 4px;
+        min-height: 18px;
+      }
+      
+      .badge {
+        font-size: 6px;
+        padding: 1px 3px;
+        border-radius: 4px;
+      }
+      
+      .modal .box {
+        width: 98%;
+        max-width: 500px;
+        padding: 12px;
+        margin: 5px;
+        max-height: 85vh;
+        overflow-y: auto;
+      }
+      
+      .modal {
+        padding: 8px;
+        align-items: flex-start !important;
+      }
+      
+      .modal h3 {
+        font-size: 14px;
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+      }
+      
+      .form-group {
+        margin-bottom: 12px;
+      }
+      
+      .form-group label {
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+      
+      input[type="text"], 
+      input[type="number"], 
+      input[type="date"], 
+      select {
+        font-size: 12px;
+        padding: 8px 10px;
+        border-radius: 6px;
+      }
+      
+      .actions {
+        margin-top: 16px;
+        padding-top: 12px;
+      }
+      
+      .chart-card {
+        min-height: 180px;
+        padding: 12px;
+      }
+      
+      .user-info {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        margin: 0 0 16px 0;
+        padding: 8px 12px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .user-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+      }
+      
+      .user-details h3 {
+        font-size: 11px;
+      }
+      
+      .user-details p {
+        font-size: 9px;
+      }
+      
+      .logout-btn {
+        padding: 5px;
+        font-size: 9px;
+        min-height: 22px;
+        min-width: 22px;
+      }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <style>
+    .auth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      pointer-events: auto;
+    }
+    
+    .auth-container {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(255,255,255,0.08);
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      overflow: visible;
+      z-index: 1;
+    }
+    
+    .auth-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #a78bfa, #6366f1);
+      border-radius: 16px 16px 0 0;
+    }
+    
+    .auth-logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .auth-logo h1 {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #6366f1, #a78bfa, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    
+    .auth-logo p {
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .auth-form-group {
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .auth-form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .auth-form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      color: inherit;
+      font-size: 14px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      pointer-events: auto !important;
+      user-select: text !important;
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      cursor: text !important;
+      opacity: 1 !important;
+      z-index: 10 !important;
+      position: relative !important;
+    }
+    
+    .auth-form-group input:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.1);
+      background: rgba(255,255,255,0.05);
+    }
+    
+    .auth-form-group input:not(:disabled) {
+      cursor: text;
+      pointer-events: auto;
+    }
+    
+    .auth-form-group input:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    
+    .auth-form-group input::placeholder {
+      color: #94a3b8;
+    }
+    
+    .auth-form-group input[type="text"],
+    .auth-form-group input[type="password"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-color: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #e2e8f0;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 12px 16px;
+      width: 100%;
+      box-sizing: border-box;
+      pointer-events: auto;
+      user-select: text;
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      cursor: text;
+    }
+    
+    .auth-form-group input[type="text"]:focus,
+    .auth-form-group input[type="password"]:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.1);
+      background-color: rgba(255,255,255,0.05);
+    }
+    
+    .auth-btn {
+      width: 100%;
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .auth-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .auth-btn:hover::before {
+      left: 100%;
+    }
+    
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      background: #5b5bd6;
+    }
+    
+    .auth-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .auth-error {
+      background: rgba(244,63,94,0.1);
+      border: 1px solid rgba(244,63,94,0.2);
+      color: #f43f5e;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .auth-success {
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.2);
+      color: #10b981;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .auth-loading {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .auth-loading .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid #6366f1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .auth-demo {
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+    
+    .auth-demo h4 {
+      color: #6366f1;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .auth-demo p {
+      margin: 4px 0;
+      color: #94a3b8;
+    }
+    
+    .auth-demo strong {
+      color: #fff;
+    }
+    
+    .auth-footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+    
+    .user-info {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(15px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .user-info:hover {
+      background: rgba(0,0,0,0.8);
+      border-color: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+    }
+    
+    body.light .user-info {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(0,0,0,0.1);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    body.light .user-info:hover {
+      background: rgba(255,255,255,0.95);
+      border-color: rgba(0,0,0,0.2);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+    }
+    
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #a78bfa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+      border: 2px solid rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+    .user-avatar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(99,102,241,0.4);
+    }
+    
+    body.light .user-avatar {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+      border: 2px solid rgba(99,102,241,0.3);
+    }
+    
+    body.light .user-avatar:hover {
+      box-shadow: 0 4px 12px rgba(99,102,241,0.4);
+      border-color: rgba(99,102,241,0.5);
+    }
+    
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .user-details h3 {
+      font-size: 13px;
+      margin: 0;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.2;
+    }
+    
+    .user-details p {
+      font-size: 11px;
+      color: #94a3b8;
+      margin: 0;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    
+    body.light .user-details h3 {
+      color: #1e293b;
+      font-weight: 700;
+      text-shadow: none;
+    }
+    
+    body.light .user-details p {
+      color: #64748b;
+      font-weight: 600;
+    }
+    
+    .logout-btn {
+      background: linear-gradient(135deg, #f43f5e, #dc2626);
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(244,63,94,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      min-width: 28px;
+    }
+    
+    .logout-btn:hover {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 4px 12px rgba(244,63,94,0.4);
+    }
+    
+    .logout-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+    
+    body.light .logout-btn {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      color: white;
+      box-shadow: 0 2px 6px rgba(220,38,38,0.3);
+    }
+    
+    body.light .logout-btn:hover {
+      background: linear-gradient(135deg, #b91c1c, #991b1b);
+      box-shadow: 0 4px 12px rgba(220,38,38,0.4);
+    }
+    
+    @media (max-width: 768px) {
+      .user-info {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        gap: 8px;
+      }
+      
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+      }
+      
+      .user-details h3 {
+        font-size: 12px;
+      }
+      
+      .user-details p {
+        font-size: 10px;
+      }
+      
+      .logout-btn {
+        padding: 6px;
+        font-size: 10px;
+        min-height: 24px;
+        min-width: 24px;
+      }
+    }
+    
+    .permission-restricted {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    
+    #authUsername, #authPassword {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      background-color: rgba(255,255,255,0.08) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      color: #e2e8f0 !important;
+      font-family: inherit !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      padding: 12px 16px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      pointer-events: auto !important;
+      user-select: text !important;
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      cursor: text !important;
+      z-index: 10 !important;
+      position: relative !important;
+      opacity: 1 !important;
+      display: block !important;
+      visibility: visible !important;
+    }
+    
+    #authUsername:focus, #authPassword:focus {
+      outline: none !important;
+      border-color: #6366f1 !important;
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.1) !important;
+      background-color: rgba(255,255,255,0.05) !important;
+    }
+    
+    #authUsername:hover, #authPassword:hover {
+      border-color: rgba(255,255,255,0.3) !important;
+    }
+    
+    .auth-form-group input[type="text"]:not(:disabled),
+    .auth-form-group input[type="password"]:not(:disabled) {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      background-color: rgba(255,255,255,0.08) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      color: #e2e8f0 !important;
+      font-family: inherit !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      padding: 12px 16px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      pointer-events: auto !important;
+      user-select: text !important;
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      cursor: text !important;
+      z-index: 10 !important;
+      position: relative !important;
+      opacity: 1 !important;
+      display: block !important;
+      visibility: visible !important;
+      -webkit-touch-callout: text !important;
+      -webkit-tap-highlight-color: rgba(99,102,241,0.2) !important;
+    }
+    
+    .auth-form-group input[type="text"]:not(:disabled):focus,
+    .auth-form-group input[type="password"]:not(:disabled):focus {
+      outline: none !important;
+      border-color: #6366f1 !important;
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.1) !important;
+      background-color: rgba(255,255,255,0.05) !important;
+    }
+    
+    .auth-form-group input[type="text"]:not(:disabled):hover,
+    .auth-form-group input[type="password"]:not(:disabled):hover {
+      border-color: rgba(255,255,255,0.3) !important;
+    }
+    
+    @media (max-width: 480px) {
+      .auth-container {
+        padding: 30px 20px;
+      }
+      
+      .auth-logo h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="authOverlay" class="auth-overlay">
+    <div class="auth-container">
+      <div class="auth-logo">
+        <h1>قسم العمليات التجارية </h1>
+        <p> متابعة نمو الوكلاء</p>
+      </div>
+
+      <div id="authError" class="auth-error"></div>
+      <div id="authSuccess" class="auth-success"></div>
+
+  
+
+      <form id="authForm">
+        <div class="auth-form-group">
+          <label for="authUsername">اسم المستخدم</label>
+          <input type="text" id="authUsername" name="username" placeholder="أدخل اسم المستخدم" required autocomplete="username" spellcheck="false">
+        </div>
+
+        <div class="auth-form-group">
+          <label for="authPassword">كلمة المرور</label>
+          <input type="password" id="authPassword" name="password" placeholder="أدخل كلمة المرور" required autocomplete="current-password" spellcheck="false">
+        </div>
+
+        <button type="submit" class="auth-btn" id="authLoginBtn">
+          تسجيل الدخول
+        </button>
+      </form>
+
+      <div id="authLoading" class="auth-loading">
+        <div class="spinner"></div>
+        <p>جاري تسجيل الدخول...</p>
+      </div>
+
+      <div class="auth-footer">
+        <p>© 2025 عراق سيل   </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="header-left">
+        <div class="header-content">
+          <h1>متابعة الوكلاء</h1>
+          <p class="lead">قسم العمليات التجارية لشركة عراق سيل</p>
+          <div id="connectionStatus" style="font-size: 12px; margin-top: 4px; padding: 2px 6px; border-radius: 4px; display: inline-block;">
+            <span id="statusIcon">🔄</span>
+            <span id="statusText">جاري الاتصال...</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="controls">
+        <div class="controls-group">
+          <button class="btn secondary" id="btnAddAgent">
+            <span class="icon">➕</span>
+            إضافة وكيل
+          </button>
+          <button class="btn warn" id="btnWeeklyReport">
+            <span class="icon">📊</span>
+            تقرير
+          </button>
+          <button class="btn secondary" id="btnTheme">
+            <span class="icon">🌙</span>
+            الوضع: ليلي
+          </button>
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <button class="btn secondary" id="btnUserManagement" style="display: none;">
+          <span class="icon">👥</span>
+           المستخدمين
+        </button>
+        <div class="user-info" id="userInfo" style="display: none;">
+          <div class="user-avatar" id="userAvatar">A</div>
+          <div class="user-details">
+            <h3 id="userName">مدير النظام</h3>
+            <p id="userRole">مدير</p>
+          </div>
+          <button class="logout-btn" id="logoutBtn">
+            <span class="icon">⏻</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="row" style="align-items:center;">
+        <div class="col">
+          <div class="filters">
+            <select id="phaseFilter" class="search">
+              <option value="">🔍 كل المراحل</option>
+              <option value="OLD"> المشروع القديم</option>
+              <option value="PHASE2"> المرحلة الثانية</option>
+              <option value="PHASE3"> المرحلة الثالثة</option>
+            </select>
+            <input id="searchBox" class="search" placeholder="🔍 بحث عن وكيل..." />
+            <select id="sortBy" class="search">
+              <option value="name"> ترتيب حسب الاسم</option>
+              <option value="total_users_desc">📊 أعلى إجمالي</option>
+              <option value="active_desc"> أعلى نشط</option>
+              <option value="deficit_desc"> أعلى عجز</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="min-width:320px;">
+          <div class="stats">
+            <div class="stat card">
+              <h3 id="totalAgents">0</h3>
+              <p>👥 الوكلاء</p>
+            </div>
+            <div class="stat card">
+              <h3 id="totalUsers">0</h3>
+              <p>📊 إجمالي المستخدمين</p>
+            </div>
+            <div class="stat card">
+              <h3 id="totalActive">0</h3>
+              <p> المستخدمون النشطون</p>
+            </div>
+            <div class="stat card">
+              <h3 id="overallActivation">0%</h3>
+              <p>📈 معدل النمو العام</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div style="overflow:auto;">
+        <table id="agentsTable">
+          <thead>
+            <tr>
+              <th>الوكيل</th>
+              <th>تاريخ العقد</th>
+              <th>التاريخ</th>
+              <th>FDT</th>
+              <th> اللوحة</th>
+              <th>إجمالي المستخدمين</th>
+              <th>النشط الحالي</th>
+              <th>النمو الأسبوعي</th>
+              <th>معدل التفعيل</th>
+              <th>النسبة المطلوبة</th>
+              <th>المطلوب للوصول</th>
+              <th>نسبة العجز</th>
+              <th>عجز المستخدمين</th>
+              <th>الحالة</th>
+              <th>إجراءات</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="small"</div>
+    </footer>
+  </div>
+
+  <div id="modalEdit" class="modal">
+    <div class="box">
+      <h3 id="modalTitle">تحديث المستخدمين النشطين</h3>
+      <div>
+        <label>اسم الوكيل</label>
+        <input type="text" id="editName" readonly />
+      </div>
+      <div>
+        <label>إجمالي المستخدمين</label>
+        <input type="number" id="editTotal" readonly />
+      </div>
+      <div>
+        <label>النشط الحالي </label>
+        <input type="number" id="editActive" />
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="closeModal">
+          <span class="icon">❌</span>
+          إلغاء
+        </button>
+        <button class="btn" id="saveActive">
+          <span class="icon">💾</span>
+          حفظ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalEditInfo" class="modal">
+    <div class="box">
+      <h3>تعديل معلومات الوكيل</h3>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:200px;">
+          <label>اسم الوكيل</label>
+          <input type="text" id="info_name" />
+        </div>
+        <div style="flex:1; min-width:200px;">
+          <label>ITPC Site </label>
+          <input type="text" id="info_note" />
+        </div>
+        <div style="flex:1; min-width:200px;">
+          <label> اللوحة</label>
+          <input type="text" id="info_board" />
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:160px;">
+          <label>تاريخ العقد</label>
+          <input type="date" id="info_date" />
+        </div>
+        <div style="flex:1; min-width:160px;">
+          <label>المرحلة</label>
+          <select id="info_phase">
+            <option value="OLD">OLD</option>
+            <option value="PHASE2">PHASE2</option>
+            <option value="PHASE3">PHASE3</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:200px;">
+          <label>ITPC Site</label>
+          <input type="text" id="info_site" />
+        </div>
+        <div style="flex:1; min-width:200px;">
+          <label>FDT</label>
+          <input type="text" id="info_fdt" />
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:160px;">
+          <label>إجمالي المستخدمين</label>
+          <input type="number" id="info_total" />
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="closeInfoModal">
+          <span class="icon">❌</span>
+          إلغاء
+        </button>
+        <button class="btn warn" id="deleteFromInfoModal">
+          <span class="icon">🗑️</span>
+          حذف
+        </button>
+        <button class="btn" id="saveInfo">
+          <span class="icon">💾</span>
+          حفظ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalAdd" class="modal">
+    <div class="box">
+      <h3>إضافة وكيل</h3>
+      <div>
+        <label>اسم الوكيل</label>
+        <input type="text" id="new_name" />
+      </div>
+      <div style="display:flex; gap:8px;">
+        <div style="flex:1;">
+          <label>تاريخ العقد </label>
+          <input type="date" id="new_date" />
+        </div>
+        <div style="flex:1;">
+          <label>المرحلة</label>
+          <select id="new_phase">
+            <option value="OLD">OLD</option>
+            <option value="PHASE2">PHASE2</option>
+            <option value="PHASE3">PHASE3</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label>ITPC Site</label>
+        <input type="text" id="new_site" />
+      </div>
+      <div>
+        <label>FDT</label>
+        <input type="text" id="new_fdt" />
+      </div>
+      <div>
+        <label> اللوحة</label>
+        <input type="text" id="new_board" />
+      </div>
+      <div>
+        <label>ملاحظة أسفل الاسم </label>
+        <input type="text" id="new_note" placeholder="" />
+      </div>
+      <div style="display:flex; gap:8px;">
+        <div style="flex:1;">
+          <label>إجمالي المستخدمين</label>
+          <input type="number" id="new_total" />
+        </div>
+        <div style="flex:1;">
+          <label>المستخدمون النشطون</label>
+          <input type="number" id="new_active" />
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn secondary" id="closeAddModal">
+          <span class="icon">❌</span>
+          إلغاء
+        </button>
+        <button class="btn" id="saveNewAgent">
+          <span class="icon">➕</span>
+          إضافة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class AuthSystem {
+      constructor() {
+        this.currentUser = null;
+        this.permissions = {
+          admin: ['view', 'add', 'edit', 'delete', 'manage_users', 'export', 'reports'],
+          supervisor: ['view', 'add', 'edit', 'export', 'reports'],
+          viewer: ['view', 'export']
+        };
+        this.init();
+      }
+
+      init() {
+        this.loadCurrentUser();
+        this.checkAuthentication();
+        this.setupEventListeners();
+      }
+
+      loadCurrentUser() {
+        const session = localStorage.getItem('userSession');
+        if (session) {
+          try {
+            this.currentUser = JSON.parse(session);
+            const loginTime = new Date(this.currentUser.loginTime);
+            const now = new Date();
+            const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
+            
+            if (hoursDiff >= 24) {
+              this.logout();
+              return;
+            }
+            this.hideAuthOverlay();
+            this.updateUI();
+          } catch (error) {
+            this.logout();
+          }
+        }
+      }
+
+      checkAuthentication() {
+        if (!this.currentUser) {
+          this.showAuthOverlay();
+          return false;
+        }
+        return true;
+      }
+
+      hasPermission(permission) {
+        if (!this.currentUser) {
+          return false;
+        }
+        const result = this.permissions[this.currentUser.role]?.includes(permission) || false;
+        return result;
+      }
+
+      canView() { return this.hasPermission('view'); }
+      canAdd() { return this.hasPermission('add'); }
+      canEdit() { 
+        const result = this.hasPermission('edit');
+        return result;
+      }
+      canDelete() { return this.hasPermission('delete'); }
+      canManageUsers() { return this.hasPermission('manage_users'); }
+      canExport() { return this.hasPermission('export'); }
+      canGenerateReports() { return this.hasPermission('reports'); }
+
+      getCurrentUser() { return this.currentUser; }
+      getUserRole() { return this.currentUser?.role || 'viewer'; }
+      getUserName() { return this.currentUser?.name || 'مستخدم'; }
+
+      getRoleName(role) {
+        const roles = {
+          'admin': 'مدير',
+          'supervisor': 'مشرف',
+          'viewer': 'مشاهد'
+        };
+        return roles[role] || role;
+      }
+
+      showAuthOverlay() {
+        document.getElementById('authOverlay').style.display = 'flex';
+        document.querySelector('.container').style.display = 'none';
+      }
+
+      hideAuthOverlay() {
+        document.getElementById('authOverlay').style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+      }
+
+      showError(message) {
+        const errorEl = document.getElementById('authError');
+        errorEl.textContent = message;
+        errorEl.style.display = 'block';
+        document.getElementById('authSuccess').style.display = 'none';
+      }
+
+      showSuccess(message) {
+        const successEl = document.getElementById('authSuccess');
+        successEl.textContent = message;
+        successEl.style.display = 'block';
+        document.getElementById('authError').style.display = 'none';
+      }
+
+      hideMessages() {
+        document.getElementById('authError').style.display = 'none';
+        document.getElementById('authSuccess').style.display = 'none';
+      }
+
+      showLoading() {
+        document.getElementById('authLoading').style.display = 'block';
+        document.getElementById('authLoginBtn').disabled = true;
+        document.getElementById('authLoginBtn').textContent = 'جاري تسجيل الدخول...';
+      }
+
+      hideLoading() {
+        document.getElementById('authLoading').style.display = 'none';
+        document.getElementById('authLoginBtn').disabled = false;
+        document.getElementById('authLoginBtn').textContent = 'تسجيل الدخول';
+      }
+
+      async validateUser(username, password) {
+        try {
+          const supabase = getSupabaseClient();
+          if (supabase) {
+            const { data, error } = await supabase
+              .from('users')
+              .select('*')
+              .eq('username', username)
+              .eq('password_hash', password)
+              .eq('status', 'active')
+              .single();
+
+            if (error) {
+              console.error('Database validation error:', error);
+              return this.validateUserFromLocalStorage(username, password);
+            }
+
+            if (data) {
+              return {
+                success: true,
+                user: {
+                  id: data.id,
+                  username: data.username,
+                  role: data.role,
+                  name: data.full_name || data.username
+                }
+              };
+            }
+          }
+
+          return this.validateUserFromLocalStorage(username, password);
+        } catch (error) {
+          console.error('User validation error:', error);
+          return this.validateUserFromLocalStorage(username, password);
+        }
+      }
+
+      validateUserFromLocalStorage(username, password) {
+        try {
+          const savedUsers = localStorage.getItem('systemUsers');
+          if (savedUsers) {
+            const users = JSON.parse(savedUsers);
+            const user = users.find(u => 
+              u.username === username && 
+              u.password_hash === password && 
+              u.status === 'active'
+            );
+            
+            if (user) {
+              return {
+                success: true,
+                user: {
+                  id: user.id,
+                  username: user.username,
+                  role: user.role,
+                  name: user.full_name || user.username
+                }
+              };
+            }
+          }
+
+          
+
+          const user = demoUsers[username];
+          if (user && user.password === password) {
+            return {
+              success: true,
+              user: {
+                id: username,
+                username: username,
+                role: user.role,
+                name: user.name
+              }
+            };
+          }
+
+          return { success: false, message: 'اسم المستخدم أو كلمة المرور غير صحيحة' };
+        } catch (error) {
+          console.error('Local storage validation error:', error);
+          return { success: false, message: 'خطأ في التحقق من بيانات المستخدم' };
+        }
+      }
+
+      saveUserSession(user) {
+        const session = {
+          username: user.username,
+          role: user.role,
+          name: user.name,
+          loginTime: new Date().toISOString()
+        };
+        localStorage.setItem('userSession', JSON.stringify(session));
+      }
+
+      updateUI() {
+        if (!this.currentUser) {
+          
+          return;
+        }
+
+        
+
+        document.getElementById('userName').textContent = this.getUserName();
+        document.getElementById('userRole').textContent = this.getRoleName(this.getUserRole());
+        document.getElementById('userAvatar').textContent = this.getUserName().charAt(0);
+        document.getElementById('userInfo').style.display = 'flex';
+
+        this.updateElementVisibility();
+        
+        this.updateTableActionButtons();
+      }
+
+      updateTableActionButtons() {
+        const canEdit = this.canEdit();
+        const canDelete = this.canDelete();
+        
+        
+        
+        const editButtons = document.querySelectorAll('button[data-action="edit"]');
+        const editInfoButtons = document.querySelectorAll('button[data-action="edit-info"]');
+        const deleteButtons = document.querySelectorAll('button[data-action="delete"]');
+        
+        
+        
+        editButtons.forEach(btn => {
+          btn.style.display = canEdit ? 'inline-flex' : 'none';
+          
+        });
+        
+        editInfoButtons.forEach(btn => {
+          btn.style.display = canEdit ? 'inline-flex' : 'none';
+          
+        });
+        
+        deleteButtons.forEach(btn => {
+          btn.style.display = canDelete ? 'inline-flex' : 'none';
+          
+        });
+      }
+
+      updateElementVisibility() {
+        const addButton = document.getElementById('btnAddAgent');
+        if (addButton) {
+          addButton.style.display = this.canAdd() ? 'inline-flex' : 'none';
+        }
+
+        const exportButton = document.getElementById('btnWeeklyReport');
+        if (exportButton) {
+          exportButton.style.display = this.canExport() ? 'inline-flex' : 'none';
+        }
+
+        const userMgmtButton = document.getElementById('btnUserManagement');
+        if (userMgmtButton) {
+          userMgmtButton.style.display = this.canManageUsers() ? 'inline-flex' : 'none';
+        }
+
+        if (this.getUserRole() === 'viewer') {
+          const inputs = document.querySelectorAll('input, select, textarea');
+          inputs.forEach(input => {
+            input.disabled = true;
+          });
+        }
+      }
+
+      setupEventListeners() {
+        document.getElementById('authForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          this.handleLogin();
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+          this.logout();
+        });
+
+        document.getElementById('btnUserManagement').addEventListener('click', () => {
+          window.open('user_management_database.html', '_blank');
+        });
+
+        const usernameInput = document.getElementById('authUsername');
+        const passwordInput = document.getElementById('authPassword');
+        
+        if (usernameInput) {
+          usernameInput.addEventListener('focus', () => {
+            usernameInput.style.pointerEvents = 'auto';
+            usernameInput.style.userSelect = 'text';
+          });
+          
+          usernameInput.addEventListener('click', () => {
+            usernameInput.focus();
+          });
+        }
+        
+        if (passwordInput) {
+          passwordInput.addEventListener('focus', () => {
+            passwordInput.style.pointerEvents = 'auto';
+            passwordInput.style.userSelect = 'text';
+          });
+          
+          passwordInput.addEventListener('click', () => {
+            passwordInput.focus();
+          });
+        }
+      }
+
+      async handleLogin() {
+        this.hideMessages();
+
+        const username = document.getElementById('authUsername').value.trim();
+        const password = document.getElementById('authPassword').value;
+
+        if (!username || !password) {
+          this.showError('يرجى إدخال اسم المستخدم وكلمة المرور');
+          return;
+        }
+
+        this.showLoading();
+
+        try {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+          const validation = await this.validateUser(username, password);
+          
+          
+          if (validation.success) {
+            this.currentUser = validation.user;
+            
+            this.saveUserSession(validation.user);
+            
+            this.showSuccess(`مرحباً ${validation.user.name}! تم تسجيل الدخول بنجاح`);
+            
+            setTimeout(() => {
+              this.hideAuthOverlay();
+              this.updateUI();
+            }, 1500);
+          } else {
+            this.hideLoading();
+            this.showError(validation.message);
+          }
+        } catch (error) {
+          this.hideLoading();
+          this.showError('حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى');
+          console.error('Login error:', error);
+        }
+      }
+
+      logout() {
+        this.currentUser = null;
+        localStorage.removeItem('userSession');
+        this.showAuthOverlay();
+        document.getElementById('authForm').reset();
+        this.hideMessages();
+      }
+    }
+
+    const authSystem = new AuthSystem();
+    
+    function positionModal(modalElement) {
+      if (!modalElement) return;
+      
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const viewportHeight = window.innerHeight;
+      
+      modalElement.style.top = scrollTop + 'px';
+      modalElement.style.height = viewportHeight + 'px';
+      modalElement.style.display = 'flex';
+      modalElement.style.alignItems = 'flex-start';
+      modalElement.style.justifyContent = 'center';
+      modalElement.style.paddingTop = '100px';
+      
+      const modalBox = modalElement.querySelector('.box');
+      if (modalBox) {
+        modalBox.style.margin = '0 auto';
+        modalBox.style.position = 'relative';
+        modalBox.style.top = '0';
+        modalBox.style.left = '0';
+        modalBox.style.transform = 'none';
+      }
+    }
+    
+    function closeModal(modalElement) {
+      if (!modalElement) return;
+      modalElement.classList.remove('open');
+      modalElement.style.display = 'none';
+      modalElement.style.top = '0';
+      modalElement.style.height = '100vh';
+      modalElement.style.paddingTop = '20px';
+    }
+    
+    function ensureInputFieldsEditable() {
+      const usernameInput = document.getElementById('authUsername');
+      const passwordInput = document.getElementById('authPassword');
+      
+      if (usernameInput) {
+        usernameInput.style.pointerEvents = 'auto';
+        usernameInput.style.userSelect = 'text';
+        usernameInput.style.cursor = 'text';
+        usernameInput.removeAttribute('readonly');
+        usernameInput.removeAttribute('disabled');
+        usernameInput.setAttribute('autocomplete', 'username');
+        usernameInput.setAttribute('spellcheck', 'false');
+        usernameInput.style.opacity = '1';
+        usernameInput.style.zIndex = '10';
+        usernameInput.style.position = 'relative';
+        
+        usernameInput.addEventListener('click', function() {
+          this.focus();
+        });
+        
+        usernameInput.addEventListener('focus', function() {
+          this.style.pointerEvents = 'auto';
+          this.style.userSelect = 'text';
+        });
+      }
+      
+      if (passwordInput) {
+        passwordInput.style.pointerEvents = 'auto';
+        passwordInput.style.userSelect = 'text';
+        passwordInput.style.cursor = 'text';
+        passwordInput.removeAttribute('readonly');
+        passwordInput.removeAttribute('disabled');
+        passwordInput.setAttribute('autocomplete', 'current-password');
+        passwordInput.setAttribute('spellcheck', 'false');
+        passwordInput.style.opacity = '1';
+        passwordInput.style.zIndex = '10';
+        passwordInput.style.position = 'relative';
+        
+        passwordInput.addEventListener('click', function() {
+          this.focus();
+        });
+        
+        passwordInput.addEventListener('focus', function() {
+          this.style.pointerEvents = 'auto';
+          this.style.userSelect = 'text';
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', ensureInputFieldsEditable);
+    
+    setTimeout(ensureInputFieldsEditable, 100);
+    
+    setTimeout(ensureInputFieldsEditable, 1000);
+    
+    window.addEventListener('load', ensureInputFieldsEditable);
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', ensureInputFieldsEditable);
+    } else {
+      ensureInputFieldsEditable();
+    }
+    
+    document.addEventListener('click', function(e) {
+      if (e.target.id === 'authUsername' || e.target.id === 'authPassword') {
+        setTimeout(ensureInputFieldsEditable, 10);
+      }
+    });
+    
+    window.addEventListener('resize', function() {
+      const openModals = document.querySelectorAll('.modal.open');
+      openModals.forEach(modal => {
+        positionModal(modal);
+      });
+    });
+    
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const openModals = document.querySelectorAll('.modal.open');
+        openModals.forEach(modal => {
+          closeModal(modal);
+        });
+      }
+    });
+
+    const SUPABASE_URL = 'https://vpvvjascwgivdjyyhzwp.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
+    
+    const SupabaseManager = {
+      _instance: null,
+      _isInitialized: false,
+      connectionStatus: 'disconnected',
+      _creationAttempts: 0,
+      _maxAttempts: 3,
+      
+      getInstance() {
+        if (this._instance) {
+          return this._instance;
+        }
+        
+        if (this._creationAttempts >= this._maxAttempts) {
+          console.warn('Max creation attempts reached, not creating new instance');
+          return null;
+        }
+        
+        if (!this._isInitialized) {
+          this._isInitialized = true;
+          this._creationAttempts++;
+          
+          try {
+            console.log(`Creating Supabase client (Singleton) - Attempt ${this._creationAttempts}...`);
+            this._instance = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+              auth: {
+                persistSession: false,
+                autoRefreshToken: false,
+                detectSessionInUrl: false
+              }
+            });
+            
+          } catch (e) {
+            console.error('Failed to create Supabase client:', e);
+            this._isInitialized = false;
+            return null;
+          }
+        }
+        return this._instance;
+      },
+      
+      reset() {
+        
+        this.connectionStatus = 'disconnected';
+        this._creationAttempts = 0;
+        this._isInitialized = false;
+      },
+      
+      isConnected() {
+        return this._instance !== null && this.connectionStatus === 'connected';
+      },
+      
+      hasInstance() {
+        return this._instance !== null;
+      }
+    };
+    
+    function getSupabaseClient() {
+      return SupabaseManager.getInstance();
+    }
+    
+    function reinitializeSupabase() {
+      try {
+        
+        
+        if (SupabaseManager.hasInstance()) {
+          
+          SupabaseManager.connectionStatus = 'disconnected';
+          return true;
+        }
+        
+        SupabaseManager.reset();
+        const client = getSupabaseClient();
+        if (client) {
+          
+          return true;
+        } else {
+          console.error('Failed to reinitialize Supabase client');
+          return false;
+        }
+      } catch (e) {
+        console.error('Failed to reinitialize Supabase client:', e);
+        return false;
+      }
+    }
+   
+    const STORAGE_KEY = 'agents_dashboard_data_v1';
+
+    function updateConnectionStatus(status) {
+      const statusEl = document.getElementById('connectionStatus');
+      const iconEl = document.getElementById('statusIcon');
+      const textEl = document.getElementById('statusText');
+      
+      if (!statusEl || !iconEl || !textEl) return;
+      
+    
+      statusEl.className = '';
+      
+      switch(status) {
+        case 'connected':
+          statusEl.classList.add('connected');
+          iconEl.textContent = '';
+          textEl.textContent = 'Ameer Helwas';
+          break;
+        case 'error':
+          statusEl.classList.add('error');
+          iconEl.textContent = '❌';
+          textEl.textContent = 'فشل الاتصال';
+          break;
+        case 'connecting':
+          statusEl.classList.add('connecting');
+          iconEl.textContent = '🔄';
+          textEl.textContent = 'جاري الاتصال...';
+          break;
+        default:
+          statusEl.classList.add('connecting');
+          iconEl.textContent = '🔄';
+          textEl.textContent = 'جاري الاتصال...';
+      }
+    }
+
+
+    function validateAgentData(agent) {
+      const errors = [];
+      
+      if (!agent.name || agent.name.trim() === '') {
+        errors.push('اسم الوكيل مطلوب');
+      }
+      
+      if (!agent.contract_date) {
+        errors.push('تاريخ العقد مطلوب');
+      }
+      
+      if (!agent.phase || !['PHASE1', 'PHASE2', 'PHASE3', 'OLD'].includes(agent.phase)) {
+        errors.push('المرحلة يجب أن تكون PHASE1, PHASE2, PHASE3, أو OLD');
+      }
+      
+      if (typeof agent.total_users !== 'number' || agent.total_users < 0) {
+        errors.push('إجمالي المستخدمين يجب أن يكون رقم موجب');
+      }
+      
+      if (typeof agent.active !== 'number' || agent.active < 0) {
+        errors.push('المستخدمون النشطون يجب أن يكون رقم موجب');
+      }
+      
+      if (typeof agent.prev_active !== 'number' || agent.prev_active < 0) {
+        errors.push('المستخدمون النشطون السابقون يجب أن يكون رقم موجب');
+      }
+      
+      return {
+        isValid: errors.length === 0,
+        errors: errors
+      };
+    }
+
+    async function testSupabaseConnection() {
+      try {
+        
+        updateConnectionStatus('connecting');
+        
+        console.log('Supabase Key (first 20 chars):', SUPABASE_ANON_KEY.substring(0, 20) + '...');
+        
+        
+        const supabase = getSupabaseClient();
+        if (!supabase) {5
+          console.error('Failed to get Supabase client');
+          updateConnectionStatus('error');
+          return false;
+        }
+        
+        const { data, error } = await supabase
+          .from('agents')
+          .select('id, name, active, total_users, board_name') 
+          .limit(1);
+          
+        if (error) {
+          console.error('Supabase connection test failed:', error);
+          console.error('Error code:', error.code);
+          console.error('Error message:', error.message);
+          console.error('Error details:', error.details);
+          console.error('Error hint:', error.hint);
+          
+          if (error.message && error.message.includes('board_name')) {
+            console.warn('board_name column not found, trying without it...');
+            const { data: retryData, error: retryError } = await supabase
+              .from('agents')
+              .select('id, name, active, total_users')
+              .limit(1);
+              
+            if (retryError) {
+              console.error('Retry also failed:', retryError);
+              SupabaseManager.connectionStatus = 'error';
+              updateConnectionStatus('error');
+              return false;
+            } else {
+              
+              SupabaseManager.connectionStatus = 'connected';
+              updateConnectionStatus('connected');
+              return true;
+            }
+          }
+          
+          console.error('Note: Make sure the database has the required columns: name, note, contract_date, phase, fdt, total_users, active, prev_active');
+          SupabaseManager.connectionStatus = 'error';
+          updateConnectionStatus('error');
+          return false;
+        } else {
+          
+          
+          if (data && data.length > 0) {
+            
+            console.log('Available columns:', Object.keys(data[0]));
+          }
+          SupabaseManager.connectionStatus = 'connected';
+          updateConnectionStatus('connected');
+          return true;
+        }
+      } catch (e) {
+        console.error('Supabase connection test error:', e);
+        console.error('Error type:', e.name);
+        console.error('Error message:', e.message);
+        console.error('Error stack:', e.stack);
+        SupabaseManager.connectionStatus = 'error';
+        updateConnectionStatus('error');
+        return false;
+      }
+    }
+
+    const tbody = document.querySelector('#agentsTable tbody');
+    const totalAgentsEl = document.getElementById('totalAgents');
+    const totalUsersEl = document.getElementById('totalUsers');
+    const totalActiveEl = document.getElementById('totalActive');
+    const overallActEl = document.getElementById('overallActivation');
+    const phaseFilter = document.getElementById('phaseFilter');
+    const searchBox = document.getElementById('searchBox');
+    const sortBy = document.getElementById('sortBy');
+    const btnExportCSV = document.getElementById('btnExportCSV');
+    const btnAddAgent = document.getElementById('btnAddAgent');
+    const btnTheme = document.getElementById('btnTheme');
+
+    const modalEdit = document.getElementById('modalEdit');
+    const editName = document.getElementById('editName');
+    const editTotal = document.getElementById('editTotal');
+    const editActive = document.getElementById('editActive');
+    const saveActiveBtn = document.getElementById('saveActive');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    const modalAdd = document.getElementById('modalAdd');
+    const closeAddModal = document.getElementById('closeAddModal');
+    const saveNewAgent = document.getElementById('saveNewAgent');
+    const modalEditInfo = document.getElementById('modalEditInfo');
+    const closeInfoModal = document.getElementById('closeInfoModal');
+    const saveInfo = document.getElementById('saveInfo');
+
+    let barChart=null, pieChart=null;
+
+    let agents = [];
+    let dbIdByLocalId = new Map();
+    let localIdByDbId = new Map();
+
+    function migrateData(){
+      let changed = false;
+      agents.forEach(a=>{
+        const norm = normalizePhase(a.phase);
+        if(a.phase !== norm){ a.phase = norm; changed = true; }
+        if((a.name||'').trim() === 'abbas عباس حلواص' && a.phase !== 'PHASE1'){
+          a.phase = 'PHASE1';
+          changed = true;
+        }
+      });
+      if(changed){ saveToStorage(); }
+    }
+
+
+    function parseDateAuto(s){
+      if(!s) return null;
+      if(s instanceof Date) return s;
+      if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return new Date(s + 'T00:00:00');
+      if(/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)){
+        const parts = s.split('/');
+        return new Date(+parts[2], +parts[1]-1, +parts[0]);
+      }
+      const d = new Date(s);
+      return isNaN(d) ? null : d;
+    }
+
+    function monthsBetween(d1, d2){
+      const y1=d1.getFullYear(), m1=d1.getMonth();
+      const y2=d2.getFullYear(), m2=d2.getMonth();
+      return Math.max(0, (y2 - y1)*12 + (m2 - m1));
+    }
+
+    function normalizePhase(value){
+      const s = String(value||'').trim().toLowerCase();
+      if(!s) return '';
+      if(s.includes('phase2') || s.includes('phase 2') || s.includes('phase-2') || s.includes('المرحلة') && s.includes('2')) return 'PHASE2';
+      if(s.includes('phase3') || s.includes('phase 3') || s.includes('phase-3') || (s.includes('المرحلة') && s.includes('3'))) return 'PHASE3';
+      if(s.includes('old') || s.includes('قديم') || s.includes('المشروع القديم')) return 'OLD';
+      if(s.includes('phase1') || s.includes('phase 1') || s.includes('phase-1') || s.includes('المشروع الجديد')) return 'PHASE1';
+      const up = s.toUpperCase();
+      if(['PHASE1','PHASE2','PHASE3','OLD'].includes(up)) return up;
+      return '';
+    }
+
+    function arabicPhaseLabel(phase){
+      switch(String(phase||'').toUpperCase()){
+        case 'PHASE1': return ' المرحلة الثانية ';
+        case 'PHASE2': return ' المرحلة الثانية ';
+        case 'PHASE3': return 'المرحلة الثالثة';
+        case 'OLD': return 'المشروع القديم';
+        default: return '';
+      }
+    }
+
+    function toYMDLocal(d){
+      const y=d.getFullYear();
+      const m=String(d.getMonth()+1).padStart(2,'0');
+      const day=String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function genId(){
+      return 'a_' + Math.random().toString(36).slice(2,8) + Date.now().toString(36).slice(-4);
+    }
+
+    function computeAgent(agent){
+      if(!agent._id) agent._id = genId();
+      const now = new Date();
+      const contract = parseDateAuto(agent.contract_date) || now;
+      const months = monthsBetween(contract, now);
+      agent.contract_date = toYMDLocal(contract); 
+      agent.months_since = months;
+      agent.phase = normalizePhase(agent.phase);
+      let required = months >= 8 ? 80 : 60;
+      agent.required_rate = required;
+
+      agent.total_users = Number(agent.total_users) || 0;
+      agent.active = Number(agent.active) || 0;
+
+      agent.growth = Math.round(agent.active - Number(agent.prev_active||0));
+      agent.activation_rate = agent.total_users ? +( (agent.active / agent.total_users) * 100 ) : 0;
+      agent.activation_rate = Math.round(agent.activation_rate*10)/10;
+      if(required !== null){
+        const rawDeficit = required - agent.activation_rate;
+        agent.deficit_percent = Math.max(0, Math.round(rawDeficit*10)/10);
+        const neededUsers = Math.round((required/100) * agent.total_users);
+        agent.required_users = neededUsers;
+        agent.deficit_users = Math.max(0, neededUsers - agent.active);
+      } else {
+        agent.deficit_percent = 0;
+        agent.required_users = 0;
+        agent.deficit_users = 0;
+      }
+
+      if(months < 6) agent.status='جديد';
+      else if(agent.activation_rate >= required + 5) agent.status='متفوق';
+      else if(agent.activation_rate >= required) agent.status='مطابق';
+      else agent.status='عجز';
+
+      return agent;
+    }
+
+    function renderTable(){
+      let filtered = agents.slice();
+      
+      
+
+      const phase = phaseFilter.value;
+      if(phase) {
+        filtered = filtered.filter(a => (a.phase || '').toUpperCase() === phase.toUpperCase());
+        
+      }
+
+      const q = (searchBox.value || '').trim().toLowerCase();
+      if(q){
+        filtered = filtered.filter(a => ((a.name||'') + ' ' + (a.itpc_site||'') + ' ' + arabicPhaseLabel(a.phase)).toLowerCase().includes(q));
+        
+      }
+
+      const sort = sortBy.value;
+      if(sort === 'total_users_desc') filtered.sort((a,b)=>b.total_users - a.total_users);
+      else if(sort === 'active_desc') filtered.sort((a,b)=> b.active - a.active );
+      else if(sort === 'deficit_desc') filtered.sort((a,b)=>b.deficit_users - a.deficit_users);
+      else filtered.sort((a,b)=> (a.name||'').localeCompare(b.name || '', 'ar') );
+
+      while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
+      }
+      const PHASE_ORDER = ['OLD','PHASE2','PHASE3'];
+      const phaseToItems = {};
+      filtered.forEach((a)=>{
+        const key = (a.phase||'').toUpperCase();
+        if(!phaseToItems[key]) phaseToItems[key] = [];
+        phaseToItems[key].push(a);
+      });
+      
+      
+      
+      const allPhases = PHASE_ORDER.filter(p=>phaseToItems[p] && phaseToItems[p].length>0);
+      
+      let runningIndex = 0;
+      allPhases.forEach(phaseKey=>{
+        const items = phaseToItems[phaseKey];
+        
+        const hdr = document.createElement('tr');
+        hdr.className = 'phase-header';
+        hdr.innerHTML = `<td colspan="14" style="text-align:right; font-weight:700; background:rgba(99,102,241,0.15); font-size:12px; padding:12px; border-bottom:1px solid rgba(99,102,241,0.3); color:#6366f1;">${arabicPhaseLabel(phaseKey)}</td>`;
+        tbody.appendChild(hdr);
+
+        items.forEach((a)=>{
+          const idx = runningIndex++;
+          
+        const tr = document.createElement('tr');
+        const todayStr = toYMDLocal(new Date());
+        tr.innerHTML = `
+          <td style="text-align:right; padding-right:8px; white-space:normal; word-wrap:break-word;">
+            <div style="line-height:1.1;">
+              <strong style="font-size:11px; display:block; word-break:break-word;">${escapeHtml(a.name||'---')}</strong>
+              <small style="font-size:8px; color:var(--muted); word-break:break-word;">${escapeHtml(a.note||'')}</small>
+            </div>
+          </td>
+          <td>${a.contract_date}</td>
+            <td>${todayStr}</td>
+            <td>${escapeHtml(a.fdt||'')}</td>
+          <td>${escapeHtml(a.board_name||'')}</td>
+          <td style="font-weight:600;">${num(a.total_users)}</td>
+          <td style="font-weight:600;">${num(a.active)}</td>
+          <td style="font-weight:700; color: ${(a.growth||0) > 0 ? '#10b981' : (a.growth||0) < 0 ? '#ef4444' : 'inherit'};">${signedNum(a.growth||0)}</td>
+          <td style="font-weight:600;">${a.activation_rate}%</td>
+          <td style="font-weight:600;">${a.required_rate === null ? '-' : a.required_rate + '%'}</td>
+            <td style="font-weight:600;">${a.required_rate === null ? '-' : num(a.required_users)}</td>
+          <td style="${a.required_rate === null ? 'font-weight:600;' : getDeficitColor(a.deficit_percent, a.required_rate)}">${a.required_rate === null ? '-' : a.deficit_percent + '%'}</td>
+          <td style="${a.deficit_users ? getDeficitUsersColor(a.deficit_users, a.total_users) : 'font-weight:600;'}">${a.deficit_users ? num(a.deficit_users) : '-'}</td>
+          <td>${statusBadge(a.status)}</td>
+          <td>
+              <div class="flex" style="justify-content:center; gap:8px; flex-wrap:wrap;">
+                <button class="btn secondary small" data-action="edit" data-id="${a._id}" style="display: ${(typeof authSystem !== 'undefined' && authSystem.canEdit()) ? 'inline-flex' : 'none'};">
+                  <span class="icon">🔄</span>
+                  تحديث
+                </button>
+                <button class="btn small" data-action="edit-info" data-id="${a._id}" style="display: ${(typeof authSystem !== 'undefined' && authSystem.canEdit()) ? 'inline-flex' : 'none'};">
+                  <span class="icon">✏️</span>
+                  تعديل
+                </button>
+              </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+        });
+
+        const totals = items.reduce((acc, a)=>{
+          acc.total += Number(a.total_users||0);
+          acc.active += Number(a.active||0);
+          acc.deficit_users += Number(a.deficit_users||0);
+          return acc;
+        }, {total:0, active:0, deficit_users:0});
+        const sub = document.createElement('tr');
+        sub.className = 'subtotal-title';
+        sub.innerHTML = `
+          <td colspan="4" style="text-align:right; font-weight:600; font-size:10px; padding:8px;">مجموع ${escapeHtml(arabicPhaseLabel(phaseKey))}</td>
+          <td></td>
+          <td style="font-weight:600; font-size:10px; padding:8px;">${num(totals.total)}</td>
+          <td style="font-weight:600; font-size:10px; padding:8px;">${num(totals.active)}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td style="font-weight:600; font-size:10px; padding:8px; ${totals.deficit_users ? getDeficitUsersColor(totals.deficit_users, totals.total) : ''}">${totals.deficit_users ? num(totals.deficit_users) : '-'}</td>
+          <td></td>
+          <td></td>
+        `;
+        tbody.appendChild(sub);
+      });
+
+      updateStats(filtered);
+      updateCharts(filtered);
+      
+      
+      
+      
+      if (typeof authSystem !== 'undefined') {
+        authSystem.updateElementVisibility();
+      }
+    }
+
+    function updateStats(list){
+      const totalAgents = list.length;
+      const totalUsers = list.reduce((s,a)=>s + Number(a.total_users||0), 0);
+      const totalActive = list.reduce((s,a)=>s + Number(a.active||0), 0);
+      const overallActivation = totalUsers ? Math.round((totalActive / totalUsers) * 1000)/10 : 0;
+      totalAgentsEl.textContent = num(totalAgents);
+      totalUsersEl.textContent = num(totalUsers);
+      totalActiveEl.textContent = num(totalActive);
+      overallActEl.textContent = overallActivation + '%';
+    }
+
+    function updateCharts(filtered){
+      const top = filtered.slice().sort((a,b)=>b.total_users - a.total_users).slice(0,10);
+      const labels = top.map(a=>a.name || a.itpc_site || '—');
+      const totalData = top.map(a=>a.total_users);
+      const activeData = top.map(a=>a.active);
+
+      const isLightMode = document.documentElement.classList.contains('light');
+      const textColor = isLightMode ? '#1e293b' : '#ffffff';
+      const gridColor = isLightMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+
+      const barCtx = document.getElementById('barChart').getContext('2d');
+      if(barChart) barChart.destroy();
+      barChart = new Chart(barCtx, {
+        type:'bar',
+        data:{
+          labels,
+          datasets:[
+            { label:'إجمالي المستخدمين', data: totalData },
+            { label:'المستخدمون النشطون', data: activeData }
+          ]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          plugins:{
+            legend:{
+              display:true, 
+              position:'top',
+              labels:{
+                color: textColor,
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                }
+              }
+            }
+          },
+          scales:{
+            x:{
+              ticks:{
+                color: textColor,
+                font: {
+                  size: 12,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                color: gridColor
+              }
+            }, 
+            y:{
+              beginAtZero:true, 
+              ticks:{
+                color: textColor,
+                font: {
+                  size: 12,
+                  weight: 'bold'
+                }
+              },
+              grid: {
+                color: gridColor
+              }
+            }
+          }
+        }
+      });
+
+      const sumActive = filtered.reduce((s,a)=>s + a.active,0);
+      const sumTotal = filtered.reduce((s,a)=>s + a.total_users,0);
+      const inactive = Math.max(0, sumTotal - sumActive);
+      const pieCtx = document.getElementById('pieChart').getContext('2d');
+      if(pieChart) pieChart.destroy();
+      pieChart = new Chart(pieCtx, {
+        type:'doughnut',
+        data:{
+          labels:['نشطون','غير نشطين'],
+          datasets:[{ data:[sumActive, inactive] }]
+        },
+        options:{
+          responsive:true, 
+          maintainAspectRatio:false, 
+          plugins:{
+            legend:{
+              position:'bottom',
+              labels:{
+                color: textColor,
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function num(n){ 
+      const formatted = new Intl.NumberFormat('en-US').format(Number(n||0));
+      return formatted;
+    }
+    function signedNum(n){ if(n>0) return '+'+num(n); if(n<0) return num(n); return num(0); }
+    function statusBadge(status){
+      if(status==='متفوق') return `<span class="badge good" style="font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
+      if(status==='مطابق') return `<span class="badge ok" style="font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
+      if(status==='عجز') return `<span class="badge fail" style="font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
+      if(status==='جديد') return `<span class="badge" style="background:rgba(245,158,11,0.2); color:#f59e0b; border:1px solid rgba(245,158,11,0.4); font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
+      return `<span class="badge" style="background:rgba(245,158,11,0.08); color:var(--warning); font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${status}</span>`;
+    }
+    
+    function getDeficitColor(deficitPercent, requiredRate) {
+      if (requiredRate === null || requiredRate === 0) return 'color: var(--text);';
+      
+      const deficitRatio = deficitPercent / requiredRate;
+      
+      if (deficitRatio < 0.2) {
+        return 'color: #10b981; font-weight: 700;';
+      }
+      else if (deficitRatio < 0.5) {
+        return 'color: #f59e0b; font-weight: 700;';
+      }
+      else {
+        return 'color: #ef4444; font-weight: 700;';
+      }
+    }
+    
+    function getDeficitUsersColor(deficitUsers, totalUsers) {
+      if (totalUsers === 0 || deficitUsers === 0) return 'color: var(--text);';
+      
+      const deficitRatio = deficitUsers / totalUsers;
+      
+      if (deficitRatio < 0.1) {
+        return 'color: #10b981; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+      else if (deficitRatio < 0.25) {
+        return 'color: #f59e0b; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+      else {
+        return 'color: #ef4444; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+    }
+    
+    function getDeficitUsersColorForReport(deficitUsers, totalUsers) {
+      if (totalUsers === 0 || deficitUsers === 0) return 'color: var(--text);';
+      
+      const deficitRatio = deficitUsers / totalUsers;
+      
+      if (deficitRatio < 0.05) {
+        return 'color: #10b981; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+      else if (deficitRatio < 0.15) {
+        return 'color: #f59e0b; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+      else {
+        return 'color: #ef4444; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.3);';
+      }
+    }
+    function escapeHtml(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    tbody.addEventListener('click', (ev)=>{
+      const btn = ev.target.closest('button[data-action="edit"]');
+      if(!btn) return;
+      const id = btn.dataset.id;
+      if(!id) return;
+      const idx = agents.findIndex(a=>a._id === id);
+      openEditModal(idx);
+    });
+
+    tbody.addEventListener('click', (ev)=>{
+      const btn = ev.target.closest('button[data-action="edit-info"]');
+      if(!btn) return;
+      const id = btn.dataset.id;
+      const idx = agents.findIndex(a=>a._id === id);
+      if(idx < 0) return;
+      const a = agents[idx];
+      modalEditInfo.classList.add('open');
+      document.getElementById('info_name').value = a.name || '';
+      document.getElementById('info_note').value = a.note || '';
+      document.getElementById('info_date').value = a.contract_date || '';
+      document.getElementById('info_phase').value = a.phase || '';
+      document.getElementById('info_site').value = a.itpc_site || '';
+      document.getElementById('info_fdt').value = a.fdt || '';
+      document.getElementById('info_total').value = a.total_users || 0;
+      const infoBoardEl = document.getElementById('info_board'); if(infoBoardEl) infoBoardEl.value = a.board_name || '';
+      modalEditInfo.dataset.editIndex = String(idx);
+      
+      setTimeout(() => positionModal(modalEditInfo), 10);
+    });
+
+    tbody.addEventListener('click', async (ev)=>{
+      const btn = ev.target.closest('button[data-action="delete"]');
+      if(!btn) return;
+      const id = btn.dataset.id;
+      const idx = agents.findIndex(a=>a._id === id);
+      if(idx < 0) return;
+      const a = agents[idx];
+      
+      if(!confirm(`هل تريد حذف الوكيل: ${a.name || ''} ؟`)) return;
+      
+      try{
+        const dbId = dbIdByLocalId.get(a._id);
+        if(dbId){
+          const supabase = getSupabaseClient();
+          if (supabase) {
+            const { error } = await supabase.from('agents').delete().eq('id', dbId);
+            if(error) console.error('Delete error:', error);
+          }
+          localIdByDbId.delete(dbId);
+          dbIdByLocalId.delete(a._id);
+        }
+      }catch(e){ 
+        console.error('Error deleting agent from database:', e);
+      }
+      
+      agents.splice(idx,1);
+      saveToStorage();
+      renderTable();
+      
+    });
+
+    closeInfoModal.addEventListener('click', ()=> closeModal(modalEditInfo));
+    saveInfo.addEventListener('click', async ()=>{
+      const idx = Number(modalEditInfo.dataset.editIndex || -1);
+      if(idx < 0) return;
+      const a = agents[idx];
+      
+      a.name = document.getElementById('info_name').value.trim() || a.name;
+      a.note = document.getElementById('info_note').value.trim();
+      a.contract_date = document.getElementById('info_date').value || a.contract_date;
+      a.phase = normalizePhase(document.getElementById('info_phase').value);
+      a.itpc_site = document.getElementById('info_site').value.trim();
+      a.fdt = document.getElementById('info_fdt').value.trim();
+      a.total_users = Number(document.getElementById('info_total').value || a.total_users);
+      a.board_name = (document.getElementById('info_board')?.value || '').trim();
+      computeAgent(a);
+      
+      try{
+        const dbId = dbIdByLocalId.get(a._id);
+        
+        
+        if(dbId){
+          
+          const supabase = getSupabaseClient();
+          if (!supabase) {
+            console.error('Supabase client not available');
+            return;
+          }
+          
+          const updateData = {
+            name: a.name,
+            note: a.note,
+            contract_date: a.contract_date,
+            phase: a.phase,
+            fdt: a.fdt,
+            board_name: a.board_name,
+            total_users: a.total_users,
+            active: a.active,
+            prev_active: a.prev_active
+          };
+          
+          
+          
+          
+          
+          const { error } = await supabase
+            .from('agents')
+            .update(updateData)
+            .eq('id', dbId);
+            
+          if(error) {
+            console.error('Supabase update info error:', error);
+            console.error('Error details:', error.message, error.details, error.hint);
+            
+            if (error.message && error.message.includes('board_name')) {
+              console.warn('board_name column not found, updating without it...');
+              const updateDataWithoutBoard = {
+                name: a.name,
+                note: a.note,
+                contract_date: a.contract_date,
+                phase: a.phase,
+                fdt: a.fdt,
+                total_users: a.total_users,
+                active: a.active,
+                prev_active: a.prev_active
+              };
+              
+              const { error: retryError } = await supabase
+                .from('agents')
+                .update(updateDataWithoutBoard)
+                .eq('id', dbId);
+                
+              if (retryError) {
+                console.error('Retry update also failed:', retryError);
+              } else {
+                
+              }
+            }
+          } else {
+            
+          }
+        } else {
+          
+          console.log('Available dbIdByLocalId:', Array.from(dbIdByLocalId.entries()));
+        }
+      }catch(e){ 
+        console.error('Error updating agent info:', e); 
+      }
+      
+      saveToStorage();
+      renderTable();
+      closeModal(modalEditInfo);
+      
+    });
+
+    document.getElementById('deleteFromInfoModal').addEventListener('click', async ()=>{
+      const idx = Number(modalEditInfo.dataset.editIndex || -1);
+      if(idx < 0) return;
+      const a = agents[idx];
+      if(!confirm(`هل تريد حذف الوكيل: ${a.name || ''} ؟`)) return;
+      try{
+        const dbId = dbIdByLocalId.get(a._id);
+        if(dbId){
+          const supabase = getSupabaseClient();
+          if (supabase) {
+          const { error } = await supabase.from('agents').delete().eq('id', dbId);
+          if(error) console.error('Delete error:', error);
+          }
+          localIdByDbId.delete(dbId);
+          dbIdByLocalId.delete(a._id);
+        }
+      }catch(e){ 
+        console.error('Error deleting agent from database:', e);
+      }
+      agents.splice(idx,1);
+      saveToStorage();
+      renderTable();
+      modalEditInfo.classList.remove('open');
+    });
+
+
+    function openEditModal(idx){
+      const agent = agents[idx];
+      if(!agent) return;
+      modalEdit.classList.add('open');
+      editName.value = agent.name || '';
+      editTotal.value = agent.total_users || 0;
+      editActive.value = agent.active || 0;
+      modalEdit.dataset.editIndex = idx;
+      
+      setTimeout(() => positionModal(modalEdit), 10);
+    }
+
+    closeModalBtn.addEventListener('click', ()=> closeModal(modalEdit));
+    saveActiveBtn.addEventListener('click', async ()=>{
+      const idx = Number(modalEdit.dataset.editIndex || -1);
+      if(idx < 0) return;
+      const agent = agents[idx];
+      if(!agent) return;
+      const newActive = Number(editActive.value || 0);
+      
+      if(!Array.isArray(agent.history)) agent.history = [];
+      agent.history.push({ date: toYMDLocal(new Date()), active: Number(agent.active||0) });
+      agent.prev_active = Number(agent.active||0); 
+      agent.active = newActive;
+      computeAgent(agent);
+      
+      try{
+        const dbId = dbIdByLocalId.get(agent._id);
+        if(dbId){
+          
+          const supabase = getSupabaseClient();
+          if (supabase) {
+          const { error } = await supabase
+            .from('agents')
+              .update({ 
+                active: agent.active, 
+                prev_active: agent.prev_active,
+                board_name: agent.board_name
+              })
+            .eq('id', dbId);
+          if(error) {
+            console.error('Supabase update active error:', error);
+          } else {
+            
+            }
+          } else {
+            
+          }
+        } else {
+          
+        }
+      }catch(e){ 
+        console.error('Error updating active users:', e); 
+      }
+      
+      saveToStorage();
+      renderTable();
+      closeModal(modalEdit);
+      
+    });
+
+    btnAddAgent.addEventListener('click', ()=> {
+      modalAdd.classList.add('open');
+      
+      setTimeout(() => positionModal(modalAdd), 10);
+    });
+    
+    closeAddModal.addEventListener('click', ()=> closeModal(modalAdd));
+    saveNewAgent.addEventListener('click', async ()=>{
+      const name = document.getElementById('new_name').value.trim();
+      const date = document.getElementById('new_date').value;
+      const phase = normalizePhase(document.getElementById('new_phase').value);
+      const site = document.getElementById('new_site').value.trim();
+      const fdt = document.getElementById('new_fdt').value.trim();
+      const note = document.getElementById('new_note').value.trim();
+      const board = (document.getElementById('new_board')?.value || '').trim();
+      const total = Number(document.getElementById('new_total').value || 0);
+      const active = Number(document.getElementById('new_active').value || 0);
+      
+      if(!name){
+        alert('يرجى إدخال اسم الوكيل');
+        return;
+      }
+      
+      const obj = { 
+        name, 
+        contract_date: date || toYMDLocal(new Date()), 
+        phase, 
+        itpc_site: site, 
+        fdt, 
+        note, 
+        board_name: board, 
+        total_users: total, 
+        active, 
+        prev_active: 0 
+      };
+      
+      console.log('Created obj with keys:', Object.keys(obj));
+      
+      
+      computeAgent(obj);
+      
+      const validation = validateAgentData(obj);
+      if (!validation.isValid) {
+        alert('خطأ في البيانات:\n' + validation.errors.join('\n'));
+        return;
+      }
+      
+      try{
+        
+        
+        
+        const supabase = getSupabaseClient();
+        if (!supabase) {
+          console.error('Supabase client not available, saving locally only');
+          obj._id = genId();
+          agents.push(obj);
+          saveToStorage();
+          renderTable();
+          closeModal(modalAdd);
+          console.log(`تم إضافة الوكيل "${name}" محلياً فقط (لا يوجد اتصال بقاعدة البيانات)`);
+          return;
+        }
+        
+        const insertData = {
+          name: String(obj.name || ''),
+          note: String(obj.note || ''),
+          contract_date: String(obj.contract_date || ''),
+          phase: String(obj.phase || ''),
+          fdt: String(obj.fdt || ''),
+          board_name: String(obj.board_name || ''),
+          total_users: Number(obj.total_users || 0),
+          active: Number(obj.active || 0),
+          prev_active: Number(obj.prev_active || 0)
+        };
+        
+        console.log('Insert data (before send):', JSON.stringify(insertData, null, 2));
+        console.log('Original obj keys:', Object.keys(obj));
+        console.log('Insert data keys:', Object.keys(insertData));
+        
+        
+        
+        if (insertData.hasOwnProperty('board_name')) {
+          
+        } else {
+          console.error('ERROR: board_name NOT found in insertData!');
+        }
+        
+        
+        
+        const { data, error } = await supabase
+          .from('agents')
+          .insert(insertData)
+          .select('*')
+          .single();
+          
+        if(error){
+          console.error('Supabase insert error:', error);
+          console.error('Error details:', error.message, error.details, error.hint);
+          console.error('Error code:', error.code);
+          
+          if (error.message && error.message.includes('board_name')) {
+            console.warn('board_name column not found, inserting without it...');
+            const insertDataWithoutBoard = {
+              name: String(obj.name || ''),
+              note: String(obj.note || ''),
+              contract_date: String(obj.contract_date || ''),
+              phase: String(obj.phase || ''),
+              fdt: String(obj.fdt || ''),
+              total_users: Number(obj.total_users || 0),
+              active: Number(obj.active || 0),
+              prev_active: Number(obj.prev_active || 0)
+            };
+            
+            const { data: retryData, error: retryError } = await supabase
+              .from('agents')
+              .insert(insertDataWithoutBoard)
+              .select('*')
+              .single();
+              
+            if (retryError) {
+              console.error('Retry insert also failed:', retryError);
+              obj._id = genId();
+              agents.push(obj);
+              
+            } else {
+              
+              obj._id = genId();
+              obj.db_id = retryData.id;
+              dbIdByLocalId.set(obj._id, retryData.id);
+              localIdByDbId.set(retryData.id, obj._id);
+              agents.push(obj);
+            }
+          } else {
+            let errorMessage = 'فشل في حفظ البيانات في قاعدة البيانات:\n';
+            if (error.message) errorMessage += error.message + '\n';
+            if (error.details) errorMessage += 'التفاصيل: ' + error.details + '\n';
+            if (error.hint) errorMessage += 'نصيحة: ' + error.hint;
+            
+            alert(errorMessage);
+            
+            obj._id = genId();
+            agents.push(obj);
+            
+          }
+        } else {
+          
+          obj._id = genId();
+          obj.db_id = data.id;
+          dbIdByLocalId.set(obj._id, data.id);
+          localIdByDbId.set(data.id, obj._id);
+          agents.push(obj);
+        }
+      }catch(e){
+        console.error('Error inserting agent:', e);
+        console.error('Error stack:', e.stack);
+        obj._id = genId();
+        agents.push(obj);
+      }
+      
+      saveToStorage();
+      renderTable();
+      
+      closeModal(modalAdd);
+      document.getElementById('new_name').value='';
+      document.getElementById('new_date').value='';
+      document.getElementById('new_site').value='';
+      document.getElementById('new_fdt').value='';
+      document.getElementById('new_note').value='';
+      document.getElementById('new_total').value='';
+      document.getElementById('new_active').value='';
+      
+      
+      
+      
+    });
+
+    function saveToStorage(){
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(agents));
+        localStorage.setItem(STORAGE_KEY + '_timestamp', Date.now().toString());
+        console.log('Data saved to local storage successfully at:', new Date().toLocaleString());
+        
+        return true;
+      } catch (error) {
+        console.error('Error saving to local storage:', error);
+        return false;
+      }
+    }
+    function loadFromStorage(){
+      try{
+        const s = localStorage.getItem(STORAGE_KEY);
+        if(!s) return null;
+        const arr = JSON.parse(s);
+        arr.forEach(a => {
+          computeAgent(a);
+       
+          if(a.db_id) {
+            dbIdByLocalId.set(a._id, a.db_id);
+            localIdByDbId.set(a.db_id, a._id);
+          }
+        });
+        console.log('Loaded from storage, dbIdByLocalId entries:', Array.from(dbIdByLocalId.entries()));
+        return arr;
+      }catch(e){ return null; }
+    }
+
+    function computeAll(){
+      agents.forEach(a=>computeAgent(a));
+      renderTable();
+    }
+
+
+    async function loadFromSupabase(){
+      try {
+        
+        
+        
+        const supabase = getSupabaseClient();
+        if (!supabase) {
+          console.error('Supabase client not available');
+          return;
+        }
+        
+        const { data, error } = await supabase
+          .from('agents')
+          .select('*')
+          .order('id', { ascending: true });
+
+        if(error){
+          console.error('Supabase load error:', error);
+          console.error('Error details:', error.message, error.details, error.hint);
+          agents = [];
+          computeAll();
+          return;
+        }
+
+        if(!data || data.length === 0){
+          
+          agents = [];
+          computeAll();
+          return;
+        }
+
+        
+        
+        
+        agents = data.map(row=>{
+          const obj = {
+            _id: genId(),
+            db_id: row.id,
+            name: row.name,
+            note: row.note,
+            contract_date: row.contract_date,
+            phase: row.phase,
+            itpc_site: '', 
+            fdt: row.fdt,
+            board_name: row.board_name || '', 
+            total_users: row.total_users,
+            active: row.active, 
+            prev_active: row.prev_active || 0,
+            history: []
+          };
+          dbIdByLocalId.set(obj._id, row.id);
+          localIdByDbId.set(row.id, obj._id);
+          
+          return computeAgent(obj);
+        });
+        
+        console.log('dbIdByLocalId entries:', Array.from(dbIdByLocalId.entries()));
+        
+        computeAll();
+        
+      } catch(e) {
+        console.error('Error loading from Supabase:', e);
+       
+        agents = [];
+        computeAll();
+      }
+    }
+
+    phaseFilter.addEventListener('change', renderTable);
+    searchBox.addEventListener('input', renderTable);
+    sortBy.addEventListener('change', renderTable);
+
+    function safeNum(x){ return Number(x||0) || 0; }
+
+    
+    async function initializeData() {
+      try {
+        
+        updateConnectionStatus('connecting');
+        
+        let connectionOk = await testSupabaseConnection();
+        
+        if (!connectionOk && !SupabaseManager.hasInstance()) {
+          console.warn('Supabase connection failed, trying to reinitialize...');
+          updateConnectionStatus('connecting');
+          reinitializeSupabase();
+          connectionOk = await testSupabaseConnection();
+        } else if (!connectionOk) {
+          console.warn('Supabase connection failed, but instance exists - using local storage');
+        }
+        
+        if (!connectionOk) {
+          console.warn('Supabase connection failed after retry, starting with empty table');
+          updateConnectionStatus('error');
+          agents = [];
+          computeAll();
+          return;
+        }
+        
+        await loadFromSupabase();
+      } catch (e) {
+        console.error('Error initializing data:', e);
+        agents = [];
+        computeAll();
+      }
+    }
+    
+    function initializeSupabase() {
+      
+      const client = getSupabaseClient();
+      if (client) {
+        
+        return true;
+      } else {
+        console.error('Failed to initialize Supabase client');
+        return false;
+      }
+    }
+
+    window.addEventListener('beforeunload', function() {
+      
+      SupabaseManager.reset();
+    });
+
+    
+    initializeSupabase();
+    initializeData();
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof authSystem !== 'undefined') {
+        authSystem.updateUI();
+      }
+    });
+    
+    function applyTheme(theme){
+      const root = document.documentElement;
+      const bodyEl = document.body;
+      if(theme === 'light'){
+        root.classList.add('light');
+        bodyEl.classList.add('light');
+        btnTheme.textContent = '';
+        const sunIcon = document.createElement('span');
+        sunIcon.className = 'icon';
+        sunIcon.textContent = '☀️';
+        btnTheme.appendChild(sunIcon);
+        btnTheme.appendChild(document.createTextNode('  '));
+      } else {
+        root.classList.remove('light');
+        bodyEl.classList.remove('light');
+        btnTheme.textContent = '';
+        const moonIcon = document.createElement('span');
+        moonIcon.className = 'icon';
+        moonIcon.textContent = '🌙';
+        btnTheme.appendChild(moonIcon);
+        btnTheme.appendChild(document.createTextNode('  '));
+      }
+    }
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    applyTheme(savedTheme);
+    btnTheme.addEventListener('click', ()=>{
+      const current = localStorage.getItem('theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      applyTheme(next);
+    });
+
+
+    document.addEventListener('click', (e)=>{
+      if(e.target === modalEdit) {
+        closeModal(modalEdit);
+      }
+      if(e.target === modalAdd) {
+        closeModal(modalAdd);
+      }
+      if(e.target === modalEditInfo) {
+        closeModal(modalEditInfo);
+      }
+    });
+
+
+    document.getElementById('btnWeeklyReport').addEventListener('click', ()=>{
+      const todayStr = toYMDLocal(new Date());
+      const headers = ['الوكيل','تاريخ العقد','تاريخ اليوم','FDT',' اللوحة','إجمالي المستخدمين','النشط الحالي','النمو الأسبوعي','معدل التفعيل','النسبة المطلوبة','المطلوب للوصول','نسبة العجز','عدد العجز','الحالة'];
+
+      const PHASE_ORDER = ['OLD','PHASE2','PHASE3'];
+      let list = agents.slice();
+      const sort = (document.getElementById('sortBy')||{}).value || 'name';
+      if(sort === 'total_users_desc') list.sort((a,b)=> b.total_users - a.total_users);
+      else if(sort === 'active_desc') list.sort((a,b)=> b.active - a.active);
+      else if(sort === 'deficit_desc') list.sort((a,b)=> b.deficit_users - a.deficit_users);
+      else list.sort((a,b)=> (a.name||'').localeCompare(b.name||'', 'ar'));
+
+      const phaseToItems = {};
+      list.forEach(a=>{
+        const key = (a.phase||'').toUpperCase();
+        if(!phaseToItems[key]) phaseToItems[key] = [];
+        phaseToItems[key].push(a);
+      });
+
+      let html = '';
+      html += `<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <title>تقرير متابعة الوكلاء</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { 
+      width: 100%; 
+      height: 100vh; 
+      margin: 0; 
+      padding: 0; 
+      font-family: "Arial", "Helvetica", sans-serif;
+      color: #000;
+      overflow: hidden;
+    }
+    @page { 
+      size: A4 landscape; 
+      margin: 5mm; 
+    }
+    table { 
+      width: calc(100vw - 10mm); 
+      height: calc(100vh - 10mm); 
+      border-collapse: collapse; 
+      table-layout: fixed; 
+      font-size: 10px; 
+      font-weight: bold;
+      margin: 5mm;
+    }
+    th, td { 
+      border: 1px solid #000; 
+      padding: 3px 4px; 
+      text-align: center; 
+      white-space: nowrap; 
+      overflow: hidden; 
+      text-overflow: ellipsis;
+      vertical-align: middle;
+    }
+    th { 
+      background: #000; 
+      color: #fff; 
+      font-weight: bold;
+      font-size: 11px;
+      height: 25px;
+    }
+    td:nth-child(1) { 
+      text-align: right; 
+      width: 10%;
+    }
+    td:nth-child(2), td:nth-child(3) { 
+      width: 5%;
+    }
+    td:nth-child(4) { 
+      width: 6%;
+    }
+    td:nth-child(5) { 
+      width: 5%;
+    }
+    td:nth-child(6) { 
+      width: 7%;
+    }
+    td:nth-child(7) { 
+      width: 5%;
+    }
+    td:nth-child(8) { 
+      width: 6%;
+    }
+    td:nth-child(9) { 
+      width: 6%;
+    }
+    td:nth-child(10) { 
+      width: 7%;
+    }
+    td:nth-child(11) { 
+      width: 5%;
+    }
+    td:nth-child(12) { 
+      width: 7%;
+    }
+    td:nth-child(13) { 
+      width: 3%;
+    }
+    td:nth-child(14) { 
+      width: 5%;
+    }
+    tr.phase-row td { 
+      background: #d0d0d0; 
+      font-weight: bold; 
+      text-align: right; 
+      color: #000;
+      font-size: 10px;
+      height: 20px;
+      border: none;
+    }
+    
+    tr.phase-row td:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    
+    tr.phase-row td:last-child {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    tr.subtotal-title td { 
+      background: #c0c0c0; 
+      font-weight: bold; 
+      text-align: right; 
+      color: #000;
+      height: 18px;
+      border: none;
+    }
+    
+    tr.subtotal-title td:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    
+    tr.subtotal-title td:last-child {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    tr.subtotal-values td { 
+      background: #e0e0e0; 
+      font-weight: bold; 
+      color: #000;
+      height: 16px;
+      border: none;
+    }
+    
+    tr.subtotal-values td:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    
+    tr.subtotal-values td:last-child {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    tr.grand-total td { 
+      background: #a0a0a0; 
+      font-weight: bold; 
+      color: #000;
+      height: 18px;
+      border: none;
+    }
+    
+    tr.grand-total td:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    
+    /* تحسين صفوف المشروع للوضع المضيء */
+    body.light tr.phase-row td { 
+      background: #e2e8f0; 
+      color: #1e293b;
+    }
+    
+    body.light tr.subtotal-title td { 
+      background: #cbd5e1; 
+      color: #1e293b;
+    }
+    
+    body.light tr.subtotal-values td { 
+      background: #f1f5f9; 
+      color: #1e293b;
+    }
+    
+    body.light tr.grand-total td { 
+      background: #94a3b8; 
+      color: #1e293b;
+    }
+    .left { text-align: right; }
+    @media print { 
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+      html, body { 
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: "Arial", "Helvetica", sans-serif !important;
+        color: #000 !important;
+        position: relative !important;
+      } 
+      table {
+        width: calc(100% - 10mm) !important;
+        height: calc(100% - 10mm) !important;
+        font-size: 9px !important;
+        font-weight: bold !important;
+        border-collapse: collapse !important;
+        margin: 5mm !important;
+        table-layout: fixed !important;
+      }
+      th, td {
+        padding: 3px 4px !important;
+        font-size: 9px !important;
+        font-weight: bold !important;
+        border: 1px solid #000 !important;
+        color: #000 !important;
+        vertical-align: top !important;
+      }
+      
+      td:nth-child(1) { width: 15% !important; text-align: right !important; }
+      td:nth-child(2), td:nth-child(3) { width: 7% !important; }
+      td:nth-child(4) { width: 10% !important; }
+      td:nth-child(5) { width: 10% !important; }
+      td:nth-child(6) { width: 10% !important; }
+      td:nth-child(7) { width: 10% !important; }
+      td:nth-child(8) { width: 6% !important; }
+      td:nth-child(9) { width: 8% !important; }
+      td:nth-child(10) { width: 6% !important; }
+      td:nth-child(11) { width: 8% !important; }
+      td:nth-child(12) { width: 6% !important; }
+      td:nth-child(13) { width: 8% !important; }
+      td:nth-child(14) { width: 10% !important; }
+      
+      td:nth-child(4), td:nth-child(5) {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+      }
+      th {
+        font-size: 10px !important;
+        height: 30px !important;
+        background: #000 !important;
+        color: #fff !important;
+        font-weight: bold !important;
+        text-align: center !important;
+        vertical-align: middle !important;
+        white-space: nowrap !important;
+        padding: 5px 4px !important;
+      }
+      tr.phase-row td {
+        height: 20px !important;
+        font-size: 10px !important;
+        background: #d0d0d0 !important;
+        color: #000 !important;
+      }
+      tr.subtotal-title td {
+        height: 18px !important;
+        background: #c0c0c0 !important;
+        color: #000 !important;
+      }
+      tr.subtotal-values td {
+        height: 16px !important;
+        background: #e0e0e0 !important;
+        color: #000 !important;
+      }
+      tr.grand-total td {
+        height: 18px !important;
+        background: #a0a0a0 !important;
+        color: #000 !important;
+      }
+      thead { display: table-header-group !important; } 
+      tfoot { display: table-footer-group !important; } 
+      tr, td, th { page-break-inside: avoid !important; } 
+      @page {
+        size: A4 landscape !important;
+        margin: 5mm !important;
+      }
+      .signature { position: fixed; bottom: 20px; left: 20px; font-size: 8px; font-weight: normal; color: #999; z-index: 9999; background: white; padding: 5px; }
+    }
+  </style>
+</head>
+<body>`;
+      html += '<table><thead><tr>' + headers.map(h=>`<th>${h}</th>`).join('') + '</tr></thead><tbody>';
+
+      let grand = { total:0, active:0, deficit_users:0 };
+
+      PHASE_ORDER.forEach(phaseKey=>{
+        const items = phaseToItems[phaseKey];
+        if(!items || items.length===0) return;
+
+        html += `<tr class=\"phase-row\"><td colspan=\"${headers.length}\" class=\"left\">${arabicPhaseLabel(phaseKey)}</td></tr>`;
+
+        items.forEach(a=>{
+          html += '<tr>' + [
+            escapeHtml(a.name || ''),
+            a.contract_date || '',
+            todayStr,
+            a.fdt || '',
+            (a.board_name || ''),
+            num(a.total_users),
+            num(a.active),
+            `<span style="font-weight:700; color: ${(a.growth||0) > 0 ? '#10b981' : (a.growth||0) < 0 ? '#ef4444' : '#000'};">${signedNum(a.growth||0)}</span>`,
+            (a.activation_rate||0) + '%',
+            (a.required_rate === null ? '-' : a.required_rate + '%'),
+            (a.required_rate === null ? '-' : num(a.required_users)),
+            (a.required_rate === null ? '-' : `<span style="${getDeficitColor(a.deficit_percent||0, a.required_rate)}">${(a.deficit_percent||0) + '%'}</span>`),
+            (a.deficit_users ? `<span style="${getDeficitUsersColorForReport(a.deficit_users, a.total_users)}">${num(a.deficit_users)}</span>` : '-'),
+            statusBadge(a.status || '')
+          ].map(v=>`<td>${v}</td>`).join('') + '</tr>';
+        });
+
+        const totals = items.reduce((acc, a)=>{
+          acc.total += Number(a.total_users||0);
+          acc.active += Number(a.active||0);
+          acc.deficit_users += Number(a.deficit_users||0);
+          return acc;
+        }, {total:0, active:0, deficit_users:0});
+        grand.total += totals.total; grand.active += totals.active; grand.deficit_users += totals.deficit_users;
+
+        html += `<tr class=\"subtotal-title\"><td colspan=\"${headers.length}\" class=\"left\">مجموع ${arabicPhaseLabel(phaseKey)}</td></tr>`;
+        const cells = new Array(headers.length).fill('');
+        cells[5] = num(totals.total);
+        cells[6] = num(totals.active);
+        cells[11] = totals.deficit_users ? `<span style="${getDeficitUsersColorForReport(totals.deficit_users, totals.total)}">${num(totals.deficit_users)}</span>` : '-';
+        html += '<tr class=\"subtotal-values\">' + cells.map(v=>`<td>${v}</td>`).join('') + '</tr>';
+      });
+
+      const grandCells = new Array(headers.length).fill('');
+      grandCells[5] = num(grand.total);
+      grandCells[6] = num(grand.active);
+      grandCells[11] = grand.deficit_users ? `<span style="${getDeficitUsersColorForReport(grand.deficit_users, grand.total)}">${num(grand.deficit_users)}</span>` : '-';
+      html += `<tr class=\"grand-total\"><td colspan=\"${headers.length}\" class=\"left\">المجموع الكل</td></tr>`;
+      html += '<tr class=\"grand-total\">' + grandCells.map(v=>`<td>${v}</td>`).join('') + '</tr>';
+
+      html += '</tbody></table>';
+      html += '</body>';
+      html += '<script>setTimeout(function(){ if(window.print) window.print(); }, 300);<\/script>';
+      html += '</html>';
+
+      const w = window.open('about:blank','_blank');
+      if(w){ w.document.open(); w.document.write(html); w.document.close(); }
+    });
+
+
+  </script>
+</body>
+</html>
