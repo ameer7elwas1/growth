@@ -6326,15 +6326,15 @@
 
         html += `<tr class=\"subtotal-title\"><td colspan=\"${headers.length}\" class=\"left\">مجموع ${arabicPhaseLabel(phaseKey)}</td></tr>`;
         const cells = new Array(headers.length).fill('');
-        cells[6] = num(totals.total);
-        cells[7] = num(totals.active);
+        cells[5] = num(totals.total);
+        cells[6] = num(totals.active);
         cells[12] = totals.deficit_users ? `<span style="${getDeficitUsersColorForReport(totals.deficit_users, totals.total)}">${num(totals.deficit_users)}</span>` : '-';
         html += '<tr class=\"subtotal-values\">' + cells.map(v=>`<td>${v}</td>`).join('') + '</tr>';
       });
 
       const grandCells = new Array(headers.length).fill('');
-      grandCells[6] = num(grand.total);
-      grandCells[7] = num(grand.active);
+      grandCells[5] = num(grand.total);
+      grandCells[6] = num(grand.active);
       grandCells[12] = grand.deficit_users ? `<span style="${getDeficitUsersColorForReport(grand.deficit_users, grand.total)}">${num(grand.deficit_users)}</span>` : '-';
       html += `<tr class=\"grand-total\"><td colspan=\"${headers.length}\" class=\"left\">المجموع الكل</td></tr>`;
       html += '<tr class=\"grand-total\">' + grandCells.map(v=>`<td>${v}</td>`).join('') + '</tr>';
