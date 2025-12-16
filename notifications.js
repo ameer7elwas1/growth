@@ -6,6 +6,27 @@ class NotificationSystem {
   }
 
   init() {
+    // انتظار تحميل DOM قبل إنشاء الحاوية
+    if (document.body) {
+      this.createContainer();
+    } else {
+      // إذا لم يكن body جاهزاً، انتظر DOMContentLoaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => this.createContainer());
+      } else {
+        // إذا كان DOM محملاً بالفعل
+        this.createContainer();
+      }
+    }
+  }
+
+  createContainer() {
+    // التحقق من عدم وجود الحاوية مسبقاً
+    if (document.getElementById('notificationContainer')) {
+      this.container = document.getElementById('notificationContainer');
+      return;
+    }
+    
     // إنشاء حاوية الإشعارات
     this.container = document.createElement('div');
     this.container.id = 'notificationContainer';
@@ -19,7 +40,10 @@ class NotificationSystem {
       gap: 10px;
       pointer-events: none;
     `;
-    document.body.appendChild(this.container);
+    
+    if (document.body) {
+      document.body.appendChild(this.container);
+    }
   }
 
   show(message, type = 'info', duration = 5000) {
@@ -157,6 +181,13 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// إنشاء مثيل عام
-const notifications = new NotificationSystem();
+// إنشاء مثيل عام - فقط إذا لم يكن موجوداً مسبقاً
+if (typeof window.notificationSystem === 'undefined') {
+  window.notificationSystem = new NotificationSystem();
+}
+
+// إنشاء متغير notifications فقط إذا لم يكن موجوداً
+if (typeof notifications === 'undefined') {
+  var notifications = window.notificationSystem;
+}
 

@@ -6,10 +6,6 @@
   <title> Agents Growth Iraqcell</title>
   
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap">
-  
-  <!-- ملفات JavaScript الخارجية -->
-  <script src="config.js"></script>
-  <script src="notifications.js"></script>
 
   <style>
     :root {
@@ -5544,10 +5540,11 @@
 
     const STORAGE_KEY_NOTIFICATIONS = 'agents_notifications_v1';
     
-    let notifications = JSON.parse(localStorage.getItem(STORAGE_KEY_NOTIFICATIONS) || '[]');
+    // إعادة تسمية المتغير لتجنب التعارض مع نظام الإشعارات
+    let notificationsData = JSON.parse(localStorage.getItem(STORAGE_KEY_NOTIFICATIONS) || '[]');
     
     function saveNotifications() {
-      localStorage.setItem(STORAGE_KEY_NOTIFICATIONS, JSON.stringify(notifications));
+      localStorage.setItem(STORAGE_KEY_NOTIFICATIONS, JSON.stringify(notificationsData));
     }
     
     function getUniqueITPCSites() {
@@ -5637,7 +5634,7 @@
     function sendNotificationToAgents(agentIds, message) {
       const timestamp = new Date().toISOString();
       agentIds.forEach(agentId => {
-        notifications.push({
+        notificationsData.push({
           id: 'notif_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
           agentId: agentId,
           message: message,
@@ -5650,7 +5647,7 @@
     }
     
     function updateNotificationBadge() {
-      const unreadCount = notifications.filter(n => !n.read).length;
+      const unreadCount = notificationsData.filter(n => !n.read).length;
       const btn = document.getElementById('btnNotifications');
       if (btn) {
         if (unreadCount > 0) {
@@ -6545,5 +6542,9 @@
 
 
   </script>
+  
+  <!-- تحميل ملفات JavaScript بعد تحميل DOM -->
+  <script src="config.js"></script>
+  <script src="notifications.js"></script>
 </body>
 </html>
