@@ -4284,11 +4284,12 @@
           break;
         case 'error':
           statusEl.classList.add('error');
-          iconEl.textContent = '💾';
           if (window.location.protocol === 'file:') {
+            iconEl.textContent = '💾';
             textEl.textContent = 'وضع محلي فقط';
           } else {
-            textEl.textContent = 'وضع محلي فقط';
+            iconEl.textContent = '⚠️';
+            textEl.textContent = 'خطأ في الاتصال';
           }
           break;
         case 'connecting':
