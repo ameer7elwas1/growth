@@ -1,5 +1,7 @@
 # ملفات الإعدادات الحساسة
 config.js
+config/config.js
+config/*.local.js
 
 # ملفات النسخ الاحتياطي
 backups/

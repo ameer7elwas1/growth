@@ -7,7 +7,9 @@
   
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap">
   
-  <script src="config.js"></script>
+  <!-- تحميل الإعدادات: أولوية لـ config.js المحلي، ثم config-loader.js -->
+  <script src="config.js" onerror="console.warn('config.js not found, using config-loader.js')"></script>
+  <script src="config/config-loader.js"></script>
   <script src="notifications.js"></script>
 
   <style>
@@ -4074,14 +4076,26 @@
       }
     });
 
-    // استخدام الإعدادات من ملف config.js أو window variables
-    // ⚠️ ملاحظة أمنية: هذا المفتاح هو ANON KEY (مفتاح عام) من Supabase
-    // المفتاح ANON آمن للاستخدام العام لأنه مقيد بسياسات Row Level Security (RLS)
-    // ⚠️ لا تستخدم service_role key أبداً في الكود المصدري
-    // لتغيير المفاتيح: استخدم window.SUPABASE_URL و window.SUPABASE_ANON_KEY قبل تحميل الصفحة
-    // أو أنشئ ملف config.js محلياً (موجود في .gitignore ولن يُرفع على GitHub)
-    const SUPABASE_URL = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.URL) ? SUPABASE_CONFIG.URL : (window.SUPABASE_URL || 'https://vpvvjascwgivdjyyhzwp.supabase.co');
-    const SUPABASE_ANON_KEY = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.ANON_KEY) ? SUPABASE_CONFIG.ANON_KEY : (window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ');
+    // استخدام الإعدادات من config-loader.js (يتم تحميلها تلقائياً)
+    // النظام يتحقق من: window.SUPABASE_URL → SUPABASE_CONFIG → القيم الافتراضية
+    // ⚠️ ملاحظة أمنية: المفاتيح محمّلة من config-loader.js أو window variables
+    // لا توجد مفاتيح مكشوفة في هذا الملف
+    const SUPABASE_URL = (window.SUPABASE_CONFIG_LOADED && window.SUPABASE_CONFIG_LOADED.URL) 
+      ? window.SUPABASE_CONFIG_LOADED.URL 
+      : ((typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.URL) 
+        ? SUPABASE_CONFIG.URL 
+        : (window.SUPABASE_URL || ''));
+    
+    const SUPABASE_ANON_KEY = (window.SUPABASE_CONFIG_LOADED && window.SUPABASE_CONFIG_LOADED.ANON_KEY) 
+      ? window.SUPABASE_CONFIG_LOADED.ANON_KEY 
+      : ((typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.ANON_KEY) 
+        ? SUPABASE_CONFIG.ANON_KEY 
+        : (window.SUPABASE_ANON_KEY || ''));
+    
+    // التحقق من وجود المفاتيح
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+      console.error('❌ خطأ: لم يتم العثور على إعدادات Supabase. تأكد من تحميل config-loader.js أو تعيين window.SUPABASE_URL و window.SUPABASE_ANON_KEY');
+    }
     
     const SupabaseManager = {
       _instance: null,

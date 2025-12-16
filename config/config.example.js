@@ -1,6 +1,7 @@
 // ملف الإعدادات - قالب للاستخدام
-// انسخ هذا الملف إلى config.js وأضف المفاتيح الحقيقية
+// انسخ هذا الملف إلى config.js في المجلد الرئيسي وأضف المفاتيح الحقيقية
 // ملف config.js موجود في .gitignore ولن يتم رفعه على GitHub
+// المسار: config.js (في المجلد الرئيسي، ليس في مجلد config/)
 
 // يمكنك استخدام متغيرات البيئة أو window variables للإنتاج
 // للاستخدام على GitHub Pages، يمكنك تعيين window.SUPABASE_URL و window.SUPABASE_ANON_KEY
