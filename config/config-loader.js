@@ -39,7 +39,16 @@
     
     // الأولوية 3: القيم الافتراضية (للاختبار فقط)
     // ⚠️ تحذير: في الإنتاج يجب استخدام window variables أو config.js
-    console.warn('⚠️ استخدام القيم الافتراضية للإعدادات. يُنصح بتعيين window.SUPABASE_URL و window.SUPABASE_ANON_KEY');
+    // الرسائل الإعلامية فقط - لا تظهر تحذيرات في الإنتاج
+    const isLocal = window.location.hostname === 'localhost' || 
+                    window.location.hostname === '127.0.0.1' || 
+                    window.location.protocol === 'file:' ||
+                    !window.location.hostname;
+    
+    if (isLocal) {
+      console.info('ℹ️ [وضع التطوير] استخدام القيم الافتراضية من config-loader.js');
+    }
+    // في الإنتاج (GitHub Pages) لا تظهر أي رسائل - النظام يعمل بشكل صامت
     
     return {
       URL: DEFAULT_SUPABASE_URL,
