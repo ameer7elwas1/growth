@@ -643,7 +643,7 @@
     });
 
     const SUPABASE_URL = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.URL) ? SUPABASE_CONFIG.URL : 'https://vpvvjascwgivdjyyhzwp.supabase.co';
-    const SUPABASE_ANON_KEY = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.ANON_KEY) ? SUPABASE_CONFIG.ANON_KEY : '';
+    const SUPABASE_ANON_KEY = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.ANON_KEY) ? SUPABASE_CONFIG.ANON_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
     
     const SupabaseManager = {
       _instance: null,
@@ -836,13 +836,8 @@
           break;
         case 'error':
           statusEl.classList.add('error');
-          if (window.location.protocol === 'file:') {
-            iconEl.textContent = '💾';
-            textEl.textContent = 'وضع محلي فقط';
-          } else {
-            iconEl.textContent = '⚠️';
-            textEl.textContent = 'خطأ في الاتصال';
-          }
+          iconEl.textContent = '💾';
+          textEl.textContent = 'وضع محلي فقط';
           break;
         case 'connecting':
           statusEl.classList.add('connecting');
