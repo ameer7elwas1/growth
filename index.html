@@ -6,6 +6,9 @@
   <title> Agents Growth Iraqcell</title>
   
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap">
+  
+  <script src="config.js"></script>
+  <script src="notifications.js"></script>
 
   <style>
     :root {
@@ -275,37 +278,20 @@
     :root:not([data-theme="dark"]) input[type="text"], 
     :root:not([data-theme="dark"]) input[type="number"], 
     :root:not([data-theme="dark"]) input[type="date"], 
-    :root:not([data-theme="dark"]) select,
-    :root:not([data-theme="dark"]) .search {
+    :root:not([data-theme="dark"]) select {
       background: var(--input-bg);
       border: 2px solid var(--input-border);
       color: var(--text-primary);
       font-weight: 500;
-      border-radius: 10px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 8px rgba(128, 28, 50, 0.05);
     }
     
     :root:not([data-theme="dark"]) input[type="text"]:focus, 
     :root:not([data-theme="dark"]) input[type="number"]:focus, 
     :root:not([data-theme="dark"]) input[type="date"]:focus, 
-    :root:not([data-theme="dark"]) select:focus,
-    :root:not([data-theme="dark"]) .search:focus {
+    :root:not([data-theme="dark"]) select:focus {
       background: var(--input-bg);
       border-color: var(--primary-color);
-      box-shadow: 
-        0 0 0 4px rgba(128, 28, 50, 0.1),
-        0 4px 12px rgba(128, 28, 50, 0.15);
-      transform: translateY(-1px);
-    }
-    
-    :root:not([data-theme="dark"]) input[type="text"]:hover, 
-    :root:not([data-theme="dark"]) input[type="number"]:hover, 
-    :root:not([data-theme="dark"]) input[type="date"]:hover, 
-    :root:not([data-theme="dark"]) select:hover,
-    :root:not([data-theme="dark"]) .search:hover {
-      border-color: var(--primary-hover);
-      box-shadow: 0 2px 12px rgba(128, 28, 50, 0.1);
+      box-shadow: 0 0 20px var(--shadow-md);
     }
     
     :root:not([data-theme="dark"]) .badge.good {
@@ -398,45 +384,18 @@
       gap: 24px; 
       align-items: center; 
       justify-content: space-between; 
-      margin-bottom: 24px;
-      padding: 24px 30px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 16px;
-      border: 1.5px solid rgba(128, 28, 50, 0.15);
+      margin-bottom: 20px;
+      padding: 20px 25px;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      border: 1.5px solid var(--border-light);
       box-shadow: 
-        0 8px 32px rgba(128, 28, 50, 0.08),
-        0 4px 16px rgba(128, 28, 50, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        0 4px 12px var(--shadow-sm),
+        0 2px 6px var(--shadow-sm);
       position: relative;
       overflow: hidden;
       flex-wrap: wrap;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    header:hover {
-      transform: translateY(-2px);
-      box-shadow: 
-        0 12px 40px rgba(128, 28, 50, 0.12),
-        0 6px 20px rgba(128, 28, 50, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    }
-    
-    [data-theme="dark"] header {
-      background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(20, 20, 20, 0.9) 100%);
-      border: 1.5px solid rgba(255, 71, 87, 0.2);
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.4),
-        0 4px 16px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    }
-    
-    [data-theme="dark"] header:hover {
-      box-shadow: 
-        0 12px 40px rgba(0, 0, 0, 0.5),
-        0 6px 20px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
     }
     
     @media (max-width: 768px) {
@@ -571,46 +530,19 @@
       color: var(--text-secondary);
     }
     .card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1.5px solid rgba(128, 28, 50, 0.15);
-      border-radius: 16px;
-      padding: 24px 28px;
-      box-shadow: 
-        0 4px 16px rgba(128, 28, 50, 0.08),
-        0 2px 8px rgba(128, 28, 50, 0.04);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      margin-bottom: 24px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 6px var(--shadow-sm);
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
       color: var(--text-primary);
       width: 100%;
       max-width: 100%;
       box-sizing: border-box;
-    }
-    
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 
-        0 8px 24px rgba(128, 28, 50, 0.12),
-        0 4px 12px rgba(128, 28, 50, 0.06);
-      border-color: rgba(128, 28, 50, 0.25);
-    }
-    
-    [data-theme="dark"] .card {
-      background: linear-gradient(135deg, rgba(26, 26, 26, 0.98) 0%, rgba(20, 20, 20, 0.95) 100%);
-      border: 1.5px solid rgba(255, 71, 87, 0.2);
-      box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.4),
-        0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    [data-theme="dark"] .card:hover {
-      box-shadow: 
-        0 8px 24px rgba(0, 0, 0, 0.5),
-        0 4px 12px rgba(0, 0, 0, 0.3);
-      border-color: rgba(255, 71, 87, 0.3);
     }
     
     section.card:has(.stats),
@@ -675,60 +607,25 @@
     }
     input[type="file"]{display:none;}
     .btn {
-      padding: 12px 24px;
+      padding: 10px 20px;
       border: none;
-      border-radius: 12px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 700;
       margin: 6px 5px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
       box-shadow: 
-        0 4px 12px rgba(128, 28, 50, 0.2),
-        0 2px 6px rgba(128, 28, 50, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        0 3px 8px rgba(0, 0, 0, 0.12),
+        0 2px 4px rgba(0, 0, 0, 0.08);
       position: relative;
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      background: var(--primary-color);
       color: white;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       font-family: 'Cairo', 'Segoe UI', 'Arial', sans-serif;
-      overflow: hidden;
-    }
-    
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-    
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 
-        0 6px 16px rgba(128, 28, 50, 0.3),
-        0 3px 8px rgba(128, 28, 50, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    }
-    
-    .btn:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-    
-    .btn:active {
-      transform: translateY(0);
-      box-shadow: 
-        0 2px 8px rgba(128, 28, 50, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
     .btn:hover {
       background: var(--primary-hover);
@@ -784,21 +681,21 @@
     }
     
     .btn.small.secondary{
-      background: rgba(99,102,241,0.15); 
-      border: 1px solid rgba(99,102,241,0.4); 
-      color: #a5b4fc;
+      background: rgba(99,102,241,0.25); 
+      border: 1.5px solid rgba(99,102,241,0.7); 
+      color: #6366f1;
       font-weight: 700;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      text-shadow: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
     }
     
     .btn.small.secondary:hover{
-      background: rgba(99,102,241,0.25);
-      border-color: rgba(99,102,241,0.6);
-      color: #c7d2fe;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+      background: rgba(99,102,241,0.4);
+      border-color: #6366f1;
+      color: #4f46e5;
+      text-shadow: none;
     }
     
     .btn.tiny{
@@ -832,76 +729,42 @@
     .stat {
       background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
       border: none;
-      border-radius: 20px;
-      padding: 28px 24px;
-      box-shadow: 
-        0 8px 24px rgba(0, 0, 0, 0.12),
-        0 4px 12px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      min-height: 170px;
+      min-height: 160px;
       cursor: pointer;
       flex: none;
       min-width: auto;
-      border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     .stat::before {
       content: '';
       position: absolute;
-      bottom: -30px;
-      left: -30px;
-      width: 140px;
-      height: 140px;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
+      bottom: -20px;
+      left: -20px;
+      width: 120px;
+      height: 120px;
+      background: rgba(255, 255, 255, 0.15);
       border-radius: 50%;
-      opacity: 0.7;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0.6;
+      transition: all 0.3s ease;
       z-index: 0;
-      animation: float 6s ease-in-out infinite;
-    }
-    
-    .stat::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 1;
     }
     
     .stat:hover {
-      transform: translateY(-12px) scale(1.04);
-      box-shadow: 
-        0 16px 40px rgba(0, 0, 0, 0.2),
-        0 8px 20px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     }
     
     .stat:hover::before {
-      transform: scale(1.3) translate(10px, 10px);
-      opacity: 0.9;
-    }
-    
-    .stat:hover::after {
-      opacity: 1;
-    }
-    
-    @keyframes float {
-      0%, 100% {
-        transform: translate(0, 0) scale(1);
-      }
-      50% {
-        transform: translate(10px, -10px) scale(1.1);
-      }
+      transform: scale(1.2);
+      opacity: 0.8;
     }
     
     .stat:nth-child(1) {
@@ -1197,32 +1060,15 @@
       font-size: 0.9rem;
       font-weight: 500;
       border: 2px solid var(--primary-color);
-      border-radius: 12px;
+      border-radius: 8px;
       overflow: hidden;
       font-family: 'Cairo', 'Segoe UI', 'Arial', sans-serif;
-      box-shadow: 
-        0 4px 16px rgba(128, 28, 50, 0.1),
-        0 2px 8px rgba(128, 28, 50, 0.05);
-      transition: all 0.3s ease;
-    }
-    
-    table:hover {
-      box-shadow: 
-        0 6px 20px rgba(128, 28, 50, 0.15),
-        0 3px 10px rgba(128, 28, 50, 0.08);
+      box-shadow: 0 2px 8px rgba(128, 28, 50, 0.1);
     }
     
     [data-theme="dark"] table {
       border-color: rgba(255, 71, 87, 0.5);
-      box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.4),
-        0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    [data-theme="dark"] table:hover {
-      box-shadow: 
-        0 6px 20px rgba(0, 0, 0, 0.5),
-        0 3px 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
     th {
       background: var(--table-header);
@@ -1673,29 +1519,31 @@
       font-size: 11px;
       margin: 2px;
       white-space: nowrap;
-      border: 1px solid rgba(0,0,0,0.1);
-      background: var(--card);
-      color: var(--text);
+      border: 1.5px solid var(--accent);
+      background: var(--accent);
+      color: white;
       transition: all 0.2s ease;
+      font-weight: 700;
     }
     
     table .actions .btn:hover {
-      background: var(--accent);
+      background: var(--accent-hover, rgba(99,102,241,0.8));
       color: white;
-      border-color: var(--accent);
+      border-color: var(--accent-hover, rgba(99,102,241,0.8));
       transform: translateY(-1px);
     }
     
     table .actions .btn.secondary {
-      background: rgba(99,102,241,0.1);
-      color: var(--accent);
-      border-color: rgba(99,102,241,0.2);
+      background: rgba(99,102,241,0.25);
+      color: #a5b4fc;
+      border: 1.5px solid rgba(99,102,241,0.6);
+      font-weight: 700;
     }
     
     table .actions .btn.secondary:hover {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
+      background: rgba(99,102,241,0.4);
+      color: #c7d2fe;
+      border-color: rgba(99,102,241,0.8);
     }
     
     table .actions .btn.warn {
@@ -1705,21 +1553,29 @@
     }
     
     :root:not([data-theme="dark"]) table .actions .btn {
-      background: #f8fafc;
-      color: #333333;
-      border-color: rgba(0,0,0,0.1);
+      background: var(--primary-color);
+      color: white;
+      border: 1.5px solid var(--primary-color);
+      font-weight: 700;
     }
     
     :root:not([data-theme="dark"]) table .actions .btn:hover {
-      background: var(--primary-color);
+      background: var(--primary-hover);
       color: white;
-      border-color: var(--primary-color);
+      border-color: var(--primary-hover);
     }
     
     :root:not([data-theme="dark"]) table .actions .btn.secondary {
-      background: rgba(128,28,50,0.1);
-      color: var(--primary-color);
-      border-color: rgba(128,28,50,0.2);
+      background: rgba(99,102,241,0.25);
+      color: #6366f1;
+      border: 1.5px solid rgba(99,102,241,0.7);
+      font-weight: 700;
+    }
+    
+    :root:not([data-theme="dark"]) table .actions .btn.secondary:hover {
+      background: rgba(99,102,241,0.4);
+      color: #4f46e5;
+      border-color: #6366f1;
     }
     
     :root:not([data-theme="dark"]) table .actions .btn.warn {
@@ -1897,21 +1753,118 @@
     
     .chart-card {
       flex: 1 1 400px; 
-      min-height: 300px; 
-      padding: 20px; 
-      background: var(--card-bg); 
-      border-radius: var(--border-radius);
-      border: 1.5px solid var(--border-light);
-      transition: all 0.3s ease;
+      min-height: 380px;
+      max-height: 480px;
+      height: 420px;
+      padding: 30px; 
+      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255,255,255,0.98) 100%);
+      border-radius: 16px;
+      border: 2px solid var(--border-light);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 
-        0 4px 12px var(--shadow-sm),
-        0 2px 6px var(--shadow-sm);
+        0 8px 24px rgba(0, 0, 0, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
     }
+    
+    [data-theme="dark"] .chart-card {
+      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(26, 26, 26, 0.98) 100%);
+      box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .chart-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, 
+        rgba(59, 130, 246, 1) 0%,
+        rgba(139, 92, 246, 1) 50%,
+        rgba(236, 72, 153, 1) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 1;
+    }
+    
+    .chart-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(128, 28, 50, 0.05) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    
+    .chart-card h3 {
+      flex-shrink: 0;
+      margin: 0 0 20px 0;
+      color: var(--primary-color);
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-align: center;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-light);
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.3px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    
+    .chart-card canvas {
+      flex: 1 1 auto;
+      min-height: 0;
+      max-height: 100%;
+      width: 100% !important;
+      position: relative;
+      z-index: 1;
+    }
+    
     .chart-card:hover {
       box-shadow: 
-        0 20px 50px var(--shadow-md),
-        0 10px 30px var(--shadow-sm);
+        0 24px 60px rgba(128, 28, 50, 0.15),
+        0 12px 36px rgba(128, 28, 50, 0.1),
+        0 0 0 1px rgba(128, 28, 50, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
       border-color: var(--primary-color);
+      transform: translateY(-4px) scale(1.01);
+    }
+    
+    [data-theme="dark"] .chart-card:hover {
+      box-shadow: 
+        0 24px 60px rgba(0, 0, 0, 0.6),
+        0 12px 36px rgba(255, 71, 87, 0.2),
+        0 0 0 1px rgba(255, 71, 87, 0.3);
+    }
+    
+    .chart-card:hover::before {
+      opacity: 1;
+    }
+    
+    .chart-card:hover::after {
+      opacity: 1;
+    }
+    
+    .chart-card h3 {
+      margin: 0 0 20px 0;
+      color: var(--primary-color);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border-light);
     }
     footer {
       color: var(--text-tertiary); 
@@ -3011,9 +2964,6 @@
       transition: all 0.2s ease;
       border-radius: 6px;
       border: 1px solid transparent;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.2s;
     }
     
     .agent-group-item:hover {
@@ -3038,7 +2988,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="config.js"></script>
 </head>
 <body>
   <div id="authOverlay" class="auth-overlay">
@@ -3086,7 +3035,14 @@
             <span id="statusIcon">🔄</span>
             <span id="statusText">جاري الاتصال...</span>
           </div>
-          <div id="sidebarUser" class="sidebar-user-name" style="background: #667eea; color: white; padding: 8px 16px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3); text-align: center; letter-spacing: 0.5px; border: 2px solid rgba(255, 255, 255, 0.2); position: relative; cursor: pointer; user-select: none; -webkit-user-select: none; transition: all 0.3s ease; width: 100%; box-sizing: border-box; margin-top: 12px;" onclick="toggleUserContactPopup(event)" onmouseenter="if(!document.getElementById('userContactPopup').classList.contains('show')) { this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 16px rgba(102, 126, 234, 0.4)'; }" onmouseleave="if(!document.getElementById('userContactPopup').classList.contains('show')) { this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.3)'; }">Ameer Helwas
+          <div id="sidebarUser" class="sidebar-user-name" style="background: linear-gradient(135deg, #801c32, #a52d45); color: white; padding: 14px 18px; border-radius: 12px; font-weight: 700; font-size: 1rem; box-shadow: 0 4px 12px rgba(128, 28, 50, 0.4); text-align: center; letter-spacing: 0.5px; border: 2px solid rgba(255, 255, 255, 0.3); position: relative; cursor: pointer; user-select: none; -webkit-user-select: none; transition: all 0.3s ease; width: 100%; box-sizing: border-box; margin-top: 12px;" onclick="toggleUserContactPopup(event)" onmouseenter="if(!document.getElementById('userContactPopup').classList.contains('show')) { this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 16px rgba(128, 28, 50, 0.5)'; }" onmouseleave="if(!document.getElementById('userContactPopup').classList.contains('show')) { this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(128, 28, 50, 0.4)'; }">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <span style="font-size: 1.3rem;"></span>
+                <span style="font-size: 1.05rem; font-weight: 700;">Ameer Helwas</span>
+              </div>
+              <div style="font-size: 0.75rem; opacity: 0.9; font-weight: 500;"></div>
+            </div>
             <div id="userContactPopup" class="user-contact-popup" onmouseenter="event.stopPropagation();" onmouseleave="event.stopPropagation();" onclick="event.stopPropagation();">
               <div class="user-contact-item">
                 <span class="user-contact-icon">
@@ -3094,7 +3050,7 @@
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="#0078d4"/>
                   </svg>
                 </span>
-                <a href="mailto:ameeralgaraawi@hotmail.com">ameeralgaraawi@hotmail.com</a>
+                <a href="mailto:ameeralgaraawi@hotmail.com">Email</a>
               </div>
               <div class="user-contact-item">
                 <span class="user-contact-icon">
@@ -3102,7 +3058,7 @@
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="#E4405F"/>
                   </svg>
                 </span>
-                <a href="https://instagram.com/ameer_7elwas" target="_blank">ameer_7elwas</a>
+                <a href="https://instagram.com/ameer_7elwas" target="_blank">instagram</a>
               </div>
               <div class="user-contact-item">
                 <span class="user-contact-icon">
@@ -3110,7 +3066,7 @@
                     <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z" fill="#0088cc"/>
                   </svg>
                 </span>
-                <a href="https://t.me/ameer_7elwas" target="_blank">ameer_7elwas</a>
+                <a href="https://t.me/ameer_7elwas" target="_blank">Telegram</a>
               </div>
               <div class="user-contact-item">
                 <span class="user-contact-icon">
@@ -3222,7 +3178,7 @@
               <th>المطلوب للوصول</th>
               <th>نسبة العجز</th>
               <th>عجز المستخدمين</th>
-              <th>الحالة</th>
+              <th>المنتهي اشتراكهم</th>
               <th>إجراءات</th>
             </tr>
           </thead>
@@ -3232,16 +3188,36 @@
 
       <div class="chart-row">
         <div class="chart-card">
+          <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700; text-align: center;">أعلى 10 وكلاء حسب إجمالي المستخدمين</h3>
           <canvas id="barChart"></canvas>
         </div>
         <div class="chart-card">
+          <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700; text-align: center;">توزيع المستخدمين (نشطون / غير نشطين)</h3>
           <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="chart-row">
+        <div class="chart-card" style="flex: 1 1 100%; max-height: 500px; height: 450px; overflow-y: auto;">
+          <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700; text-align: center;">النمو الأسبوعي للوكلاء</h3>
+          <canvas id="growthChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700; text-align: center;">معدل التفعيل حسب المراحل</h3>
+          <canvas id="phaseChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="chart-row">
+        <div class="chart-card" style="flex: 1 1 100%; max-height: 500px; height: 450px; overflow-y: auto;">
+          <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700; text-align: center;">تحليل العجز للوكلاء</h3>
+          <canvas id="deficitChart"></canvas>
         </div>
       </div>
     </section>
 
     <footer>
-      <div class="small"</div>
+      <div class="small"></div>
     </footer>
   </div>
 
@@ -3255,6 +3231,10 @@
       <div>
         <label>إجمالي المستخدمين</label>
         <input type="number" id="editTotal" readonly />
+      </div>
+      <div>
+        <label>العدد الفعلي الذي وصل</label>
+        <input type="number" id="editReachedTotal" />
       </div>
       <div>
         <label>النشط الحالي </label>
@@ -3318,7 +3298,7 @@
         <div style="flex:1; min-width:160px;">
           <label>أرقام الهواتف (مفصولة بفواصل)</label>
           <input type="text" id="info_phone" placeholder="07901234567, 07501234567" />
-          <small style="color:var(--text-tertiary); font-size:11px;"</small>
+          <small style="color:var(--text-tertiary); font-size:11px;">يمكنك إدخال أكثر من رقم مفصول بفواصل</small>
         </div>
         <div style="flex:1; min-width:160px;">
           <label>إجمالي المستخدمين</label>
@@ -3426,6 +3406,10 @@
         <div style="flex:1;">
           <label>إجمالي المستخدمين</label>
           <input type="number" id="new_total" />
+        </div>
+        <div style="flex:1;">
+          <label>العدد الفعلي الذي وصل</label>
+          <input type="number" id="new_reached_total" />
         </div>
         <div style="flex:1;">
           <label>المستخدمون النشطون</label>
@@ -4291,7 +4275,11 @@
         case 'error':
           statusEl.classList.add('error');
           iconEl.textContent = '💾';
-          textEl.textContent = 'وضع محلي فقط';
+          if (window.location.protocol === 'file:') {
+            textEl.textContent = 'وضع محلي فقط';
+          } else {
+            textEl.textContent = 'وضع محلي فقط';
+          }
           break;
         case 'connecting':
           statusEl.classList.add('connecting');
@@ -4421,6 +4409,7 @@
     const modalEdit = document.getElementById('modalEdit');
     const editName = document.getElementById('editName');
     const editTotal = document.getElementById('editTotal');
+    const editReachedTotal = document.getElementById('editReachedTotal');
     const editActive = document.getElementById('editActive');
     const saveActiveBtn = document.getElementById('saveActive');
     const closeModalBtn = document.getElementById('closeModal');
@@ -4432,7 +4421,7 @@
     const closeInfoModal = document.getElementById('closeInfoModal');
     const saveInfo = document.getElementById('saveInfo');
 
-    let barChart=null, pieChart=null;
+    let barChart=null, pieChart=null, growthChart=null, phaseChart=null, deficitChart=null;
     let agents = [];
     let dbIdByLocalId = new Map();
     let localIdByDbId = new Map();
@@ -4515,6 +4504,13 @@
 
       agent.total_users = Number(agent.total_users) || 0;
       agent.active = Number(agent.active) || 0;
+      agent.reached_total = Number(agent.reached_total) || 0;
+      
+      if (!agent.reached_total && agent.active > 0) {
+        agent.reached_total = agent.active;
+      }
+      
+      agent.expired = Math.max(0, agent.reached_total - agent.active);
 
       agent.growth = Math.round(agent.active - Number(agent.prev_active||0));
       agent.activation_rate = agent.total_users ? +( (agent.active / agent.total_users) * 100 ) : 0;
@@ -4581,6 +4577,9 @@
         tbody.appendChild(emptyRow);
         updateStats([]);
         updateCharts([]);
+        if(growthChart) growthChart.destroy();
+        if(phaseChart) phaseChart.destroy();
+        if(deficitChart) deficitChart.destroy();
         return;
       }
       
@@ -4637,7 +4636,7 @@
             <td style="font-weight:800; font-size:13px; color:#000000;">${a.required_rate === null ? '-' : num(a.required_users)}</td>
           <td style="font-size:13px; font-weight:700;">${a.required_rate === null ? '-' : `<span style="${getDeficitColor(a.deficit_percent, a.required_rate)}">${a.deficit_percent + '%'}</span>`}</td>
           <td style="font-size:13px; font-weight:700;">${a.deficit_users ? `<span style="${getDeficitUsersColor(a.deficit_users, a.total_users)}">${num(a.deficit_users)}</span>` : '-'}</td>
-          <td style="font-size:13px;">${statusBadge(a.status)}</td>
+          <td style="font-weight:800; font-size:13px; color:#000000;">${num(a.expired || 0)}</td>
           <td style="background:transparent;">
               <div class="flex" style="justify-content:center; gap:8px; flex-wrap:wrap; background:transparent;">
                 <button class="btn secondary small" data-action="edit" data-id="${a._id}" style="display: ${(typeof authSystem !== 'undefined' && authSystem.canEdit()) ? 'inline-flex' : 'none'};">
@@ -4658,8 +4657,10 @@
           acc.total += Number(a.total_users||0);
           acc.active += Number(a.active||0);
           acc.deficit_users += Number(a.deficit_users||0);
+          acc.reached_total += Number(a.reached_total||0);
+          acc.expired += Number(a.expired||0);
           return acc;
-        }, {total:0, active:0, deficit_users:0});
+        }, {total:0, active:0, deficit_users:0, reached_total:0, expired:0});
         const sub = document.createElement('tr');
         sub.className = 'subtotal-title';
         sub.innerHTML = `
@@ -4673,6 +4674,7 @@
           <td></td>
           <td style="font-weight:600; font-size:12px; padding:8px;">${totals.deficit_users ? `<span style="${getDeficitUsersColor(totals.deficit_users, totals.total)}">${num(totals.deficit_users)}</span>` : '-'}</td>
           <td></td>
+          <td style="font-weight:600; font-size:12px; padding:8px;">${num(totals.expired)}</td>
           <td></td>
         `;
         tbody.appendChild(sub);
@@ -4701,40 +4703,174 @@
     }
 
     function updateCharts(filtered){
+      const isLightMode = !document.documentElement.hasAttribute('data-theme') || document.documentElement.getAttribute('data-theme') !== 'dark';
+      const textColor = isLightMode ? '#333333' : '#f5f5f5';
+      const gridColor = isLightMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+      const backgroundColor = isLightMode ? '#ffffff' : '#1a1a1a';
+
       const top = filtered.slice().sort((a,b)=>b.total_users - a.total_users).slice(0,10);
       const labels = top.map(a=>a.name || a.itpc_site || '—');
       const totalData = top.map(a=>a.total_users);
       const activeData = top.map(a=>a.active);
 
-      const isLightMode = !document.documentElement.hasAttribute('data-theme') || document.documentElement.getAttribute('data-theme') !== 'dark';
-      const textColor = isLightMode ? '#333333' : '#f5f5f5';
-      const gridColor = isLightMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
-
-      const barCtx = document.getElementById('barChart').getContext('2d');
-      if(barChart) barChart.destroy();
+      if(barChart) {
+        barChart.destroy();
+        barChart = null;
+      }
+      
+      const barCanvas = document.getElementById('barChart');
+      const existingBarChart = Chart.getChart(barCanvas);
+      if(existingBarChart) {
+        existingBarChart.destroy();
+      }
+      
+      const barCtx = barCanvas.getContext('2d');
       barChart = new Chart(barCtx, {
         type:'bar',
         data:{
           labels,
           datasets:[
-            { label:'إجمالي المستخدمين', data: totalData },
-            { label:'المستخدمون النشطون', data: activeData }
+            { 
+              label:'إجمالي المستخدمين', 
+              data: totalData,
+              backgroundColor: (ctx) => {
+                const canvas = ctx.chart.canvas;
+                const ctx2d = canvas.getContext('2d');
+                const gradient = ctx2d.createLinearGradient(0, 0, 0, canvas.height);
+                gradient.addColorStop(0, 'rgba(59, 130, 246, 0.9)');
+                gradient.addColorStop(0.5, 'rgba(99, 102, 241, 0.85)');
+                gradient.addColorStop(1, 'rgba(139, 92, 246, 0.8)');
+                return gradient;
+              },
+              borderColor: 'rgba(59, 130, 246, 1)',
+              borderWidth: 2.5,
+              borderRadius: 10,
+              borderSkipped: false,
+              barThickness: 'flex',
+              maxBarThickness: 50,
+              shadowOffsetX: 0,
+              shadowOffsetY: 4,
+              shadowBlur: 8,
+              shadowColor: 'rgba(59, 130, 246, 0.3)',
+            },
+            { 
+              label:'المستخدمون النشطون', 
+              data: activeData,
+              backgroundColor: (ctx) => {
+                const canvas = ctx.chart.canvas;
+                const ctx2d = canvas.getContext('2d');
+                const gradient = ctx2d.createLinearGradient(0, 0, 0, canvas.height);
+                gradient.addColorStop(0, 'rgba(16, 185, 129, 0.9)');
+                gradient.addColorStop(0.5, 'rgba(34, 197, 94, 0.85)');
+                gradient.addColorStop(1, 'rgba(74, 222, 128, 0.8)');
+                return gradient;
+              },
+              borderColor: 'rgba(16, 185, 129, 1)',
+              borderWidth: 2.5,
+              borderRadius: 10,
+              borderSkipped: false,
+              barThickness: 'flex',
+              maxBarThickness: 50,
+              shadowOffsetX: 0,
+              shadowOffsetY: 4,
+              shadowBlur: 8,
+              shadowColor: 'rgba(16, 185, 129, 0.3)',
+            }
           ]
         },
         options:{
           responsive:true,
-          maintainAspectRatio:false,
+          maintainAspectRatio:true,
+          aspectRatio: 1.5,
+          animation: {
+            duration: 2000,
+            easing: 'easeOutQuart',
+            onComplete: function() {
+              try {
+                const chart = this.chart;
+                if (chart && chart.canvas) {
+                  const ctx = chart.canvas.getContext('2d');
+                  if (ctx) {
+                    ctx.save();
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+                    ctx.restore();
+                  }
+                }
+              } catch (e) {
+              }
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
           plugins:{
             legend:{
               display:true, 
               position:'top',
+              align: 'center',
               labels:{
                 color: textColor,
                 font: {
-                  size: 14,
-                  weight: 'bold'
-                }
+                  size: 15,
+                  weight: '700',
+                  family: "'Cairo', sans-serif"
+                },
+                padding: 18,
+                usePointStyle: true,
+                pointStyle: 'circle',
+                boxWidth: 14,
+                boxHeight: 14,
+                textAlign: 'right'
+              },
+              title: {
+                display: false
               }
+            },
+            tooltip: {
+              backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.98)' : 'rgba(26, 26, 26, 0.98)',
+              titleColor: textColor,
+              bodyColor: textColor,
+              borderColor: isLightMode ? 'rgba(128, 28, 50, 0.2)' : 'rgba(255, 71, 87, 0.3)',
+              borderWidth: 2,
+              padding: 16,
+              cornerRadius: 12,
+              displayColors: true,
+              boxPadding: 8,
+              titleFont: {
+                size: 15,
+                weight: 'bold',
+                family: "'Cairo', sans-serif"
+              },
+              bodyFont: {
+                  size: 14,
+                weight: '600',
+                family: "'Cairo', sans-serif"
+              },
+              footerFont: {
+                size: 12,
+                family: "'Cairo', sans-serif"
+              },
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': ' + num(context.parsed.y) + ' مستخدم';
+                },
+                labelColor: function(context) {
+                  return {
+                    borderColor: context.dataset.borderColor,
+                    backgroundColor: context.dataset.backgroundColor,
+                    borderWidth: 2,
+                    borderRadius: 4
+                  };
+                }
+              },
+              titleSpacing: 8,
+              bodySpacing: 6,
+              footerSpacing: 6,
+              usePointStyle: true,
+              boxWidth: 12,
+              boxHeight: 12
             }
           },
           scales:{
@@ -4742,12 +4878,16 @@
               ticks:{
                 color: textColor,
                 font: {
-                  size: 12,
-                  weight: 'bold'
-                }
+                  size: 11,
+                  weight: 'bold',
+                  family: "'Cairo', sans-serif"
+                },
+                maxRotation: 45,
+                minRotation: 45
               },
               grid: {
-                color: gridColor
+                color: gridColor,
+                drawBorder: false
               }
             }, 
             y:{
@@ -4756,11 +4896,16 @@
                 color: textColor,
                 font: {
                   size: 12,
-                  weight: 'bold'
+                  weight: 'bold',
+                  family: "'Cairo', sans-serif"
+                },
+                callback: function(value) {
+                  return num(value);
                 }
               },
               grid: {
-                color: gridColor
+                color: gridColor,
+                drawBorder: false
               }
             }
           }
@@ -4770,31 +4915,654 @@
       const sumActive = filtered.reduce((s,a)=>s + a.active,0);
       const sumTotal = filtered.reduce((s,a)=>s + a.total_users,0);
       const inactive = Math.max(0, sumTotal - sumActive);
-      const pieCtx = document.getElementById('pieChart').getContext('2d');
-      if(pieChart) pieChart.destroy();
+      
+      if(pieChart) {
+        pieChart.destroy();
+        pieChart = null;
+      }
+      
+      const pieCanvas = document.getElementById('pieChart');
+      const existingPieChart = Chart.getChart(pieCanvas);
+      if(existingPieChart) {
+        existingPieChart.destroy();
+      }
+      
+      const pieCtx = pieCanvas.getContext('2d');
       pieChart = new Chart(pieCtx, {
         type:'doughnut',
         data:{
           labels:['نشطون','غير نشطين'],
-          datasets:[{ data:[sumActive, inactive] }]
+            datasets:[{ 
+            data:[sumActive, inactive],
+            backgroundColor: (ctx) => {
+              const chart = ctx.chart;
+              const {chartArea} = chart;
+              if (!chartArea) {
+                return ['rgba(16, 185, 129, 0.9)', 'rgba(239, 68, 68, 0.9)'];
+              }
+              const centerX = (chartArea.left + chartArea.right) / 2;
+              const centerY = (chartArea.top + chartArea.bottom) / 2;
+              const r = Math.min(
+                (chartArea.right - chartArea.left) / 2,
+                (chartArea.bottom - chartArea.top) / 2
+              );
+              
+              const canvasCtx = chart.canvas ? chart.canvas.getContext('2d') : null;
+              if (!canvasCtx) return 'rgba(16, 185, 129, 0.8)';
+              
+              const gradient1 = canvasCtx.createRadialGradient(centerX, centerY, 0, centerX, centerY, r);
+              gradient1.addColorStop(0, 'rgba(16, 185, 129, 1)');
+              gradient1.addColorStop(0.7, 'rgba(34, 197, 94, 0.9)');
+              gradient1.addColorStop(1, 'rgba(74, 222, 128, 0.85)');
+              
+              const gradient2 = canvasCtx.createRadialGradient(centerX, centerY, 0, centerX, centerY, r);
+              gradient2.addColorStop(0, 'rgba(239, 68, 68, 1)');
+              gradient2.addColorStop(0.7, 'rgba(248, 113, 113, 0.9)');
+              gradient2.addColorStop(1, 'rgba(252, 165, 165, 0.85)');
+              
+              return [gradient1, gradient2];
+            },
+            borderColor: [
+              'rgba(255, 255, 255, 0.9)',
+              'rgba(255, 255, 255, 0.9)'
+            ],
+            borderWidth: 4,
+            hoverOffset: 15,
+            hoverBorderWidth: 5,
+            cutout: '60%',
+            spacing: 3
+          }]
         },
         options:{
           responsive:true, 
-          maintainAspectRatio:false, 
+          maintainAspectRatio:true,
+          aspectRatio: 1.3,
+          animation: {
+            animateRotate: true,
+            animateScale: true,
+            duration: 2000,
+            easing: 'easeOutQuart'
+          },
           plugins:{
             legend:{
               position:'bottom',
+              align: 'center',
               labels:{
                 color: textColor,
                 font: {
-                  size: 14,
-                  weight: 'bold'
-                }
+                  size: 15,
+                  weight: '700',
+                  family: "'Cairo', sans-serif"
+                },
+                padding: 18,
+                usePointStyle: true,
+                pointStyle: 'circle',
+                boxWidth: 14,
+                boxHeight: 14,
+                textAlign: 'right'
               }
+            },
+            tooltip: {
+              backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.98)' : 'rgba(26, 26, 26, 0.98)',
+              titleColor: textColor,
+              bodyColor: textColor,
+              borderColor: isLightMode ? 'rgba(128, 28, 50, 0.2)' : 'rgba(255, 71, 87, 0.3)',
+              borderWidth: 2,
+              padding: 16,
+              cornerRadius: 12,
+              displayColors: true,
+              boxPadding: 8,
+              titleFont: {
+                size: 15,
+                weight: 'bold',
+                family: "'Cairo', sans-serif"
+              },
+              bodyFont: {
+                  size: 14,
+                weight: '600',
+                family: "'Cairo', sans-serif"
+              },
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.parsed || 0;
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                  return label + ': ' + num(value) + ' (' + percentage + '%)';
+                },
+                labelColor: function(context) {
+                  const bgColors = context.dataset.backgroundColor;
+                  const borderColors = context.dataset.borderColor;
+                  return {
+                    borderColor: Array.isArray(borderColors) ? borderColors[context.dataIndex] : borderColors,
+                    backgroundColor: Array.isArray(bgColors) ? bgColors[context.dataIndex] : bgColors,
+                    borderWidth: 2,
+                    borderRadius: 4
+                  };
+                }
+              },
+              usePointStyle: true,
+              boxWidth: 12,
+              boxHeight: 12
             }
           }
         }
       });
+
+      const growthData = filtered
+        .filter(a => (a.growth || 0) !== 0)
+        .sort((a,b)=>Math.abs(b.growth||0) - Math.abs(a.growth||0));
+      const growthLabels = growthData.map(a=>a.name || '—');
+      const growthValues = growthData.map(a=>a.growth||0);
+      const growthColors = growthValues.map(v => v > 0 ? 'rgba(16, 185, 129, 0.8)' : v < 0 ? 'rgba(239, 68, 68, 0.8)' : 'rgba(156, 163, 175, 0.8)');
+
+      const growthCanvas = document.getElementById('growthChart');
+      if(growthChart) {
+        growthChart.destroy();
+        growthChart = null;
+      }
+      const existingGrowthChart = Chart.getChart(growthCanvas);
+      if(existingGrowthChart) {
+        existingGrowthChart.destroy();
+      }
+      if(growthData.length > 0) {
+        growthChart = new Chart(growthCanvas.getContext('2d'), {
+          type:'bar',
+          data:{
+            labels: growthLabels,
+            datasets:[{ 
+              label:'النمو الأسبوعي',
+              data: growthValues,
+              backgroundColor: (ctx) => {
+                const canvas = ctx.chart.canvas;
+                const ctx2d = canvas.getContext('2d');
+                return growthValues.map(v => {
+                  const gradient = ctx2d.createLinearGradient(0, 0, 0, canvas.height);
+                  if(v > 0) {
+                    gradient.addColorStop(0, 'rgba(16, 185, 129, 0.95)');
+                    gradient.addColorStop(0.5, 'rgba(34, 197, 94, 0.9)');
+                    gradient.addColorStop(1, 'rgba(74, 222, 128, 0.85)');
+                  } else if(v < 0) {
+                    gradient.addColorStop(0, 'rgba(239, 68, 68, 0.95)');
+                    gradient.addColorStop(0.5, 'rgba(248, 113, 113, 0.9)');
+                    gradient.addColorStop(1, 'rgba(252, 165, 165, 0.85)');
+                  } else {
+                    gradient.addColorStop(0, 'rgba(156, 163, 175, 0.8)');
+                    gradient.addColorStop(1, 'rgba(209, 213, 219, 0.7)');
+                  }
+                  return gradient;
+                });
+              },
+              borderColor: growthValues.map(v => v > 0 ? 'rgba(16, 185, 129, 1)' : v < 0 ? 'rgba(239, 68, 68, 1)' : 'rgba(156, 163, 175, 1)'),
+              borderWidth: 2.5,
+              borderRadius: 10,
+              barThickness: 'flex',
+              maxBarThickness: growthData.length > 20 ? 25 : 45,
+              shadowOffsetX: 0,
+              shadowOffsetY: 4,
+              shadowBlur: 8,
+              shadowColor: growthValues.map(v => v > 0 ? 'rgba(16, 185, 129, 0.3)' : v < 0 ? 'rgba(239, 68, 68, 0.3)' : 'rgba(156, 163, 175, 0.2)')
+            }]
+          },
+          options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            animation: {
+              duration: 2000,
+              easing: 'easeOutQuart'
+            },
+            plugins:{
+              legend:{
+                display:false
+              },
+              tooltip: {
+                backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.98)' : 'rgba(26, 26, 26, 0.98)',
+                titleColor: textColor,
+                bodyColor: textColor,
+                borderColor: isLightMode ? 'rgba(128, 28, 50, 0.2)' : 'rgba(255, 71, 87, 0.3)',
+                borderWidth: 2,
+                padding: 16,
+                cornerRadius: 12,
+                displayColors: true,
+                boxPadding: 8,
+                titleFont: {
+                  size: 15,
+                  weight: 'bold',
+                  family: "'Cairo', sans-serif"
+                },
+                bodyFont: {
+                  size: 14,
+                  weight: '600',
+                  family: "'Cairo', sans-serif"
+                },
+                callbacks: {
+                  label: function(context) {
+                    const value = context.parsed.y;
+                    return 'النمو: ' + signedNum(value) + ' مستخدم';
+                  },
+                  labelColor: function(context) {
+                    return {
+                      borderColor: context.dataset.borderColor[context.dataIndex],
+                      backgroundColor: context.dataset.backgroundColor[context.dataIndex],
+                      borderWidth: 2,
+                      borderRadius: 4
+                    };
+                  }
+                },
+                usePointStyle: true,
+                boxWidth: 12,
+                boxHeight: 12
+              }
+            },
+            scales:{
+              x:{
+                ticks:{
+                  color: textColor,
+                  font: {
+                    size: growthData.length > 20 ? 9 : 11,
+                    weight: 'bold',
+                    family: "'Cairo', sans-serif"
+                  },
+                  maxRotation: growthData.length > 20 ? 90 : 45,
+                  minRotation: growthData.length > 20 ? 90 : 45
+                },
+                grid: {
+                  display: false
+                }
+              }, 
+              y:{
+                beginAtZero:false,
+                ticks:{
+                  color: textColor,
+                  font: {
+                    size: 12,
+                    weight: 'bold',
+                    family: "'Cairo', sans-serif"
+                  },
+                  callback: function(value) {
+                    return signedNum(value);
+                  }
+                },
+                grid: {
+                  color: gridColor,
+                  drawBorder: false
+                }
+              }
+            }
+          }
+        });
+      } else {
+        if(growthCanvas) {
+          growthCanvas.style.display = 'none';
+          const parent = growthCanvas.parentElement;
+          if(!parent.querySelector('.no-data-message')) {
+            const msg = document.createElement('div');
+            msg.className = 'no-data-message';
+            msg.style.cssText = 'text-align:center; padding:40px; color:var(--text-secondary); font-size:14px;';
+            msg.textContent = 'لا توجد بيانات للنمو الأسبوعي';
+            parent.appendChild(msg);
+          }
+        }
+      }
+
+      const phases = ['OLD', 'PHASE2', 'PHASE3'];
+      const phaseData = phases.map(phase => {
+        const phaseAgents = filtered.filter(a => (a.phase || '').toUpperCase() === phase);
+        if(phaseAgents.length === 0) return null;
+        const total = phaseAgents.reduce((s,a)=>s + (a.total_users||0), 0);
+        const active = phaseAgents.reduce((s,a)=>s + (a.active||0), 0);
+        return total > 0 ? (active / total * 100) : 0;
+      }).filter(v => v !== null);
+      const phaseLabels = phases.filter((phase, idx) => phaseData[idx] !== null).map(p => arabicPhaseLabel(p));
+
+      const phaseCanvas = document.getElementById('phaseChart');
+      if(phaseChart) {
+        phaseChart.destroy();
+        phaseChart = null;
+      }
+      const existingPhaseChart = Chart.getChart(phaseCanvas);
+      if(existingPhaseChart) {
+        existingPhaseChart.destroy();
+      }
+      if(phaseData.length > 0) {
+        phaseChart = new Chart(phaseCanvas.getContext('2d'), {
+          type:'bar',
+          data:{
+            labels: phaseLabels,
+            datasets:[{ 
+              label:'معدل التفعيل (%)',
+              data: phaseData,
+              backgroundColor: (ctx) => {
+                const canvas = ctx.chart.canvas;
+                const ctx2d = canvas.getContext('2d');
+                const gradients = [
+                  ctx2d.createLinearGradient(0, 0, 0, canvas.height),
+                  ctx2d.createLinearGradient(0, 0, 0, canvas.height),
+                  ctx2d.createLinearGradient(0, 0, 0, canvas.height)
+                ];
+                gradients[0].addColorStop(0, 'rgba(59, 130, 246, 0.95)');
+                gradients[0].addColorStop(0.5, 'rgba(99, 102, 241, 0.9)');
+                gradients[0].addColorStop(1, 'rgba(139, 92, 246, 0.85)');
+                gradients[1].addColorStop(0, 'rgba(139, 92, 246, 0.95)');
+                gradients[1].addColorStop(0.5, 'rgba(168, 85, 247, 0.9)');
+                gradients[1].addColorStop(1, 'rgba(192, 132, 252, 0.85)');
+                gradients[2].addColorStop(0, 'rgba(236, 72, 153, 0.95)');
+                gradients[2].addColorStop(0.5, 'rgba(244, 63, 94, 0.9)');
+                gradients[2].addColorStop(1, 'rgba(251, 113, 133, 0.85)');
+                return gradients.slice(0, phaseData.length);
+              },
+              borderColor: [
+                'rgba(59, 130, 246, 1)',
+                'rgba(139, 92, 246, 1)',
+                'rgba(236, 72, 153, 1)'
+              ],
+              borderWidth: 2.5,
+              borderRadius: 10,
+              barThickness: 'flex',
+              maxBarThickness: 60,
+              shadowOffsetX: 0,
+              shadowOffsetY: 4,
+              shadowBlur: 8,
+              shadowColor: 'rgba(128, 28, 50, 0.2)'
+            }]
+          },
+          options:{
+            responsive:true,
+            maintainAspectRatio:true,
+            aspectRatio: 1.5,
+            animation: {
+              duration: 2000,
+              easing: 'easeOutQuart'
+            },
+            plugins:{
+              legend:{
+                display:false
+              },
+              tooltip: {
+                backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.98)' : 'rgba(26, 26, 26, 0.98)',
+                titleColor: textColor,
+                bodyColor: textColor,
+                borderColor: isLightMode ? 'rgba(128, 28, 50, 0.2)' : 'rgba(255, 71, 87, 0.3)',
+                borderWidth: 2,
+                padding: 16,
+                cornerRadius: 12,
+                displayColors: true,
+                boxPadding: 8,
+                titleFont: {
+                  size: 15,
+                  weight: 'bold',
+                  family: "'Cairo', sans-serif"
+                },
+                bodyFont: {
+                  size: 14,
+                  weight: '600',
+                  family: "'Cairo', sans-serif"
+                },
+                callbacks: {
+                  label: function(context) {
+                    return 'معدل التفعيل: ' + context.parsed.y.toFixed(1) + '%';
+                  },
+                  labelColor: function(context) {
+                    return {
+                      borderColor: context.dataset.borderColor[context.dataIndex],
+                      backgroundColor: context.dataset.backgroundColor[context.dataIndex],
+                      borderWidth: 2,
+                      borderRadius: 4
+                    };
+                  }
+                },
+                usePointStyle: true,
+                boxWidth: 12,
+                boxHeight: 12
+              }
+            },
+            scales:{
+              x:{
+                ticks:{
+                  color: textColor,
+                  font: {
+                    size: 12,
+                    weight: 'bold',
+                    family: "'Cairo', sans-serif"
+                  }
+                },
+                grid: {
+                  display: false
+                }
+              }, 
+              y:{
+                beginAtZero:true,
+                max: 100,
+                ticks:{
+                  color: textColor,
+                  font: {
+                    size: 12,
+                    weight: 'bold',
+                    family: "'Cairo', sans-serif"
+                  },
+                  callback: function(value) {
+                    return value + '%';
+                  }
+                },
+                grid: {
+                  color: gridColor,
+                  drawBorder: false
+                }
+              }
+            }
+          }
+        });
+      } else {
+        if(phaseCanvas) {
+          phaseCanvas.style.display = 'none';
+          const parent = phaseCanvas.parentElement;
+          if(!parent.querySelector('.no-data-message')) {
+            const msg = document.createElement('div');
+            msg.className = 'no-data-message';
+            msg.style.cssText = 'text-align:center; padding:40px; color:var(--text-secondary); font-size:14px;';
+            msg.textContent = 'لا توجد بيانات للمراحل';
+            parent.appendChild(msg);
+          }
+        }
+      }
+
+      const deficitData = filtered
+        .filter(a => (a.deficit_users || 0) > 0)
+        .sort((a,b)=>(b.deficit_users||0) - (a.deficit_users||0));
+      const deficitLabels = deficitData.map(a=>a.name || '—');
+      const deficitValues = deficitData.map(a=>a.deficit_users||0);
+
+      const deficitCanvas = document.getElementById('deficitChart');
+      if(deficitChart) {
+        deficitChart.destroy();
+        deficitChart = null;
+      }
+      const existingDeficitChart = Chart.getChart(deficitCanvas);
+      if(existingDeficitChart) {
+        existingDeficitChart.destroy();
+      }
+      if(deficitData.length > 0) {
+        if(deficitCanvas) {
+          deficitCanvas.style.display = 'block';
+          const parent = deficitCanvas.parentElement;
+          const noDataMsg = parent.querySelector('.no-data-message');
+          if(noDataMsg) noDataMsg.remove();
+        }
+        deficitChart = new Chart(deficitCanvas.getContext('2d'), {
+          type:'bar',
+          data:{
+            labels: deficitLabels,
+            datasets:[{ 
+              label:'عجز المستخدمين',
+              data: deficitValues,
+              backgroundColor: (ctx) => {
+                const canvas = ctx.chart.canvas;
+                const ctx2d = canvas.getContext('2d');
+                return deficitValues.map((v, idx) => {
+                  const total = deficitData[idx].total_users || 1;
+                  const percent = (v / total) * 100;
+                  const gradient = ctx2d.createLinearGradient(0, 0, canvas.width, 0);
+                  if(percent < 5) {
+                    gradient.addColorStop(0, 'rgba(245, 158, 11, 0.95)');
+                    gradient.addColorStop(0.5, 'rgba(251, 191, 36, 0.9)');
+                    gradient.addColorStop(1, 'rgba(253, 224, 71, 0.85)');
+                  } else if(percent < 10) {
+                    gradient.addColorStop(0, 'rgba(251, 146, 60, 0.95)');
+                    gradient.addColorStop(0.5, 'rgba(249, 115, 22, 0.9)');
+                    gradient.addColorStop(1, 'rgba(234, 88, 12, 0.85)');
+                  } else {
+                    gradient.addColorStop(0, 'rgba(239, 68, 68, 0.95)');
+                    gradient.addColorStop(0.5, 'rgba(248, 113, 113, 0.9)');
+                    gradient.addColorStop(1, 'rgba(220, 38, 38, 0.85)');
+                  }
+                  return gradient;
+                });
+              },
+              borderColor: deficitValues.map((v, idx) => {
+                const total = deficitData[idx].total_users || 1;
+                const percent = (v / total) * 100;
+                if(percent < 5) return 'rgba(245, 158, 11, 1)';
+                if(percent < 10) return 'rgba(251, 146, 60, 1)';
+                return 'rgba(239, 68, 68, 1)';
+              }),
+              borderWidth: 2.5,
+              borderRadius: 10,
+              barThickness: 'flex',
+              maxBarThickness: deficitData.length > 20 ? 30 : 50,
+              shadowOffsetX: 4,
+              shadowOffsetY: 0,
+              shadowBlur: 8,
+              shadowColor: deficitValues.map((v, idx) => {
+                const total = deficitData[idx].total_users || 1;
+                const percent = (v / total) * 100;
+                if(percent < 5) return 'rgba(245, 158, 11, 0.3)';
+                if(percent < 10) return 'rgba(251, 146, 60, 0.3)';
+                return 'rgba(239, 68, 68, 0.3)';
+              })
+            }]
+          },
+          options:{
+            indexAxis: 'y',
+            responsive:true,
+            maintainAspectRatio:false,
+            animation: {
+              duration: 2000,
+              easing: 'easeOutQuart'
+            },
+            plugins:{
+              legend:{
+                display:false
+              },
+              tooltip: {
+                backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.98)' : 'rgba(26, 26, 26, 0.98)',
+                titleColor: textColor,
+                bodyColor: textColor,
+                borderColor: isLightMode ? 'rgba(128, 28, 50, 0.2)' : 'rgba(255, 71, 87, 0.3)',
+                borderWidth: 2,
+                padding: 16,
+                cornerRadius: 12,
+                displayColors: true,
+                boxPadding: 8,
+                titleFont: {
+                  size: 15,
+                  weight: 'bold',
+                  family: "'Cairo', sans-serif"
+                },
+                bodyFont: {
+                  size: 14,
+                  weight: '600',
+                  family: "'Cairo', sans-serif"
+                },
+                callbacks: {
+                  label: function(context) {
+                    const value = context.parsed.x;
+                    const agent = deficitData[context.dataIndex];
+                    const percent = agent.total_users > 0 ? ((value / agent.total_users) * 100).toFixed(1) : 0;
+                    return 'العجز: ' + num(value) + ' مستخدم (' + percent + '%)';
+                  },
+                  labelColor: function(context) {
+                    const idx = context.dataIndex;
+                    const total = deficitData[idx].total_users || 1;
+                    const percent = (deficitValues[idx] / total) * 100;
+                    let bgColor;
+                    if(percent < 5) bgColor = 'rgba(245, 158, 11, 0.9)';
+                    else if(percent < 10) bgColor = 'rgba(251, 146, 60, 0.9)';
+                    else bgColor = 'rgba(239, 68, 68, 0.9)';
+                    return {
+                      borderColor: context.dataset.borderColor[idx],
+                      backgroundColor: bgColor,
+                      borderWidth: 2,
+                      borderRadius: 4
+                    };
+                  }
+                },
+                usePointStyle: true,
+                boxWidth: 12,
+                boxHeight: 12
+              }
+            },
+            scales:{
+              x:{
+                beginAtZero:true,
+                ticks:{
+                  color: textColor,
+                  font: {
+                    size: 12,
+                    weight: 'bold',
+                    family: "'Cairo', sans-serif"
+                  },
+                  callback: function(value) {
+                    return num(value);
+                  }
+                },
+                grid: {
+                  color: gridColor,
+                  drawBorder: false
+                }
+              }, 
+              y:{
+                ticks:{
+                  color: textColor,
+                  font: {
+                    size: deficitData.length > 20 ? 9 : 11,
+                    weight: 'bold',
+                    family: "'Cairo', sans-serif"
+                  }
+                },
+                grid: {
+                  display: false
+                }
+              }
+            }
+          }
+        });
+      } else {
+        if(deficitCanvas) {
+          deficitCanvas.style.display = 'none';
+          const parent = deficitCanvas.parentElement;
+          if(!parent.querySelector('.no-data-message')) {
+            const msg = document.createElement('div');
+            msg.className = 'no-data-message';
+            msg.style.cssText = 'text-align:center; padding:40px; color:var(--text-secondary); font-size:14px;';
+            msg.textContent = 'لا يوجد عجز في المستخدمين';
+            parent.appendChild(msg);
+          }
+        }
+      }
+      
+      if(growthCanvas && growthData.length > 0) {
+        growthCanvas.style.display = 'block';
+        const parent = growthCanvas.parentElement;
+        const noDataMsg = parent.querySelector('.no-data-message');
+        if(noDataMsg) noDataMsg.remove();
+      }
+      
+      if(phaseCanvas && phaseData.length > 0) {
+        phaseCanvas.style.display = 'block';
+        const parent = phaseCanvas.parentElement;
+        const noDataMsg = parent.querySelector('.no-data-message');
+        if(noDataMsg) noDataMsg.remove();
+      }
     }
 
     function num(n){ 
@@ -4816,18 +5584,15 @@
         return isDark ? 'color: #ffffff !important; font-weight: 700;' : 'color: #000000 !important; font-weight: 700;';
       }
       
-      // إذا تطابق (العجز = 0) → أخضر
       if (deficitPercent === 0 || deficitPercent < 0.1) {
         return 'color: #22c55e !important; font-weight: 700;';
       }
       
-      // إذا قريب من النسبة المطلوبة (أقل من 20% من النسبة المطلوبة) → برتقالي
-      const threshold = requiredRate * 0.2; // 20% من النسبة المطلوبة
+      const threshold = requiredRate * 0.2;
       if (deficitPercent <= threshold) {
         return 'color: #f97316 !important; font-weight: 700;';
       }
       
-      // إذا بعيد → أحمر
       return 'color: #ef4444 !important; font-weight: 700;';
     }
     
@@ -4837,18 +5602,15 @@
         return isDark ? 'color: #ffffff !important; font-weight: 700;' : 'color: #000000 !important; font-weight: 700;';
       }
       
-      // إذا تطابق (العجز = 0) → أخضر
       if (deficitUsers === 0) {
         return 'color: #22c55e !important; font-weight: 700;';
       }
       
-      // إذا قريب (أقل من 5% من إجمالي المستخدمين) → برتقالي
-      const threshold = totalUsers * 0.05; // 5% من إجمالي المستخدمين
+      const threshold = totalUsers * 0.05;
       if (deficitUsers <= threshold) {
         return 'color: #f97316 !important; font-weight: 700;';
       }
       
-      // إذا بعيد → أحمر
       return 'color: #ef4444 !important; font-weight: 700;';
     }
     
@@ -4857,18 +5619,15 @@
         return 'color: #000000 !important; font-weight: 700;';
       }
       
-      // إذا تطابق (العجز = 0) → أخضر
       if (deficitUsers === 0) {
         return 'color: #22c55e !important; font-weight: 700;';
       }
       
-      // إذا قريب (أقل من 5% من إجمالي المستخدمين) → برتقالي
-      const threshold = totalUsers * 0.05; // 5% من إجمالي المستخدمين
+      const threshold = totalUsers * 0.05;
       if (deficitUsers <= threshold) {
         return 'color: #f97316 !important; font-weight: 700;';
       }
       
-      // إذا بعيد → أحمر
       return 'color: #ef4444 !important; font-weight: 700;';
     }
     
@@ -4878,25 +5637,21 @@
         return isDark ? 'color: #ffffff !important; font-weight: 700;' : 'color: #000000 !important; font-weight: 700;';
       }
       
-      // إذا تجاوز 50% → برتقالي
       if (activationRate >= 50) {
         return 'color: #f97316 !important; font-weight: 700;';
       }
       
       const diff = Math.abs(activationRate - requiredRate);
       
-      // إذا طابق (الفرق أقل من 0.5%) → أخضر
       if (diff < 0.5) {
         return 'color: #22c55e !important; font-weight: 700;';
       }
       
-      // إذا قريب (الفرق أقل من 5% من النسبة المطلوبة) → برتقالي
-      const threshold = requiredRate * 0.05; // 5% من النسبة المطلوبة
+      const threshold = requiredRate * 0.05;
       if (diff <= threshold) {
         return 'color: #f97316 !important; font-weight: 700;';
       }
       
-      // إذا بعيد → أحمر
       return 'color: #ef4444 !important; font-weight: 700;';
     }
     function escapeHtml(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -5083,6 +5838,7 @@
       modalEdit.classList.add('open');
       editName.value = agent.name || '';
       editTotal.value = agent.total_users || 0;
+      editReachedTotal.value = agent.reached_total || agent.active || 0;
       editActive.value = agent.active || 0;
       modalEdit.dataset.editIndex = idx;
       
@@ -5095,11 +5851,13 @@
       if(idx < 0) return;
       const agent = agents[idx];
       if(!agent) return;
+      const newReachedTotal = Number(editReachedTotal.value || 0);
       const newActive = Number(editActive.value || 0);
       
       if(!Array.isArray(agent.history)) agent.history = [];
       agent.history.push({ date: toYMDLocal(new Date()), active: Number(agent.active||0) });
       agent.prev_active = Number(agent.active||0); 
+      agent.reached_total = newReachedTotal || newActive;
       agent.active = newActive;
       computeAgent(agent);
       
@@ -5114,6 +5872,7 @@
               .update({ 
                 active: agent.active, 
                 prev_active: agent.prev_active,
+                reached_total: agent.reached_total,
                 board_name: agent.board_name
               })
             .eq('id', dbId);
@@ -5153,6 +5912,7 @@
       const board = (document.getElementById('new_board')?.value || '').trim();
       const phone = (document.getElementById('new_phone')?.value || '').trim();
       const total = Number(document.getElementById('new_total').value || 0);
+      const reached_total = Number(document.getElementById('new_reached_total').value || 0);
       const active = Number(document.getElementById('new_active').value || 0);
       
       if(!name){
@@ -5174,6 +5934,7 @@
         board_name: board, 
         phone,
         total_users: total, 
+        reached_total: reached_total || active,
         active, 
         prev_active: 0 
       };
@@ -5212,6 +5973,7 @@
           contract_date: String(obj.contract_date || ''),
           phase: String(obj.phase || ''),
           total_users: Number(obj.total_users || 0),
+          reached_total: Number(obj.reached_total || 0),
           active: Number(obj.active || 0),
           prev_active: Number(obj.prev_active || 0)
         };
@@ -5254,6 +6016,7 @@
               contract_date: String(obj.contract_date || ''),
               phase: String(obj.phase || ''),
               total_users: Number(obj.total_users || 0),
+              reached_total: Number(obj.reached_total || 0),
               active: Number(obj.active || 0),
               prev_active: Number(obj.prev_active || 0)
             };
@@ -5316,6 +6079,7 @@
       document.getElementById('new_note').value='';
       document.getElementById('new_phone').value='';
       document.getElementById('new_total').value='';
+      document.getElementById('new_reached_total').value='';
       document.getElementById('new_active').value='';
       
       
@@ -5405,6 +6169,7 @@
             board_name: row.board_name || '', 
             phone: row.phone || '',
             total_users: row.total_users,
+            reached_total: row.reached_total || row.active || 0,
             active: row.active, 
             prev_active: row.prev_active || 0,
             history: []
@@ -5542,11 +6307,10 @@
 
     const STORAGE_KEY_NOTIFICATIONS = 'agents_notifications_v1';
     
-    // إعادة تسمية المتغير لتجنب التعارض مع نظام الإشعارات
-    let notificationsData = JSON.parse(localStorage.getItem(STORAGE_KEY_NOTIFICATIONS) || '[]');
+    let agentNotifications = JSON.parse(localStorage.getItem(STORAGE_KEY_NOTIFICATIONS) || '[]');
     
     function saveNotifications() {
-      localStorage.setItem(STORAGE_KEY_NOTIFICATIONS, JSON.stringify(notificationsData));
+      localStorage.setItem(STORAGE_KEY_NOTIFICATIONS, JSON.stringify(agentNotifications));
     }
     
     function getUniqueITPCSites() {
@@ -5636,7 +6400,7 @@
     function sendNotificationToAgents(agentIds, message) {
       const timestamp = new Date().toISOString();
       agentIds.forEach(agentId => {
-        notificationsData.push({
+        agentNotifications.push({
           id: 'notif_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
           agentId: agentId,
           message: message,
@@ -5649,7 +6413,7 @@
     }
     
     function updateNotificationBadge() {
-      const unreadCount = notificationsData.filter(n => !n.read).length;
+      const unreadCount = agentNotifications.filter(n => !n.read).length;
       const btn = document.getElementById('btnNotifications');
       if (btn) {
         if (unreadCount > 0) {
@@ -6187,7 +6951,7 @@
 
     document.getElementById('btnWeeklyReport').addEventListener('click', ()=>{
       const todayStr = toYMDLocal(new Date());
-      const headers = ['الوكيل','تاريخ العقد','تاريخ اليوم','FDT',' اللوحة','إجمالي المستخدمين','النشط الحالي','النمو الأسبوعي','معدل التفعيل','النسبة المطلوبة','المطلوب للوصول','نسبة العجز','عدد العجز','الحالة'];
+      const headers = ['الوكيل','تاريخ العقد','تاريخ اليوم','FDT',' اللوحة','إجمالي المستخدمين','العدد الفعلي','النشط الحالي','المنتهي اشتراكهم','النمو الأسبوعي','معدل التفعيل','النسبة المطلوبة','المطلوب للوصول','نسبة العجز','عدد العجز'];
 
       const PHASE_ORDER = ['OLD','PHASE2','PHASE3'];
       let list = agents.slice();
@@ -6212,31 +6976,31 @@
   <title>تقرير متابعة الوكلاء</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { 
+      html, body { 
       width: 100%; 
-      height: 100vh; 
+      min-height: 100vh; 
       margin: 0; 
       padding: 0; 
       font-family: "Arial", "Helvetica", sans-serif;
       color: #000;
-      overflow: hidden;
+      overflow: auto;
     }
     @page { 
       size: A4 landscape; 
       margin: 5mm; 
     }
     table { 
-      width: calc(100vw - 10mm); 
-      height: calc(100vh - 10mm); 
+      width: 100%; 
+      max-width: 100%;
       border-collapse: collapse; 
       table-layout: fixed; 
-      font-size: 10px; 
+      font-size: 8px; 
       font-weight: bold;
-      margin: 5mm;
+      margin: 0;
     }
     th, td { 
       border: 1px solid #000; 
-      padding: 3px 4px; 
+      padding: 2px 3px; 
       text-align: center; 
       white-space: nowrap; 
       overflow: hidden; 
@@ -6247,48 +7011,54 @@
       background: #000; 
       color: #fff; 
       font-weight: bold;
-      font-size: 11px;
+      font-size: 8px;
       height: 25px;
+      line-height: 1.2;
+      white-space: normal;
+      word-wrap: break-word;
     }
     td:nth-child(1) { 
       text-align: right; 
-      width: 10%;
+      width: 8%;
     }
     td:nth-child(2), td:nth-child(3) { 
-      width: 5%;
+      width: 4.5%;
     }
     td:nth-child(4) { 
-      width: 6%;
+      width: 5%;
     }
     td:nth-child(5) { 
-      width: 5%;
+      width: 4.5%;
     }
     td:nth-child(6) { 
-      width: 7%;
+      width: 5.5%;
     }
     td:nth-child(7) { 
-      width: 5%;
+      width: 5.5%;
     }
     td:nth-child(8) { 
-      width: 6%;
+      width: 5.5%;
     }
     td:nth-child(9) { 
-      width: 6%;
+      width: 5.5%;
     }
     td:nth-child(10) { 
-      width: 7%;
+      width: 5.5%;
     }
     td:nth-child(11) { 
-      width: 5%;
+      width: 5.5%;
     }
     td:nth-child(12) { 
-      width: 7%;
+      width: 4.5%;
     }
     td:nth-child(13) { 
-      width: 3%;
+      width: 5.5%;
     }
     td:nth-child(14) { 
-      width: 5%;
+      width: 5.5%;
+    }
+    td:nth-child(15) { 
+      width: 5.5%;
     }
     tr.phase-row td { 
       background: #d0d0d0; 
@@ -6385,44 +7155,52 @@
       }
       html, body { 
         width: 100% !important;
-        height: 100% !important;
+        min-height: 100% !important;
+        height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
         font-family: "Arial", "Helvetica", sans-serif !important;
         color: #000 !important;
         position: relative !important;
+        overflow: visible !important;
       } 
       table {
-        width: calc(100% - 10mm) !important;
-        height: calc(100% - 10mm) !important;
-        font-size: 9px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        font-size: 8px !important;
         font-weight: bold !important;
         border-collapse: collapse !important;
-        margin: 5mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
         table-layout: fixed !important;
       }
       th, td {
-        padding: 3px 4px !important;
-        font-size: 9px !important;
+        padding: 2px 3px !important;
+        font-size: 8px !important;
         font-weight: bold !important;
         border: 1px solid #000 !important;
         color: #000 !important;
-        vertical-align: top !important;
+        vertical-align: middle !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
       }
       
-      td:nth-child(1) { width: 15% !important; text-align: right !important; }
-      td:nth-child(2), td:nth-child(3) { width: 7% !important; }
-      td:nth-child(4) { width: 10% !important; }
-      td:nth-child(5) { width: 10% !important; }
-      td:nth-child(6) { width: 10% !important; }
-      td:nth-child(7) { width: 10% !important; }
-      td:nth-child(8) { width: 6% !important; }
-      td:nth-child(9) { width: 8% !important; }
-      td:nth-child(10) { width: 6% !important; }
-      td:nth-child(11) { width: 8% !important; }
-      td:nth-child(12) { width: 6% !important; }
-      td:nth-child(13) { width: 8% !important; }
-      td:nth-child(14) { width: 10% !important; }
+      td:nth-child(1) { width: 8% !important; text-align: right !important; }
+      td:nth-child(2), td:nth-child(3) { width: 4.5% !important; }
+      td:nth-child(4) { width: 5% !important; }
+      td:nth-child(5) { width: 4.5% !important; }
+      td:nth-child(6) { width: 5.5% !important; }
+      td:nth-child(7) { width: 5.5% !important; }
+      td:nth-child(8) { width: 5.5% !important; }
+      td:nth-child(9) { width: 5.5% !important; }
+      td:nth-child(10) { width: 5.5% !important; }
+      td:nth-child(11) { width: 5.5% !important; }
+      td:nth-child(12) { width: 4.5% !important; }
+      td:nth-child(13) { width: 5.5% !important; }
+      td:nth-child(14) { width: 5.5% !important; }
+      td:nth-child(15) { width: 5.5% !important; }
       
       td:nth-child(4), td:nth-child(5) {
         white-space: normal !important;
@@ -6431,15 +7209,17 @@
         text-overflow: unset !important;
       }
       th {
-        font-size: 10px !important;
-        height: 30px !important;
+        font-size: 8px !important;
+        height: 25px !important;
         background: #000 !important;
         color: #fff !important;
         font-weight: bold !important;
         text-align: center !important;
         vertical-align: middle !important;
-        white-space: nowrap !important;
-        padding: 5px 4px !important;
+        white-space: normal !important;
+        line-height: 1.2 !important;
+        padding: 3px 2px !important;
+        word-wrap: break-word !important;
       }
       tr.phase-row td {
         height: 20px !important;
@@ -6465,18 +7245,99 @@
       thead { display: table-header-group !important; } 
       tfoot { display: table-footer-group !important; } 
       tr, td, th { page-break-inside: avoid !important; } 
+      .page-one {
+        page-break-after: always !important;
+        break-after: page !important;
+        -webkit-page-break-after: always !important;
+        height: calc(100vh - 10mm) !important;
+        overflow: hidden !important;
+      }
       @page {
         size: A4 landscape !important;
         margin: 5mm !important;
       }
+      @page :first {
+        size: A4 landscape !important;
+        margin: 5mm !important;
+      }
+      @page :nth(2) {
+        size: A4 landscape !important;
+        margin: 5mm !important;
+      }
+      .page-break {
+        page-break-before: always !important;
+        break-before: page !important;
+        -webkit-page-break-before: always !important;
+        page-break-after: auto !important;
+        display: block !important;
+        clear: both !important;
+        width: 100% !important;
+        min-height: calc(100vh - 40px) !important;
+        margin: 0 !important;
+        padding: 20px !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        page-break-inside: avoid !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+      div[style*="page-break-before"] {
+        page-break-before: always !important;
+        break-before: page !important;
+        -webkit-page-break-before: always !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+      div[style*="page-break-before: always"] {
+        page-break-before: always !important;
+        break-before: page !important;
+        -webkit-page-break-before: always !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+      .page-break table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        margin-bottom: 20px !important;
+        font-size: 9px !important;
+      }
+      .page-break th,
+      .page-break td {
+        border: 1px solid #000 !important;
+        padding: 6px !important;
+        text-align: center !important;
+        color: #000 !important;
+      }
+      .page-break h2,
+      .page-break h3 {
+        color: #000 !important;
+        font-weight: bold !important;
+        page-break-after: avoid !important;
+      }
+      .page-break thead {
+        display: table-header-group !important;
+      }
+      .page-break tbody {
+        display: table-row-group !important;
+      }
       .signature { position: fixed; bottom: 20px; left: 20px; font-size: 8px; font-weight: normal; color: #999; z-index: 9999; background: white; padding: 5px; }
+      button[onclick*="print"] {
+        display: none !important;
+      }
+    }
+    @media screen {
+      button[onclick*="print"] {
+        display: block !important;
+      }
     }
   </style>
 </head>
 <body>`;
+      html += '<div class="page-one">';
       html += '<table><thead><tr>' + headers.map(h=>`<th>${h}</th>`).join('') + '</tr></thead><tbody>';
 
-      let grand = { total:0, active:0, deficit_users:0 };
+      let grand = { total:0, active:0, deficit_users:0, reached_total:0, expired:0 };
 
       PHASE_ORDER.forEach(phaseKey=>{
         const items = phaseToItems[phaseKey];
@@ -6485,21 +7346,24 @@
         html += `<tr class=\"phase-row\"><td colspan=\"${headers.length}\" class=\"left\">${arabicPhaseLabel(phaseKey)}</td></tr>`;
 
         items.forEach(a=>{
-          html += '<tr>' + [
+          const isNew = (a.months_since || 999) < 6 || a.status === 'جديد';
+          const rowStyle = isNew ? 'background-color: rgba(34, 197, 94, 0.15) !important;' : '';
+          html += `<tr style="${rowStyle}">` + [
             escapeHtml(a.name || ''),
             a.contract_date || '',
             todayStr,
             a.fdt || '',
             (a.board_name || ''),
             num(a.total_users),
+            num(a.reached_total || 0),
             num(a.active),
+            num(a.expired || 0),
             `<span style="font-weight:700; color: ${(a.growth||0) > 0 ? '#22c55e' : (a.growth||0) < 0 ? '#ef4444' : '#000000'} !important;">${signedNum(a.growth||0)}</span>`,
             (a.required_rate === null ? (a.activation_rate||0) + '%' : `<span style="${getActivationRateColor(a.activation_rate||0, a.required_rate)}">${(a.activation_rate||0) + '%'}</span>`),
             (a.required_rate === null ? '-' : a.required_rate + '%'),
             (a.required_rate === null ? '-' : num(a.required_users)),
             (a.required_rate === null ? '-' : `<span style="${getDeficitColor(a.deficit_percent||0, a.required_rate)}">${(a.deficit_percent||0) + '%'}</span>`),
-            (a.deficit_users ? `<span style="${getDeficitUsersColorForReport(a.deficit_users, a.total_users)}">${num(a.deficit_users)}</span>` : '-'),
-            statusBadge(a.status || '')
+            (a.deficit_users ? `<span style="${getDeficitUsersColorForReport(a.deficit_users, a.total_users)}">${num(a.deficit_users)}</span>` : '-')
           ].map(v=>`<td>${v}</td>`).join('') + '</tr>';
         });
 
@@ -6507,28 +7371,229 @@
           acc.total += Number(a.total_users||0);
           acc.active += Number(a.active||0);
           acc.deficit_users += Number(a.deficit_users||0);
+          acc.reached_total += Number(a.reached_total||0);
+          acc.expired += Number(a.expired||0);
           return acc;
-        }, {total:0, active:0, deficit_users:0});
-        grand.total += totals.total; grand.active += totals.active; grand.deficit_users += totals.deficit_users;
+        }, {total:0, active:0, deficit_users:0, reached_total:0, expired:0});
+        grand.total += totals.total; grand.reached_total += totals.reached_total; grand.active += totals.active; grand.expired += totals.expired; grand.deficit_users += totals.deficit_users;
 
         html += `<tr class=\"subtotal-title\"><td colspan=\"${headers.length}\" class=\"left\">مجموع ${arabicPhaseLabel(phaseKey)}</td></tr>`;
         const cells = new Array(headers.length).fill('');
         cells[5] = num(totals.total);
-        cells[6] = num(totals.active);
-        cells[12] = totals.deficit_users ? `<span style="${getDeficitUsersColorForReport(totals.deficit_users, totals.total)}">${num(totals.deficit_users)}</span>` : '-';
+        cells[6] = num(totals.reached_total);
+        cells[7] = num(totals.active);
+        cells[8] = num(totals.expired);
+        cells[14] = totals.deficit_users ? `<span style="${getDeficitUsersColorForReport(totals.deficit_users, totals.total)}">${num(totals.deficit_users)}</span>` : '-';
         html += '<tr class=\"subtotal-values\">' + cells.map(v=>`<td>${v}</td>`).join('') + '</tr>';
       });
 
       const grandCells = new Array(headers.length).fill('');
       grandCells[5] = num(grand.total);
-      grandCells[6] = num(grand.active);
-      grandCells[12] = grand.deficit_users ? `<span style="${getDeficitUsersColorForReport(grand.deficit_users, grand.total)}">${num(grand.deficit_users)}</span>` : '-';
+      grandCells[6] = num(grand.reached_total);
+      grandCells[7] = num(grand.active);
+      grandCells[8] = num(grand.expired);
+      grandCells[14] = grand.deficit_users ? `<span style="${getDeficitUsersColorForReport(grand.deficit_users, grand.total)}">${num(grand.deficit_users)}</span>` : '-';
       html += `<tr class=\"grand-total\"><td colspan=\"${headers.length}\" class=\"left\">المجموع الكل</td></tr>`;
       html += '<tr class=\"grand-total\">' + grandCells.map(v=>`<td>${v}</td>`).join('') + '</tr>';
 
       html += '</tbody></table>';
+      html += '</div>';
+      
+      html += '<div class="page-break" style="page-break-before: always !important; break-before: page !important; -webkit-page-break-before: always !important; display: block !important; width: 100% !important; min-height: calc(100vh - 40px) !important; padding: 15px !important; box-sizing: border-box !important; position: relative !important; margin: 0 !important; margin-top: 0 !important; visibility: visible !important; opacity: 1 !important; background: white !important; page-break-inside: avoid !important; overflow: visible !important;">';
+      html += '<h2 style="text-align: center; margin-bottom: 15px; color: #000; font-size: 18px; font-weight: bold; border-bottom: 3px solid #000; padding-bottom: 8px;"> </h2>';
+      
+      const totalGrowth = list.reduce((sum, a) => sum + (a.growth || 0), 0);
+      const positiveGrowth = list.filter(a => (a.growth || 0) > 0).length;
+      const negativeGrowth = list.filter(a => (a.growth || 0) < 0).length;
+      const noGrowth = list.filter(a => (a.growth || 0) === 0).length;
+      const overallActivation = grand.total > 0 ? ((grand.active / grand.total) * 100) : 0;
+      
+      const statusStats = {};
+      list.forEach(agent => {
+        const status = agent.status || 'غير محدد';
+        if(!statusStats[status]) {
+          statusStats[status] = { count: 0 };
+        }
+        statusStats[status].count++;
+      });
+      
+      const phaseStats = {};
+      PHASE_ORDER.forEach(phaseKey => {
+        const items = phaseToItems[phaseKey];
+        if(items && items.length > 0) {
+          phaseStats[phaseKey] = {
+            count: items.length,
+            total: items.reduce((s, a) => s + (a.total_users || 0), 0),
+            active: items.reduce((s, a) => s + (a.active || 0), 0)
+          };
+        }
+      });
+      
+      const totalDeficit = list.reduce((sum, a) => sum + (a.deficit_users || 0), 0);
+      const agentsWithDeficit = list.filter(a => (a.deficit_users || 0) > 0).length;
+      const statusOrder = ['متفوق', 'مطابق', 'جديد', 'عجز'];
+      const topAgentsByTotal = list.slice().sort((a, b) => (b.total_users || 0) - (a.total_users || 0)).slice(0, 10);
+      const topAgentsByGrowth = list.slice().filter(a => (a.growth || 0) > 0).sort((a, b) => (b.growth || 0) - (a.growth || 0)).slice(0, 10);
+      const topAgentsByNegativeGrowth = list.slice().filter(a => (a.growth || 0) < 0).sort((a, b) => (a.growth || 0) - (b.growth || 0)).slice(0, 10);
+      const topAgentsByDeficit = list.slice().filter(a => (a.deficit_users || 0) > 0).sort((a, b) => (b.deficit_users || 0) - (a.deficit_users || 0)).slice(0, 10);
+      
+      html += '<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px;">';
+      html += '<div style="background: #f8f9fa; border: 2px solid #000; padding: 10px; text-align: center; border-radius: 5px;">';
+      html += '<div style="font-size: 11px; color: #666; margin-bottom: 5px;">إجمالي الوكلاء</div>';
+      html += `<div style="font-size: 18px; font-weight: bold; color: #000;">${list.length}</div>`;
+      html += '</div>';
+      html += '<div style="background: #e8f5e9; border: 2px solid #000; padding: 10px; text-align: center; border-radius: 5px;">';
+      html += '<div style="font-size: 11px; color: #666; margin-bottom: 5px;">إجمالي المستخدمين</div>';
+      html += `<div style="font-size: 18px; font-weight: bold; color: #000;">${num(grand.total)}</div>`;
+      html += '</div>';
+      html += '<div style="background: #e3f2fd; border: 2px solid #000; padding: 10px; text-align: center; border-radius: 5px;">';
+      html += '<div style="font-size: 11px; color: #666; margin-bottom: 5px;">النشط</div>';
+      html += `<div style="font-size: 18px; font-weight: bold; color: #000;">${num(grand.active)}</div>`;
+      html += '</div>';
+      html += '<div style="background: #fff3e0; border: 2px solid #000; padding: 10px; text-align: center; border-radius: 5px;">';
+      html += '<div style="font-size: 11px; color: #666; margin-bottom: 5px;">معدل التفعيل</div>';
+      html += `<div style="font-size: 18px; font-weight: bold; color: #000;">${overallActivation.toFixed(1)}%</div>`;
+      html += '</div>';
+      html += '</div>';
+      
+      html += '<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px;">';
+      html += '<div style="background: #e8f5e9; border: 2px solid #22c55e; padding: 10px; text-align: center; border-radius: 5px;">';
+      html += '<div style="font-size: 11px; color: #666; margin-bottom: 5px;">النمو الأسبوعي</div>';
+      html += `<div style="font-size: 16px; font-weight: bold; color: ${totalGrowth >= 0 ? '#22c55e' : '#ef4444'};">${signedNum(totalGrowth)}</div>`;
+      html += '</div>';
+      html += '<div style="background: #fff3e0; border: 2px solid #f59e0b; padding: 10px; text-align: center; border-radius: 5px;">';
+      html += '<div style="font-size: 11px; color: #666; margin-bottom: 5px;">وكلاء بنمو إيجابي</div>';
+      html += `<div style="font-size: 16px; font-weight: bold; color: #000;">${positiveGrowth}</div>`;
+      html += '</div>';
+      html += '<div style="background: #ffebee; border: 2px solid #ef4444; padding: 10px; text-align: center; border-radius: 5px;">';
+      html += '<div style="font-size: 11px; color: #666; margin-bottom: 5px;">إجمالي العجز</div>';
+      html += `<div style="font-size: 16px; font-weight: bold; color: #ef4444;">${num(totalDeficit)}</div>`;
+      html += '</div>';
+      html += '<div style="background: #fce4ec; border: 2px solid #ef4444; padding: 10px; text-align: center; border-radius: 5px;">';
+      html += '<div style="font-size: 11px; color: #666; margin-bottom: 5px;">وكلاء بعجز</div>';
+      html += `<div style="font-size: 16px; font-weight: bold; color: #000;">${agentsWithDeficit}</div>`;
+      html += '</div>';
+      html += '</div>';
+      
+      html += '<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px;">';
+      
+      html += '<div>';
+      html += '<h4 style="text-align: center; margin-bottom: 8px; color: #000; font-size: 12px; font-weight: bold; background: #e3f2fd; padding: 6px; border: 1px solid #000;">أعلى 10 وكلاء (إجمالي المستخدمين)</h4>';
+      html += '<table style="width: 100%; border-collapse: collapse; font-size: 8px;">';
+      html += '<thead><tr style="background: #000; color: #fff;"><th style="padding: 4px; border: 1px solid #000;">الترتيب</th><th style="padding: 4px; border: 1px solid #000;">اسم الوكيل</th><th style="padding: 4px; border: 1px solid #000;">الإجمالي</th><th style="padding: 4px; border: 1px solid #000;">النشط</th></tr></thead>';
+      html += '<tbody>';
+      topAgentsByTotal.forEach((agent, idx) => {
+        html += `<tr><td style="padding: 3px; border: 1px solid #000; text-align: center;">${idx + 1}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: right; font-size: 7px;">${escapeHtml((agent.name || '').substring(0, 18))}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: center;">${num(agent.total_users)}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: center;">${num(agent.active)}</td></tr>`;
+      });
+      html += '</tbody></table>';
+      html += '</div>';
+      
+      html += '<div>';
+      html += '<h4 style="text-align: center; margin-bottom: 8px; color: #000; font-size: 12px; font-weight: bold; background: #e8f5e9; padding: 6px; border: 1px solid #000;">أعلى 10 وكلاء (النمو الأسبوعي)</h4>';
+      html += '<table style="width: 100%; border-collapse: collapse; font-size: 8px;">';
+      html += '<thead><tr style="background: #000; color: #fff;"><th style="padding: 4px; border: 1px solid #000;">الترتيب</th><th style="padding: 4px; border: 1px solid #000;">اسم الوكيل</th><th style="padding: 4px; border: 1px solid #000;">النمو</th><th style="padding: 4px; border: 1px solid #000;">النشط</th></tr></thead>';
+      html += '<tbody>';
+      topAgentsByGrowth.forEach((agent, idx) => {
+        html += `<tr><td style="padding: 3px; border: 1px solid #000; text-align: center;">${idx + 1}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: right; font-size: 7px;">${escapeHtml((agent.name || '').substring(0, 18))}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: center; color: #22c55e; font-weight: bold;">+${num(agent.growth || 0)}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: center;">${num(agent.active)}</td></tr>`;
+      });
+      if(topAgentsByGrowth.length === 0) {
+        html += '<tr><td colspan="4" style="padding: 8px; border: 1px solid #000; text-align: center;">لا توجد بيانات</td></tr>';
+      }
+      html += '</tbody></table>';
+      html += '</div>';
+      
+      html += '<div>';
+      html += '<h4 style="text-align: center; margin-bottom: 8px; color: #000; font-size: 12px; font-weight: bold; background: #ffebee; padding: 6px; border: 1px solid #000;">أعلى 10 وكلاء (نمو سلبي)</h4>';
+      html += '<table style="width: 100%; border-collapse: collapse; font-size: 8px;">';
+      html += '<thead><tr style="background: #000; color: #fff;"><th style="padding: 4px; border: 1px solid #000;">الترتيب</th><th style="padding: 4px; border: 1px solid #000;">اسم الوكيل</th><th style="padding: 4px; border: 1px solid #000;">النمو</th><th style="padding: 4px; border: 1px solid #000;">النشط</th></tr></thead>';
+      html += '<tbody>';
+      topAgentsByNegativeGrowth.forEach((agent, idx) => {
+        html += `<tr><td style="padding: 3px; border: 1px solid #000; text-align: center;">${idx + 1}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: right; font-size: 7px;">${escapeHtml((agent.name || '').substring(0, 18))}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: center; color: #ef4444; font-weight: bold;">${num(agent.growth || 0)}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: center;">${num(agent.active)}</td></tr>`;
+      });
+      if(topAgentsByNegativeGrowth.length === 0) {
+        html += '<tr><td colspan="4" style="padding: 8px; border: 1px solid #000; text-align: center;">لا توجد بيانات</td></tr>';
+      }
+      html += '</tbody></table>';
+      html += '</div>';
+      
+      html += '<div>';
+      html += '<h4 style="text-align: center; margin-bottom: 8px; color: #000; font-size: 12px; font-weight: bold; background: #ffebee; padding: 6px; border: 1px solid #000;">أعلى 10 وكلاء (العجز)</h4>';
+      html += '<table style="width: 100%; border-collapse: collapse; font-size: 8px;">';
+      html += '<thead><tr style="background: #000; color: #fff;"><th style="padding: 4px; border: 1px solid #000;">الترتيب</th><th style="padding: 4px; border: 1px solid #000;">اسم الوكيل</th><th style="padding: 4px; border: 1px solid #000;">العجز</th><th style="padding: 4px; border: 1px solid #000;">النسبة</th></tr></thead>';
+      html += '<tbody>';
+      topAgentsByDeficit.forEach((agent, idx) => {
+        html += `<tr><td style="padding: 3px; border: 1px solid #000; text-align: center;">${idx + 1}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: right; font-size: 7px;">${escapeHtml((agent.name || '').substring(0, 18))}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: center; color: #ef4444; font-weight: bold;">${num(agent.deficit_users || 0)}</td>`;
+        html += `<td style="padding: 3px; border: 1px solid #000; text-align: center;">${(agent.deficit_percent || 0).toFixed(1)}%</td></tr>`;
+      });
+      if(topAgentsByDeficit.length === 0) {
+        html += '<tr><td colspan="4" style="padding: 8px; border: 1px solid #000; text-align: center;">لا توجد بيانات</td></tr>';
+      }
+      html += '</tbody></table>';
+      html += '</div>';
+      html += '</div>';
+      
+      html += '<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px;">';
+      html += '<div style="background: #f8f9fa; border: 2px solid #000; padding: 10px; border-radius: 5px;">';
+      html += '<h4 style="text-align: center; margin-bottom: 8px; color: #000; font-size: 12px; font-weight: bold;">إحصائيات إضافية</h4>';
+      html += '<table style="width: 100%; border-collapse: collapse; font-size: 9px;">';
+      html += `<tr><td style="padding: 4px; border: 1px solid #ccc; text-align: right; font-weight: bold;">العدد الفعلي:</td><td style="padding: 4px; border: 1px solid #ccc; text-align: center;">${num(grand.reached_total)}</td></tr>`;
+      html += `<tr><td style="padding: 4px; border: 1px solid #ccc; text-align: right; font-weight: bold;">المنتهي:</td><td style="padding: 4px; border: 1px solid #ccc; text-align: center;">${num(grand.expired)}</td></tr>`;
+      html += `<tr><td style="padding: 4px; border: 1px solid #ccc; text-align: right; font-weight: bold;">وكلاء بنمو سلبي:</td><td style="padding: 4px; border: 1px solid #ccc; text-align: center; color: #ef4444;">${negativeGrowth}</td></tr>`;
+      html += `<tr><td style="padding: 4px; border: 1px solid #ccc; text-align: right; font-weight: bold;">وكلاء بدون تغيير:</td><td style="padding: 4px; border: 1px solid #ccc; text-align: center;">${noGrowth}</td></tr>`;
+      html += '</table>';
+      html += '</div>';
+      html += '<div style="background: #f8f9fa; border: 2px solid #000; padding: 10px; border-radius: 5px;">';
+      html += '<h4 style="text-align: center; margin-bottom: 8px; color: #000; font-size: 12px; font-weight: bold;">تحليل الأداء</h4>';
+      html += '<table style="width: 100%; border-collapse: collapse; font-size: 9px;">';
+      const avgGrowth = list.length > 0 ? (totalGrowth / list.length).toFixed(1) : 0;
+      const avgActivation = list.filter(a => (a.total_users || 0) > 0).length > 0 ? 
+        (list.filter(a => (a.total_users || 0) > 0).reduce((s, a) => s + (a.activation_rate || 0), 0) / list.filter(a => (a.total_users || 0) > 0).length).toFixed(1) : 0;
+      html += `<tr><td style="padding: 4px; border: 1px solid #ccc; text-align: right; font-weight: bold;">متوسط النمو لكل وكيل:</td><td style="padding: 4px; border: 1px solid #ccc; text-align: center;">${avgGrowth}</td></tr>`;
+      html += `<tr><td style="padding: 4px; border: 1px solid #ccc; text-align: right; font-weight: bold;">متوسط معدل التفعيل:</td><td style="padding: 4px; border: 1px solid #ccc; text-align: center;">${avgActivation}%</td></tr>`;
+      html += `<tr><td style="padding: 4px; border: 1px solid #ccc; text-align: right; font-weight: bold;">نسبة الوكلاء المتفوقين:</td><td style="padding: 4px; border: 1px solid #ccc; text-align: center; color: #10b981;">${statusStats['متفوق'] ? ((statusStats['متفوق'].count / list.length) * 100).toFixed(1) : 0}%</td></tr>`;
+      html += `<tr><td style="padding: 4px; border: 1px solid #ccc; text-align: right; font-weight: bold;">نسبة الوكلاء بعجز:</td><td style="padding: 4px; border: 1px solid #ccc; text-align: center; color: #ef4444;">${list.length > 0 ? ((agentsWithDeficit / list.length) * 100).toFixed(1) : 0}%</td></tr>`;
+      html += '</table>';
+      html += '</div>';
+      html += '</div>';
+      
+      html += '</div>';
+      
+      html += '<div style="position: fixed; top: 20px; left: 20px; z-index: 10000; display: block !important;">';
+      html += '<button onclick="window.print()" style="background: #007bff; color: white; border: none; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">🖨️ طباعة التقرير</button>';
+      html += '</div>';
       html += '</body>';
-      html += '<script>setTimeout(function(){ if(window.print) window.print(); }, 300);<\/script>';
+      html += '<script>';
+      html += 'window.onload = function() {';
+      html += '  // التأكد من أن body يسمح بعرض جميع الصفحات';
+      html += '  document.body.style.overflow = "visible";';
+      html += '  document.body.style.height = "auto";';
+      html += '  document.documentElement.style.overflow = "visible";';
+      html += '  document.documentElement.style.height = "auto";';
+      html += '  // التحقق من وجود الصفحة الثانية وإجبار إعادة الرسم';
+      html += '  setTimeout(function(){';
+      html += '    var pageBreak = document.querySelector(".page-break");';
+      html += '    if(pageBreak) {';
+      html += '      // التأكد من أن الصفحة مرئية';
+      html += '      pageBreak.style.visibility = "visible";';
+      html += '      pageBreak.style.display = "block";';
+      html += '      pageBreak.style.opacity = "1";';
+      html += '      pageBreak.style.height = "auto";';
+      html += '      pageBreak.style.minHeight = "calc(100vh - 40px)";';
+      html += '    }';
+      html += '  }, 200);';
+      html += '};';
+      html += '<\/script>';
       html += '</html>';
 
       // استخدام طريقة آمنة بدلاً من document.write
@@ -6544,8 +7609,5 @@
 
 
   </script>
-  
-  <!-- تحميل ملفات JavaScript بعد تحميل DOM -->
-  <script src="notifications.js"></script>
 </body>
 </html>
