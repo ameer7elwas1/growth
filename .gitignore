@@ -1,0 +1,20 @@
+# ملفات الإعدادات الحساسة
+config.js
+
+# ملفات النظام
+.DS_Store
+Thumbs.db
+*.log
+
+# محررات الأكواد
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ملفات مؤقتة
+*.tmp
+*.bak
+*.cache
+
