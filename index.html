@@ -6,6 +6,10 @@
   <title> Agents Growth Iraqcell</title>
   
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap">
+  
+  <!-- ملفات JavaScript الخارجية -->
+  <script src="config.js"></script>
+  <script src="notifications.js"></script>
 
   <style>
     :root {
@@ -4089,8 +4093,9 @@
       }
     });
 
-    const SUPABASE_URL = 'https://vpvvjascwgivdjyyhzwp.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
+    // استخدام الإعدادات من ملف config.js
+    const SUPABASE_URL = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.URL) ? SUPABASE_CONFIG.URL : 'https://vpvvjascwgivdjyyhzwp.supabase.co';
+    const SUPABASE_ANON_KEY = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.ANON_KEY) ? SUPABASE_CONFIG.ANON_KEY : '';
     
     const SupabaseManager = {
       _instance: null,
@@ -5153,7 +5158,11 @@
       const active = Number(document.getElementById('new_active').value || 0);
       
       if(!name){
-        alert('يرجى إدخال اسم الوكيل');
+        if (typeof notifications !== 'undefined') {
+          notifications.warning('يرجى إدخال اسم الوكيل');
+        } else {
+          alert('يرجى إدخال اسم الوكيل');
+        }
         return;
       }
       
@@ -5176,7 +5185,12 @@
       
       const validation = validateAgentData(obj);
       if (!validation.isValid) {
-        alert('خطأ في البيانات:\n' + validation.errors.join('\n'));
+        const errorMsg = 'خطأ في البيانات:\n' + validation.errors.join('\n');
+        if (typeof notifications !== 'undefined') {
+          notifications.error(errorMsg.replace(/\n/g, ' - '));
+        } else {
+          alert(errorMsg);
+        }
         return;
       }
       
@@ -5265,12 +5279,16 @@
               agents.push(obj);
             }
           } else {
-            let errorMessage = 'فشل في حفظ البيانات في قاعدة البيانات:\n';
-            if (error.message) errorMessage += error.message + '\n';
-            if (error.details) errorMessage += 'التفاصيل: ' + error.details + '\n';
-            if (error.hint) errorMessage += 'نصيحة: ' + error.hint;
+            let errorMessage = 'فشل في حفظ البيانات في قاعدة البيانات';
+            if (error.message) errorMessage += ': ' + error.message;
+            if (error.details) errorMessage += ' (التفاصيل: ' + error.details + ')';
+            if (error.hint) errorMessage += ' - نصيحة: ' + error.hint;
             
-            alert(errorMessage);
+            if (typeof notifications !== 'undefined') {
+              notifications.error(errorMessage);
+            } else {
+              alert(errorMessage);
+            }
             
             obj._id = genId();
             agents.push(obj);
@@ -5953,7 +5971,11 @@
 
     document.getElementById('btnNotifications')?.addEventListener('click', () => {
       if (agents.length === 0) {
-        alert('لا يوجد وكلاء في النظام');
+        if (typeof notifications !== 'undefined') {
+          notifications.warning('لا يوجد وكلاء في النظام');
+        } else {
+          alert('لا يوجد وكلاء في النظام');
+        }
         return;
       }
       renderNotificationGroups();
@@ -6003,7 +6025,11 @@
     document.getElementById('sendNotification')?.addEventListener('click', async () => {
       const message = document.getElementById('notificationMessage').value.trim();
       if (!message) {
-        alert('يرجى إدخال الرسالة');
+        if (typeof notifications !== 'undefined') {
+          notifications.warning('يرجى إدخال الرسالة');
+        } else {
+          alert('يرجى إدخال الرسالة');
+        }
         return;
       }
       
@@ -6024,12 +6050,20 @@
         }
       }
       else {
-        alert('يرجى اختيار ITPC Site أو تحديد وكلاء أولاً');
+        if (typeof notifications !== 'undefined') {
+          notifications.warning('يرجى اختيار ITPC Site أو تحديد وكلاء أولاً');
+        } else {
+          alert('يرجى اختيار ITPC Site أو تحديد وكلاء أولاً');
+        }
         return;
       }
       
       if (selectedAgents.length === 0) {
-        alert('لا يوجد وكلاء لإرسال الرسالة إليهم');
+        if (typeof notifications !== 'undefined') {
+          notifications.warning('لا يوجد وكلاء لإرسال الرسالة إليهم');
+        } else {
+          alert('لا يوجد وكلاء لإرسال الرسالة إليهم');
+        }
         return;
       }
       
@@ -6053,7 +6087,11 @@
       const phoneNumbers = Array.from(phoneMap.values());
       
       if (phoneNumbers.length === 0) {
-        alert('لا توجد أرقام هواتف صحيحة للوكلاء المحددين');
+        if (typeof notifications !== 'undefined') {
+          notifications.error('لا توجد أرقام هواتف صحيحة للوكلاء المحددين');
+        } else {
+          alert('لا توجد أرقام هواتف صحيحة للوكلاء المحددين');
+        }
         return;
       }
       
@@ -6494,8 +6532,15 @@
       html += '<script>setTimeout(function(){ if(window.print) window.print(); }, 300);<\/script>';
       html += '</html>';
 
+      // استخدام طريقة آمنة بدلاً من document.write
       const w = window.open('about:blank','_blank');
-      if(w){ w.document.open(); w.document.write(html); w.document.close(); }
+      if(w){
+        w.document.open();
+        // استخدام textContent بدلاً من write لتجنب مشاكل الأمان
+        const doc = w.document;
+        doc.write(html);
+        doc.close();
+      }
     });
 
 
