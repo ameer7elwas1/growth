@@ -1,0 +1,31 @@
+# ملفات الإعدادات الحساسة
+config.js
+
+# ملفات النسخ الاحتياطي
+backups/
+database_backups/
+*.backup
+*.bak
+
+# ملفات النظام
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ملفات IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ملفات مؤقتة
+*.tmp
+*.log
+*.cache
+
+# ملفات البيئة
+.env
+.env.local
+.env.*.local
+
