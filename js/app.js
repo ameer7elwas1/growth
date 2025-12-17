@@ -3576,7 +3576,7 @@
     }
     @page { 
       size: A4 landscape; 
-      margin: 5mm; 
+      margin: 3mm; 
     }
     table { 
       width: 100%; 
@@ -3852,15 +3852,15 @@
       }
       @page {
         size: A4 landscape !important;
-        margin: 8mm 5mm !important;
+        margin: 3mm !important;
       }
       @page :first {
         size: A4 landscape !important;
-        margin: 8mm 5mm !important;
+        margin: 3mm !important;
       }
       @page :nth(2) {
         size: A4 landscape !important;
-        margin: 8mm 5mm !important;
+        margin: 3mm !important;
       }
       .page-break {
         page-break-before: always !important;
