@@ -31,11 +31,27 @@
     }
     
     // الأولوية 2: SUPABASE_CONFIG من config.js (للاستخدام المحلي)
-    if (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.URL && SUPABASE_CONFIG.ANON_KEY) {
-      return {
-        URL: SUPABASE_CONFIG.URL,
-        ANON_KEY: SUPABASE_CONFIG.ANON_KEY
-      };
+    // التحقق من وجود SUPABASE_CONFIG في النطاق العام
+    // محاولة الوصول إلى SUPABASE_CONFIG من window أيضاً
+    const configSource = (typeof SUPABASE_CONFIG !== 'undefined' ? SUPABASE_CONFIG : null) ||
+                         (window.SUPABASE_CONFIG ? window.SUPABASE_CONFIG : null);
+    
+    if (configSource) {
+      // التحقق من أن القيم موجودة وليست placeholders
+      const url = configSource.URL || (configSource.url || '');
+      const key = configSource.ANON_KEY || (configSource.anonKey || configSource.anon_key || '');
+      
+      if (url && 
+          url !== 'YOUR_SUPABASE_URL_HERE' &&
+          url !== '' &&
+          key && 
+          key !== 'YOUR_SUPABASE_ANON_KEY_HERE' &&
+          key !== '') {
+        return {
+          URL: url,
+          ANON_KEY: key
+        };
+      }
     }
     
     // الأولوية 3: القيم الافتراضية (placeholders فقط - لن تعمل)
@@ -72,19 +88,76 @@
     };
   }
   
-  // تصدير الإعدادات للاستخدام العام
-  const config = getSupabaseConfig();
-  window.SUPABASE_CONFIG_LOADED = {
-    URL: config.URL,
-    ANON_KEY: config.ANON_KEY
-  };
-  
-  // للتوافق مع الكود القديم
-  if (typeof SUPABASE_CONFIG === 'undefined') {
-    window.SUPABASE_CONFIG = {
+  // دالة لتحديث الإعدادات
+  function updateConfig() {
+    const config = getSupabaseConfig();
+    
+    window.SUPABASE_CONFIG_LOADED = {
       URL: config.URL,
       ANON_KEY: config.ANON_KEY
     };
+    
+    // للتوافق مع الكود القديم
+    // إذا كان SUPABASE_CONFIG موجوداً، استخدمه مباشرة
+    if (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG) {
+      // نسخ PROJECT_ID إذا كان موجوداً
+      window.SUPABASE_CONFIG = {
+        URL: config.URL,
+        ANON_KEY: config.ANON_KEY,
+        PROJECT_ID: SUPABASE_CONFIG.PROJECT_ID || 'growth_iraqcell'
+      };
+      // إضافة PROJECT_ID إلى SUPABASE_CONFIG_LOADED
+      if (SUPABASE_CONFIG.PROJECT_ID) {
+        window.SUPABASE_CONFIG_LOADED.PROJECT_ID = SUPABASE_CONFIG.PROJECT_ID;
+      }
+    } else {
+      window.SUPABASE_CONFIG = {
+        URL: config.URL,
+        ANON_KEY: config.ANON_KEY
+      };
+    }
+    
+    return config;
+  }
+  
+  // محاولة تحديث الإعدادات فوراً
+  let config = updateConfig();
+  
+  // إذا لم يتم العثور على الإعدادات، حاول مرة أخرى بعد تحميل الصفحة
+  if (!config.URL || !config.ANON_KEY || 
+      config.URL === '' || config.ANON_KEY === '' ||
+      config.URL === 'YOUR_SUPABASE_URL_HERE' || 
+      config.ANON_KEY === 'YOUR_SUPABASE_ANON_KEY_HERE') {
+    // انتظر قليلاً ثم حاول مرة أخرى (في حالة تأخر تحميل config.js)
+    // استخدم DOMContentLoaded للتأكد من تحميل جميع السكريبتات
+    function retryConfigLoad() {
+      config = updateConfig();
+      // إذا تم العثور على الإعدادات الآن، أزل رسالة الخطأ
+      if (config.URL && config.ANON_KEY && 
+          config.URL !== '' && config.ANON_KEY !== '' &&
+          config.URL !== 'YOUR_SUPABASE_URL_HERE' && 
+          config.ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
+        console.log('✅ تم تحميل إعدادات Supabase بنجاح من config.js');
+        return true;
+      }
+      return false;
+    }
+    
+    // محاولة فورية بعد تأخير بسيط
+    setTimeout(function() {
+      if (!retryConfigLoad()) {
+        // إذا لم تنجح، انتظر DOMContentLoaded
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(retryConfigLoad, 100);
+          });
+        } else {
+          setTimeout(retryConfigLoad, 100);
+        }
+      }
+    }, 100);
+  } else {
+    console.log('✅ تم تحميل إعدادات Supabase بنجاح');
   }
 })();
 

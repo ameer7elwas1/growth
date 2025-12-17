@@ -661,8 +661,25 @@
       }
     });
 
-    const SUPABASE_URL = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.URL) ? SUPABASE_CONFIG.URL : 'https://vpvvjascwgivdjyyhzwp.supabase.co';
-    const SUPABASE_ANON_KEY = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.ANON_KEY) ? SUPABASE_CONFIG.ANON_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
+    // استخدام الإعدادات من config-loader.js (يتم تحميلها تلقائياً)
+    // النظام يتحقق من: window.SUPABASE_URL → window.SUPABASE_CONFIG_LOADED → SUPABASE_CONFIG → القيم الافتراضية
+    // ⚠️ ملاحظة أمنية: المفاتيح محمّلة من config-loader.js أو window variables
+    const SUPABASE_URL = (window.SUPABASE_CONFIG_LOADED && window.SUPABASE_CONFIG_LOADED.URL) 
+      ? window.SUPABASE_CONFIG_LOADED.URL 
+      : ((typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.URL) 
+        ? SUPABASE_CONFIG.URL 
+        : (window.SUPABASE_URL || 'https://vpvvjascwgivdjyyhzwp.supabase.co'));
+    
+    const SUPABASE_ANON_KEY = (window.SUPABASE_CONFIG_LOADED && window.SUPABASE_CONFIG_LOADED.ANON_KEY) 
+      ? window.SUPABASE_CONFIG_LOADED.ANON_KEY 
+      : ((typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.ANON_KEY) 
+        ? SUPABASE_CONFIG.ANON_KEY 
+        : (window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ'));
+    
+    // التحقق من وجود المفاتيح
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY || SUPABASE_URL === '' || SUPABASE_ANON_KEY === '') {
+      console.error('❌ خطأ: لم يتم العثور على إعدادات Supabase. تأكد من تحميل config-loader.js أو تعيين window.SUPABASE_URL و window.SUPABASE_ANON_KEY');
+    }
     
     const SupabaseManager = {
       _instance: null,
@@ -672,29 +689,68 @@
       _maxAttempts: 3,
       
       getInstance() {
-        if (this._instance) {
+        // إرجاع الـ instance الموجود إذا كان صالحاً
+        if (this._instance && this.connectionStatus !== 'error') {
           return this._instance;
         }
         
+        // التحقق من عدد المحاولات
         if (this._creationAttempts >= this._maxAttempts) {
+          console.error('❌ فشل إنشاء عميل Supabase بعد ' + this._maxAttempts + ' محاولات');
+          this.connectionStatus = 'error';
           return null;
         }
         
-        if (!this._isInitialized) {
+        // التحقق من وجود المفاتيح قبل إنشاء العميل
+        if (!SUPABASE_URL || !SUPABASE_ANON_KEY || SUPABASE_URL === '' || SUPABASE_ANON_KEY === '') {
+          console.error('❌ خطأ: إعدادات Supabase غير موجودة أو غير صحيحة');
+          console.error('   URL:', SUPABASE_URL ? SUPABASE_URL.substring(0, 30) + '...' : 'غير موجود');
+          console.error('   KEY:', SUPABASE_ANON_KEY ? SUPABASE_ANON_KEY.substring(0, 20) + '...' : 'غير موجود');
+          this.connectionStatus = 'error';
+          return null;
+        }
+        
+        // التحقق من وجود مكتبة Supabase
+        if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+          console.error('❌ خطأ: مكتبة Supabase غير محمّلة. تأكد من تحميل supabase.js قبل app.js');
+          console.error('   تأكد من وجود: <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>');
+          this.connectionStatus = 'error';
+          return null;
+        }
+        
+        // إنشاء instance جديد فقط إذا لم يكن موجوداً أو كان هناك خطأ
+        if (!this._isInitialized || this.connectionStatus === 'error') {
           this._isInitialized = true;
           this._creationAttempts++;
           
           try {
+            // إعادة تعيين الـ instance القديم إذا كان موجوداً
+            if (this._instance) {
+              this._instance = null;
+            }
+            
             this._instance = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
               auth: {
                 persistSession: false,
                 autoRefreshToken: false,
                 detectSessionInUrl: false
+              },
+              db: {
+                schema: 'public'
+              },
+              global: {
+                headers: {
+                  'x-client-info': 'growth-app'
+                }
               }
             });
-            
+            console.log('✅ تم إنشاء عميل Supabase بنجاح');
+            this.connectionStatus = 'initialized';
           } catch (e) {
+            console.error('❌ خطأ في إنشاء عميل Supabase:', e);
+            this._instance = null;
             this._isInitialized = false;
+            this.connectionStatus = 'error';
             return null;
           }
         }
@@ -702,7 +758,7 @@
       },
       
       reset() {
-        
+        this._instance = null;
         this.connectionStatus = 'disconnected';
         this._creationAttempts = 0;
         this._isInitialized = false;
@@ -723,11 +779,17 @@
     
     // الحصول على معرف المشروع من الإعدادات
     function getProjectId() {
-      if (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.PROJECT_ID) {
-        return SUPABASE_CONFIG.PROJECT_ID;
+      // الأولوية 1: window.SUPABASE_CONFIG_LOADED
+      if (window.SUPABASE_CONFIG_LOADED && window.SUPABASE_CONFIG_LOADED.PROJECT_ID) {
+        return window.SUPABASE_CONFIG_LOADED.PROJECT_ID;
       }
+      // الأولوية 2: window.PROJECT_ID
       if (window.PROJECT_ID) {
         return window.PROJECT_ID;
+      }
+      // الأولوية 3: SUPABASE_CONFIG
+      if (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.PROJECT_ID) {
+        return SUPABASE_CONFIG.PROJECT_ID;
       }
       // القيمة الافتراضية
       return 'growth_iraqcell';
@@ -735,23 +797,27 @@
     
     function reinitializeSupabase() {
       try {
+        console.log('🔄 إعادة تهيئة اتصال Supabase...');
         
-        
-        if (SupabaseManager.hasInstance()) {
-          
-          SupabaseManager.connectionStatus = 'disconnected';
-          return true;
-        }
-        
+        // إعادة تعيين كاملة للاتصال
         SupabaseManager.reset();
-        const client = getSupabaseClient();
-        if (client) {
-          
-          return true;
-        } else {
-          return false;
-        }
+        
+        // انتظار قصير قبل إعادة المحاولة
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            const client = getSupabaseClient();
+            if (client) {
+              console.log('✅ تم إعادة تهيئة اتصال Supabase بنجاح');
+              resolve(true);
+            } else {
+              console.error('❌ فشل إعادة تهيئة اتصال Supabase');
+              resolve(false);
+            }
+          }, 500);
+        });
       } catch (e) {
+        console.error('❌ خطأ في إعادة تهيئة Supabase:', e);
+        SupabaseManager.reset();
         return false;
       }
     }
@@ -918,21 +984,28 @@
 
     async function testSupabaseConnection() {
       try {
+        // تخطي الاختبار في حالة فتح الملف محلياً
         if (window.location.protocol === 'file:') {
+          console.log('⚠️ تم فتح الملف محلياً - تخطي اختبار الاتصال');
+          return false;
         }
         
         updateConnectionStatus('connecting');
         
         const supabase = getSupabaseClient();
         if (!supabase) {
+          console.error('❌ فشل الحصول على عميل Supabase');
+          SupabaseManager.connectionStatus = 'error';
           updateConnectionStatus('error');
           return false;
         }
         
+        // إعداد timeout للاتصال (10 ثواني)
         const timeoutPromise = new Promise((_, reject) => 
           setTimeout(() => reject(new Error('Connection timeout')), 10000)
         );
         
+        // استعلام بسيط لاختبار الاتصال
         const queryPromise = supabase
           .from('agents')
           .select('id, name, active, total_users, board_name') 
@@ -943,21 +1016,28 @@
         const { data, error } = result;
           
         if (error) {
+          console.warn('⚠️ خطأ في اختبار الاتصال:', error.message);
           
+          // معالجة أخطاء الشبكة
           if (error.message && (error.message.includes('Failed to fetch') || error.message.includes('NetworkError'))) {
+            console.error('❌ خطأ في الشبكة - تحقق من الاتصال بالإنترنت');
           }
           
+          // معالجة خطأ عدم وجود عمود board_name
           if (error.message && error.message.includes('board_name')) {
+            console.log('🔄 محاولة إعادة الاتصال بدون عمود board_name...');
             const { data: retryData, error: retryError } = await supabase
               .from('agents')
               .select('id, name, active, total_users')
               .limit(1);
               
             if (retryError) {
+              console.error('❌ فشلت إعادة المحاولة:', retryError.message);
               SupabaseManager.connectionStatus = 'error';
               updateConnectionStatus('error');
               return false;
             } else {
+              console.log('✅ نجحت إعادة المحاولة');
               SupabaseManager.connectionStatus = 'connected';
               updateConnectionStatus('connected');
               return true;
@@ -968,13 +1048,17 @@
           updateConnectionStatus('error');
           return false;
         } else {
+          console.log('✅ تم الاتصال بقاعدة البيانات بنجاح');
           SupabaseManager.connectionStatus = 'connected';
           updateConnectionStatus('connected');
           return true;
         }
       } catch (e) {
+        console.error('❌ استثناء في اختبار الاتصال:', e.message);
         
+        // معالجة timeout وأخطاء الشبكة
         if (e.message && (e.message.includes('Failed to fetch') || e.message.includes('NetworkError') || e.message.includes('timeout'))) {
+          console.error('❌ انتهت مهلة الاتصال أو خطأ في الشبكة');
         }
         
         SupabaseManager.connectionStatus = 'error';
@@ -2792,30 +2876,44 @@
         
         let connectionOk = await testSupabaseConnection();
         
+        // إذا فشل الاتصال ولم يكن هناك instance، حاول إعادة التهيئة
         if (!connectionOk && !SupabaseManager.hasInstance()) {
+          console.log('🔄 محاولة إعادة تهيئة الاتصال...');
           updateConnectionStatus('connecting');
-          reinitializeSupabase();
-          connectionOk = await testSupabaseConnection();
-        } else if (!connectionOk) {
-        }
-        
-        if (connectionOk || SupabaseManager.hasInstance()) {
-          try {
-            await loadFromSupabase();
-            return;
-          } catch (e) {
+          const reinitResult = await reinitializeSupabase();
+          if (reinitResult) {
+            connectionOk = await testSupabaseConnection();
           }
         }
         
+        // إذا نجح الاتصال، حمّل البيانات من Supabase
+        if (connectionOk || SupabaseManager.hasInstance()) {
+          try {
+            console.log('📥 تحميل البيانات من Supabase...');
+            await loadFromSupabase();
+            console.log('✅ تم تحميل البيانات بنجاح');
+            return;
+          } catch (e) {
+            console.error('❌ خطأ في تحميل البيانات من Supabase:', e);
+            // في حالة الفشل، استخدم البيانات المحلية
+            updateConnectionStatus('error');
+          }
+        }
+        
+        // استخدام البيانات المحلية كبديل
+        console.log('📦 استخدام البيانات المحلية...');
         updateConnectionStatus('error');
         const localData = loadFromStorage();
         if (localData && localData.length > 0) {
           agents = localData;
+          console.log(`✅ تم تحميل ${localData.length} وكيل من التخزين المحلي`);
         } else {
           agents = [];
+          console.log('⚠️ لا توجد بيانات محلية');
         }
         computeAll();
       } catch (e) {
+        console.error('❌ خطأ عام في تهيئة البيانات:', e);
         const localData = loadFromStorage();
         if (localData && localData.length > 0) {
           agents = localData;
@@ -2827,12 +2925,26 @@
     }
     
     function initializeSupabase() {
+      console.log('🚀 تهيئة اتصال Supabase...');
+      
+      // التحقق من وجود الإعدادات
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY || SUPABASE_URL === '' || SUPABASE_ANON_KEY === '') {
+        console.error('❌ إعدادات Supabase غير موجودة');
+        return false;
+      }
+      
+      // التحقق من وجود مكتبة Supabase
+      if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+        console.error('❌ مكتبة Supabase غير محمّلة');
+        return false;
+      }
       
       const client = getSupabaseClient();
       if (client) {
-        
+        console.log('✅ تم تهيئة اتصال Supabase بنجاح');
         return true;
       } else {
+        console.error('❌ فشل تهيئة اتصال Supabase');
         return false;
       }
     }
