@@ -23,7 +23,10 @@
    */
   function getSupabaseConfig() {
     // الأولوية 1: window variables (للإنتاج/GitHub Pages)
-    if (window.SUPABASE_URL && window.SUPABASE_ANON_KEY) {
+    if (window.SUPABASE_URL && window.SUPABASE_ANON_KEY && 
+        window.SUPABASE_URL !== '' && window.SUPABASE_ANON_KEY !== '' &&
+        window.SUPABASE_URL !== 'YOUR_SUPABASE_URL_HERE' && 
+        window.SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
       return {
         URL: window.SUPABASE_URL,
         ANON_KEY: window.SUPABASE_ANON_KEY
@@ -33,8 +36,16 @@
     // الأولوية 2: SUPABASE_CONFIG من config.js (للاستخدام المحلي)
     // التحقق من وجود SUPABASE_CONFIG في النطاق العام
     // محاولة الوصول إلى SUPABASE_CONFIG من window أيضاً
-    const configSource = (typeof SUPABASE_CONFIG !== 'undefined' ? SUPABASE_CONFIG : null) ||
-                         (window.SUPABASE_CONFIG ? window.SUPABASE_CONFIG : null);
+    let configSource = null;
+    
+    // محاولة الوصول من window أولاً (الأسرع)
+    if (window.SUPABASE_CONFIG) {
+      configSource = window.SUPABASE_CONFIG;
+    } 
+    // ثم من النطاق العام
+    else if (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG) {
+      configSource = SUPABASE_CONFIG;
+    }
     
     if (configSource) {
       // التحقق من أن القيم موجودة وليست placeholders
@@ -65,10 +76,14 @@
     // تحذير واضح في حالة استخدام القيم الافتراضية
     if (DEFAULT_SUPABASE_URL === 'YOUR_SUPABASE_URL_HERE' || 
         DEFAULT_SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY_HERE') {
-      console.error('❌ [خطأ] لم يتم تعيين إعدادات Supabase!');
-      console.error('❌ يجب تعيين window.SUPABASE_URL و window.SUPABASE_ANON_KEY');
-      console.error('❌ أو إنشاء ملف config.js في المجلد الرئيسي');
-      console.error('❌ راجع config/config.example.js للتعليمات');
+      // فقط أظهر الخطأ مرة واحدة، وليس في كل محاولة
+      if (!window._CONFIG_ERROR_SHOWN) {
+        console.error('❌ [خطأ] لم يتم تعيين إعدادات Supabase!');
+        console.error('❌ يجب تعيين window.SUPABASE_URL و window.SUPABASE_ANON_KEY');
+        console.error('❌ أو إنشاء ملف config.js في المجلد الرئيسي');
+        console.error('❌ راجع config/config.example.js للتعليمات');
+        window._CONFIG_ERROR_SHOWN = true;
+      }
       
       // إرجاع قيم فارغة لتجنب الأخطاء
       return {
@@ -120,41 +135,60 @@
     return config;
   }
   
-  // محاولة تحديث الإعدادات فوراً
-  let config = updateConfig();
-  
-  // إذا لم يتم العثور على الإعدادات، حاول مرة أخرى بعد تحميل الصفحة
-  if (!config.URL || !config.ANON_KEY || 
-      config.URL === '' || config.ANON_KEY === '' ||
-      config.URL === 'YOUR_SUPABASE_URL_HERE' || 
-      config.ANON_KEY === 'YOUR_SUPABASE_ANON_KEY_HERE') {
-    // انتظر قليلاً ثم حاول مرة أخرى (في حالة تأخر تحميل config.js)
-    // استخدم DOMContentLoaded للتأكد من تحميل جميع السكريبتات
-    function retryConfigLoad() {
-      config = updateConfig();
-      // إذا تم العثور على الإعدادات الآن، أزل رسالة الخطأ
+  // دالة لمحاولة تحميل الإعدادات مع إعادة المحاولة
+  function loadConfigWithRetry(maxRetries, delay) {
+    maxRetries = maxRetries || 10;
+    delay = delay || 100;
+    let attempts = 0;
+    let success = false;
+    
+    function tryLoad() {
+      attempts++;
+      const config = updateConfig();
+      
+      // التحقق من نجاح التحميل
       if (config.URL && config.ANON_KEY && 
           config.URL !== '' && config.ANON_KEY !== '' &&
           config.URL !== 'YOUR_SUPABASE_URL_HERE' && 
           config.ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
-        console.log('✅ تم تحميل إعدادات Supabase بنجاح من config.js');
+        if (!success) {
+          console.log('✅ تم تحميل إعدادات Supabase بنجاح');
+          if (attempts > 1) {
+            console.log('   (بعد ' + attempts + ' محاولة)');
+          }
+          success = true;
+        }
         return true;
+      }
+      
+      // إذا لم تنجح ولم نتجاوز الحد الأقصى للمحاولات
+      if (attempts < maxRetries) {
+        setTimeout(tryLoad, delay);
+        return false;
+      }
+      
+      // إذا فشلت جميع المحاولات (فقط أظهر مرة واحدة)
+      if (!success && !window._CONFIG_LOAD_FAILED) {
+        console.error('❌ فشل تحميل إعدادات Supabase بعد ' + attempts + ' محاولات');
+        window._CONFIG_LOAD_FAILED = true;
       }
       return false;
     }
     
-    // محاولة فورية بعد تأخير بسيط
+    return tryLoad();
+  }
+  
+  // محاولة تحميل الإعدادات فوراً
+  let config = updateConfig();
+  
+  // إذا لم يتم العثور على الإعدادات، حاول مرة أخرى
+  if (!config.URL || !config.ANON_KEY || 
+      config.URL === '' || config.ANON_KEY === '' ||
+      config.URL === 'YOUR_SUPABASE_URL_HERE' || 
+      config.ANON_KEY === 'YOUR_SUPABASE_ANON_KEY_HERE') {
+    // انتظر قليلاً لتحميل config.js ثم حاول
     setTimeout(function() {
-      if (!retryConfigLoad()) {
-        // إذا لم تنجح، انتظر DOMContentLoaded
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(retryConfigLoad, 100);
-          });
-        } else {
-          setTimeout(retryConfigLoad, 100);
-        }
-      }
+      loadConfigWithRetry(10, 100);
     }, 100);
   } else {
     console.log('✅ تم تحميل إعدادات Supabase بنجاح');
