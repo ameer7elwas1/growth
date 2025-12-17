@@ -11,10 +11,11 @@
 (function() {
   'use strict';
   
-  // ⚠️ ملاحظة أمنية: هذه القيم الافتراضية للاختبار فقط
-  // يجب استبدالها في الإنتاج باستخدام window variables أو config.js
-  const DEFAULT_SUPABASE_URL = 'https://vpvvjascwgivdjyyhzwp.supabase.co';
-  const DEFAULT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
+  // ⚠️ ملاحظة أمنية: هذه القيم الافتراضية هي placeholders فقط
+  // ⚠️ يجب استبدالها في الإنتاج باستخدام window variables أو config.js
+  // ⚠️ لا تستخدم هذه القيم في الإنتاج - يجب تعيين window.SUPABASE_URL و window.SUPABASE_ANON_KEY
+  const DEFAULT_SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
+  const DEFAULT_SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
   
   /**
    * الحصول على إعدادات Supabase
@@ -37,18 +38,33 @@
       };
     }
     
-    // الأولوية 3: القيم الافتراضية (للاختبار فقط)
-    // ⚠️ تحذير: في الإنتاج يجب استخدام window variables أو config.js
-    // الرسائل الإعلامية فقط - لا تظهر تحذيرات في الإنتاج
+    // الأولوية 3: القيم الافتراضية (placeholders فقط - لن تعمل)
+    // ⚠️ تحذير: هذه القيم هي placeholders ولن تعمل في الإنتاج
+    // ⚠️ يجب استخدام window variables أو config.js
     const isLocal = window.location.hostname === 'localhost' || 
                     window.location.hostname === '127.0.0.1' || 
                     window.location.protocol === 'file:' ||
                     !window.location.hostname;
     
-    if (isLocal) {
-      console.info('ℹ️ [وضع التطوير] استخدام القيم الافتراضية من config-loader.js');
+    // تحذير واضح في حالة استخدام القيم الافتراضية
+    if (DEFAULT_SUPABASE_URL === 'YOUR_SUPABASE_URL_HERE' || 
+        DEFAULT_SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY_HERE') {
+      console.error('❌ [خطأ] لم يتم تعيين إعدادات Supabase!');
+      console.error('❌ يجب تعيين window.SUPABASE_URL و window.SUPABASE_ANON_KEY');
+      console.error('❌ أو إنشاء ملف config.js في المجلد الرئيسي');
+      console.error('❌ راجع config/config.example.js للتعليمات');
+      
+      // إرجاع قيم فارغة لتجنب الأخطاء
+      return {
+        URL: '',
+        ANON_KEY: ''
+      };
     }
-    // في الإنتاج (GitHub Pages) لا تظهر أي رسائل - النظام يعمل بشكل صامت
+    
+    if (isLocal) {
+      console.warn('⚠️ [تحذير] استخدام القيم الافتراضية من config-loader.js');
+      console.warn('⚠️ يجب استخدام window variables أو config.js للإنتاج');
+    }
     
     return {
       URL: DEFAULT_SUPABASE_URL,

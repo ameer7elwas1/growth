@@ -14,6 +14,9 @@
 const SUPABASE_CONFIG = {
   // استبدل بالقيم الحقيقية من Supabase Dashboard
   URL: window.SUPABASE_URL || 'YOUR_SUPABASE_URL_HERE',
-  ANON_KEY: window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY_HERE'
+  ANON_KEY: window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY_HERE',
+  // معرف المشروع - يستخدم لتصفية المستخدمين والبيانات حسب المشروع
+  // يجب أن يكون فريداً لكل مشروع يستخدم نفس قاعدة البيانات
+  PROJECT_ID: window.PROJECT_ID || 'YOUR_PROJECT_ID_HERE'
 };
 

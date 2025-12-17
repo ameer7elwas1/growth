@@ -178,12 +178,14 @@
         try {
           const supabase = getSupabaseClient();
           if (supabase) {
+            const projectId = getProjectId();
             const { data, error } = await supabase
               .from('users')
               .select('*')
               .eq('username', username)
               .eq('password_hash', password)
               .eq('status', 'active')
+              .eq('project_id', projectId)
               .single();
 
             if (error) {
@@ -191,6 +193,21 @@
             }
 
             if (data) {
+              // تحديث last_login في قاعدة البيانات
+              const supabaseClient = getSupabaseClient();
+              if (supabaseClient) {
+                supabaseClient
+                  .from('users')
+                  .update({ last_login: new Date().toISOString() })
+                  .eq('id', data.id)
+                  .then(() => {
+                    console.log('تم تحديث آخر تسجيل دخول');
+                  })
+                  .catch(err => {
+                    console.error('خطأ في تحديث آخر تسجيل دخول:', err);
+                  });
+              }
+
               return {
                 success: true,
                 user: {
@@ -213,11 +230,13 @@
         try {
           const savedUsers = localStorage.getItem('systemUsers');
           if (savedUsers) {
+            const projectId = getProjectId();
             const users = JSON.parse(savedUsers);
             const user = users.find(u => 
               u.username === username && 
               u.password_hash === password && 
-              u.status === 'active'
+              u.status === 'active' &&
+              (u.project_id === projectId || !u.project_id) // دعم المستخدمين القديمين بدون project_id
             );
             
             if (user) {
@@ -700,6 +719,18 @@
     
     function getSupabaseClient() {
       return SupabaseManager.getInstance();
+    }
+    
+    // الحصول على معرف المشروع من الإعدادات
+    function getProjectId() {
+      if (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.PROJECT_ID) {
+        return SUPABASE_CONFIG.PROJECT_ID;
+      }
+      if (window.PROJECT_ID) {
+        return window.PROJECT_ID;
+      }
+      // القيمة الافتراضية
+      return 'growth_iraqcell';
     }
     
     function reinitializeSupabase() {
@@ -3577,46 +3608,49 @@
     }
     td:nth-child(1) { 
       text-align: right; 
-      width: 8%;
+      width: 10%;
     }
-    td:nth-child(2), td:nth-child(3) { 
-      width: 4.5%;
+    td:nth-child(2) { 
+      width: 4%;
+    }
+    td:nth-child(3) { 
+      width: 3%;
     }
     td:nth-child(4) { 
-      width: 5%;
+      width: 4%;
     }
     td:nth-child(5) { 
-      width: 4.5%;
+      width: 3.5%;
     }
     td:nth-child(6) { 
-      width: 5.5%;
+      width: 6%;
     }
     td:nth-child(7) { 
       width: 5.5%;
     }
     td:nth-child(8) { 
-      width: 5.5%;
+      width: 6%;
     }
     td:nth-child(9) { 
-      width: 5.5%;
+      width: 4%;
     }
     td:nth-child(10) { 
-      width: 5.5%;
+      width: 4%;
     }
     td:nth-child(11) { 
-      width: 5.5%;
+      width: 5%;
     }
     td:nth-child(12) { 
-      width: 4.5%;
+      width: 3.5%;
     }
     td:nth-child(13) { 
-      width: 5.5%;
+      width: 4%;
     }
     td:nth-child(14) { 
-      width: 5.5%;
+      width: 4%;
     }
     td:nth-child(15) { 
-      width: 5.5%;
+      width: 4%;
     }
     tr.phase-row td { 
       background: #d0d0d0; 
@@ -3734,8 +3768,8 @@
         table-layout: fixed !important;
       }
       th, td {
-        padding: 2px 3px !important;
-        font-size: 8px !important;
+        padding: 2px 2px !important;
+        font-size: 7px !important;
         font-weight: bold !important;
         border: 1px solid #000 !important;
         color: #000 !important;
@@ -3745,20 +3779,26 @@
         text-overflow: ellipsis !important;
       }
       
-      td:nth-child(1) { width: 8% !important; text-align: right !important; }
-      td:nth-child(2), td:nth-child(3) { width: 4.5% !important; }
-      td:nth-child(4) { width: 5% !important; }
-      td:nth-child(5) { width: 4.5% !important; }
-      td:nth-child(6) { width: 5.5% !important; }
+      th {
+        font-size: 7px !important;
+        padding: 3px 2px !important;
+      }
+      
+      td:nth-child(1) { width: 10% !important; text-align: right !important; }
+      td:nth-child(2) { width: 4% !important; }
+      td:nth-child(3) { width: 3% !important; }
+      td:nth-child(4) { width: 4% !important; }
+      td:nth-child(5) { width: 3.5% !important; }
+      td:nth-child(6) { width: 6% !important; }
       td:nth-child(7) { width: 5.5% !important; }
-      td:nth-child(8) { width: 5.5% !important; }
-      td:nth-child(9) { width: 5.5% !important; }
-      td:nth-child(10) { width: 5.5% !important; }
-      td:nth-child(11) { width: 5.5% !important; }
-      td:nth-child(12) { width: 4.5% !important; }
-      td:nth-child(13) { width: 5.5% !important; }
-      td:nth-child(14) { width: 5.5% !important; }
-      td:nth-child(15) { width: 5.5% !important; }
+      td:nth-child(8) { width: 6% !important; }
+      td:nth-child(9) { width: 4% !important; }
+      td:nth-child(10) { width: 4% !important; }
+      td:nth-child(11) { width: 5% !important; }
+      td:nth-child(12) { width: 3.5% !important; }
+      td:nth-child(13) { width: 4% !important; }
+      td:nth-child(14) { width: 4% !important; }
+      td:nth-child(15) { width: 4% !important; }
       
       td:nth-child(4), td:nth-child(5) {
         white-space: normal !important;
@@ -3812,15 +3852,15 @@
       }
       @page {
         size: A4 landscape !important;
-        margin: 5mm !important;
+        margin: 8mm 5mm !important;
       }
       @page :first {
         size: A4 landscape !important;
-        margin: 5mm !important;
+        margin: 8mm 5mm !important;
       }
       @page :nth(2) {
         size: A4 landscape !important;
-        margin: 5mm !important;
+        margin: 8mm 5mm !important;
       }
       .page-break {
         page-break-before: always !important;

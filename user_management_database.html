@@ -534,8 +534,8 @@
                     <input type="text" id="fullName" name="fullName" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">كلمة المرور</label>
-                    <input type="password" id="password" name="password" required>
+                    <label for="password">كلمة المرور <span id="passwordLabelHint" style="font-size: 0.85em; color: #666; font-weight: normal;">(اختياري عند التعديل)</span></label>
+                    <input type="password" id="password" name="password" placeholder="اتركه فارغاً للحفاظ على كلمة المرور الحالية">
                 </div>
                 <div class="form-group">
                     <label for="role">الدور</label>
@@ -560,14 +560,28 @@
         </div>
     </div>
 
+    <script src="config.js" onerror=""></script>
+    <script src="config/config-loader.js?v=2.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // Supabase configuration
-        const SUPABASE_URL = 'https://vpvvjascwgivdjyyhzwp.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
+        const SUPABASE_URL = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.URL) ? SUPABASE_CONFIG.URL : 'https://vpvvjascwgivdjyyhzwp.supabase.co';
+        const SUPABASE_ANON_KEY = (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.ANON_KEY) ? SUPABASE_CONFIG.ANON_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwdnZqYXNjd2dpdmRqeXloendwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MDYxMjYsImV4cCI6MjA2NTM4MjEyNn0.6AR2-MG4x9ugNTXe9jUqx-IwGEtj1m6MCYwQkTsSbUQ';
 
         // Initialize Supabase
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // الحصول على معرف المشروع من الإعدادات
+        function getProjectId() {
+          if (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.PROJECT_ID) {
+            return SUPABASE_CONFIG.PROJECT_ID;
+          }
+          if (window.PROJECT_ID) {
+            return window.PROJECT_ID;
+          }
+          // القيمة الافتراضية
+          return 'growth_iraqcell';
+        }
 
         // User management system with database
         class UserManager {
@@ -596,19 +610,49 @@
       async loadUsersFromDatabase() {
         try {
           this.showLoading();
-          const { data, error } = await supabase
+          const projectId = getProjectId();
+          console.log('Loading users for project_id:', projectId);
+          
+          // محاولة جلب جميع المستخدمين أولاً للتشخيص
+          const { data: allData, error: allError } = await supabase
             .from('users')
             .select('*')
             .order('id', { ascending: false });
+          
+          if (allError) {
+            console.error('Error loading all users:', allError);
+          } else {
+            console.log('All users in database:', allData?.length || 0);
+            console.log('Sample project_ids:', allData?.slice(0, 5).map(u => ({ username: u.username, project_id: u.project_id })));
+          }
+          
+          // الآن جلب المستخدمين المفلترين حسب project_id
+          const { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('project_id', projectId)
+            .order('id', { ascending: false });
 
           if (error) {
-            console.error('Error loading users:', error);
+            console.error('Error loading filtered users:', error);
             console.log('Falling back to local storage...');
             this.loadUsersFromLocalStorage();
             return;
           }
 
-          this.users = data || [];
+          console.log('Filtered users for project_id', projectId, ':', data?.length || 0);
+          
+          // تصفية إضافية للتأكد (في حالة وجود بيانات بدون project_id)
+          this.users = (data || []).filter(user => {
+            // إذا كان project_id موجوداً، يجب أن يطابق
+            if (user.project_id) {
+              return user.project_id === projectId;
+            }
+            // إذا لم يكن موجوداً، نتجاهله (أو يمكن إرجاع false لتجاهله)
+            return false;
+          });
+          
+          console.log('Final filtered users:', this.users.length);
           this.renderUsers();
           this.hideLoading();
         } catch (error) {
@@ -620,11 +664,24 @@
 
       loadUsersFromLocalStorage() {
         try {
+          const projectId = getProjectId();
+          console.log('Loading from localStorage for project_id:', projectId);
           const savedUsers = localStorage.getItem('systemUsers');
           if (savedUsers) {
-            this.users = JSON.parse(savedUsers);
+            const allUsers = JSON.parse(savedUsers);
+            console.log('All users in localStorage:', allUsers.length);
+            // تصفية المستخدمين حسب project_id
+            this.users = allUsers.filter(user => {
+              // إذا كان project_id موجوداً، يجب أن يطابق
+              if (user.project_id) {
+                return user.project_id === projectId;
+              }
+              // إذا لم يكن موجوداً، نتجاهله
+              return false;
+            });
+            console.log('Filtered users from localStorage:', this.users.length);
           } else {
-            // Demo users
+            // Demo users - مع project_id
             this.users = [
               {
                 id: 1,
@@ -632,6 +689,7 @@
                 full_name: 'مدير النظام',
                 role: 'admin',
                 status: 'active',
+                project_id: projectId,
                 last_login: '2025-01-25 10:30:00',
                 created_at: '2025-01-01 00:00:00'
               },
@@ -641,6 +699,7 @@
                 full_name: 'مشرف النظام',
                 role: 'supervisor',
                 status: 'active',
+                project_id: projectId,
                 last_login: '2025-01-25 09:15:00',
                 created_at: '2025-01-01 00:00:00'
               },
@@ -650,6 +709,7 @@
                 full_name: 'مشاهد النظام',
                 role: 'viewer',
                 status: 'active',
+                project_id: projectId,
                 last_login: '2025-01-24 16:45:00',
                 created_at: '2025-01-01 00:00:00'
               }
@@ -731,6 +791,47 @@
                 return roles[role] || role;
             }
 
+            formatLastLogin(lastLogin) {
+                if (!lastLogin) return '<span style="color: #999; font-style: italic;">لم يسجل دخول</span>';
+                
+                try {
+                    const loginDate = new Date(lastLogin);
+                    const now = new Date();
+                    const diffMs = now - loginDate;
+                    const diffMins = Math.floor(diffMs / 60000);
+                    const diffHours = Math.floor(diffMs / 3600000);
+                    const diffDays = Math.floor(diffMs / 86400000);
+                    
+                    let timeAgo = '';
+                    if (diffMins < 1) {
+                        timeAgo = 'الآن';
+                    } else if (diffMins < 60) {
+                        timeAgo = `منذ ${diffMins} دقيقة`;
+                    } else if (diffHours < 24) {
+                        timeAgo = `منذ ${diffHours} ساعة`;
+                    } else if (diffDays < 7) {
+                        timeAgo = `منذ ${diffDays} يوم`;
+                    } else {
+                        timeAgo = loginDate.toLocaleDateString('ar-SA');
+                    }
+                    
+                    const fullDate = loginDate.toLocaleString('ar-SA', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    return `<div style="display: flex; flex-direction: column; gap: 2px;">
+                        <span style="font-weight: 500;">${fullDate}</span>
+                        <span style="font-size: 0.85em; color: #666;">${timeAgo}</span>
+                    </div>`;
+                } catch (e) {
+                    return '<span style="color: #999;">تاريخ غير صحيح</span>';
+                }
+            }
+
             renderUsers() {
                 const tbody = document.getElementById('usersTableBody');
                 if (this.users.length === 0) {
@@ -751,7 +852,7 @@
                         <td>${user.full_name}</td>
                         <td><span class="role-badge role-${user.role}">${this.getRoleName(user.role)}</span></td>
                         <td><span class="status-badge status-${user.status}">${user.status === 'active' ? 'نشط' : 'غير نشط'}</span></td>
-                        <td>${user.last_login ? new Date(user.last_login).toLocaleString('ar-SA') : 'لم يسجل دخول'}</td>
+                        <td>${user.last_login ? this.formatLastLogin(user.last_login) : '<span style="color: #999; font-style: italic;">لم يسجل دخول</span>'}</td>
                         <td>
                             <div class="actions">
                                 <button class="action-btn edit-btn" onclick="userManager.editUser(${user.id})">تعديل</button>
@@ -787,7 +888,7 @@
                         <td>${user.full_name}</td>
                         <td><span class="role-badge role-${user.role}">${this.getRoleName(user.role)}</span></td>
                         <td><span class="status-badge status-${user.status}">${user.status === 'active' ? 'نشط' : 'غير نشط'}</span></td>
-                        <td>${user.last_login ? new Date(user.last_login).toLocaleString('ar-SA') : 'لم يسجل دخول'}</td>
+                        <td>${user.last_login ? this.formatLastLogin(user.last_login) : '<span style="color: #999; font-style: italic;">لم يسجل دخول</span>'}</td>
                         <td>
                             <div class="actions">
                                 <button class="action-btn edit-btn" onclick="userManager.editUser(${user.id})">تعديل</button>
@@ -802,6 +903,8 @@
                 document.getElementById('modalTitle').textContent = 'إضافة مستخدم جديد';
                 document.getElementById('modalSubtitle').textContent = 'أدخل بيانات المستخدم الجديد';
                 document.getElementById('userForm').reset();
+                document.getElementById('password').placeholder = '';
+                document.getElementById('password').required = true;
                 document.getElementById('userModal').classList.add('open');
             }
 
@@ -816,6 +919,8 @@
                 document.getElementById('username').value = user.username;
                 document.getElementById('fullName').value = user.full_name;
                 document.getElementById('password').value = '';
+                document.getElementById('password').placeholder = 'اتركه فارغاً للحفاظ على كلمة المرور الحالية';
+                document.getElementById('password').required = false;
                 document.getElementById('role').value = user.role;
                 document.getElementById('status').value = user.status;
                 
@@ -841,8 +946,28 @@
         };
 
         // Validate
-        if (!userData.username || !userData.full_name || !userData.password) {
+        if (!userData.username || !userData.full_name) {
           this.showError('يرجى ملء جميع الحقول المطلوبة');
+          return;
+        }
+        
+        // التحقق من صحة الدور
+        const validRoles = ['admin', 'supervisor', 'viewer'];
+        if (!validRoles.includes(userData.role)) {
+          this.showError(`الدور غير صحيح. يجب أن يكون أحد: ${validRoles.join(', ')}`);
+          return;
+        }
+        
+        // التحقق من صحة الحالة
+        const validStatuses = ['active', 'inactive'];
+        if (!validStatuses.includes(userData.status)) {
+          this.showError(`الحالة غير صحيحة. يجب أن تكون أحد: ${validStatuses.join(', ')}`);
+          return;
+        }
+        
+        // كلمة المرور مطلوبة فقط عند إضافة مستخدم جديد
+        if (!userId && !userData.password) {
+          this.showError('يرجى إدخال كلمة المرور للمستخدم الجديد');
           return;
         }
 
@@ -851,32 +976,73 @@
           if (userId) {
             // Edit existing user
             const userIdNum = parseInt(userId);
+            const projectId = getProjectId();
+            
+            // إعداد بيانات التحديث - كلمة المرور فقط إذا تم إدخالها
+            const updateData = {
+              username: userData.username,
+              full_name: userData.full_name,
+              role: userData.role,
+              status: userData.status,
+              updated_at: new Date().toISOString()
+            };
+            
+            // إضافة كلمة المرور فقط إذا تم إدخالها
+            if (userData.password && userData.password.trim() !== '') {
+              updateData.password_hash = userData.password;
+            }
+            
             const { error } = await supabase
               .from('users')
-              .update({
-                username: userData.username,
-                full_name: userData.full_name,
-                password_hash: userData.password,
-                role: userData.role,
-                status: userData.status
-              })
-              .eq('id', userIdNum);
+              .update(updateData)
+              .eq('id', userIdNum)
+              .eq('project_id', projectId);
 
-            if (error) throw error;
+            if (error) {
+              console.error('Database update error:', error);
+              
+              // رسالة خطأ أوضح
+              if (error.code === '22P02' && error.message.includes('enum')) {
+                this.showError('خطأ: قيمة الدور غير صحيحة. يرجى التحقق من إعدادات قاعدة البيانات.');
+              } else if (error.code === '23505') {
+                this.showError('اسم المستخدم موجود بالفعل');
+              } else {
+                this.showError(`خطأ في تحديث المستخدم: ${error.message}`);
+              }
+              throw error;
+            }
             this.showSuccess('تم تحديث المستخدم بنجاح في قاعدة البيانات');
           } else {
             // Add new user
+            const projectId = getProjectId();
+            const insertData = {
+              username: userData.username,
+              full_name: userData.full_name,
+              password_hash: userData.password,
+              role: userData.role,
+              status: userData.status,
+              project_id: projectId
+            };
+            
+            console.log('Inserting user with data:', { ...insertData, password_hash: '***' });
+            
             const { error } = await supabase
               .from('users')
-              .insert({
-                username: userData.username,
-                full_name: userData.full_name,
-                password_hash: userData.password,
-                role: userData.role,
-                status: userData.status
-              });
+              .insert(insertData);
 
-            if (error) throw error;
+            if (error) {
+              console.error('Database insert error:', error);
+              
+              // رسالة خطأ أوضح
+              if (error.code === '22P02' && error.message.includes('enum')) {
+                this.showError('خطأ: قيمة الدور غير صحيحة. يرجى التحقق من إعدادات قاعدة البيانات.');
+              } else if (error.code === '23505') {
+                this.showError('اسم المستخدم موجود بالفعل');
+              } else {
+                this.showError(`خطأ في حفظ المستخدم: ${error.message}`);
+              }
+              throw error;
+            }
             this.showSuccess('تم إضافة المستخدم بنجاح في قاعدة البيانات');
           }
 
@@ -894,18 +1060,25 @@
               const userIdNum = parseInt(userId);
               const userIndex = this.users.findIndex(u => parseInt(u.id) === userIdNum);
               if (userIndex !== -1) {
-                this.users[userIndex] = {
+                const updatedUser = {
                   ...this.users[userIndex],
                   username: userData.username,
                   full_name: userData.full_name,
-                  password_hash: userData.password,
                   role: userData.role,
                   status: userData.status
                 };
+                
+                // تحديث كلمة المرور فقط إذا تم إدخالها
+                if (userData.password && userData.password.trim() !== '') {
+                  updatedUser.password_hash = userData.password;
+                }
+                
+                this.users[userIndex] = updatedUser;
               }
               this.showSuccess('تم تحديث المستخدم بنجاح في التخزين المحلي');
             } else {
               // Add new user
+              const projectId = getProjectId();
               const newUser = {
                 id: Date.now(),
                 username: userData.username,
@@ -913,6 +1086,7 @@
                 password_hash: userData.password,
                 role: userData.role,
                 status: userData.status,
+                project_id: projectId,
                 last_login: null,
                 created_at: new Date().toISOString()
               };
@@ -944,10 +1118,12 @@
 
         try {
           // Try database first
+          const projectId = getProjectId();
           const { error } = await supabase
             .from('users')
             .delete()
-            .eq('id', userIdNum);
+            .eq('id', userIdNum)
+            .eq('project_id', projectId);
 
           if (error) throw error;
 
