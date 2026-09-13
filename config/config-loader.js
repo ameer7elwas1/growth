@@ -152,7 +152,7 @@
           config.URL !== 'YOUR_SUPABASE_URL_HERE' && 
           config.ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY_HERE') {
         if (!success) {
-          console.log('✅ تم تحميل إعدادات Supabase بنجاح');
+          console.log(' تم');
           if (attempts > 1) {
             console.log('   (بعد ' + attempts + ' محاولة)');
           }
@@ -161,7 +161,6 @@
         return true;
       }
       
-      // إذا لم تنجح ولم نتجاوز الحد الأقصى للمحاولات
       if (attempts < maxRetries) {
         setTimeout(tryLoad, delay);
         return false;
@@ -191,7 +190,7 @@
       loadConfigWithRetry(10, 100);
     }, 100);
   } else {
-    console.log('✅ تم تحميل إعدادات Supabase بنجاح');
+    console.log(' تم   ');
   }
 })();
 

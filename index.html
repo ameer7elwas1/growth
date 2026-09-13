@@ -1655,6 +1655,178 @@
       margin-bottom: 0;
     }
     .small{font-size:12px; color:var(--muted);}
+    /* تصميم جديد للرسوم البيانية */
+    .charts-section {
+      margin-top: 32px;
+      padding: 0;
+    }
+    
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+    
+    .chart-container {
+      background: var(--card-bg);
+      border-radius: 20px;
+      border: 2px solid var(--border-color);
+      overflow: hidden;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      will-change: box-shadow, border-color;
+    }
+    
+    .chart-container.chart-full-width {
+      grid-column: 1 / -1;
+    }
+    
+    .chart-header {
+      padding: 24px 28px;
+      border-bottom: 2px solid var(--border-light);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+    
+    [data-theme="dark"] .chart-header {
+      background: linear-gradient(135deg, rgba(26, 26, 26, 0.5) 0%, rgba(17, 24, 39, 0.3) 100%);
+    }
+    
+    .chart-icon {
+      font-size: 32px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    
+    .chart-container h3 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+    
+    .chart-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    
+    .chart-body {
+      padding: 28px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .chart-body canvas {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: 100%;
+      display: block;
+      position: relative;
+    }
+    
+    /* ألوان مختلفة لكل رسم بياني */
+    .chart-primary {
+      border-top: 5px solid #dc2626;
+    }
+    
+    .chart-primary .chart-header {
+      background: linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, rgba(220, 38, 38, 0.03) 100%);
+    }
+    
+    .chart-success {
+      border-top: 5px solid #10b981;
+    }
+    
+    .chart-success .chart-header {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%);
+    }
+    
+    .chart-info {
+      border-top: 5px solid #3b82f6;
+    }
+    
+    .chart-info .chart-header {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.03) 100%);
+    }
+    
+    .chart-warning {
+      border-top: 5px solid #8b5cf6;
+    }
+    
+    .chart-warning .chart-header {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(139, 92, 246, 0.03) 100%);
+    }
+    
+    .chart-danger {
+      border-top: 5px solid #ef4444;
+    }
+    
+    .chart-danger .chart-header {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.03) 100%);
+    }
+    
+    .chart-container:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 12px 24px rgba(0, 0, 0, 0.06);
+      border-color: var(--primary-color);
+    }
+    
+    [data-theme="dark"] .chart-container {
+      background: var(--card-bg);
+      border-color: var(--border-color);
+    }
+    
+    [data-theme="dark"] .chart-container:hover {
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5), 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* تصميم متجاوب */
+    @media (max-width: 1200px) {
+      .charts-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 20px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      
+      .chart-container.chart-full-width {
+        grid-column: 1;
+      }
+      
+      .chart-header {
+        padding: 20px;
+      }
+      
+      .chart-body {
+        padding: 20px;
+        min-height: 300px;
+      }
+      
+      .chart-container h3 {
+        font-size: 1.2rem;
+      }
+    }
+    
     .chart-row{display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;}
     
     #connectionStatus{
@@ -1765,6 +1937,7 @@
       justify-content: center;
     }
     
+    /* الاحتفاظ بـ chart-card للتوافق مع الكود القديم */
     .chart-card {
       flex: 1 1 400px; 
       min-height: 380px;
@@ -1793,50 +1966,6 @@
         0 4px 12px rgba(0, 0, 0, 0.2);
     }
     
-    .chart-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: linear-gradient(90deg, 
-        rgba(59, 130, 246, 1) 0%,
-        rgba(139, 92, 246, 1) 50%,
-        rgba(236, 72, 153, 1) 100%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 1;
-    }
-    
-    .chart-card::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(128, 28, 50, 0.05) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-    }
-    
-    .chart-card h3 {
-      flex-shrink: 0;
-      margin: 0 0 20px 0;
-      color: var(--primary-color);
-      font-size: 1.15rem;
-      font-weight: 800;
-      text-align: center;
-      padding-bottom: 15px;
-      border-bottom: 2px solid var(--border-light);
-      position: relative;
-      z-index: 1;
-      letter-spacing: 0.3px;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    }
-    
     .chart-card canvas {
       flex: 1 1 auto;
       min-height: 0;
@@ -1844,31 +1973,6 @@
       width: 100% !important;
       position: relative;
       z-index: 1;
-    }
-    
-    .chart-card:hover {
-      box-shadow: 
-        0 24px 60px rgba(128, 28, 50, 0.15),
-        0 12px 36px rgba(128, 28, 50, 0.1),
-        0 0 0 1px rgba(128, 28, 50, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      border-color: var(--primary-color);
-      transform: translateY(-4px) scale(1.01);
-    }
-    
-    [data-theme="dark"] .chart-card:hover {
-      box-shadow: 
-        0 24px 60px rgba(0, 0, 0, 0.6),
-        0 12px 36px rgba(255, 71, 87, 0.2),
-        0 0 0 1px rgba(255, 71, 87, 0.3);
-    }
-    
-    .chart-card:hover::before {
-      opacity: 1;
-    }
-    
-    .chart-card:hover::after {
-      opacity: 1;
     }
     
     .chart-card h3 {
@@ -3200,32 +3304,65 @@
         </table>
       </div>
 
-      <div class="chart-row">
-        <div class="chart-card">
-          <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700; text-align: center;">أعلى 10 وكلاء حسب إجمالي المستخدمين</h3>
-          <canvas id="barChart"></canvas>
-        </div>
-        <div class="chart-card">
-          <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700; text-align: center;">توزيع المستخدمين (نشطون / غير نشطين)</h3>
-          <canvas id="pieChart"></canvas>
-        </div>
-      </div>
-      
-      <div class="chart-row">
-        <div class="chart-card" style="flex: 1 1 100%; max-height: 500px; height: 450px; overflow-y: auto;">
-          <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700; text-align: center;">النمو الأسبوعي للوكلاء</h3>
-          <canvas id="growthChart"></canvas>
-        </div>
-        <div class="chart-card">
-          <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700; text-align: center;">معدل التفعيل حسب المراحل</h3>
-          <canvas id="phaseChart"></canvas>
-        </div>
-      </div>
-      
-      <div class="chart-row">
-        <div class="chart-card" style="flex: 1 1 100%; max-height: 500px; height: 450px; overflow-y: auto;">
-          <h3 style="margin: 0 0 15px 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700; text-align: center;">تحليل العجز للوكلاء</h3>
-          <canvas id="deficitChart"></canvas>
+      <!-- قسم الرسوم البيانية الرئيسية -->
+      <div class="charts-section">
+        <div class="charts-grid">
+          <!-- الرسم البياني الأول: أعلى 10 وكلاء -->
+          <div class="chart-container chart-primary">
+            <div class="chart-header">
+              <div class="chart-icon">📊</div>
+              <h3>أعلى 10 وكلاء حسب إجمالي المستخدمين</h3>
+            </div>
+            <div class="chart-body">
+              <canvas id="barChart"></canvas>
+            </div>
+          </div>
+
+          <!-- الرسم البياني الثاني: توزيع المستخدمين -->
+          <div class="chart-container chart-success">
+            <div class="chart-header">
+              <div class="chart-icon">📈</div>
+              <h3>توزيع المستخدمين</h3>
+              <div class="chart-subtitle">نشطون / غير نشطين</div>
+            </div>
+            <div class="chart-body">
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+
+          <!-- الرسم البياني الثالث: النمو الأسبوعي -->
+          <div class="chart-container chart-info chart-full-width">
+            <div class="chart-header">
+              <div class="chart-icon">📉</div>
+              <h3>النمو الأسبوعي للوكلاء</h3>
+              <div class="chart-subtitle">أول 8 وكلاء</div>
+            </div>
+            <div class="chart-body">
+              <canvas id="growthChart"></canvas>
+            </div>
+          </div>
+
+          <!-- الرسم البياني الرابع: معدل التفعيل -->
+          <div class="chart-container chart-warning">
+            <div class="chart-header">
+              <div class="chart-icon">📊</div>
+              <h3>معدل التفعيل حسب المراحل</h3>
+            </div>
+            <div class="chart-body">
+              <canvas id="phaseChart"></canvas>
+            </div>
+          </div>
+
+          <!-- الرسم البياني الخامس: تحليل العجز -->
+          <div class="chart-container chart-danger chart-full-width">
+            <div class="chart-header">
+              <div class="chart-icon">🔍</div>
+              <h3>تحليل العجز للوكلاء</h3>
+            </div>
+            <div class="chart-body">
+              <canvas id="deficitChart"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -4616,7 +4753,29 @@
       
       agent.expired = Math.max(0, agent.reached_total - agent.active);
 
-      agent.growth = Math.round(agent.active - Number(agent.prev_active||0));
+      // حساب النمو الأسبوعي - استخدام history إذا كان متوفراً
+      let weeklyGrowth = 0;
+      if (agent.history && Array.isArray(agent.history) && agent.history.length > 0) {
+        // البحث عن آخر قيمة قبل أسبوع
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        const oneWeekAgoStr = toYMDLocal(oneWeekAgo);
+        
+        // البحث عن آخر سجل قبل أسبوع
+        let prevWeekActive = agent.prev_active || 0;
+        for (let i = agent.history.length - 1; i >= 0; i--) {
+          if (agent.history[i].date <= oneWeekAgoStr) {
+            prevWeekActive = agent.history[i].active || agent.prev_active || 0;
+            break;
+          }
+        }
+        weeklyGrowth = Math.round(agent.active - prevWeekActive);
+      } else {
+        // إذا لم يكن هناك history، استخدم prev_active
+        weeklyGrowth = Math.round(agent.active - Number(agent.prev_active||0));
+      }
+      
+      agent.growth = weeklyGrowth;
       agent.activation_rate = agent.total_users ? +( (agent.active / agent.total_users) * 100 ) : 0;
       agent.activation_rate = Math.round(agent.activation_rate*10)/10;
       if(required !== null){
@@ -4812,7 +4971,15 @@
       const gridColor = isLightMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
       const backgroundColor = isLightMode ? '#ffffff' : '#1a1a1a';
 
-      const top = filtered.slice().sort((a,b)=>b.total_users - a.total_users).slice(0,10);
+      const top = filtered.slice()
+        .sort((a,b)=>{
+          // ترتيب حسب إجمالي المستخدمين تنازلياً
+          const totalDiff = b.total_users - a.total_users;
+          if (totalDiff !== 0) return totalDiff;
+          // في حالة التساوي، ترتيب حسب المستخدمين النشطين
+          return b.active - a.active;
+        })
+        .slice(0,10);
       const labels = top.map(a=>a.name || a.itpc_site || '—');
       const totalData = top.map(a=>a.total_users);
       const activeData = top.map(a=>a.active);
@@ -4829,6 +4996,16 @@
       }
       
       const barCtx = barCanvas.getContext('2d');
+      // إنشاء تدرجات لونية حديثة للرسوم البيانية
+      const createGradient = (ctx, chartArea, color1, color2, direction = 'vertical') => {
+        const gradient = direction === 'vertical' 
+          ? ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top)
+          : ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+        gradient.addColorStop(0, color1);
+        gradient.addColorStop(1, color2);
+        return gradient;
+      };
+
       barChart = new Chart(barCtx, {
         type:'bar',
         data:{
@@ -4837,71 +5014,67 @@
             { 
               label:'إجمالي المستخدمين', 
               data: totalData,
-              backgroundColor: (ctx) => {
-                const canvas = ctx.chart.canvas;
-                const ctx2d = canvas.getContext('2d');
-                const gradient = ctx2d.createLinearGradient(0, 0, 0, canvas.height);
-                gradient.addColorStop(0, 'rgba(59, 130, 246, 0.9)');
-                gradient.addColorStop(0.5, 'rgba(99, 102, 241, 0.85)');
-                gradient.addColorStop(1, 'rgba(139, 92, 246, 0.8)');
-                return gradient;
-              },
-              borderColor: 'rgba(59, 130, 246, 1)',
-              borderWidth: 2.5,
-              borderRadius: 10,
+              backgroundColor: '#dc2626',
+              borderColor: '#b91c1c',
+              borderWidth: 3,
+              borderRadius: 8,
               borderSkipped: false,
-              barThickness: 'flex',
-              maxBarThickness: 50,
-              shadowOffsetX: 0,
-              shadowOffsetY: 4,
-              shadowBlur: 8,
-              shadowColor: 'rgba(59, 130, 246, 0.3)',
             },
             { 
               label:'المستخدمون النشطون', 
               data: activeData,
-              backgroundColor: (ctx) => {
-                const canvas = ctx.chart.canvas;
-                const ctx2d = canvas.getContext('2d');
-                const gradient = ctx2d.createLinearGradient(0, 0, 0, canvas.height);
-                gradient.addColorStop(0, 'rgba(16, 185, 129, 0.9)');
-                gradient.addColorStop(0.5, 'rgba(34, 197, 94, 0.85)');
-                gradient.addColorStop(1, 'rgba(74, 222, 128, 0.8)');
-                return gradient;
-              },
-              borderColor: 'rgba(16, 185, 129, 1)',
-              borderWidth: 2.5,
-              borderRadius: 10,
+              backgroundColor: '#2563eb',
+              borderColor: '#1e40af',
+              borderWidth: 3,
+              borderRadius: 8,
               borderSkipped: false,
-              barThickness: 'flex',
-              maxBarThickness: 50,
-              shadowOffsetX: 0,
-              shadowOffsetY: 4,
-              shadowBlur: 8,
-              shadowColor: 'rgba(16, 185, 129, 0.3)',
             }
           ]
         },
         options:{
           responsive:true,
           maintainAspectRatio:true,
-          aspectRatio: 1.5,
+          aspectRatio: 2.0,
+          layout: {
+            padding: {
+              top: 50,
+              right: 30,
+              bottom: 30,
+              left: 30
+            }
+          },
           animation: {
-            duration: 2000,
+            duration: 1500,
             easing: 'easeOutQuart',
+            delay: 0,
             onComplete: function() {
               try {
                 const chart = this.chart;
-                if (chart && chart.canvas) {
-                  const ctx = chart.canvas.getContext('2d');
-                  if (ctx) {
-                    ctx.save();
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
-                    ctx.restore();
-                  }
-                }
+                if (!chart || !chart.canvas) return;
+                const ctx = chart.canvas.getContext('2d');
+                if (!ctx) return;
+                ctx.save();
+                chart.data.datasets.forEach((dataset, i) => {
+                  const meta = chart.getDatasetMeta(i);
+                  if (!meta || !meta.data) return;
+                  meta.data.forEach((bar, index) => {
+                    if (!bar) return;
+                    const value = dataset.data[index];
+                    if (value > 0 && bar.x !== undefined && bar.y !== undefined) {
+                      ctx.fillStyle = isLightMode ? '#1f2937' : '#f9fafb';
+                      ctx.font = 'bold 16px Cairo';
+                      ctx.textAlign = 'center';
+                      ctx.textBaseline = 'bottom';
+                      ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+                      ctx.shadowBlur = 4;
+                      ctx.fillText(num(value), bar.x, bar.y - 8);
+                      ctx.shadowBlur = 0;
+                    }
+                  });
+                });
+                ctx.restore();
               } catch (e) {
+                console.warn('Chart label rendering error:', e);
               }
             }
           },
@@ -4917,99 +5090,179 @@
               labels:{
                 color: textColor,
                 font: {
-                  size: 15,
-                  weight: '700',
+                  size: 18,
+                  weight: '900',
                   family: "'Cairo', sans-serif"
                 },
-                padding: 18,
-                usePointStyle: true,
-                pointStyle: 'circle',
-                boxWidth: 14,
-                boxHeight: 14,
-                textAlign: 'right'
+                padding: 35,
+                usePointStyle: false,
+                boxWidth: 25,
+                boxHeight: 25,
+                textAlign: 'right',
+                generateLabels: function(chart) {
+                  const original = Chart.defaults.plugins.legend.labels.generateLabels;
+                  const labels = original.call(this, chart);
+                  labels.forEach(label => {
+                    label.fillStyle = label.strokeStyle;
+                  });
+                  return labels;
+                }
               },
               title: {
                 display: false
               }
             },
             tooltip: {
-              backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.98)' : 'rgba(26, 26, 26, 0.98)',
+              enabled: true,
+              backgroundColor: isLightMode 
+                ? 'rgba(255, 255, 255, 0.99)' 
+                : 'rgba(17, 24, 39, 0.99)',
               titleColor: textColor,
               bodyColor: textColor,
-              borderColor: isLightMode ? 'rgba(128, 28, 50, 0.2)' : 'rgba(255, 71, 87, 0.3)',
-              borderWidth: 2,
-              padding: 16,
-              cornerRadius: 12,
+              borderColor: isLightMode 
+                ? 'rgba(220, 38, 38, 0.5)' 
+                : 'rgba(37, 99, 235, 0.6)',
+              borderWidth: 4,
+              padding: {
+                top: 18,
+                right: 24,
+                bottom: 18,
+                left: 24
+              },
+              cornerRadius: 18,
               displayColors: true,
-              boxPadding: 8,
+              boxPadding: 14,
               titleFont: {
-                size: 15,
+                size: 17,
                 weight: 'bold',
                 family: "'Cairo', sans-serif"
               },
               bodyFont: {
-                  size: 14,
-                weight: '600',
+                size: 16,
+                weight: '800',
                 family: "'Cairo', sans-serif"
               },
               footerFont: {
-                size: 12,
+                size: 14,
+                weight: '600',
                 family: "'Cairo', sans-serif"
               },
               callbacks: {
+                title: function(context) {
+                  return context[0].label || '';
+                },
                 label: function(context) {
-                  return context.dataset.label + ': ' + num(context.parsed.y) + ' مستخدم';
+                  const label = context.dataset.label || '';
+                  const value = context.parsed.y;
+                  const percentage = sumTotal > 0 
+                    ? ((value / sumTotal) * 100).toFixed(1) 
+                    : '0.0';
+                  return `${label}: ${num(value)} مستخدم (${percentage}%)`;
                 },
                 labelColor: function(context) {
                   return {
                     borderColor: context.dataset.borderColor,
-                    backgroundColor: context.dataset.backgroundColor,
-                    borderWidth: 2,
-                    borderRadius: 4
+                    backgroundColor: context.dataset.borderColor,
+                    borderWidth: 5,
+                    borderRadius: 10
                   };
                 }
               },
-              titleSpacing: 8,
-              bodySpacing: 6,
-              footerSpacing: 6,
+              titleSpacing: 14,
+              bodySpacing: 12,
+              footerSpacing: 8,
               usePointStyle: true,
-              boxWidth: 12,
-              boxHeight: 12
+              boxWidth: 18,
+              boxHeight: 18,
+              animation: {
+                duration: 400
+              }
             }
           },
           scales:{
             x:{
+              reverse: false,
+              stacked: false,
+              title: {
+                display: true,
+                text: 'الوكلاء',
+                color: textColor,
+                font: {
+                  size: 15,
+                  weight: 'bold',
+                  family: "'Cairo', sans-serif"
+                },
+                padding: {
+                  top: 10,
+                  bottom: 5
+                }
+              },
               ticks:{
                 color: textColor,
                 font: {
-                  size: 11,
-                  weight: 'bold',
+                  size: 16,
+                  weight: '900',
                   family: "'Cairo', sans-serif"
                 },
                 maxRotation: 45,
-                minRotation: 45
+                minRotation: 45,
+                padding: 20
               },
               grid: {
                 color: gridColor,
-                drawBorder: false
+                drawBorder: false,
+                drawOnChartArea: true,
+                drawTicks: false,
+                lineWidth: 2,
+                borderDash: [8, 8]
+              },
+              border: {
+                display: true,
+                color: isLightMode ? 'rgba(220, 38, 38, 0.25)' : 'rgba(37, 99, 235, 0.35)',
+                width: 2.5
               }
             }, 
             y:{
-              beginAtZero:true, 
-              ticks:{
+              beginAtZero:true,
+              stacked: false,
+              title: {
+                display: true,
+                text: 'عدد المستخدمين',
                 color: textColor,
                 font: {
-                  size: 12,
+                  size: 17,
                   weight: 'bold',
                   family: "'Cairo', sans-serif"
                 },
+                padding: {
+                  top: 5,
+                  bottom: 10
+                }
+              },
+              ticks:{
+                color: textColor,
+                font: {
+                  size: 17,
+                  weight: '900',
+                  family: "'Cairo', sans-serif"
+                },
+                padding: 25,
                 callback: function(value) {
                   return num(value);
                 }
               },
               grid: {
                 color: gridColor,
-                drawBorder: false
+                drawBorder: false,
+                drawOnChartArea: true,
+                drawTicks: false,
+                lineWidth: 2,
+                borderDash: [8, 8]
+              },
+              border: {
+                display: true,
+                color: isLightMode ? 'rgba(220, 38, 38, 0.25)' : 'rgba(37, 99, 235, 0.35)',
+                width: 2.5
               }
             }
           }
@@ -5032,60 +5285,54 @@
       }
       
       const pieCtx = pieCanvas.getContext('2d');
+      
+      // إنشاء تدرجات لونية للدونات
+      const activeGradient = pieCtx.createLinearGradient(0, 0, 200, 200);
+      activeGradient.addColorStop(0, '#34d399');
+      activeGradient.addColorStop(0.5, '#10b981');
+      activeGradient.addColorStop(1, '#059669');
+      
+      const inactiveGradient = pieCtx.createLinearGradient(0, 0, 200, 200);
+      inactiveGradient.addColorStop(0, '#94a3b8');
+      inactiveGradient.addColorStop(0.5, '#64748b');
+      inactiveGradient.addColorStop(1, '#475569');
+      
       pieChart = new Chart(pieCtx, {
-        type:'doughnut',
+        type:'polarArea',
         data:{
           labels:['نشطون','غير نشطين'],
             datasets:[{ 
             data:[sumActive, inactive],
-            backgroundColor: (ctx) => {
-              const chart = ctx.chart;
-              const {chartArea} = chart;
-              if (!chartArea) {
-                return ['rgba(16, 185, 129, 0.9)', 'rgba(239, 68, 68, 0.9)'];
-              }
-              const centerX = (chartArea.left + chartArea.right) / 2;
-              const centerY = (chartArea.top + chartArea.bottom) / 2;
-              const r = Math.min(
-                (chartArea.right - chartArea.left) / 2,
-                (chartArea.bottom - chartArea.top) / 2
-              );
-              
-              const canvasCtx = chart.canvas ? chart.canvas.getContext('2d') : null;
-              if (!canvasCtx) return 'rgba(16, 185, 129, 0.8)';
-              
-              const gradient1 = canvasCtx.createRadialGradient(centerX, centerY, 0, centerX, centerY, r);
-              gradient1.addColorStop(0, 'rgba(16, 185, 129, 1)');
-              gradient1.addColorStop(0.7, 'rgba(34, 197, 94, 0.9)');
-              gradient1.addColorStop(1, 'rgba(74, 222, 128, 0.85)');
-              
-              const gradient2 = canvasCtx.createRadialGradient(centerX, centerY, 0, centerX, centerY, r);
-              gradient2.addColorStop(0, 'rgba(239, 68, 68, 1)');
-              gradient2.addColorStop(0.7, 'rgba(248, 113, 113, 0.9)');
-              gradient2.addColorStop(1, 'rgba(252, 165, 165, 0.85)');
-              
-              return [gradient1, gradient2];
-            },
-            borderColor: [
-              'rgba(255, 255, 255, 0.9)',
-              'rgba(255, 255, 255, 0.9)'
+            backgroundColor: [
+              '#10b981',
+              '#64748b'
             ],
-            borderWidth: 4,
-            hoverOffset: 15,
-            hoverBorderWidth: 5,
-            cutout: '60%',
-            spacing: 3
+            borderColor: [
+              '#059669',
+              '#475569'
+            ],
+            borderWidth: 8,
+            hoverOffset: 35,
+            hoverBorderWidth: 10
           }]
         },
         options:{
           responsive:true, 
-          maintainAspectRatio:true,
-          aspectRatio: 1.3,
+          maintainAspectRatio:false,
+          layout: {
+            padding: {
+              top: 20,
+              right: 20,
+              bottom: 20,
+              left: 20
+            }
+          },
           animation: {
             animateRotate: true,
-            animateScale: true,
+            animateScale: false,
             duration: 2000,
-            easing: 'easeOutQuart'
+            easing: 'easeOutQuart',
+            delay: 0
           },
           plugins:{
             legend:{
@@ -5094,70 +5341,163 @@
               labels:{
                 color: textColor,
                 font: {
-                  size: 15,
-                  weight: '700',
+                  size: 18,
+                  weight: '900',
                   family: "'Cairo', sans-serif"
                 },
-                padding: 18,
-                usePointStyle: true,
-                pointStyle: 'circle',
-                boxWidth: 14,
-                boxHeight: 14,
-                textAlign: 'right'
+                padding: 35,
+                usePointStyle: false,
+                boxWidth: 25,
+                boxHeight: 25,
+                textAlign: 'right',
+                generateLabels: function(chart) {
+                  const original = Chart.defaults.plugins.legend.labels.generateLabels;
+                  const labels = original.call(this, chart);
+                  labels.forEach(label => {
+                    label.fillStyle = label.strokeStyle;
+                  });
+                  return labels;
+                }
               }
             },
             tooltip: {
-              backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.98)' : 'rgba(26, 26, 26, 0.98)',
+              enabled: true,
+              backgroundColor: isLightMode 
+                ? 'rgba(255, 255, 255, 0.99)' 
+                : 'rgba(17, 24, 39, 0.99)',
               titleColor: textColor,
               bodyColor: textColor,
-              borderColor: isLightMode ? 'rgba(128, 28, 50, 0.2)' : 'rgba(255, 71, 87, 0.3)',
-              borderWidth: 2,
-              padding: 16,
-              cornerRadius: 12,
+              borderColor: isLightMode 
+                ? 'rgba(16, 185, 129, 0.5)' 
+                : 'rgba(100, 116, 139, 0.6)',
+              borderWidth: 4,
+              padding: {
+                top: 18,
+                right: 24,
+                bottom: 18,
+                left: 24
+              },
+              cornerRadius: 18,
               displayColors: true,
-              boxPadding: 8,
+              boxPadding: 14,
               titleFont: {
-                size: 15,
+                size: 17,
                 weight: 'bold',
                 family: "'Cairo', sans-serif"
               },
               bodyFont: {
-                  size: 14,
-                weight: '600',
+                size: 16,
+                weight: '800',
                 family: "'Cairo', sans-serif"
               },
               callbacks: {
+                title: function(context) {
+                  return context[0].label || '';
+                },
                 label: function(context) {
                   const label = context.label || '';
                   const value = context.parsed || 0;
                   const total = context.dataset.data.reduce((a, b) => a + b, 0);
                   const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                  return label + ': ' + num(value) + ' (' + percentage + '%)';
+                  return `${label}: ${num(value)} مستخدم (${percentage}%)`;
                 },
                 labelColor: function(context) {
                   const bgColors = context.dataset.backgroundColor;
                   const borderColors = context.dataset.borderColor;
                   return {
-                    borderColor: Array.isArray(borderColors) ? borderColors[context.dataIndex] : borderColors,
-                    backgroundColor: Array.isArray(bgColors) ? bgColors[context.dataIndex] : bgColors,
-                    borderWidth: 2,
-                    borderRadius: 4
+                    borderColor: Array.isArray(borderColors) 
+                      ? borderColors[context.dataIndex] 
+                      : borderColors,
+                    backgroundColor: Array.isArray(bgColors) 
+                      ? bgColors[context.dataIndex] 
+                      : bgColors,
+                    borderWidth: 5,
+                    borderRadius: 10
                   };
                 }
               },
+              titleSpacing: 14,
+              bodySpacing: 12,
               usePointStyle: true,
-              boxWidth: 12,
-              boxHeight: 12
+              boxWidth: 18,
+              boxHeight: 18,
+              animation: {
+                duration: 400
+              }
             }
           }
-        }
+        },
+        plugins: [{
+          id: 'centerText',
+          beforeDraw: function(chart) {
+            try {
+              if (!chart || !chart.canvas || !chart.chartArea) return;
+              const ctx = chart.canvas.getContext('2d');
+              if (!ctx) return;
+              const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+              const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+              
+              ctx.save();
+              // إضافة ظل للنص
+              ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+              ctx.shadowBlur = 8;
+              ctx.shadowOffsetX = 3;
+              ctx.shadowOffsetY = 3;
+              
+              ctx.fillStyle = textColor;
+              ctx.font = 'bold 52px Cairo';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(num(sumTotal), centerX, centerY - 16);
+              
+              ctx.font = '900 22px Cairo';
+              ctx.fillStyle = isLightMode ? '#10b981' : '#64748b';
+              ctx.fillText('إجمالي المستخدمين', centerX, centerY + 28);
+              
+              ctx.shadowBlur = 0;
+              ctx.restore();
+            } catch (e) {
+              console.warn('Chart center text rendering error:', e);
+            }
+          }
+        }]
       });
 
+      // جمع بيانات النمو - عرض جميع الوكلاء حتى لو كان النمو 0
       const growthData = filtered
-        .filter(a => (a.growth || 0) !== 0)
-        .sort((a,b)=>Math.abs(b.growth||0) - Math.abs(a.growth||0));
-      const growthLabels = growthData.map(a=>a.name || '—');
-      const growthValues = growthData.map(a=>a.growth||0);
+        .map(a => {
+          // التأكد من حساب النمو بشكل صحيح
+          let growthValue = Number(a.growth) || 0;
+          
+          // إذا كان النمو 0، حاول إعادة حسابه مباشرة
+          if (growthValue === 0 && a.prev_active !== undefined && a.prev_active !== null) {
+            growthValue = Math.round((a.active || 0) - Number(a.prev_active || 0));
+          }
+          
+          // إذا كان النمو لا يزال 0، استخدم active مباشرة (يعني النمو = active)
+          // هذا في حالة عدم وجود prev_active
+          if (growthValue === 0 && (a.prev_active === undefined || a.prev_active === null || a.prev_active === 0)) {
+            // لا نعرض النمو كـ active، بل نتركه 0
+            growthValue = 0;
+          }
+          
+          return {
+            name: a.name || a.itpc_site || '—',
+            growth: growthValue
+          };
+        })
+        .filter(a => a.name !== '—') // استبعاد الوكلاء بدون أسماء
+        .sort((a,b)=>{
+          // ترتيب حسب القيمة المطلقة للنمو (من الأكبر إلى الأصغر)
+          // لكن نعطي الأولوية للقيم غير الصفرية
+          if (a.growth === 0 && b.growth !== 0) return 1;
+          if (a.growth !== 0 && b.growth === 0) return -1;
+          return Math.abs(b.growth) - Math.abs(a.growth);
+        })
+        .slice(0, 8); // أول 8 وكلاء
+      
+      const growthLabels = growthData.map(a => a.name);
+      const growthValues = growthData.map(a => a.growth);
       const growthColors = growthValues.map(v => v > 0 ? 'rgba(16, 185, 129, 0.8)' : v < 0 ? 'rgba(239, 68, 68, 0.8)' : 'rgba(156, 163, 175, 0.8)');
 
       const growthCanvas = document.getElementById('growthChart');
@@ -5170,129 +5510,145 @@
         existingGrowthChart.destroy();
       }
       if(growthData.length > 0) {
+        // حساب القيم القصوى والدنيا للنمو
+        const maxGrowth = Math.max(...growthValues.map(v => Math.abs(v)));
+        const minGrowth = Math.min(...growthValues);
+        const maxValue = maxGrowth > 0 ? Math.ceil(maxGrowth * 1.2) : 100;
+        const minValue = minGrowth < 0 ? Math.floor(minGrowth * 1.2) : 0;
+        const stepSize = maxGrowth > 0 ? Math.max(10, Math.ceil(maxGrowth / 5)) : 10;
+        
         growthChart = new Chart(growthCanvas.getContext('2d'), {
-          type:'bar',
+          type:'radar',
           data:{
             labels: growthLabels,
             datasets:[{ 
               label:'النمو الأسبوعي',
               data: growthValues,
-              backgroundColor: (ctx) => {
-                const canvas = ctx.chart.canvas;
-                const ctx2d = canvas.getContext('2d');
-                return growthValues.map(v => {
-                  const gradient = ctx2d.createLinearGradient(0, 0, 0, canvas.height);
-                  if(v > 0) {
-                    gradient.addColorStop(0, 'rgba(16, 185, 129, 0.95)');
-                    gradient.addColorStop(0.5, 'rgba(34, 197, 94, 0.9)');
-                    gradient.addColorStop(1, 'rgba(74, 222, 128, 0.85)');
-                  } else if(v < 0) {
-                    gradient.addColorStop(0, 'rgba(239, 68, 68, 0.95)');
-                    gradient.addColorStop(0.5, 'rgba(248, 113, 113, 0.9)');
-                    gradient.addColorStop(1, 'rgba(252, 165, 165, 0.85)');
-                  } else {
-                    gradient.addColorStop(0, 'rgba(156, 163, 175, 0.8)');
-                    gradient.addColorStop(1, 'rgba(209, 213, 219, 0.7)');
-                  }
-                  return gradient;
-                });
-              },
-              borderColor: growthValues.map(v => v > 0 ? 'rgba(16, 185, 129, 1)' : v < 0 ? 'rgba(239, 68, 68, 1)' : 'rgba(156, 163, 175, 1)'),
-              borderWidth: 2.5,
-              borderRadius: 10,
-              barThickness: 'flex',
-              maxBarThickness: growthData.length > 20 ? 25 : 45,
-              shadowOffsetX: 0,
-              shadowOffsetY: 4,
-              shadowBlur: 8,
-              shadowColor: growthValues.map(v => v > 0 ? 'rgba(16, 185, 129, 0.3)' : v < 0 ? 'rgba(239, 68, 68, 0.3)' : 'rgba(156, 163, 175, 0.2)')
+              backgroundColor: 'rgba(16, 185, 129, 0.4)',
+              borderColor: '#10b981',
+              borderWidth: 6,
+              pointBackgroundColor: '#10b981',
+              pointBorderColor: '#ffffff',
+              pointBorderWidth: 6,
+              pointRadius: 12,
+              pointHoverRadius: 16,
+              pointHoverBackgroundColor: '#34d399',
+              pointHoverBorderColor: '#ffffff',
+              pointHoverBorderWidth: 7
             }]
           },
           options:{
             responsive:true,
             maintainAspectRatio:false,
-            animation: {
-              duration: 2000,
-              easing: 'easeOutQuart'
-            },
-            plugins:{
-              legend:{
-                display:false
-              },
-              tooltip: {
-                backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.98)' : 'rgba(26, 26, 26, 0.98)',
-                titleColor: textColor,
-                bodyColor: textColor,
-                borderColor: isLightMode ? 'rgba(128, 28, 50, 0.2)' : 'rgba(255, 71, 87, 0.3)',
-                borderWidth: 2,
-                padding: 16,
-                cornerRadius: 12,
-                displayColors: true,
-                boxPadding: 8,
-                titleFont: {
-                  size: 15,
-                  weight: 'bold',
-                  family: "'Cairo', sans-serif"
-                },
-                bodyFont: {
-                  size: 14,
-                  weight: '600',
-                  family: "'Cairo', sans-serif"
-                },
-                callbacks: {
-                  label: function(context) {
-                    const value = context.parsed.y;
-                    return 'النمو: ' + signedNum(value) + ' مستخدم';
-                  },
-                  labelColor: function(context) {
-                    return {
-                      borderColor: context.dataset.borderColor[context.dataIndex],
-                      backgroundColor: context.dataset.backgroundColor[context.dataIndex],
-                      borderWidth: 2,
-                      borderRadius: 4
-                    };
-                  }
-                },
-                usePointStyle: true,
-                boxWidth: 12,
-                boxHeight: 12
+            layout: {
+              padding: {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20
               }
             },
-            scales:{
-              x:{
-                ticks:{
+            animation: {
+              duration: 2000,
+              easing: 'easeOutQuart',
+              delay: 0
+            },
+            scales: {
+              r: {
+                beginAtZero: false,
+                min: minValue,
+                max: maxValue,
+                ticks: {
                   color: textColor,
                   font: {
-                    size: growthData.length > 20 ? 9 : 11,
-                    weight: 'bold',
+                    size: 16,
+                    weight: '900',
                     family: "'Cairo', sans-serif"
                   },
-                  maxRotation: growthData.length > 20 ? 90 : 45,
-                  minRotation: growthData.length > 20 ? 90 : 45
-                },
-                grid: {
-                  display: false
-                }
-              }, 
-              y:{
-                beginAtZero:false,
-                ticks:{
-                  color: textColor,
-                  font: {
-                    size: 12,
-                    weight: 'bold',
-                    family: "'Cairo', sans-serif"
-                  },
+                  stepSize: stepSize,
+                  padding: 15,
                   callback: function(value) {
                     return signedNum(value);
                   }
                 },
                 grid: {
                   color: gridColor,
-                  drawBorder: false
+                  lineWidth: 3,
+                  borderDash: [8, 8]
+                },
+                pointLabels: {
+                  color: textColor,
+                  font: {
+                    size: growthLabels.length > 6 ? 15 : 17,
+                    weight: '900',
+                    family: "'Cairo', sans-serif"
+                  },
+                  padding: 18
                 }
               }
-            }
+            },
+            plugins:{
+              legend:{
+                display:false
+              },
+              tooltip: {
+                enabled: true,
+                backgroundColor: isLightMode 
+                  ? 'rgba(255, 255, 255, 0.99)' 
+                  : 'rgba(26, 26, 26, 0.99)',
+                titleColor: textColor,
+                bodyColor: textColor,
+                borderColor: isLightMode 
+                  ? 'rgba(16, 185, 129, 0.5)' 
+                  : 'rgba(16, 185, 129, 0.6)',
+                borderWidth: 4,
+                padding: {
+                  top: 18,
+                  right: 24,
+                  bottom: 18,
+                  left: 24
+                },
+                cornerRadius: 18,
+                displayColors: true,
+                boxPadding: 14,
+                titleFont: {
+                  size: 17,
+                  weight: 'bold',
+                  family: "'Cairo', sans-serif"
+                },
+                bodyFont: {
+                  size: 16,
+                  weight: '800',
+                  family: "'Cairo', sans-serif"
+                },
+                callbacks: {
+                  title: function(context) {
+                    return context[0].label || '';
+                  },
+                  label: function(context) {
+                    const value = context.parsed.y;
+                    const sign = value > 0 ? '+' : '';
+                    return `النمو: ${sign}${num(value)} مستخدم`;
+                  },
+                  labelColor: function(context) {
+                    return {
+                      borderColor: context.dataset.borderColor,
+                      backgroundColor: context.dataset.backgroundColor,
+                      borderWidth: 5,
+                      borderRadius: 10
+                    };
+                  }
+                },
+                titleSpacing: 14,
+                bodySpacing: 12,
+                usePointStyle: true,
+                boxWidth: 18,
+                boxHeight: 18,
+                animation: {
+                  duration: 400
+                }
+              }
+            },
           }
         });
       } else {
@@ -5330,127 +5686,200 @@
       }
       if(phaseData.length > 0) {
         phaseChart = new Chart(phaseCanvas.getContext('2d'), {
-          type:'bar',
+          type:'line',
           data:{
             labels: phaseLabels,
             datasets:[{ 
               label:'معدل التفعيل (%)',
               data: phaseData,
               backgroundColor: (ctx) => {
-                const canvas = ctx.chart.canvas;
-                const ctx2d = canvas.getContext('2d');
-                const gradients = [
-                  ctx2d.createLinearGradient(0, 0, 0, canvas.height),
-                  ctx2d.createLinearGradient(0, 0, 0, canvas.height),
-                  ctx2d.createLinearGradient(0, 0, 0, canvas.height)
-                ];
-                gradients[0].addColorStop(0, 'rgba(59, 130, 246, 0.95)');
-                gradients[0].addColorStop(0.5, 'rgba(99, 102, 241, 0.9)');
-                gradients[0].addColorStop(1, 'rgba(139, 92, 246, 0.85)');
-                gradients[1].addColorStop(0, 'rgba(139, 92, 246, 0.95)');
-                gradients[1].addColorStop(0.5, 'rgba(168, 85, 247, 0.9)');
-                gradients[1].addColorStop(1, 'rgba(192, 132, 252, 0.85)');
-                gradients[2].addColorStop(0, 'rgba(236, 72, 153, 0.95)');
-                gradients[2].addColorStop(0.5, 'rgba(244, 63, 94, 0.9)');
-                gradients[2].addColorStop(1, 'rgba(251, 113, 133, 0.85)');
-                return gradients.slice(0, phaseData.length);
+                const chart = ctx.chart;
+                const {ctx: chartCtx, chartArea} = chart;
+                if (!chartArea) return 'rgba(139, 92, 246, 0.15)';
+                const gradient = chartCtx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                gradient.addColorStop(0, 'rgba(139, 92, 246, 0.5)');
+                gradient.addColorStop(0.5, 'rgba(139, 92, 246, 0.25)');
+                gradient.addColorStop(1, 'rgba(139, 92, 246, 0.05)');
+                return gradient;
               },
-              borderColor: [
-                'rgba(59, 130, 246, 1)',
-                'rgba(139, 92, 246, 1)',
-                'rgba(236, 72, 153, 1)'
-              ],
-              borderWidth: 2.5,
-              borderRadius: 10,
-              barThickness: 'flex',
-              maxBarThickness: 60,
+              borderColor: '#8b5cf6',
+              borderWidth: 7,
+              borderCapStyle: 'round',
+              borderJoinStyle: 'round',
+              pointBackgroundColor: '#8b5cf6',
+              pointBorderColor: '#ffffff',
+              pointBorderWidth: 6,
+              pointRadius: 13,
+              pointHoverRadius: 18,
+              pointHoverBackgroundColor: '#a78bfa',
+              pointHoverBorderColor: '#ffffff',
+              pointHoverBorderWidth: 7,
+              tension: 0.4,
+              fill: true,
+              stepped: false,
               shadowOffsetX: 0,
               shadowOffsetY: 4,
-              shadowBlur: 8,
-              shadowColor: 'rgba(128, 28, 50, 0.2)'
+              shadowBlur: 12,
+              shadowColor: 'rgba(139, 92, 246, 0.3)'
             }]
           },
           options:{
-            responsive:true,
-            maintainAspectRatio:true,
-            aspectRatio: 1.5,
+          responsive:true,
+          maintainAspectRatio:false,
+          layout: {
+            padding: {
+              top: 20,
+              right: 20,
+              bottom: 20,
+              left: 20
+            }
+          },
             animation: {
               duration: 2000,
-              easing: 'easeOutQuart'
+              easing: 'easeOutQuart',
+              delay: 0
             },
             plugins:{
               legend:{
                 display:false
               },
               tooltip: {
-                backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.98)' : 'rgba(26, 26, 26, 0.98)',
+                enabled: true,
+                backgroundColor: isLightMode 
+                  ? 'rgba(255, 255, 255, 0.99)' 
+                  : 'rgba(26, 26, 26, 0.99)',
                 titleColor: textColor,
                 bodyColor: textColor,
-                borderColor: isLightMode ? 'rgba(128, 28, 50, 0.2)' : 'rgba(255, 71, 87, 0.3)',
-                borderWidth: 2,
-                padding: 16,
-                cornerRadius: 12,
+                borderColor: isLightMode 
+                  ? 'rgba(139, 92, 246, 0.5)' 
+                  : 'rgba(139, 92, 246, 0.6)',
+                borderWidth: 4,
+                padding: {
+                  top: 18,
+                  right: 24,
+                  bottom: 18,
+                  left: 24
+                },
+                cornerRadius: 18,
                 displayColors: true,
-                boxPadding: 8,
+                boxPadding: 14,
                 titleFont: {
-                  size: 15,
+                  size: 17,
                   weight: 'bold',
                   family: "'Cairo', sans-serif"
                 },
                 bodyFont: {
-                  size: 14,
-                  weight: '600',
+                  size: 16,
+                  weight: '800',
                   family: "'Cairo', sans-serif"
                 },
                 callbacks: {
+                  title: function(context) {
+                    return context[0].label || '';
+                  },
                   label: function(context) {
-                    return 'معدل التفعيل: ' + context.parsed.y.toFixed(1) + '%';
+                    return `معدل التفعيل: ${context.parsed.y.toFixed(1)}%`;
                   },
                   labelColor: function(context) {
                     return {
-                      borderColor: context.dataset.borderColor[context.dataIndex],
-                      backgroundColor: context.dataset.backgroundColor[context.dataIndex],
-                      borderWidth: 2,
-                      borderRadius: 4
+                      borderColor: context.dataset.borderColor,
+                      backgroundColor: context.dataset.borderColor,
+                      borderWidth: 5,
+                      borderRadius: 10
                     };
                   }
                 },
+                titleSpacing: 14,
+                bodySpacing: 12,
                 usePointStyle: true,
-                boxWidth: 12,
-                boxHeight: 12
+                boxWidth: 18,
+                boxHeight: 18,
+                animation: {
+                  duration: 400
+                }
               }
             },
             scales:{
               x:{
+                reverse: false,
+                title: {
+                  display: true,
+                  text: 'المراحل',
+                  color: textColor,
+                  font: {
+                    size: 15,
+                    weight: 'bold',
+                    family: "'Cairo', sans-serif"
+                  },
+                  padding: {
+                    top: 10,
+                    bottom: 5
+                  }
+                },
                 ticks:{
                   color: textColor,
                   font: {
-                    size: 12,
-                    weight: 'bold',
+                    size: 17,
+                    weight: '900',
                     family: "'Cairo', sans-serif"
-                  }
+                  },
+                  padding: 20
                 },
                 grid: {
-                  display: false
+                  color: gridColor,
+                  drawBorder: false,
+                  drawOnChartArea: true,
+                  drawTicks: false,
+                  lineWidth: 2,
+                  borderDash: [8, 8]
+                },
+                border: {
+                  display: true,
+                  color: isLightMode ? 'rgba(139, 92, 246, 0.25)' : 'rgba(139, 92, 246, 0.35)',
+                  width: 2.5
                 }
               }, 
               y:{
                 beginAtZero:true,
                 max: 100,
-                ticks:{
+                title: {
+                  display: true,
+                  text: 'معدل التفعيل (%)',
                   color: textColor,
                   font: {
-                    size: 12,
+                    size: 17,
                     weight: 'bold',
                     family: "'Cairo', sans-serif"
                   },
+                  padding: {
+                    top: 5,
+                    bottom: 10
+                  }
+                },
+                ticks:{
+                  color: textColor,
+                  font: {
+                    size: 17,
+                    weight: '900',
+                    family: "'Cairo', sans-serif"
+                  },
+                  padding: 25,
                   callback: function(value) {
                     return value + '%';
                   }
                 },
                 grid: {
                   color: gridColor,
-                  drawBorder: false
+                  drawBorder: false,
+                  drawOnChartArea: true,
+                  drawTicks: false,
+                  lineWidth: 2,
+                  borderDash: [8, 8]
+                },
+                border: {
+                  display: true,
+                  color: isLightMode ? 'rgba(139, 92, 246, 0.25)' : 'rgba(139, 92, 246, 0.35)',
+                  width: 2.5
                 }
               }
             }
@@ -5472,7 +5901,15 @@
 
       const deficitData = filtered
         .filter(a => (a.deficit_users || 0) > 0)
-        .sort((a,b)=>(b.deficit_users||0) - (a.deficit_users||0));
+        .sort((a,b)=>{
+          // ترتيب حسب العجز تنازلياً
+          const deficitDiff = (b.deficit_users||0) - (a.deficit_users||0);
+          if (deficitDiff !== 0) return deficitDiff;
+          // في حالة التساوي، ترتيب حسب نسبة العجز
+          const aPercent = a.total_users > 0 ? (a.deficit_users || 0) / a.total_users : 0;
+          const bPercent = b.total_users > 0 ? (b.deficit_users || 0) / b.total_users : 0;
+          return bPercent - aPercent;
+        });
       const deficitLabels = deficitData.map(a=>a.name || '—');
       const deficitValues = deficitData.map(a=>a.deficit_users||0);
 
@@ -5493,148 +5930,199 @@
           if(noDataMsg) noDataMsg.remove();
         }
         deficitChart = new Chart(deficitCanvas.getContext('2d'), {
-          type:'bar',
+          type:'bubble',
           data:{
-            labels: deficitLabels,
-            datasets:[{ 
-              label:'عجز المستخدمين',
-              data: deficitValues,
-              backgroundColor: (ctx) => {
-                const canvas = ctx.chart.canvas;
-                const ctx2d = canvas.getContext('2d');
-                return deficitValues.map((v, idx) => {
-                  const total = deficitData[idx].total_users || 1;
-                  const percent = (v / total) * 100;
-                  const gradient = ctx2d.createLinearGradient(0, 0, canvas.width, 0);
-                  if(percent < 5) {
-                    gradient.addColorStop(0, 'rgba(245, 158, 11, 0.95)');
-                    gradient.addColorStop(0.5, 'rgba(251, 191, 36, 0.9)');
-                    gradient.addColorStop(1, 'rgba(253, 224, 71, 0.85)');
-                  } else if(percent < 10) {
-                    gradient.addColorStop(0, 'rgba(251, 146, 60, 0.95)');
-                    gradient.addColorStop(0.5, 'rgba(249, 115, 22, 0.9)');
-                    gradient.addColorStop(1, 'rgba(234, 88, 12, 0.85)');
-                  } else {
-                    gradient.addColorStop(0, 'rgba(239, 68, 68, 0.95)');
-                    gradient.addColorStop(0.5, 'rgba(248, 113, 113, 0.9)');
-                    gradient.addColorStop(1, 'rgba(220, 38, 38, 0.85)');
-                  }
-                  return gradient;
-                });
-              },
-              borderColor: deficitValues.map((v, idx) => {
-                const total = deficitData[idx].total_users || 1;
-                const percent = (v / total) * 100;
-                if(percent < 5) return 'rgba(245, 158, 11, 1)';
-                if(percent < 10) return 'rgba(251, 146, 60, 1)';
-                return 'rgba(239, 68, 68, 1)';
-              }),
-              borderWidth: 2.5,
-              borderRadius: 10,
-              barThickness: 'flex',
-              maxBarThickness: deficitData.length > 20 ? 30 : 50,
-              shadowOffsetX: 4,
-              shadowOffsetY: 0,
-              shadowBlur: 8,
-              shadowColor: deficitValues.map((v, idx) => {
-                const total = deficitData[idx].total_users || 1;
-                const percent = (v / total) * 100;
-                if(percent < 5) return 'rgba(245, 158, 11, 0.3)';
-                if(percent < 10) return 'rgba(251, 146, 60, 0.3)';
-                return 'rgba(239, 68, 68, 0.3)';
-              })
-            }]
+            datasets: deficitData.map((agent, idx) => {
+              const total = agent.total_users || 1;
+              const deficit = deficitValues[idx];
+              const percent = (deficit / total) * 100;
+              let color;
+              if(percent < 5) {
+                color = '#f59e0b';
+              } else if(percent < 10) {
+                color = '#f97316';
+              } else {
+                color = '#ef4444';
+              }
+              return {
+                label: agent.name || '—',
+                data: [{
+                  x: total,
+                  y: deficit,
+                  r: Math.max(10, Math.min(35, (deficit / Math.max(...deficitValues)) * 35))
+                }],
+                backgroundColor: color + '95',
+                borderColor: color,
+                borderWidth: 5
+              };
+            })
           },
           options:{
-            indexAxis: 'y',
             responsive:true,
             maintainAspectRatio:false,
+            layout: {
+              padding: {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20
+              }
+            },
             animation: {
               duration: 2000,
-              easing: 'easeOutQuart'
+              easing: 'easeOutQuart',
+              delay: 0
             },
             plugins:{
               legend:{
                 display:false
               },
               tooltip: {
-                backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.98)' : 'rgba(26, 26, 26, 0.98)',
+                backgroundColor: isLightMode ? 'rgba(255, 255, 255, 0.99)' : 'rgba(26, 26, 26, 0.99)',
                 titleColor: textColor,
                 bodyColor: textColor,
-                borderColor: isLightMode ? 'rgba(128, 28, 50, 0.2)' : 'rgba(255, 71, 87, 0.3)',
-                borderWidth: 2,
-                padding: 16,
-                cornerRadius: 12,
+                borderColor: isLightMode ? 'rgba(239, 68, 68, 0.5)' : 'rgba(245, 158, 11, 0.6)',
+                borderWidth: 4,
+                padding: {
+                  top: 18,
+                  right: 24,
+                  bottom: 18,
+                  left: 24
+                },
+                cornerRadius: 18,
                 displayColors: true,
-                boxPadding: 8,
+                boxPadding: 14,
                 titleFont: {
-                  size: 15,
+                  size: 17,
                   weight: 'bold',
                   family: "'Cairo', sans-serif"
                 },
                 bodyFont: {
-                  size: 14,
-                  weight: '600',
+                  size: 16,
+                  weight: '800',
                   family: "'Cairo', sans-serif"
                 },
                 callbacks: {
+                  title: function(context) {
+                    return context[0].raw.label || '';
+                  },
                   label: function(context) {
-                    const value = context.parsed.x;
-                    const agent = deficitData[context.dataIndex];
-                    const percent = agent.total_users > 0 ? ((value / agent.total_users) * 100).toFixed(1) : 0;
-                    return 'العجز: ' + num(value) + ' مستخدم (' + percent + '%)';
+                    const point = context.raw;
+                    const agent = deficitData[context.datasetIndex];
+                    const percent = agent.total_users > 0 ? ((point.y / agent.total_users) * 100).toFixed(1) : 0;
+                    return [
+                      'إجمالي المستخدمين: ' + num(point.x),
+                      'العجز: ' + num(point.y) + ' مستخدم',
+                      'النسبة: ' + percent + '%'
+                    ];
                   },
                   labelColor: function(context) {
                     const idx = context.dataIndex;
                     const total = deficitData[idx].total_users || 1;
                     const percent = (deficitValues[idx] / total) * 100;
                     let bgColor;
-                    if(percent < 5) bgColor = 'rgba(245, 158, 11, 0.9)';
-                    else if(percent < 10) bgColor = 'rgba(251, 146, 60, 0.9)';
-                    else bgColor = 'rgba(239, 68, 68, 0.9)';
+                    if(percent < 5) bgColor = 'rgba(245, 158, 11, 0.95)';
+                    else if(percent < 10) bgColor = 'rgba(251, 146, 60, 0.95)';
+                    else bgColor = 'rgba(239, 68, 68, 0.95)';
                     return {
                       borderColor: context.dataset.borderColor[idx],
                       backgroundColor: bgColor,
-                      borderWidth: 2,
-                      borderRadius: 4
+                      borderWidth: 5,
+                      borderRadius: 10
                     };
                   }
                 },
+                titleSpacing: 14,
+                bodySpacing: 12,
                 usePointStyle: true,
-                boxWidth: 12,
-                boxHeight: 12
+                boxWidth: 18,
+                boxHeight: 18,
+                animation: {
+                  duration: 400
+                }
               }
             },
             scales:{
               x:{
                 beginAtZero:true,
-                ticks:{
+                reverse: false,
+                title: {
+                  display: true,
+                  text: 'إجمالي المستخدمين',
                   color: textColor,
                   font: {
-                    size: 12,
+                    size: 17,
                     weight: 'bold',
                     family: "'Cairo', sans-serif"
                   },
+                  padding: {
+                    top: 10,
+                    bottom: 5
+                  }
+                },
+                ticks:{
+                  color: textColor,
+                  font: {
+                    size: 16,
+                    weight: '900',
+                    family: "'Cairo', sans-serif"
+                  },
+                  padding: 15,
                   callback: function(value) {
                     return num(value);
                   }
                 },
                 grid: {
                   color: gridColor,
-                  drawBorder: false
+                  drawBorder: false,
+                  lineWidth: 2,
+                  borderDash: [8, 8]
+                },
+                border: {
+                  display: true,
+                  color: isLightMode ? 'rgba(239, 68, 68, 0.25)' : 'rgba(245, 158, 11, 0.35)',
+                  width: 2.5
                 }
               }, 
               y:{
+                beginAtZero:true,
+                reverse: false,
+                title: {
+                  display: true,
+                  text: 'عجز المستخدمين',
+                  color: textColor,
+                  font: {
+                    size: 17,
+                    weight: 'bold',
+                    family: "'Cairo', sans-serif"
+                  },
+                  padding: {
+                    top: 5,
+                    bottom: 10
+                  }
+                },
                 ticks:{
                   color: textColor,
                   font: {
-                    size: deficitData.length > 20 ? 9 : 11,
-                    weight: 'bold',
+                    size: 16,
+                    weight: '900',
                     family: "'Cairo', sans-serif"
+                  },
+                  padding: 15,
+                  callback: function(value) {
+                    return num(value);
                   }
                 },
                 grid: {
-                  display: false
+                  color: gridColor,
+                  drawBorder: false,
+                  lineWidth: 2,
+                  borderDash: [8, 8]
+                },
+                border: {
+                  display: true,
+                  color: isLightMode ? 'rgba(239, 68, 68, 0.25)' : 'rgba(245, 158, 11, 0.35)',
+                  width: 2.5
                 }
               }
             }
@@ -7724,3 +8212,4 @@
   </script>
 </body>
 </html>
+

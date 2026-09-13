@@ -1425,8 +1425,16 @@
       const gridColor = isLightMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
       const backgroundColor = isLightMode ? '#ffffff' : '#1a1a1a';
 
-      const top = filtered.slice().sort((a,b)=>b.total_users - a.total_users).slice(0,10);
-      const labels = top.map(a=>a.name || a.itpc_site || 'â€”');
+      const top = filtered.slice()
+        .sort((a,b)=>{
+          // ترتيب حسب إجمالي المستخدمين تنازلياً
+          const totalDiff = b.total_users - a.total_users;
+          if (totalDiff !== 0) return totalDiff;
+          // في حالة التساوي، ترتيب حسب المستخدمين النشطين
+          return b.active - a.active;
+        })
+        .slice(0,10);
+      const labels = top.map(a=>a.name || a.itpc_site || 'â€"');
       const totalData = top.map(a=>a.total_users);
       const activeData = top.map(a=>a.active);
 
@@ -1450,71 +1458,88 @@
             { 
               label:'ط¥ط¬ظ…ط§ظ„ظٹ ط§ظ„ظ…ط³طھط®ط¯ظ…ظٹظ†', 
               data: totalData,
-              backgroundColor: (ctx) => {
-                const canvas = ctx.chart.canvas;
-                const ctx2d = canvas.getContext('2d');
-                const gradient = ctx2d.createLinearGradient(0, 0, 0, canvas.height);
-                gradient.addColorStop(0, 'rgba(59, 130, 246, 0.9)');
-                gradient.addColorStop(0.5, 'rgba(99, 102, 241, 0.85)');
-                gradient.addColorStop(1, 'rgba(139, 92, 246, 0.8)');
-                return gradient;
+              backgroundColor: '#3b82f6',
+              borderColor: '#3b82f6',
+              borderWidth: 0,
+              borderRadius: {
+                topLeft: 6,
+                topRight: 6,
+                bottomLeft: 6,
+                bottomRight: 6
               },
-              borderColor: 'rgba(59, 130, 246, 1)',
-              borderWidth: 2.5,
-              borderRadius: 10,
               borderSkipped: false,
               barThickness: 'flex',
               maxBarThickness: 50,
-              shadowOffsetX: 0,
-              shadowOffsetY: 4,
-              shadowBlur: 8,
-              shadowColor: 'rgba(59, 130, 246, 0.3)',
+              categoryPercentage: 0.7,
+              barPercentage: 0.75,
             },
             { 
               label:'ط§ظ„ظ…ط³طھط®ط¯ظ…ظˆظ† ط§ظ„ظ†ط´ط·ظˆظ†', 
               data: activeData,
-              backgroundColor: (ctx) => {
-                const canvas = ctx.chart.canvas;
-                const ctx2d = canvas.getContext('2d');
-                const gradient = ctx2d.createLinearGradient(0, 0, 0, canvas.height);
-                gradient.addColorStop(0, 'rgba(16, 185, 129, 0.9)');
-                gradient.addColorStop(0.5, 'rgba(34, 197, 94, 0.85)');
-                gradient.addColorStop(1, 'rgba(74, 222, 128, 0.8)');
-                return gradient;
+              backgroundColor: '#6366f1',
+              borderColor: '#6366f1',
+              borderWidth: 0,
+              borderRadius: {
+                topLeft: 6,
+                topRight: 6,
+                bottomLeft: 6,
+                bottomRight: 6
               },
-              borderColor: 'rgba(16, 185, 129, 1)',
-              borderWidth: 2.5,
-              borderRadius: 10,
               borderSkipped: false,
               barThickness: 'flex',
               maxBarThickness: 50,
-              shadowOffsetX: 0,
-              shadowOffsetY: 4,
-              shadowBlur: 8,
-              shadowColor: 'rgba(16, 185, 129, 0.3)',
+              categoryPercentage: 0.7,
+              barPercentage: 0.75,
             }
           ]
         },
         options:{
           responsive:true,
           maintainAspectRatio:true,
-          aspectRatio: 1.5,
+          aspectRatio: 1.6,
+          layout: {
+            padding: {
+              top: 10,
+              right: 15,
+              bottom: 10,
+              left: 10
+            }
+          },
           animation: {
-            duration: 2000,
-            easing: 'easeOutQuart',
+            duration: 1800,
+            easing: 'easeOutCubic',
+            delay: (context) => {
+              let delay = 0;
+              if (context.type === 'data' && context.mode === 'default') {
+                delay = context.dataIndex * 80;
+              }
+              return delay;
+            },
             onComplete: function() {
               try {
                 const chart = this.chart;
-                if (chart && chart.canvas) {
-                  const ctx = chart.canvas.getContext('2d');
-                  if (ctx) {
-                    ctx.save();
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
-                    ctx.restore();
-                  }
-                }
+                if (!chart || !chart.canvas) return;
+                const ctx = chart.canvas.getContext('2d');
+                if (!ctx) return;
+                ctx.save();
+                chart.data.datasets.forEach((dataset, i) => {
+                  const meta = chart.getDatasetMeta(i);
+                  if (!meta || !meta.data) return;
+                  meta.data.forEach((bar, index) => {
+                    if (!bar) return;
+                    const value = dataset.data[index];
+                    if (value > 0 && bar.x !== undefined && bar.y !== undefined) {
+                      ctx.fillStyle = textColor;
+                      ctx.font = 'bold 11px Cairo';
+                      ctx.textAlign = 'center';
+                      ctx.textBaseline = 'bottom';
+                      ctx.fillText(num(value), bar.x, bar.y - 5);
+                    }
+                  });
+                });
+                ctx.restore();
               } catch (e) {
+                console.warn('Chart label rendering error:', e);
               }
             }
           },
@@ -1592,6 +1617,7 @@
           },
           scales:{
             x:{
+              reverse: false,
               ticks:{
                 color: textColor,
                 font: {
@@ -1651,54 +1677,37 @@
           labels:['ظ†ط´ط·ظˆظ†','ط؛ظٹط± ظ†ط´ط·ظٹظ†'],
             datasets:[{ 
             data:[sumActive, inactive],
-            backgroundColor: (ctx) => {
-              const chart = ctx.chart;
-              const {chartArea} = chart;
-              if (!chartArea) {
-                return ['rgba(16, 185, 129, 0.9)', 'rgba(239, 68, 68, 0.9)'];
-              }
-              const centerX = (chartArea.left + chartArea.right) / 2;
-              const centerY = (chartArea.top + chartArea.bottom) / 2;
-              const r = Math.min(
-                (chartArea.right - chartArea.left) / 2,
-                (chartArea.bottom - chartArea.top) / 2
-              );
-              
-              const canvasCtx = chart.canvas ? chart.canvas.getContext('2d') : null;
-              if (!canvasCtx) return 'rgba(16, 185, 129, 0.8)';
-              
-              const gradient1 = canvasCtx.createRadialGradient(centerX, centerY, 0, centerX, centerY, r);
-              gradient1.addColorStop(0, 'rgba(16, 185, 129, 1)');
-              gradient1.addColorStop(0.7, 'rgba(34, 197, 94, 0.9)');
-              gradient1.addColorStop(1, 'rgba(74, 222, 128, 0.85)');
-              
-              const gradient2 = canvasCtx.createRadialGradient(centerX, centerY, 0, centerX, centerY, r);
-              gradient2.addColorStop(0, 'rgba(239, 68, 68, 1)');
-              gradient2.addColorStop(0.7, 'rgba(248, 113, 113, 0.9)');
-              gradient2.addColorStop(1, 'rgba(252, 165, 165, 0.85)');
-              
-              return [gradient1, gradient2];
-            },
+            backgroundColor: ['#3b82f6', '#9ca3af'],
             borderColor: [
-              'rgba(255, 255, 255, 0.9)',
-              'rgba(255, 255, 255, 0.9)'
+              isLightMode ? '#ffffff' : '#1f2937',
+              isLightMode ? '#ffffff' : '#1f2937'
             ],
-            borderWidth: 4,
-            hoverOffset: 15,
-            hoverBorderWidth: 5,
-            cutout: '60%',
-            spacing: 3
+            borderWidth: 3,
+            hoverOffset: 8,
+            hoverBorderWidth: 4,
+            cutout: '75%',
+            spacing: 2,
+            rotation: -90
           }]
         },
         options:{
           responsive:true, 
           maintainAspectRatio:true,
-          aspectRatio: 1.3,
+          aspectRatio: 1.4,
+          layout: {
+            padding: {
+              top: 15,
+              right: 15,
+              bottom: 15,
+              left: 15
+            }
+          },
           animation: {
             animateRotate: true,
             animateScale: true,
             duration: 2000,
-            easing: 'easeOutQuart'
+            easing: 'easeOutCubic',
+            delay: 200
           },
           plugins:{
             legend:{
@@ -1768,8 +1777,19 @@
 
       const growthData = filtered
         .filter(a => (a.growth || 0) !== 0)
-        .sort((a,b)=>Math.abs(b.growth||0) - Math.abs(a.growth||0));
-      const growthLabels = growthData.map(a=>a.name || 'â€”');
+        .sort((a,b)=>{
+          // ترتيب: أولاً القيم الموجبة (من الأكبر إلى الأصغر)، ثم القيم السالبة (من الأصغر إلى الأكبر)
+          const aGrowth = a.growth || 0;
+          const bGrowth = b.growth || 0;
+          if (aGrowth > 0 && bGrowth > 0) {
+            return bGrowth - aGrowth; // ترتيب تنازلي للقيم الموجبة
+          }
+          if (aGrowth < 0 && bGrowth < 0) {
+            return aGrowth - bGrowth; // ترتيب تصاعدي للقيم السالبة (الأقل سالبية أولاً)
+          }
+          return bGrowth - aGrowth; // القيم الموجبة قبل السالبة
+        });
+      const growthLabels = growthData.map(a=>a.name || 'â€"');
       const growthValues = growthData.map(a=>a.growth||0);
       const growthColors = growthValues.map(v => v > 0 ? 'rgba(16, 185, 129, 0.8)' : v < 0 ? 'rgba(239, 68, 68, 0.8)' : 'rgba(156, 163, 175, 0.8)');
 
@@ -1794,25 +1814,19 @@
                 const canvas = ctx.chart.canvas;
                 const ctx2d = canvas.getContext('2d');
                 return growthValues.map(v => {
-                  const gradient = ctx2d.createLinearGradient(0, 0, 0, canvas.height);
-                  if(v > 0) {
-                    gradient.addColorStop(0, 'rgba(16, 185, 129, 0.95)');
-                    gradient.addColorStop(0.5, 'rgba(34, 197, 94, 0.9)');
-                    gradient.addColorStop(1, 'rgba(74, 222, 128, 0.85)');
-                  } else if(v < 0) {
-                    gradient.addColorStop(0, 'rgba(239, 68, 68, 0.95)');
-                    gradient.addColorStop(0.5, 'rgba(248, 113, 113, 0.9)');
-                    gradient.addColorStop(1, 'rgba(252, 165, 165, 0.85)');
-                  } else {
-                    gradient.addColorStop(0, 'rgba(156, 163, 175, 0.8)');
-                    gradient.addColorStop(1, 'rgba(209, 213, 219, 0.7)');
-                  }
-                  return gradient;
+                  if(v > 0) return '#10b981';
+                  if(v < 0) return '#ef4444';
+                  return '#9ca3af';
                 });
               },
-              borderColor: growthValues.map(v => v > 0 ? 'rgba(16, 185, 129, 1)' : v < 0 ? 'rgba(239, 68, 68, 1)' : 'rgba(156, 163, 175, 1)'),
-              borderWidth: 2.5,
-              borderRadius: 10,
+              borderColor: growthValues.map(v => v > 0 ? '#10b981' : v < 0 ? '#ef4444' : '#9ca3af'),
+              borderWidth: 0,
+              borderRadius: {
+                topLeft: 6,
+                topRight: 6,
+                bottomLeft: 6,
+                bottomRight: 6
+              },
               barThickness: 'flex',
               maxBarThickness: growthData.length > 20 ? 25 : 45,
               shadowOffsetX: 0,
@@ -1873,6 +1887,7 @@
             },
             scales:{
               x:{
+                reverse: false,
                 ticks:{
                   color: textColor,
                   font: {
@@ -1957,24 +1972,22 @@
                   ctx2d.createLinearGradient(0, 0, 0, canvas.height),
                   ctx2d.createLinearGradient(0, 0, 0, canvas.height)
                 ];
-                gradients[0].addColorStop(0, 'rgba(59, 130, 246, 0.95)');
-                gradients[0].addColorStop(0.5, 'rgba(99, 102, 241, 0.9)');
-                gradients[0].addColorStop(1, 'rgba(139, 92, 246, 0.85)');
-                gradients[1].addColorStop(0, 'rgba(139, 92, 246, 0.95)');
-                gradients[1].addColorStop(0.5, 'rgba(168, 85, 247, 0.9)');
-                gradients[1].addColorStop(1, 'rgba(192, 132, 252, 0.85)');
-                gradients[2].addColorStop(0, 'rgba(236, 72, 153, 0.95)');
-                gradients[2].addColorStop(0.5, 'rgba(244, 63, 94, 0.9)');
-                gradients[2].addColorStop(1, 'rgba(251, 113, 133, 0.85)');
-                return gradients.slice(0, phaseData.length);
+                return phaseData.map((_, idx) => {
+                  const colors = ['#3b82f6', '#6366f1', '#8b5cf6'];
+                  return colors[idx] || '#3b82f6';
+                });
               },
-              borderColor: [
-                'rgba(59, 130, 246, 1)',
-                'rgba(139, 92, 246, 1)',
-                'rgba(236, 72, 153, 1)'
-              ],
-              borderWidth: 2.5,
-              borderRadius: 10,
+              borderColor: phaseData.map((_, idx) => {
+                const colors = ['#3b82f6', '#6366f1', '#8b5cf6'];
+                return colors[idx] || '#3b82f6';
+              }),
+              borderWidth: 0,
+              borderRadius: {
+                topLeft: 6,
+                topRight: 6,
+                bottomLeft: 6,
+                bottomRight: 6
+              },
               barThickness: 'flex',
               maxBarThickness: 60,
               shadowOffsetX: 0,
@@ -2035,6 +2048,7 @@
             },
             scales:{
               x:{
+                reverse: false,
                 ticks:{
                   color: textColor,
                   font: {
@@ -2085,8 +2099,16 @@
 
       const deficitData = filtered
         .filter(a => (a.deficit_users || 0) > 0)
-        .sort((a,b)=>(b.deficit_users||0) - (a.deficit_users||0));
-      const deficitLabels = deficitData.map(a=>a.name || 'â€”');
+        .sort((a,b)=>{
+          // ترتيب حسب العجز تنازلياً
+          const deficitDiff = (b.deficit_users||0) - (a.deficit_users||0);
+          if (deficitDiff !== 0) return deficitDiff;
+          // في حالة التساوي، ترتيب حسب نسبة العجز
+          const aPercent = a.total_users > 0 ? (a.deficit_users || 0) / a.total_users : 0;
+          const bPercent = b.total_users > 0 ? (b.deficit_users || 0) / b.total_users : 0;
+          return bPercent - aPercent;
+        });
+      const deficitLabels = deficitData.map(a=>a.name || 'â€"');
       const deficitValues = deficitData.map(a=>a.deficit_users||0);
 
       const deficitCanvas = document.getElementById('deficitChart');
@@ -2221,6 +2243,7 @@
             scales:{
               x:{
                 beginAtZero:true,
+                reverse: false,
                 ticks:{
                   color: textColor,
                   font: {
@@ -2238,6 +2261,7 @@
                 }
               }, 
               y:{
+                reverse: true,
                 ticks:{
                   color: textColor,
                   font: {
